@@ -1,0 +1,997 @@
+{
+  "name": "材料入库",
+  "description": "筑快科技材料入库套件开发",
+  "icon": "",
+  "bizType": "isv.zhukuai.warehousing",
+  "templateType": "advanced",
+  "props": { "hiddenReason": false },
+  "setters": [],
+  "children": [
+    {
+      "componentName": "FormRelateField",
+      "bizAlias": "relation",
+      "props": {
+        "id": "test",
+        "placeholder": "请填写方式",
+        "label": "表单关联",
+        "required": false,
+        "fields": [
+          {
+            "componentName": "TextField",
+            "props": {
+              "id": "请假事由",
+              "label": "请假事由",
+              "placeholder": "请输入请假事由",
+              "required": false
+            }
+          }
+        ],
+        "dataSource": {
+          "params": {
+            "filter": ""
+          },
+          "target": {
+            "appType": 0,
+            "appUuid": "",
+            "bizType": "",
+            "formCode": "PROC-0932431C-DFA8-4EDF-90C9-6857771B8A5C"
+          },
+          "type": "form"
+        }
+      }
+    },
+    {
+      "componentName": "MoneyField",
+      "bizAlias": "Moneytest",
+      "props": {
+        "placeholder": "请输入",
+        "label": "金额（元）大写",
+        "notUpper": "0"
+      }
+    },
+    {
+      "componentName": "MoneyField",
+      "bizAlias": "Moneybei",
+      "props": {
+        "placeholder": "请输入",
+        "label": "备用金金额（元）大写",
+        "notUpper": "0"
+      }
+    },
+    {
+      "componentName": "InnerContactField",
+      "bizAlias": "InnerContactmony",
+      "props": {
+        "placeholder": "请选择",
+        "label": "联系人多选",
+        "choice": "1"
+      }
+    },
+    {
+      "componentName": "InnerContactField",
+      "bizAlias": "InnerContactone",
+      "props": {
+        "placeholder": "请选择",
+        "label": "联系人单选",
+        "choice": "0"
+      }
+    },
+    {
+      "componentName": "DateField",
+      "bizAlias": "DateFielddate",
+      "props": {
+        "placeholder": "请选择",
+        "format": "yyyy-MM-dd",
+        "label": "日期"
+      }
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "incomeTitle",
+      "props": {
+        "placeholder": "请输入",
+        "required": false,
+        "label": "入库主题"
+      }
+    },
+    {
+      "componentName": "SelectProField",
+      "bizAlias": "SelectPro",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "项目名称"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelectProtwoField",
+      "bizAlias": "SelectProtwo",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "项目名称1"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelectTbproField",
+      "bizAlias": "SelectTbpro",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "项目名称2"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelectField",
+      "bizAlias": "RadioField",
+      "props": {
+        "required": false,
+        "spread": false,
+        "placeholder": "请选择",
+        "options": [
+          { "key": "option_1", "value": "投标保证金支出" },
+          { "key": "option_2", "value": "履约保证金支出" },
+          { "key": "option_3", "value": "劳务分包保证金退回" },
+          { "key": "option_4", "value": "专业分包保证金退回" },
+          { "key": "option_5", "value": "投标保证金退回" },
+          { "key": "option_6", "value": "履约保证金退回" },
+          { "key": "option_7", "value": "劳务分包保证金收入" },
+          { "key": "option_8", "value": "专业分包保证金收入" }
+        ],
+
+        "label": "单选框"
+      }
+    },
+    {
+      "componentName": "SelectDepositField",
+      "bizAlias": "SelectDeposit",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "保证金付款登记-项目"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelectHeField",
+      "bizAlias": "SelectHe",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "合同收款登记"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelectRelatedField",
+      "bizAlias": "SelectRelated",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "关联保证金申请"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelectHeshouField",
+      "bizAlias": "SelectHeshou",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "合同收款登记"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelectLeaseField",
+      "bizAlias": "SelectLease",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "关联租赁计划"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelectZuField",
+      "bizAlias": "SelectZu",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "租赁合同名称"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "Zumoney",
+      "props": {
+        "disabled": true,
+        "placeholder": "请输入",
+        "label": "租赁合同金额",
+        "maxLength": "100"
+      }
+    },
+    {
+      "componentName": "SelectFenField",
+      "bizAlias": "SelectFen",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "分包合同名称"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "Fenmoney",
+      "props": {
+        "disabled": true,
+        "placeholder": "请输入",
+        "label": "分包合同金额",
+        "maxLength": "100"
+      }
+    },
+
+    {
+      "componentName": "SelectConField",
+      "bizAlias": "SelectCon",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "收入合同名称"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelectjiaField",
+      "bizAlias": "Selectjia",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "甲方"
+      },
+      "type": "custom"
+    },
+
+    {
+      "componentName": "TextField",
+      "bizAlias": "Conmoney",
+      "props": {
+        "disabled": true,
+        "placeholder": "请输入",
+        "label": "收入合同金额",
+        "maxLength": "100"
+      }
+    },
+
+    {
+      "componentName": "SelectLaoField",
+      "bizAlias": "SelectLao",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "劳务合同名称"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "ConLaomoney'",
+      "props": {
+        "disabled": true,
+        "placeholder": "请输入",
+        "label": "劳务合同金额",
+        "maxLength": "100"
+      }
+    },
+    {
+      "componentName": "SelectSpoField",
+      "bizAlias": "SelectSpo",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "关联零星劳务结算"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "Jiesmoney'",
+      "props": {
+        "disabled": true,
+        "placeholder": "请输入",
+        "label": "结算金额",
+        "maxLength": "100"
+      }
+    },
+    {
+      "componentName": "SelecTickeField",
+      "bizAlias": "SelecTicke",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "收票登记"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestMaterField",
+      "bizAlias": "TestMater",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "材料付款"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "Conname'",
+      "props": {
+        "disabled": true,
+        "placeholder": "请输入",
+        "label": "合同名称",
+        "maxLength": "100"
+      }
+    },
+
+    {
+      "componentName": "TestCollectionField",
+      "bizAlias": "TestCollection",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "合同收款登记"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestLabourField",
+      "bizAlias": "TestLabour",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "关联劳务结算"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestSubconField",
+      "bizAlias": "TestSubcon",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "分包付款登记"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestRegistField",
+      "bizAlias": "TestRegist",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "租赁付款登记"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelectAccField",
+      "bizAlias": "SelectAcc",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "账户名称"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "Inputvalue1",
+      "props": {
+        "disabled": true,
+        "placeholder": "请输入",
+        "label": "账号",
+        "maxLength": "100"
+      }
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "Inputvalue2",
+      "props": {
+        "disabled": true,
+        "placeholder": "请输入",
+        "label": "开户行",
+        "maxLength": "100"
+      }
+    },
+
+    {
+      "componentName": "CorpSupplierField",
+      "bizAlias": "CorpSupplier",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "供应商"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "CorpSupplieryiField",
+      "bizAlias": "CorpSupplieryi",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "供应商"
+      },
+      "type": "custom"
+    },
+
+    {
+      "componentName": "SelectField",
+      "bizAlias": "IsAutoOut",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "是否自动出库",
+        "options": [
+          { "key": "1", "value": "是" },
+          { "key": "2", "value": "否" }
+        ]
+      }
+    },
+    {
+      "componentName": "InnerContactField",
+      "bizAlias": "outPeople",
+      "props": {
+        "placeholder": "请输入",
+        "label": "出库人",
+        "choice": "0"
+      }
+    },
+    {
+      "componentName": "CorpHouseField",
+      "bizAlias": "CorpHouse",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "库房"
+      },
+      "type": "custom"
+    },
+
+    {
+      "componentName": "TestDestinationField",
+      "bizAlias": "TestDestination",
+      "props": {
+        "placeholder": "请输入",
+        "label": "添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "PositionDesField",
+      "bizAlias": "PositionDes",
+      "props": {
+        "placeholder": "请选择",
+        "label": "位置"
+      },
+      "type": "custom"
+    },
+
+    {
+      "componentName": "TestBiddingField",
+      "bizAlias": "TestBidding",
+      "props": {
+        "placeholder": "请输入",
+        "label": "物资招标添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestPlanField",
+      "bizAlias": "TestPlan",
+      "props": {
+        "placeholder": "请输入",
+        "label": "材料总计划添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestOrderField",
+      "bizAlias": "TestOrder",
+      "props": {
+        "placeholder": "请输入",
+        "label": "采购订单添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestSheField",
+      "bizAlias": "TestShe",
+      "props": {
+        "placeholder": "请输入",
+        "label": "设备名称"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestMaterialField",
+      "bizAlias": "TestMaterial",
+      "props": {
+        "placeholder": "请输入",
+        "label": "材料盘点添加物资材料"
+      },
+      "type": "custom"
+    },
+
+    {
+      "componentName": "TestApplicationField",
+      "bizAlias": "TestApplication",
+      "props": {
+        "placeholder": "请输入",
+        "label": "采购申请"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestSetField",
+      "bizAlias": "TestSet",
+      "props": {
+        "placeholder": "请输入",
+        "label": "材料结算"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestPurField",
+      "bizAlias": "TestPur",
+      "props": {
+        "placeholder": "请输入",
+        "label": "采购合同"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestExpeField",
+      "bizAlias": "TestExpe",
+      "props": {
+        "placeholder": "请输入",
+        "label": "费用报销"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestCinField",
+      "bizAlias": "TestCin",
+      "props": {
+        "placeholder": "请输入",
+        "label": "材料入库-明细"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestOutField",
+      "bizAlias": "TestOut",
+      "props": {
+        "placeholder": "请输入",
+        "label": "材料出库-明细"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestCunField",
+      "bizAlias": "TestCun",
+      "props": {
+        "placeholder": "请输入",
+        "label": "材料调拨"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestLeaseField",
+      "bizAlias": "TestLease",
+      "props": {
+        "placeholder": "请输入",
+        "label": "租赁计划添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestLeconField",
+      "bizAlias": "TestLecon",
+      "props": {
+        "placeholder": "请输入",
+        "label": "租赁合同添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestMachineryField",
+      "bizAlias": "TestMachinery",
+      "props": {
+        "placeholder": "请输入",
+        "label": "机械费登记添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestDemandField",
+      "bizAlias": "TestDemand",
+      "props": {
+        "placeholder": "请输入",
+        "label": "设备需用计划添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestInspecField",
+      "bizAlias": "TestInspec",
+      "props": {
+        "placeholder": "请输入",
+        "label": "设备检查添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestMainField",
+      "bizAlias": "TestMain",
+      "props": {
+        "placeholder": "请输入",
+        "label": "设备维保添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestOliField",
+      "bizAlias": "TestOli",
+      "props": {
+        "placeholder": "请输入",
+        "label": "设备油耗添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestScienceField",
+      "bizAlias": "TestScience",
+      "props": {
+        "placeholder": "请输入",
+        "label": "退库添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestOpeningField",
+      "bizAlias": "TestOpening",
+      "props": {
+        "placeholder": "请输入",
+        "label": "库存期初添加物资材料"
+      },
+      "type": "custom"
+    },
+
+    {
+      "componentName": "TableField",
+      "bizAlias": "SimpleDetails",
+      "props": {
+        "actionName": "增加明细",
+        "statField": [
+          {
+            "label": "数字输入框",
+            "upper": false
+          }
+        ],
+        "label": "明细"
+      },
+      "children": [
+        {
+          "componentName": "SelectField",
+          "bizAlias": "SimpleRa",
+          "props": {
+            "placeholder": "请选择",
+            "options": [
+              { "key": "option_1", "value": "选项1" },
+              { "key": "option_2", "value": "选项2" }
+            ],
+
+            "label": "单选框"
+          }
+        },
+        {
+          "componentName": "MoneyField",
+          "bizAlias": "SimpleMo",
+          "props": {
+            "id": "CalculateField_JINE",
+            "placeholder": "请输入",
+            "label": "金额（元）大写",
+            "notUpper": "0"
+          }
+        },
+        {
+          "componentName": "TextareaField",
+          "bizAlias": "SimpleText",
+          "props": {
+            "placeholder": "请输入",
+            "label": "多行输入框",
+            "maxLength": "8000"
+          }
+        }
+      ]
+    },
+    {
+      "componentName": "CalculateField",
+      "bizAlias": "TaxMoneyALL",
+      "props": {
+        "notUpper": "0",
+        "placeholder": "自动计算",
+        "label": "金额合计",
+        "id": "CalculateField_CHENGBEN",
+        "formula": [
+          {
+            "id": "CalculateField_JINE"
+          }
+        ]
+      }
+    },
+
+    {
+      "componentName": "TableField",
+      "bizAlias": "SimpleSporadic",
+      "props": {
+        "actionName": "增加明细",
+        "statField": [
+          {
+            "label": "数字输入框",
+            "upper": false
+          }
+        ],
+        "label": "零星劳务-明细"
+      },
+      "children": [
+        {
+          "componentName": "TextareaField",
+          "bizAlias": "SporadicText",
+          "props": {
+            "placeholder": "请输入",
+            "label": "施工内容",
+            "maxLength": "8000"
+          }
+        },
+
+        {
+          "componentName": "MoneyField",
+          "bizAlias": "SporadicMo",
+          "props": {
+            "placeholder": "请输入",
+            "label": "单价",
+            "notUpper": "0",
+            "id": "MoneyField_MXRKHSD1"
+          }
+        },
+
+        {
+          "componentName": "MoneyField",
+          "bizAlias": "SporadicGo",
+          "props": {
+            "placeholder": "请输入",
+            "label": "工程量",
+            "notUpper": "0",
+            "id": "NumberField_MXRKNM1"
+          }
+        },
+        {
+          "componentName": "MoneyField",
+          "bizAlias": "SporadicTo",
+          "props": {
+            "placeholder": "请输入",
+            "label": "金额",
+            "notUpper": "0",
+            "id": "CalculateField_MXRKHSE1",
+            "formula": [
+              {
+                "id": "MoneyField_MXRKHSD1"
+              },
+              "*",
+              {
+                "id": "NumberField_MXRKNM1"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "componentName": "CalculateField",
+      "bizAlias": "TaxMoneyT",
+      "props": {
+        "notUpper": "0",
+        "placeholder": "自动计算",
+        "label": "金额合计",
+        "id": "CalculateField_MXRKHSH1",
+        "formula": [
+          {
+            "id": "CalculateField_MXRKHSE1"
+          }
+        ]
+      }
+    },
+
+    {
+      "componentName": "TableField",
+      "bizAlias": "SimpleWage",
+      "props": {
+        "actionName": "增加明细",
+        "statField": [
+          {
+            "label": "数字输入框",
+            "upper": false
+          }
+        ],
+        "label": "自有工人工资发放-明细"
+      },
+      "children": [
+        {
+          "componentName": "TextField",
+          "bizAlias": "Wagename",
+          "props": {
+            "placeholder": "请输入",
+            "label": "姓名",
+            "maxLength": "100",
+            "id": "TextField-JTNAME"
+          }
+        },
+        {
+          "componentName": "TextField",
+          "bizAlias": "Wagecard",
+          "props": {
+            "placeholder": "请输入",
+            "label": "身份证",
+            "maxLength": "100",
+            "id": "TextField-JTVARD"
+          }
+        },
+        {
+          "componentName": "TextField",
+          "bizAlias": " ",
+          "props": {
+            "placeholder": "请输入",
+            "label": "应发工资",
+            "maxLength": "100",
+            "id": "TextField-JTYNAME"
+          }
+        },
+        {
+          "componentName": "TextField",
+          "bizAlias": "Wagesmonty",
+          "props": {
+            "placeholder": "请输入",
+            "label": "实发工资",
+            "maxLength": "100",
+            "id": "TextField-JTSNAME"
+          }
+        },
+        {
+          "componentName": "TextField",
+          "bizAlias": "Wagephone",
+          "props": {
+            "placeholder": "请输入",
+            "label": "联系方式",
+            "maxLength": "100",
+            "id": "TextField-JTPHONE"
+          }
+        }
+      ]
+    },
+    {
+      "componentName": "CalculateField",
+      "bizAlias": "WageMoneyY",
+      "props": {
+        "notUpper": "0",
+        "placeholder": "自动计算",
+        "label": "应发工资合计",
+        "id": "CalculateField_MXYWAGE",
+        "formula": [
+          {
+            "id": "TextField-JTYNAME"
+          }
+        ]
+      }
+    },
+    {
+      "componentName": "CalculateField",
+      "bizAlias": "WageMoneyS",
+      "props": {
+        "notUpper": "0",
+        "placeholder": "自动计算",
+        "label": "实发工资合计",
+        "id": "CalculateField_MXSWAGE",
+        "formula": [
+          {
+            "id": "TextField-JTSNAME"
+          }
+        ]
+      }
+    },
+    {
+      "componentName": "TableField",
+      "bizAlias": "SimpleTeam",
+      "props": {
+        "actionName": "增加明细",
+        "statField": [
+          {
+            "label": "数字输入框",
+            "upper": false
+          }
+        ],
+        "label": "代发班组工资-明细"
+      },
+      "children": [
+        {
+          "componentName": "TextField",
+          "bizAlias": "Teamname",
+          "props": {
+            "placeholder": "请输入",
+            "label": "姓名",
+            "maxLength": "100"
+          }
+        },
+        {
+          "componentName": "TextField",
+          "bizAlias": "Teamcard",
+          "props": {
+            "placeholder": "请输入",
+            "label": "身份证",
+            "maxLength": "100"
+          }
+        },
+        {
+          "componentName": "TextField",
+          "bizAlias": "Teammoney",
+          "props": {
+            "placeholder": "请输入",
+            "label": "代发金额",
+            "maxLength": "100",
+            "id": "CalculateField_YINGFA"
+          }
+        },
+        {
+          "componentName": "TextField",
+          "bizAlias": "Teamphone",
+          "props": {
+            "placeholder": "请输入",
+            "label": "联系方式",
+            "maxLength": "100"
+          }
+        }
+      ]
+    },
+    {
+      "componentName": "CalculateField",
+      "bizAlias": "Teamtmoney",
+      "props": {
+        "notUpper": "0",
+        "placeholder": "自动计算",
+        "label": "金额合计",
+        "id": "CalculateField_TAME",
+        "formula": [
+          {
+            "id": "CalculateField_YINGFA"
+          }
+        ]
+      }
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "Textest",
+      "props": {
+        "required": true,
+        "placeholder": "请输入",
+        "label": "单行输入框"
+      }
+    }
+  ]
+}
