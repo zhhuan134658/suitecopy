@@ -633,14 +633,7 @@ const FormField: ISwapFormField = {
     // this.setState({ dataSource: newData });
     // this.setState({ isModalVisible: false });
 
-    this.setState({ dataSource: newData, isModalVisible: false }, () => {
-      form.setFieldValue('TestMater', record);
-      form.setExtendFieldValue('TestMater', {
-        record: record,
-        Inputmoney1: this.state.Inputmoney1,
-        Inputmoney2: this.state.Inputmoney2,
-      });
-    });
+    this.setState({ dataSource: newData, isModalVisible: false });
   },
   handleOktree() {
     const newData = [...this.state.dataSource];
@@ -893,6 +886,35 @@ const FormField: ISwapFormField = {
         this.setState({ selectedRowKeys });
       },
     };
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+      const { hanmoney = '', detailedData = [] } = value;
+      return (
+        <div>
+          <div className="label">含税金额</div>
+          <div>{hanmoney}</div>
+          <div className="label">物资明细</div>
+
+          {/* <div>
+            {detailedData.map(item => {
+              return <div>{item.toString()}</div>;
+            })}
+          </div> */}
+          <div>
+            <Table
+              scroll={{ x: '50vw' }}
+              components={components}
+              rowClassName={() => 'editable-row'}
+              bordered
+              dataSource={detailedData}
+              columns={deColumns}
+              pagination={false}
+            />
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="pc-custom-field-wrap">
         <div>

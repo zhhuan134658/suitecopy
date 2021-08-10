@@ -1,6 +1,6 @@
 {
-  "name": "suitecopy",
-  "version": "0.0.2",
+  "name": "zkoa-suite",
+  "version": "1.1.2",
   "description": "",
   "files": [
     "dist",

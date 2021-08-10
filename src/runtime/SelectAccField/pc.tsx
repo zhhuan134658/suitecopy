@@ -467,7 +467,7 @@ const FormField: ISwapFormField = {
       () => {
         form.setFieldValue('SelectAcc', record.name);
         form.setExtendFieldValue('SelectAcc', {
-          data: record,
+          data: record.name,
         });
       },
     );
@@ -636,10 +636,12 @@ const FormField: ISwapFormField = {
 
     // 详情页
     if (viewMode) {
+      const value = field.getValue();
+      const { data = '' } = value;
       return (
         <div>
           <div className="label">{label}</div>
-          {field.getValue()}
+          {data}
         </div>
       );
     }

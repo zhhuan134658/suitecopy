@@ -627,11 +627,14 @@ const FormField: ISwapFormField = {
       },
     };
     // 详情页
-    if (viewMode) {
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+      const { detailname = '' } = value;
       return (
         <div>
-          <div className="label">{label}</div>
-          {field.getValue()}
+          <div className="label">物资明细</div>
+          <div>{detailname}</div>
         </div>
       );
     }

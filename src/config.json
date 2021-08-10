@@ -464,15 +464,7 @@
       "type": "custom"
     },
 
-    {
-      "componentName": "TestDestinationField",
-      "bizAlias": "TestDestination",
-      "props": {
-        "placeholder": "请输入",
-        "label": "添加物资材料"
-      },
-      "type": "custom"
-    },
+ 
     {
       "componentName": "PositionDesField",
       "bizAlias": "PositionDes",

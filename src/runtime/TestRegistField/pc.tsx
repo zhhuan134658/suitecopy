@@ -451,12 +451,7 @@ const FormField: ISwapFormField = {
     const { form } = this.props;
     console.log(record);
 
-    this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
-      form.setFieldValue('TestRegist', record.name);
-      form.setExtendFieldValue('TestRegist', {
-        data: record,
-      });
-    });
+    this.setState({ Inputvalue: record.name, isModalVisible: false });
 
     // form.getFormData().then(res => {
     //   debugger
@@ -545,6 +540,33 @@ const FormField: ISwapFormField = {
     //     ],
     //   },
     // ];
+    const deColumns = [
+      {
+        title: '名称',
+        dataIndex: 'name',
+        width: '30%',
+      },
+      {
+        title: '类型',
+        dataIndex: 'type',
+      },
+      {
+        title: '规格',
+        dataIndex: 'size',
+      },
+      {
+        title: '数量',
+        dataIndex: 'num1',
+      },
+      {
+        title: '单价',
+        dataIndex: 'num2',
+      },
+      {
+        title: '金额',
+        dataIndex: 'num3',
+      },
+    ];
     const etColumns = [
       {
         title: '名称',
@@ -671,15 +693,32 @@ const FormField: ISwapFormField = {
         this.setState({ selectedRowKeys });
       },
     };
-    // 详情页
-    if (viewMode) {
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+      const { hanmoney = '', detailedData = [] } = value;
       return (
         <div>
-          <div className="label">
-            {required ? <span style={{ color: 'red' }}>*</span> : null}
-            {label}
+          <div className="label">含税金额</div>
+          <div>{hanmoney}</div>
+          <div className="label">物资明细</div>
+
+          {/* <div>
+            {detailedData.map(item => {
+              return <div>{item.toString()}</div>;
+            })}
+          </div> */}
+          <div>
+            <Table
+              scroll={{ x: '50vw' }}
+              components={components}
+              rowClassName={() => 'editable-row'}
+              bordered
+              dataSource={detailedData}
+              columns={deColumns}
+              pagination={false}
+            />
           </div>
-          {field.getValue()}
         </div>
       );
     }

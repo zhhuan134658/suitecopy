@@ -443,7 +443,7 @@ const FormField: ISwapFormField = {
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('SelectDeposit', record.name);
       form.setExtendFieldValue('SelectDeposit', {
-        id: record.id,
+        data: record.name,
       });
     });
     console.log('asdas', form);
@@ -617,10 +617,12 @@ const FormField: ISwapFormField = {
     };
     // 详情页
     if (viewMode) {
+      const value = field.getValue();
+      const { data = '' } = value;
       return (
         <div>
           <div className="label">{label}</div>
-          {field.getValue()}
+          {data}
         </div>
       );
     }

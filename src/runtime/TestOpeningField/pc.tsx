@@ -594,14 +594,7 @@ const FormField: ISwapFormField = {
     // this.setState({ dataSource: newData });
     // this.setState({ isModalVisible: false });
 
-    this.setState({ dataSource: newData, isModalVisible: false }, () => {
-      form.setFieldValue('TestOpening', record);
-      form.setExtendFieldValue('TestOpening', {
-        record: record,
-        Inputmoney1: this.state.Inputmoney1,
-        Inputmoney2: this.state.Inputmoney2,
-      });
-    });
+    this.setState({ dataSource: newData, isModalVisible: false });
   },
   handleOk() {
     const newData = [...this.state.dataSource];

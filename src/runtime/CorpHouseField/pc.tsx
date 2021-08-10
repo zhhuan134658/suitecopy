@@ -441,7 +441,7 @@ const FormField: ISwapFormField = {
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('CorpHouse', record.name);
       form.setExtendFieldValue('CorpHouse', {
-        id: record.id,
+        data: record.name,
       });
     });
 
@@ -602,10 +602,12 @@ const FormField: ISwapFormField = {
 
     // 详情页
     if (viewMode) {
+      const value = field.getValue();
+      const { data = '' } = value;
       return (
         <div>
           <div className="label">{label}</div>
-          {field.getValue()}
+          {data}
         </div>
       );
     }

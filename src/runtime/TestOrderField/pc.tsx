@@ -715,14 +715,7 @@ const FormField: ISwapFormField = {
     // this.setState({ dataSource: newData });
     // this.setState({ isModalVisible: false });
 
-    this.setState({ dataSource: newData, isModalVisible: false }, () => {
-      form.setFieldValue('TestOrder', record);
-      form.setExtendFieldValue('TestOrder', {
-        record: record,
-        Inputmoney1: this.state.Inputmoney1,
-        Inputmoney2: this.state.Inputmoney2,
-      });
-    });
+    this.setState({ dataSource: newData, isModalVisible: false });
   },
   handleOktree() {
     const newData = [...this.state.dataSource];
