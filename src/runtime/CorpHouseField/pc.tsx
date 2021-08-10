@@ -293,6 +293,7 @@ const FormField: ISwapFormField = {
   },
   /** 控件首次渲染完成之后 */
   fieldDidMount() {
+    console.log('8888888888888888', location.href);
     // const newdate = this.state.allData;
     // this.asyncSetFieldProps(newdate);
   },

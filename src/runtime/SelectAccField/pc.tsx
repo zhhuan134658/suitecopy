@@ -457,6 +457,8 @@ const FormField: ISwapFormField = {
     console.log(record);
     form.setFieldValue('Inputvalue1', record.accountnumber);
     form.setFieldValue('Inputvalue2', record.bankofdeposit);
+    form.setExtendFieldValue('Inputvalue1', record.accountnumber);
+    form.setExtendFieldValue('Inputvalue2', record.bankofdeposit);
     this.setState(
       {
         Inputvalue: record.accountname,

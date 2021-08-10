@@ -31,7 +31,9 @@ const FormField: IFormField = {
     });
   },
   /** 控件首次渲染完成之后 */
-  fieldDidMount() {},
+  fieldDidMount() {
+    console.log(location.href);
+  },
   asyncSetFieldProps(vlauedata) {
     const { form, spi } = this.props;
     const SelectProField = form.getFieldInstance('SelectPro');

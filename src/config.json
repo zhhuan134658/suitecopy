@@ -100,7 +100,7 @@
       "props": {
         "required": false,
         "placeholder": "请输入",
-        "label": "项目名称"
+        "label": "项目1名称"
       },
       "type": "custom"
     },
@@ -444,6 +444,33 @@
         ]
       }
     },
+
+    {
+      "componentName": "SelectField",
+      "bizAlias": "Autopro",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "项目",
+        "options": [
+          { "key": "1", "value": "是" },
+          { "key": "2", "value": "否" }
+        ]
+      }
+    },
+    {
+      "componentName": "SelectField",
+      "bizAlias": "Autotoupro",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "项目",
+        "options": [
+          { "key": "1", "value": "是" },
+          { "key": "2", "value": "否" }
+        ]
+      }
+    },
     {
       "componentName": "InnerContactField",
       "bizAlias": "outPeople",
@@ -464,7 +491,6 @@
       "type": "custom"
     },
 
- 
     {
       "componentName": "PositionDesField",
       "bizAlias": "PositionDes",

@@ -794,7 +794,8 @@ const FormField: ISwapFormField = {
     // this.state.Inputmoney2;
   },
   fieldRender() {
-    const { form } = this.props;
+    const { form, runtimeProps } = this.props;
+    const { viewMode } = runtimeProps;
     const field = form.getFieldInstance('TestCin');
     const label = form.getFieldProp('TestCin', 'label');
     const placeholder = form.getFieldProp('TestCin', 'placeholder');
@@ -1049,9 +1050,12 @@ const FormField: ISwapFormField = {
       console.log(value);
       this.setState({ value });
     };
+    const value = field.getValue();
+    console.log('详情', value);
     //详情
-    if (this.props.runtimeProps.viewMode) {
+    if (viewMode) {
       const value = field.getValue();
+      console.log('详情', value);
       const {
         detailname = '',
         nomoney = '',
@@ -1122,7 +1126,6 @@ const FormField: ISwapFormField = {
         <div>
           <Table
             scroll={{ x: '50vw' }}
-            scroll={{ x: 1300 }}
             components={components}
             rowClassName={() => 'editable-row'}
             bordered

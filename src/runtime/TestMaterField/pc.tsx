@@ -720,6 +720,45 @@ const FormField: ISwapFormField = {
     //     ],
     //   },
     // ];
+    const deColumns = [
+      {
+        title: '物资名称',
+        dataIndex: 'name',
+      },
+      {
+        title: '单位',
+        dataIndex: 'unit',
+      },
+      {
+        title: '规格型号',
+        dataIndex: 'size',
+      },
+      {
+        title: '入库数量',
+        dataIndex: 'rk_number',
+      },
+      {
+        title: '含税单价',
+        dataIndex: 'tax_price',
+      },
+      {
+        title: '税率(%)',
+        dataIndex: 'tax_rate',
+      },
+
+      {
+        title: '税额',
+        dataIndex: 'notax_price',
+      },
+      {
+        title: '含税金额',
+        dataIndex: 'tax_money',
+      },
+      {
+        title: '不含税金额',
+        dataIndex: 'notax_money',
+      },
+    ];
     const etColumns = [
       {
         title: '物资名称',
