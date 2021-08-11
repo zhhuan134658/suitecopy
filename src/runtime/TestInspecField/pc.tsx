@@ -413,7 +413,7 @@ const FormField: ISwapFormField = {
     //   count: count + 1,
     // });
     const { form } = this.props;
-    const Pro_name = form.getFieldValue('SelectPro');
+    const Pro_name = form.getFieldValue('Autopro');
     if (!Pro_name) {
       return notification.open({
         message: '请先选择项目',
@@ -518,7 +518,7 @@ const FormField: ISwapFormField = {
 
   asyncSetFieldProps(vlauedata) {
     const { form, spi } = this.props;
-    const Pro_name = form.getFieldValue('SelectPro');
+    const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
     const TestInspecField = form.getFieldInstance('TestInspec');
 

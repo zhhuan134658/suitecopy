@@ -347,7 +347,7 @@ const FormField: ISwapFormField = {
 
   handleAdd() {
     const { form } = this.props;
-    const value = form.getFieldValue('SelectPro');
+    const value = form.getFieldValue('Autopro');
     if (value) {
       const newvalue = this.state.allData;
       newvalue.name = '';
@@ -386,7 +386,7 @@ const FormField: ISwapFormField = {
   },
   asyncSetFieldProps(vlauedata) {
     const { form, spi } = this.props;
-    const Pro_name = form.getFieldValue('SelectPro');
+    const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
     const TestCollectionField = form.getFieldInstance('TestCollection');
 

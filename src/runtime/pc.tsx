@@ -41,13 +41,24 @@ const SwapDemoSuite: ISwapDemoSuite = {
         outPeopleField.show();
       }
     });
-    //监听物资选择
-    // form.onFieldExtendValueChange('incomeMingxi', extendValue => {
-    //   console.log(`当前输入文本值2：${extendValue}`);
-    // });
-    // form.onFieldValueChange('incomeMingxi', value => {
-    //   console.log(`当前输入文本值3：${value}`);
-    // });
+    //监听项目类型
+
+    form.onFieldExtendValueChange('RadioField', extendValue => {
+      console.log('sdasdasdsads11111111', extendValue);
+
+      if (
+        extendValue.label == '投标保证金支出' ||
+        extendValue.label == '投标保证金退回'
+      ) {
+        const newdate = { isProject: '' };
+        newdate.isProject = '2';
+        this.asyncSetFieldProps(newdate);
+      } else {
+        const newdate = { isProject: '' };
+        newdate.isProject = '1';
+        this.asyncSetFieldProps(newdate);
+      }
+    });
   },
   // 关联选项
   formDataLinkagehandler() {
@@ -64,39 +75,41 @@ const SwapDemoSuite: ISwapDemoSuite = {
   },
 
   // 动态获取业务数据
-  asyncSetFieldProps() {
+  asyncSetFieldProps(vlauedata: any) {
     const { form, spi } = this.props;
-    const leaveTypeField = form.getFieldInstance('leaveType');
-    const leaveReasonField = form.getFieldInstance('leaveReason');
 
-    const value = leaveTypeField.getValue();
-    const extendValue = leaveTypeField.getExtendValue();
-    const key = leaveTypeField.getProp('id');
+    const SelectbaoproField = form.getFieldInstance('Selectbaopro');
+
+    // const leaveReasonField = form.getFieldInstance('leaveReason');
+    const key = SelectbaoproField.getProp('id');
+    // const value = SelectbaoproField.getValue();
+    const value = '1';
+
+    // const extendValue = SelectbaoproField.getExtendValue();
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'leaveType',
-        extendValue,
+        bizAlias: 'Selectbaopro',
+        extendValue: vlauedata,
         value,
       },
     ];
 
+    // 入参和返回参考套件数据刷新集成接口文档
+
     spi
       .refreshData({
-        modifiedBizAlias: ['leaveReason'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['Selectbaopro'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
-        const leaveReasonData = find(
-          res.dataList,
-          item => item.bizAlias === 'leaveReason',
-        );
-        const show = get(leaveReasonData, 'props.invisible');
-        if (show) {
-          leaveReasonField.show();
-        } else {
-          leaveReasonField.hide();
-        }
+        console.log(JSON.parse(res.dataList[0].value).data);
+        //   表格数据
+        const newarr = JSON.parse(res.dataList[0].value).data;
+
+        console.log(form);
+        console.log(form.getFieldProps('RadioField'));
+        form.setFieldProps('Selectbaopro', { options: newarr });
       });
   },
 };

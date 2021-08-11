@@ -261,8 +261,7 @@ const FormField: ISwapFormField = {
     return {
       Inputvalue: form.getFieldInstance('SelectAcc').getValue() || '',
       //   Inputvalue: '123',
-      Inputvalue1: '',
-      Inputvalue2: '',
+
       current_page: '', //当前页
       total2: '',
       allData: { type: '0', number: '10', page: '1', name: '' },
@@ -366,12 +365,12 @@ const FormField: ISwapFormField = {
     //   count: count + 1,
     // });
     const { form } = this.props;
-    const Pro_name = form.getFieldValue('SelectPro');
-    // if (!Pro_name) {
-    //   return notification.open({
-    //     message: '请先选择项目',
-    //   });
-    // }
+    const Pro_name = form.getFieldValue('Autopro');
+    if (!Pro_name) {
+      return notification.open({
+        message: '请先选择项目',
+      });
+    }
     const newdate = this.state.allData;
 
     this.asyncSetFieldProps(newdate);
@@ -400,7 +399,7 @@ const FormField: ISwapFormField = {
   },
   asyncSetFieldProps(vlauedata) {
     const { form, spi } = this.props;
-    const Pro_name = form.getFieldValue('SelectPro');
+    const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
     const SelectAccField = form.getFieldInstance('SelectAcc');
 
@@ -455,6 +454,8 @@ const FormField: ISwapFormField = {
   rowClick(this, record, rowkey) {
     const { form } = this.props;
     console.log(record);
+    form.setFieldValue('Inputvalue', record.accountname);
+    form.setExtendFieldValue('Inputvalue', record.accountname);
     form.setFieldValue('Inputvalue1', record.accountnumber);
     form.setFieldValue('Inputvalue2', record.bankofdeposit);
     form.setExtendFieldValue('Inputvalue1', record.accountnumber);
@@ -462,15 +463,14 @@ const FormField: ISwapFormField = {
     this.setState(
       {
         Inputvalue: record.accountname,
-        Inputvalue1: record.accountnumber,
-        Inputvalue2: record.bankofdeposit,
         isModalVisible: false,
       },
       () => {
-        form.setFieldValue('SelectAcc', record.name);
+        form.setFieldValue('SelectAcc', record.accountname);
         form.setExtendFieldValue('SelectAcc', {
-          data: record.name,
+          data: record.accountname,
         });
+        console.log('sssss', form);
       },
     );
 
@@ -672,30 +672,6 @@ const FormField: ISwapFormField = {
             placeholder="请选择账户"
           />
         </div>
-        {/*       
-        <div className="label" style={{ marginTop: '10px' }}>
-          账号
-        </div>
-
-        <div>
-          <Input
-            readOnly
-            value={this.state.Inputvalue1}
-            placeholder="请选择账户"
-          />
-        </div>
-   
-        <div className="label" style={{ marginTop: '10px' }}>
-          开户行
-        </div> */}
-
-        {/* <div>
-          <Input
-            readOnly
-            value={this.state.Inputvalue2}
-            placeholder="请选择账户"
-          />
-        </div> */}
 
         <Modal
           title="选择账户"

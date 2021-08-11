@@ -382,7 +382,7 @@ const FormField: ISwapFormField = {
   },
   asyncSetFieldProps(vlauedata) {
     const { form, spi } = this.props;
-    const Pro_name = form.getFieldValue('SelectPro');
+    const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
     const CorpHouseField = form.getFieldInstance('CorpHouse');
 

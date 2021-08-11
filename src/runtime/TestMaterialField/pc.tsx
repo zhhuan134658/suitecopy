@@ -457,7 +457,7 @@ const FormField: ISwapFormField = {
   },
   chhandleAdd() {
     const { form } = this.props;
-    const Pro_name = form.getFieldValue('SelectPro');
+    const Pro_name = form.getFieldValue('Autopro');
     if (!Pro_name) {
       return notification.open({
         message: '请先选择项目',
@@ -484,7 +484,7 @@ const FormField: ISwapFormField = {
     //   count: count + 1,
     // });
     const { form } = this.props;
-    const Pro_name = form.getFieldValue('SelectPro');
+    const Pro_name = form.getFieldValue('Autopro');
     if (!Pro_name) {
       return notification.open({
         message: '请先选择项目',

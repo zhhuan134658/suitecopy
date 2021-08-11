@@ -146,6 +146,18 @@
       }
     },
     {
+      "componentName": "SelectField",
+      "bizAlias": "Selectbaopro",
+      "props": {
+        "required": false,
+        "spread": false,
+        "placeholder": "请选择项目",
+        "options": [],
+
+        "label": "单选框"
+      }
+    },
+    {
       "componentName": "SelectDepositField",
       "bizAlias": "SelectDeposit",
       "props": {
@@ -1010,6 +1022,16 @@
         "placeholder": "请输入",
         "label": "单行输入框"
       }
+    },
+    {
+      "componentName": "AntdUploadFiled",
+      "bizAlias": "AntdUpload",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "上传"
+      },
+      "type": "custom"
     }
   ]
 }

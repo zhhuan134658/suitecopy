@@ -388,7 +388,7 @@ const FormField: ISwapFormField = {
   },
   newhandleAdd() {
     const { form } = this.props;
-    const Pro_name = form.getFieldValue('SelectPro');
+    const Pro_name = form.getFieldValue('Autopro');
     if (!Pro_name) {
       return notification.open({
         message: '请先选择项目',
@@ -529,7 +529,7 @@ const FormField: ISwapFormField = {
     const { form, spi } = this.props;
 
     const SelecTickeField = form.getFieldInstance('SelecTicke');
-    const Pro_name = form.getFieldValue('SelectPro');
+    const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
     const key = SelecTickeField.getProp('id');
 
