@@ -15,14 +15,13 @@
 // const FormField: ISwapFormField = {
 //   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
 //     const { form } = this.props;
-//     form.setFieldValue('SelectDeposit', e.target.value);
+//     form.setFieldValue('CorpHouse', e.target.value);
 //   },
-
 //   fieldRender() {
 //     const { form } = this.props;
-//     const field = form.getFieldInstance('SelectDeposit');
-//     const label = form.getFieldProp('SelectDeposit', 'label');
-//     const placeholder = form.getFieldProp('SelectDeposit', 'placeholders');
+//     const field = form.getFieldInstance('CorpHouse');
+//     const label = form.getFieldProp('CorpHouse', 'label');
+//     const placeholder = form.getFieldProp('CorpHouse', 'placeholders');
 
 //     return (
 //       <div className="pc-custom-field-wrap">
@@ -46,7 +45,6 @@ import { Layout } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
-  notification,
   Table,
   Tooltip,
   Modal,
@@ -64,29 +62,25 @@ import { FormInstance } from 'antd/lib/form';
 import './pc.less';
 const mycolumns = [
   {
-    title: '项目名称',
+    title: '仓库名称',
     dataIndex: 'name',
-    render: (_: any, record: any) => (
+    render: (_, record: any) => (
       <Tooltip placement="topLeft" title={record.name}>
         <span>{record.name}</span>
       </Tooltip>
     ),
   },
   {
-    title: '项目状态',
-    dataIndex: 'project_status',
+    title: '编号',
+    dataIndex: 'number',
   },
   {
-    title: '项目负责人',
-    dataIndex: 'stalker_name',
+    title: '地址',
+    dataIndex: 'address',
   },
   {
-    title: '项目类型',
-    dataIndex: 'type',
-  },
-  {
-    title: '工程造价（元）',
-    dataIndex: 'make_cost',
+    title: '备注',
+    dataIndex: 'remarks',
   },
 ];
 interface ISwapFormField extends IFormField {
@@ -236,9 +230,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
 type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
-  id: any;
-  num2: any;
-  num1: any;
   key: React.Key;
   name: string;
   size: string;
@@ -258,11 +249,8 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const FormField: ISwapFormField = {
   getInitialState() {
     const { form } = this.props;
-
     return {
-      bizname: '',
-      Inputvalue: form.getFieldInstance('SelectDeposit').getValue() || '',
-      //   Inputvalue: '123',
+      Inputvalue: form.getFieldInstance('CorpHouse').getValue() || '',
       current_page: '', //当前页
       total2: '',
       allData: { type: '0', number: '10', page: '1', name: '' },
@@ -305,13 +293,13 @@ const FormField: ISwapFormField = {
   },
   /** 控件首次渲染完成之后 */
   fieldDidMount() {
+    console.log('8888888888888888', location.href);
     // const newdate = this.state.allData;
     // this.asyncSetFieldProps(newdate);
   },
-  onSearch(value: any) {
+  onSearch(value) {
     console.log(value);
     const newvalue = this.state.allData;
-    const bizname = this.state.bizname;
     newvalue.name = value;
     newvalue.type = 0;
     newvalue.page = 1;
@@ -320,9 +308,8 @@ const FormField: ISwapFormField = {
     });
     this.asyncSetFieldProps(newvalue);
   },
-  onChangepage(page: any) {
+  onChangepage(page) {
     const newpage = this.state.allData;
-    const bizname = this.state.bizname;
     newpage.page = page;
     console.log(newpage);
     this.setState({
@@ -337,7 +324,7 @@ const FormField: ISwapFormField = {
   handleChange(row: DataType) {
     // const inputRef = useRef<Input>(null);
     // const { form } = this.props;
-    // form.setFieldValue('SelectDeposit', e.target.value);
+    // form.setFieldValue('CorpHouse', e.target.value);
     // document.getElementsByClassName('ptID').blur();
     // inputRef.current!.focus();
     this.setState({ currentEditId: row.key });
@@ -348,7 +335,7 @@ const FormField: ISwapFormField = {
     this.setState({ isModalVisible: false });
     this.setState({ selectedRowKeys: [] });
   },
-  handleDelete(row: { id: any }) {
+  handleDelete(row) {
     const dataSource = [...this.state.dataSource];
     this.setState({
       dataSource: dataSource.filter(item => item.id !== row.id),
@@ -356,27 +343,23 @@ const FormField: ISwapFormField = {
   },
 
   handleAdd() {
-    const { form } = this.props;
-    const value = form.getFieldValue('RadioField');
-    if (value) {
-      if (value == '投标保证金支出' || value == '投标保证金退回') {
-        const newdate = this.state.allData;
-        newdate.isProject = '2';
-        this.asyncSetFieldProps(newdate);
-      } else {
-        const newdate = this.state.allData;
-        newdate.isProject = '1';
-        this.asyncSetFieldProps(newdate);
-      }
+    // const { count, dataSource } = this.state;
+    // const newData: DataType = {
+    //   key: count,
+    //   name: '请选择物资',
+    //   age: '',
+    //   address: '',
+    // };
+    // this.setState({
+    //   dataSource: [...dataSource, newData],
+    //   count: count + 1,
+    // });
+    const newdate = this.state.allData;
 
-      this.setState({
-        isModalVisible: true,
-      });
-    } else {
-      notification.open({
-        message: '请先选择合同类型',
-      });
-    }
+    this.asyncSetFieldProps(newdate);
+    this.setState({
+      isModalVisible: true,
+    });
   },
 
   handleSave(row: DataType) {
@@ -397,21 +380,22 @@ const FormField: ISwapFormField = {
 
     this.setState({ dataSource: newData });
   },
-  asyncSetFieldProps(vlauedata: any) {
+  asyncSetFieldProps(vlauedata) {
     const { form, spi } = this.props;
-
-    const SelectDepositField = form.getFieldInstance('SelectDeposit');
+    const Pro_name = form.getFieldValue('Autopro');
+    vlauedata.project_name = Pro_name;
+    const CorpHouseField = form.getFieldInstance('CorpHouse');
 
     // const leaveReasonField = form.getFieldInstance('leaveReason');
-    const key = SelectDepositField.getProp('id');
-    // const value = SelectDepositField.getValue();
+    const key = CorpHouseField.getProp('id');
+    // const value = CorpHouseField.getValue();
     const value = '1';
 
-    // const extendValue = SelectDepositField.getExtendValue();
+    // const extendValue = CorpHouseField.getExtendValue();
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'SelectDeposit',
+        bizAlias: 'CorpHouse',
         extendValue: vlauedata,
         value,
       },
@@ -421,11 +405,22 @@ const FormField: ISwapFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['SelectDeposit'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['CorpHouse'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
         console.log(JSON.parse(res.dataList[0].value));
+
+        // this.state.listData = find(
+        //   res.dataList,
+        //   item => item.bizAlias === 'CorpHouse',
+        // );
+
+        // this.state.listData = res.dataList[0].value;
+
+        // this.setState({
+        //   listData: res.dataList[0].value,
+        // });
         //   表格数据
         const newarr = JSON.parse(res.dataList[0].value).data;
 
@@ -439,23 +434,17 @@ const FormField: ISwapFormField = {
         // console.log(this.state.listData);
       });
   },
-  rowClick(this: any, record: { name: any; id: any }, rowkey: any) {
+  rowClick(this, record, rowkey) {
     const { form } = this.props;
     console.log(record);
 
+    // this.setState({ Inputvalue: record.name, isModalVisible: false });
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
-      form.setFieldValue('SelectDeposit', record.name);
-      form.setExtendFieldValue('SelectDeposit', {
+      form.setFieldValue('CorpHouse', record.name);
+      form.setExtendFieldValue('CorpHouse', {
         data: record.name,
       });
     });
-    console.log('asdas', form);
-
-    // form.getFormData().then(res => {
-    //   debugger
-    // })
-
-    // console.log(`formData: ${.}`);
 
     // const newData = [...this.state.dataSource];
     // const index = newData.findIndex(
@@ -482,33 +471,18 @@ const FormField: ISwapFormField = {
     this.setState({ isModalVisible: false });
     this.setState({ selectedRowKeys: [] });
   },
-  unique(arr: any[]) {
+  unique(arr) {
     const res = new Map();
-    return arr.filter(
-      (arr: { id: any }) => !res.has(arr.id) && res.set(arr.id, 1),
-    );
+    return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
   },
   fieldRender() {
     const { form, runtimeProps } = this.props;
-    console.log('qqqqqq', this.props);
     const { viewMode } = runtimeProps;
-    console.log('qqqqqq', viewMode);
-
-    const field = form.getFieldInstance('SelectDeposit');
-    console.log('wwwwwww', field);
-    const label = form.getFieldProp('SelectDeposit', 'label');
-    const required = form.getFieldProp('SelectDeposit', 'required');
-    const placeholder = form.getFieldProp('SelectDeposit', 'placeholder');
+    const field = form.getFieldInstance('CorpHouse');
+    const label = form.getFieldProp('CorpHouse', 'label');
+    const required = form.getFieldProp('CorpHouse', 'required');
+    const placeholder = form.getFieldProp('CorpHouse', 'placeholder');
     const { dataSource, selectedRowKeys } = this.state;
-    // // 详情页
-    // if (viewMode) {
-    //   return (
-    //     <div>
-    //       <div className="label">{label}</div>
-    //       {field.value}
-    //     </div>
-    //   );
-    // }
     // const treeData = [
     //   {
     //     title: 'parent 0',
@@ -558,7 +532,7 @@ const FormField: ISwapFormField = {
       {
         title: '操作',
         dataIndex: 'operation',
-        render: (_: any, record: any) =>
+        render: (_, record: any) =>
           this.state.dataSource.length >= 1 ? (
             <Popconfirm
               title="确定删除?"
@@ -592,13 +566,22 @@ const FormField: ISwapFormField = {
       };
     });
 
+    const onSelect = (keys: React.Key[], info: any) => {
+      console.log('Trigger Select', keys, info);
+      const treedata = { type: keys[0], number: '10', page: '1' };
+      this.setState({
+        allData: treedata,
+      });
+      this.asyncSetFieldProps(treedata);
+    };
+
     const onExpand = () => {
       console.log('Trigger Expand');
     };
 
     const rowSelection = {
       selectedRowKeys,
-      onChange: (selectedRowKeys: any, selectedRows: any) => {
+      onChange: (selectedRowKeys, selectedRows) => {
         // console.log(
         //   `selectedRowKeys: ${selectedRowKeys}`,
         //   'selectedRows: ',
@@ -607,7 +590,6 @@ const FormField: ISwapFormField = {
         let newData = [...selectedRows];
         if (newData.length > 0) {
           newData = newData.map(item => {
-            5;
             return Object.assign(item, {
               num: 1,
             });
@@ -618,6 +600,7 @@ const FormField: ISwapFormField = {
         this.setState({ selectedRowKeys });
       },
     };
+
     // 详情页
     if (viewMode) {
       const value = field.getValue();
@@ -632,30 +615,21 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div className="label">
-          {required ? <span style={{ color: 'red' }}>*</span> : null} {label}
+          {required ? <span style={{ color: 'red' }}>*</span> : null}
+          {label}
         </div>
-        {/* {field.getProp('viewMode') ? (
-          field.getValue()
-            ) :
-                (
-          <Input
-            id="ptID"
-            placeholder={placeholder}
-            onFocus={this.handleChange}
-            value={this.state.leaveLongVal}
-          />
-        )} */}
+
         <div>
           <Input
             readOnly
             value={this.state.Inputvalue}
             onClick={this.handleAdd}
-            placeholder="请选择项目"
+            placeholder="请选择库房"
           />
         </div>
 
         <Modal
-          title="选择项目"
+          title="选择库房"
           width={1000}
           visible={this.state.isModalVisible}
           footer={[
@@ -674,14 +648,14 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancel}
         >
           <Search
-            placeholder="请输入项目名称"
+            placeholder="请输入名称"
             allowClear
             enterButton="搜索"
             size="large"
             onSearch={this.onSearch}
           />
           <Table
-            scroll={{ x: '60vw' }}
+            scroll={{ x: '50vw' }}
             onRow={record => {
               return {
                 onClick: this.rowClick.bind(this, record),
