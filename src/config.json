@@ -1032,6 +1032,143 @@
         "label": "上传"
       },
       "type": "custom"
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "TextFieldone",
+      "props": {
+        "placeholder": "请输入",
+        "label": "单行输入框"
+      }
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "TextFieldtwo",
+      "props": {
+        "placeholder": "请输入",
+        "label": "单行输入框"
+      }
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "TextFieldthree",
+      "props": {
+        "placeholder": "请输入",
+        "label": "单行输入框"
+      }
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "TextFieldfore",
+      "props": {
+        "placeholder": "请输入",
+        "label": "单行输入框"
+      }
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "TextFieldfive",
+      "props": {
+        "placeholder": "请输入",
+        "label": "单行输入框"
+      }
+    },
+    {
+      "componentName": "TextareaField",
+      "bizAlias": "TextareaFieldone",
+      "props": {
+        "placeholder": "请输入",
+        "label": "多行输入框",
+        "maxLength": "8000"
+      }
+    },
+    {
+      "componentName": "TextareaField",
+      "bizAlias": "TextareaFieldtwo",
+      "props": {
+        "placeholder": "请输入",
+        "label": "多行输入框",
+        "maxLength": "8000"
+      }
+    },
+    {
+      "componentName": "TextareaField",
+      "bizAlias": "TextareaFieldthree",
+      "props": {
+        "placeholder": "请输入",
+        "label": "多行输入框",
+        "maxLength": "8000"
+      }
+    },
+    {
+      "componentName": "SelectField",
+      "bizAlias": "SelectFieldone",
+      "props": {
+        "spread": false,
+        "placeholder": "请选择",
+        "options": [
+          { "key": "option_1", "value": "选项1" },
+          { "key": "option_2", "value": "选项2" }
+        ],
+
+        "label": "单选框"
+      }
+    },
+    {
+      "componentName": "SelectField",
+      "bizAlias": "SelectFieldtwo",
+      "props": {
+        "spread": false,
+        "placeholder": "请选择",
+        "options": [
+          { "key": "option_1", "value": "选项1" },
+          { "key": "option_2", "value": "选项2" }
+        ],
+
+        "label": "单选框"
+      }
+    },
+    {
+      "componentName": "SelectField",
+      "bizAlias": "SelectFieldthree",
+      "props": {
+        "spread": false,
+        "placeholder": "请选择",
+        "options": [
+          { "key": "option_1", "value": "选项1" },
+          { "key": "option_2", "value": "选项2" }
+        ],
+
+        "label": "单选框"
+      }
+    },
+    {
+      "componentName": "SelectField",
+      "bizAlias": "SelectFieldfore",
+      "props": {
+        "spread": false,
+        "placeholder": "请选择",
+        "options": [
+          { "key": "option_1", "value": "选项1" },
+          { "key": "option_2", "value": "选项2" }
+        ],
+
+        "label": "单选框"
+      }
+    },
+    {
+      "componentName": "SelectField",
+      "bizAlias": "SelectFieldfive",
+      "props": {
+        "spread": false,
+        "placeholder": "请选择",
+        "options": [
+          { "key": "option_1", "value": "选项1" },
+          { "key": "option_2", "value": "选项2" }
+        ],
+
+        "label": "单选框"
+      }
     }
   ]
 }

@@ -239,6 +239,9 @@ const EditableCell: React.FC<EditableCellProps> = ({
 type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
+  id: any;
+  material_total: any;
+  person_total: any;
   key: React.Key;
   name: string;
   size: string;
@@ -391,7 +394,7 @@ const FormField: ISwapFormField = {
     if (row.total_price) {
       const newvalue2 = this.state.Inputmoney2;
       this.setState({
-        Inputmoney2: (newvalue - row.total_price).toFixed(2),
+        Inputmoney2: (newvalue2 - row.total_price).toFixed(2),
       });
       console.log('ssks');
     }
@@ -475,7 +478,7 @@ const FormField: ISwapFormField = {
     //   });
     // });
 
-    console.log('sss', eval(newarr3.join('+')));
+  
   },
 
   //   handleSave(row: DataType) {

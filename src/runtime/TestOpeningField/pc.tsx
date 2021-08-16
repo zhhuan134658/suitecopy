@@ -45,6 +45,7 @@ import { Layout } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
+  notification,
   TreeSelect,
   Select,
   Table,
@@ -238,6 +239,11 @@ const EditableCell: React.FC<EditableCellProps> = ({
 type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
+  id: any;
+  num2: any;
+  num1: any;
+  num4: any;
+  num3: any;
   key: React.Key;
   name: string;
   size: string;
@@ -391,7 +397,7 @@ const FormField: ISwapFormField = {
     if (row.num5) {
       const newvalue2 = this.state.Inputmoney2;
       this.setState({
-        Inputmoney2: (newvalue - row.num5).toFixed(2),
+        Inputmoney2: (newvalue2 - row.num5).toFixed(2),
       });
       console.log('ssks');
     }

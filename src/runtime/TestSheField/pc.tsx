@@ -237,6 +237,10 @@ const EditableCell: React.FC<EditableCellProps> = ({
 type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
+  id: any;
+  pur_price: any;
+  pur_quantity: any;
+  tax_rate: any;
   tax_money: any;
   key: React.Key;
   name: string;
