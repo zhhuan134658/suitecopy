@@ -109,7 +109,7 @@ const SwapDemoSuite: ISwapDemoSuite = {
 
         console.log(form);
         console.log(form.getFieldProps('RadioField'));
-        form.setFieldProps('Selectbaopro', { options: newarr });
+        form.setFieldProp('Selectbaopro', { options: newarr });
       });
   },
 };

@@ -529,7 +529,7 @@ const FormField: ISwapFormField = {
         editable: true,
       },
       {
-        title: '金额',
+        title: '金额',  
         dataIndex: 'num3',
       },
       {

@@ -1169,6 +1169,28 @@
 
         "label": "单选框"
       }
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "XJTextField",
+      "props": {
+        "placeholder": "请输入",
+        "label": "协同单行输入框"
+      }
+    },
+    {
+      "componentName": "SelectField",
+      "bizAlias": "XJSelectField",
+      "props": {
+        "spread": false,
+        "placeholder": "请选择",
+        "options": [
+          { "key": "option_1", "value": "选项1" },
+          { "key": "option_2", "value": "选项2" }
+        ],
+
+        "label": "协同建设单选框"
+      }
     }
   ]
 }
