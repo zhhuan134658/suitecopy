@@ -787,7 +787,7 @@ const FormField: ISwapFormField = {
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
       const value2 = field.getExtendValue();
-      const { detailedData = [] } = value;
+      //   const { detailedData = [] } = value;
       console.log('详情数据', value, value2);
       return (
         <div>
@@ -804,7 +804,7 @@ const FormField: ISwapFormField = {
               components={components}
               rowClassName={() => 'editable-row'}
               bordered
-              dataSource={detailedData}
+              dataSource={value}
               columns={deColumns}
               pagination={false}
             />
