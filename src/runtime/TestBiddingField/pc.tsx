@@ -786,7 +786,9 @@ const FormField: ISwapFormField = {
     //详情
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
+      const value2 = field.getExtendValue();
       const { detailedData = [] } = value;
+      console.log('详情数据', value, value2);
       return (
         <div>
           <div className="label">物资明细</div>
