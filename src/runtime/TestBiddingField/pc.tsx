@@ -248,6 +248,7 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
  */
 const FormField: ISwapFormField = {
   getInitialState() {
+
     return {
       tabledata: [
         {
@@ -592,18 +593,18 @@ const FormField: ISwapFormField = {
     return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
   },
   fieldDidUpdate() {
-    let editData = {
-      detailedData: [], //物资明细
-    };
+    // let editData = {
+    //   detailedData: [], //物资明细
+    // };
 
-    editData.detailedData = this.state.dataSource;
-    const { form } = this.props;
+    // editData.detailedData = this.state.dataSource;
+    // const { form } = this.props;
 
-    form.setFieldValue('TestBidding', editData);
-    form.setExtendFieldValue('TestBidding', {
-      data: editData,
-    });
-    console.log('909879836573256347856', editData);
+    // form.setFieldValue('TestBidding', editData);
+    // form.setExtendFieldValue('TestBidding', {
+    //   data: editData,
+    // });
+    // console.log('909879836573256347856', editData);
 
     // this.state.dataSource;
     // this.state.Inputmoney1;
@@ -836,7 +837,7 @@ const FormField: ISwapFormField = {
               pagination={false}
             />
             -----接口数据----
-            ----{JSON.stringify(value)}----
+            ----{JSON.stringify(value)}
             <Table
               scroll={{ x: '50vw' }}
               components={components}
