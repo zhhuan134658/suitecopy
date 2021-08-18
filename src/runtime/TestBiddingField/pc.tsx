@@ -836,6 +836,7 @@ const FormField: ISwapFormField = {
               pagination={false}
             />
             -----接口数据----
+            ----{JSON.stringify(value)}----
             <Table
               scroll={{ x: '50vw' }}
               components={components}
