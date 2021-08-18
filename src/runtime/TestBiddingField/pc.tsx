@@ -818,11 +818,13 @@ const FormField: ISwapFormField = {
       const value2 = field.getExtendValue();
       const { detailedData = [] } = value;
       console.log('详情数据', value, value2);
-
+      const testdate = JSON.stringify(this.state.tabledata);
       return (
         <div className="field-wrapper">
-          <div className="label">物资1明细</div>
-          {this.state.tabledata}
+          <div className="label" style={{ color: 'red' }}>
+            测试=========物资1明细
+          </div>
+          {testdate}
           <div>
             <Table
               scroll={{ x: '50vw' }}
