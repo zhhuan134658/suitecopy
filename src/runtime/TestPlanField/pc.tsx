@@ -186,7 +186,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         name={dataIndex}
         rules={[
           {
-            required: true,
+            required: false,
             message: `${title} 不能为空`,
           },
         ]}
@@ -628,16 +628,19 @@ const FormField: ISwapFormField = {
     return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
   },
   fieldDidUpdate() {
-    let editData = {
-      detailedData: [], //物资明细
-    };
+    if (!this.props.runtimeProps.viewMode) {
+      console.log('发起页：fieldDidUpdate');
+      let editData = {
+        detailedData: [], //物资明细
+      };
 
-    editData.detailedData = this.state.dataSource;
-    const { form } = this.props;
-    form.setFieldValue('TestPlan', editData);
-    form.setExtendFieldValue('TestPlan', {
-      data: editData,
-    });
+      editData.detailedData = this.state.dataSource;
+      const { form } = this.props;
+      form.setFieldValue('TestPlan', editData);
+      form.setExtendFieldValue('TestPlan', {
+        data: editData,
+      });
+    }
 
     // this.state.dataSource;
     // this.state.Inputmoney1;

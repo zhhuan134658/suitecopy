@@ -182,7 +182,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         name={dataIndex}
         rules={[
           {
-            required: true,
+            required: false,
             message: `${title} 不能为空`,
           },
         ]}
@@ -599,11 +599,14 @@ const FormField: ISwapFormField = {
     return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
   },
   fieldDidUpdate() {
-    const { form } = this.props;
-    form.setFieldValue('TestShe', this.state.Inputmoney1);
-    form.setExtendFieldValue('TestShe', {
-      data: this.state.Inputmoney1,
-    });
+    if (!this.props.runtimeProps.viewMode) {
+      console.log('发起页：fieldDidUpdate');
+      const { form } = this.props;
+      form.setFieldValue('TestShe', this.state.Inputmoney1);
+      form.setExtendFieldValue('TestShe', {
+        data: this.state.Inputmoney1,
+      });
+    }
 
     // this.state.dataSource;
     // this.state.Inputmoney1;

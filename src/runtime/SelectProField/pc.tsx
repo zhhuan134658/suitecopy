@@ -182,7 +182,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         name={dataIndex}
         rules={[
           {
-            required: true,
+            required: false,
             message: `${title} 不能为空`,
           },
         ]}

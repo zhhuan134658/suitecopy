@@ -184,7 +184,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         name={dataIndex}
         rules={[
           {
-            required: true,
+            required: false,
             message: `${title} 不能为空`,
           },
         ]}
@@ -605,29 +605,27 @@ const FormField: ISwapFormField = {
     return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
   },
   fieldDidUpdate() {
-    console.log(
-      'uihsiuahfiausfaihiu',
-      this.state.Inputmoney1,
-      this.state.Inputmoney2,
-    );
-    let editData = {
-      hanmoney: '',
-      nomoney: '',
-      detailedData: [], //物资明细
-    };
-    if (this.state.Inputmoney1) {
-      editData.hanmoney = this.state.Inputmoney1;
-    }
-    if (this.state.Inputmoney2) {
-      editData.nomoney = this.state.Inputmoney2;
-    }
+    if (!this.props.runtimeProps.viewMode) {
+      console.log('发起页：fieldDidUpdate');
+      let editData = {
+        hanmoney: '',
+        nomoney: '',
+        detailedData: [], //物资明细
+      };
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
 
-    editData.detailedData = this.state.dataSource;
-    const { form } = this.props;
-    form.setFieldValue('TestOli', editData);
-    form.setExtendFieldValue('TestOli', {
-      data: editData,
-    });
+      editData.detailedData = this.state.dataSource;
+      const { form } = this.props;
+      form.setFieldValue('TestOli', editData);
+      form.setExtendFieldValue('TestOli', {
+        data: editData,
+      });
+    }
 
     // this.state.dataSource;
     // this.state.Inputmoney1;
@@ -999,6 +997,7 @@ const FormField: ISwapFormField = {
               rules={[{ required: true, message: '请填写单位名称' }]}
             >
               <TreeSelect
+                showSearch
                 style={{ width: '100%' }}
                 value={this.state.value}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}

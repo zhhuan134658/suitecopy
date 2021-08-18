@@ -184,7 +184,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         name={dataIndex}
         rules={[
           {
-            required: true,
+            required: false,
             message: `${title} 不能为空`,
           },
         ]}
@@ -193,13 +193,11 @@ const EditableCell: React.FC<EditableCellProps> = ({
         {/*   */}
         {/* <Input ref={inputRef} /> */}
 
-        <InputNumber
+        <Input
           className="editable-cell-value-inputNumber"
           ref={inputRef}
           onPressEnter={save}
           onBlur={save}
-          min={0}
-          step="0.001"
           placeholder="请输入"
         />
       </Form.Item>
@@ -598,30 +596,33 @@ const FormField: ISwapFormField = {
     });
   },
   fieldDidUpdate() {
-    console.log(
-      'uihsiuahfiausfaihiu',
-      this.state.Inputmoney1,
-      this.state.Inputmoney2,
-    );
+    if (!this.props.runtimeProps.viewMode) {
+      console.log('发起页：fieldDidUpdate');
+      let editData = {
+        hanmoney: '',
+        nomoney: '',
+        detailedData: [], //物资明细
+        petty_sele: '', //备用金抵扣
+        Numbervalue1: '', //备用金余额
+        Numbervalue2: '', //折扣后合计
+      };
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
 
-    let editData = {
-      hanmoney: '',
-      nomoney: '',
-      detailedData: [], //物资明细
-    };
-    if (this.state.Inputmoney1) {
-      editData.hanmoney = this.state.Inputmoney1;
+      editData.detailedData = this.state.dataSource;
+      editData.petty_sele = this.state.petty_sele;
+      editData.Numbervalue1 = this.state.Numbervalue1;
+      editData.Numbervalue2 = this.state.Numbervalue2;
+      const { form } = this.props;
+      form.setFieldValue('TestExpe', editData);
+      form.setExtendFieldValue('TestExpe', {
+        data: editData,
+      });
     }
-    if (this.state.Inputmoney2) {
-      editData.nomoney = this.state.Inputmoney2;
-    }
-
-    editData.detailedData = this.state.dataSource;
-    const { form } = this.props;
-    form.setFieldValue('TestExpe', editData);
-    form.setExtendFieldValue('TestExpe', {
-      data: editData,
-    });
 
     // this.state.dataSource;
     // this.state.Inputmoney1;

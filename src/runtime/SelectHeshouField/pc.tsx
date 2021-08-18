@@ -199,7 +199,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         name={dataIndex}
         rules={[
           {
-            required: true,
+            required: false,
             message: `${title} 不能为空`,
           },
         ]}
@@ -704,31 +704,28 @@ const FormField: ISwapFormField = {
     return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
   },
   fieldDidUpdate() {
-    console.log(
-      'uihsiuahfiausfaihiu',
-      this.state.Inputmoney1,
-      this.state.Inputmoney2,
-    );
-
-    let editData = {
-      hanmoney: '',
-      nomoney: '',
-      detailname: '',
-      detailedData: [], //物资明细
-    };
-    if (this.state.Inputmoney1) {
-      editData.hanmoney = this.state.Inputmoney1;
+    if (!this.props.runtimeProps.viewMode) {
+      console.log('发起页：fieldDidUpdate');
+      let editData = {
+        hanmoney: '',
+        nomoney: '',
+        detailname: '',
+        detailedData: [], //物资明细
+      };
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
+      editData.detailname = this.state.detailname;
+      editData.detailedData = this.state.dataSource;
+      const { form } = this.props;
+      form.setFieldValue('SelectHeshou', editData);
+      form.setExtendFieldValue('SelectHeshou', {
+        data: editData,
+      });
     }
-    if (this.state.Inputmoney2) {
-      editData.nomoney = this.state.Inputmoney2;
-    }
-    editData.detailname = this.state.detailname;
-    editData.detailedData = this.state.dataSource;
-    const { form } = this.props;
-    form.setFieldValue('SelectHeshou', editData);
-    form.setExtendFieldValue('SelectHeshou', {
-      data: editData,
-    });
 
     // this.state.dataSource;
     // this.state.Inputmoney1;
