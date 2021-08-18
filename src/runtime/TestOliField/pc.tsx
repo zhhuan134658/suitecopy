@@ -832,7 +832,7 @@ const FormField: ISwapFormField = {
               components={components}
               rowClassName={() => 'editable-row'}
               bordered
-              dataSource={detailedData}
+              dataSource={value instanceof Array ? value : detailedData}
               columns={deColumns}
               pagination={false}
             />

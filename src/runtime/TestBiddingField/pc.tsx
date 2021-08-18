@@ -801,7 +801,7 @@ const FormField: ISwapFormField = {
               scroll={{ x: '50vw' }}
               components={components}
               bordered
-              dataSource={detailedData}
+              dataSource={value instanceof Array ? value : detailedData}
               columns={deColumns}
               pagination={false}
             />

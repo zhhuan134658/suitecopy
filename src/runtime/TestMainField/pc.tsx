@@ -836,7 +836,7 @@ const FormField: ISwapFormField = {
       const value = field.getValue();
       const { hanmoney = '', detailedData = [] } = value;
       return (
-        <div className="field-wrapper">
+        <div>
           <div className="label">含税金额</div>
           <div>{hanmoney}</div>
           <div className="label">物资明细</div>
@@ -852,7 +852,7 @@ const FormField: ISwapFormField = {
               components={components}
               rowClassName={() => 'editable-row'}
               bordered
-              dataSource={detailedData}
+              dataSource={value instanceof Array ? value : detailedData}
               columns={deColumns}
               pagination={false}
             />
