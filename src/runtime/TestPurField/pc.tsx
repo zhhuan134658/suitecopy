@@ -1114,7 +1114,7 @@ const FormField: ISwapFormField = {
         <div>
           <Table
             scroll={{ x: '50vw' }}
-            scroll={{ x: 1300 }}
+  
             components={components}
             rowClassName={() => 'editable-row'}
             bordered

@@ -249,6 +249,37 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const FormField: ISwapFormField = {
   getInitialState() {
     return {
+      tabledata: [
+        {
+          type_name: '水泥',
+          type: '84',
+          id: '93',
+          input_tax_rate: '0',
+          unit: '18',
+          size: '18',
+          name: '表格18',
+          corp_id: 'dingea47c602975497f935c2f4657eb6378f',
+          status: '1',
+          num: 1,
+        },
+        {
+          candidate_list: '6',
+          corp_id: 'dingea47c602975497f935c2f4657eb6378f',
+          id: '73',
+          input_tax_rate: '0',
+          name: '3333',
+          num: 1,
+          number: '2',
+          purchase_address: '5',
+          purchase_riqi: '4',
+          purchase_unit: '3',
+          size: '44',
+          status: '1',
+          type: '84',
+          type_name: '水泥',
+          unit: '444',
+        },
+      ],
       value: undefined,
       msgdata: '',
       newOptine: [],
@@ -787,21 +818,17 @@ const FormField: ISwapFormField = {
       const value2 = field.getExtendValue();
       const { detailedData = [] } = value;
       console.log('详情数据', value, value2);
+
       return (
         <div className="field-wrapper">
-          <div className="label">物资明细</div>
-
-          {/* <div>
-            {detailedData.map(item => {
-              return <div>{item.toString()}</div>;
-            })}
-          </div> */}
+          <div className="label">物资1明细</div>
+          {this.state.tabledata}
           <div>
             <Table
               scroll={{ x: '50vw' }}
               components={components}
               bordered
-              dataSource={value instanceof Array ? value : detailedData}
+              dataSource={this.state.tabledata}
               columns={deColumns}
               pagination={false}
             />
