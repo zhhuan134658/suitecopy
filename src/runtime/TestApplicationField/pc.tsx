@@ -1047,11 +1047,6 @@ const FormField: ISwapFormField = {
 
           <div className="label">物资明细</div>
 
-          {/* <div>
-            {detailedData.map(item => {
-              return <div>{item.toString()}</div>;
-            })}
-          </div> */}
           <div>
             <Table
               scroll={{ x: '50vw' }}

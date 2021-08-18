@@ -504,10 +504,12 @@ const FormField: ISwapFormField = {
     const { dataSource, selectedRowKeys } = this.state;
     // 详情页
     if (viewMode) {
+      const value = field.getValue();
       return (
         <div className="field-wrapper">
           <div className="label">{label}</div>
-          {field.getValue()}
+          {/* {field.getValue()} */}
+          {JSON.stringify(value)}
         </div>
       );
     }
