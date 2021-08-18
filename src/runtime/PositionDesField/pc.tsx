@@ -87,10 +87,10 @@ const FormField: ISwapFormField = {
     this.asyncSetFieldProps(newdate);
   },
 
-//   onClick() {
-//     const newdate = this.state.allData;
-//     this.asyncSetFieldProps(newdate);
-//   },
+  //   onClick() {
+  //     const newdate = this.state.allData;
+  //     this.asyncSetFieldProps(newdate);
+  //   },
   onChangevalue(value, selectedOptions) {
     const { form } = this.props;
 
@@ -184,7 +184,12 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div className="label">
-          {required ? <span style={{ color: 'red' }}>*</span> : null} 位置
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}{' '}
+          位置
         </div>
 
         <div>

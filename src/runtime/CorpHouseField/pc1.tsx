@@ -615,7 +615,11 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div className="label">
-          {required ? <span style={{ color: 'red' }}>*</span> : null}
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}
           {label}
         </div>
 

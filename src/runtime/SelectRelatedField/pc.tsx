@@ -621,7 +621,7 @@ const FormField: ISwapFormField = {
     // 详情页
     if (viewMode) {
       return (
-        <div>
+        <div className="field-wrapper">
           <div className="label">{label}</div>
           {field.getValue()}
         </div>
@@ -631,7 +631,12 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div className="label">
-          {required ? <span style={{ color: 'red' }}>*</span> : null} {label}
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}{' '}
+          {label}
         </div>
         {/* {field.getProp('viewMode') ? (
           field.getValue()

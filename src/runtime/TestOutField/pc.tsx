@@ -76,7 +76,7 @@ const mycolumns = [
     dataIndex: 'size',
   },
 ];
-interface ISwapFormField <P, S>  extends IFormField  {
+interface ISwapFormField<P, S> extends IFormField {
   handleChange: () => void;
   handleOk: () => void;
   handleCancel: () => void;
@@ -396,7 +396,7 @@ const FormField: ISwapFormField = {
     this.setState({ ischModalVisible: false });
     this.setState({ selectedRowKeys: [] });
   },
-  handleDelete(row: { tax_money: number; notax_money: number; id: any; }) {
+  handleDelete(row: { tax_money: number; notax_money: number; id: any }) {
     const dataSource = [...this.state.dataSource];
     console.log(row);
     if (row.tax_money) {
@@ -545,7 +545,10 @@ const FormField: ISwapFormField = {
   //     this.setState({ dataSource: newData });
   //     },
 
-  asyncSetFieldProps(vlauedata: { project_name: any; isHouse: any; ck_name: any; }, typename: string) {
+  asyncSetFieldProps(
+    vlauedata: { project_name: any; isHouse: any; ck_name: any },
+    typename: string,
+  ) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
@@ -574,7 +577,7 @@ const FormField: ISwapFormField = {
         modifiedBizAlias: ['TestOut'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
-      .then((res: { dataList: { value: string; }[]; }) => {
+      .then((res: { dataList: { value: string }[] }) => {
         if (typename == '1') {
           //   表格数据
           const newarr = JSON.parse(res.dataList[0].value).data;
@@ -626,7 +629,7 @@ const FormField: ISwapFormField = {
         }
       });
   },
-  rowClickch(this: any, record: { name: any; }, rowkey: any) {
+  rowClickch(this: any, record: { name: any }, rowkey: any) {
     const { form } = this.props;
     console.log(record);
 
@@ -687,7 +690,9 @@ const FormField: ISwapFormField = {
   },
   unique(arr: any[]) {
     const res = new Map();
-    return arr.filter((arr: { id: any; }) => !res.has(arr.id) && res.set(arr.id, 1));
+    return arr.filter(
+      (arr: { id: any }) => !res.has(arr.id) && res.set(arr.id, 1),
+    );
   },
   fieldDidUpdate() {
     console.log(
@@ -866,7 +871,7 @@ const FormField: ISwapFormField = {
         this.setState({ selectedRowKeys });
       },
     };
-  
+
     const onFinish = (values: any) => {
       this.setState({
         msgdata: '1',
@@ -894,7 +899,7 @@ const FormField: ISwapFormField = {
       const value = field.getValue();
       const { detailedData = [] } = value;
       return (
-        <div>
+        <div className="field-wrapper">
           <div className="label">物资明细</div>
 
           {/* <div>
@@ -919,7 +924,11 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div className="label">
-          {required ? <span style={{ color: 'red' }}>*</span> : null}
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}
           {label}
         </div>
         <div>
@@ -985,7 +994,6 @@ const FormField: ISwapFormField = {
             scroll={{ x: '50vw' }}
             components={components}
             rowClassName={() => 'editable-row'}
-        
             dataSource={dataSource}
             columns={columns as ColumnTypes}
             pagination={false}

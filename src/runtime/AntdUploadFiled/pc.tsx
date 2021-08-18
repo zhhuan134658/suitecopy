@@ -107,6 +107,11 @@ const SwapCustomSetter = {
     return (
       <div className="pc-custom-field-wrap">
         <div className="label">
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}
           {label}
           <Form labelCol={{ span: 4 }}>
             <Form.Item label="Photos" name="photos">

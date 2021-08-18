@@ -529,7 +529,7 @@ const FormField: ISwapFormField = {
         editable: true,
       },
       {
-        title: '金额',  
+        title: '金额',
         dataIndex: 'num3',
       },
       {
@@ -609,7 +609,7 @@ const FormField: ISwapFormField = {
       const value = field.getValue();
       const { data = '' } = value;
       return (
-        <div>
+        <div className="field-wrapper">
           <div className="label">{label}</div>
           {data}
         </div>
@@ -618,7 +618,11 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div className="label">
-          {required ? <span style={{ color: 'red' }}>*</span> : null}
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}
           {label}
         </div>
 

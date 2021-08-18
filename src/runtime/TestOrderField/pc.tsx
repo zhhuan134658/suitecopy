@@ -1044,7 +1044,7 @@ const FormField: ISwapFormField = {
         detailedData = [],
       } = value;
       return (
-        <div>
+        <div className="field-wrapper">
           <div className="label">{label}</div>
           <div>{detailname}</div>
           <div className="label">含税金额</div>
@@ -1076,7 +1076,11 @@ const FormField: ISwapFormField = {
       <div className="pc-custom-field-wrap">
         <div>
           <div className="label">
-            {required ? <span style={{ color: 'red' }}>*</span> : null}
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}
             {label}
           </div>
           <Input

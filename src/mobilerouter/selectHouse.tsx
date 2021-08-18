@@ -83,7 +83,14 @@ const FormField: IFormField = {
     ];
     return (
       <div className="mobile-wrap">
-        <div className="label">{label}</div>
+        <div className="label">
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}
+          {label}
+        </div>
         <InputItem value={this.state.Inputvalue} onFocus={this.inputFocus}>
           姓名
         </InputItem>

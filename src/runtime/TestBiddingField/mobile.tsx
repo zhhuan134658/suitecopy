@@ -262,7 +262,7 @@ const FormField: IFormField = {
                   <div className="mobile_title">
                     <div>物资明细{index + 1}</div>
                     <div
-                      style={{ color: 'red' }}
+                      style={{ color: '#ea6d5c' }}
                       onClick={this.deleteItem.bind(this, index)}
                     >
                       删除

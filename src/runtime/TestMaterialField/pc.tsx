@@ -1043,7 +1043,7 @@ const FormField: ISwapFormField = {
       const value = field.getValue();
       const { warehouse = '', detailedData = [] } = value;
       return (
-        <div>
+        <div className="field-wrapper">
           <div className="label">仓库</div>
           <div>{warehouse}</div>
 
@@ -1071,7 +1071,11 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div className="label">
-          {required ? <span style={{ color: 'red' }}>*</span> : null}
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}
           {label}
         </div>
         <div>

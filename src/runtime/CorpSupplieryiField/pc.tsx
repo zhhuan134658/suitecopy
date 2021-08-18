@@ -668,7 +668,7 @@ const FormField: ISwapFormField = {
       this.setState({
         visibleModal: false,
       });
-
+      newdate.supplier_add = '';
       //   form.resetFields();
     };
     const onFinishFailed = (errorInfo: any) => {
@@ -680,7 +680,7 @@ const FormField: ISwapFormField = {
       const value = field.getValue();
       const { data = '' } = value;
       return (
-        <div>
+        <div className="field-wrapper">
           <div className="label">{label}</div>
           {data}
         </div>
@@ -688,7 +688,12 @@ const FormField: ISwapFormField = {
     }
     return (
       <div className="pc-custom-field-wrap">
-        {required ? <span style={{ color: 'red' }}>*</span> : null} {label}
+        {required ? (
+          <span style={{ color: '#ea6d5c' }}>*</span>
+        ) : (
+          <span style={{ color: '#fff' }}>*</span>
+        )}{' '}
+        {label}
         {/* {field.getProp('viewMode') ? (
           field.getValue()
             ) :

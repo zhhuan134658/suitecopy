@@ -426,8 +426,6 @@ const FormField: ISwapFormField = {
         data: newData,
       });
     });
-
-    console.log('sss', eval(newarr3.join('+')));
   },
 
   //   handleSave(row: DataType) {
@@ -787,10 +785,10 @@ const FormField: ISwapFormField = {
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
       const value2 = field.getExtendValue();
-      //   const { detailedData = [] } = value;
+      const { detailedData = [] } = value;
       console.log('详情数据', value, value2);
       return (
-        <div>
+        <div className="field-wrapper">
           <div className="label">物资明细</div>
 
           {/* <div>
@@ -802,9 +800,8 @@ const FormField: ISwapFormField = {
             <Table
               scroll={{ x: '50vw' }}
               components={components}
-              rowClassName={() => 'editable-row'}
               bordered
-              dataSource={value}
+              dataSource={detailedData}
               columns={deColumns}
               pagination={false}
             />
@@ -814,7 +811,11 @@ const FormField: ISwapFormField = {
     }
     return (
       <div className="pc-custom-field-wrap">
-        {required ? <span style={{ color: 'red' }}>*</span> : null}
+        {required ? (
+          <span style={{ color: '#ea6d5c' }}>*</span>
+        ) : (
+          <span style={{ color: '#fff' }}>*</span>
+        )}
         {/* {field.getProp('viewMode') ? (
           field.getValue()
             ) :

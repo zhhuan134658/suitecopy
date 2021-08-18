@@ -799,7 +799,7 @@ const FormField: ISwapFormField = {
     const field = form.getFieldInstance('TestApplication');
     const label = form.getFieldProp('TestApplication', 'label');
     const placeholder = form.getFieldProp('TestApplication', 'placeholder');
-
+    const required = form.getFieldProp('TestApplication', 'required');
     const { dataSource, selectedRowKeys } = this.state;
     // const treeData = [
     //   {
@@ -1041,7 +1041,7 @@ const FormField: ISwapFormField = {
       const value = field.getValue();
       const { detailname = '', detailedData = [] } = value;
       return (
-        <div>
+        <div className="field-wrapper">
           <div className="label">名称</div>
           <div>{detailname}</div>
 
@@ -1069,7 +1069,14 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div>
-          <div className="label">{label}</div>
+          <div className="label">
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}
+            {label}
+          </div>
           <Input
             onClick={this.newhandleAdd}
             readOnly

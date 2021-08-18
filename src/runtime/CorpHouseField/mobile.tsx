@@ -129,6 +129,11 @@ const FormField: IFormField = {
     return (
       <div className="mobile-wrap">
         <div className="label" onClick={this.onOpenChange}>
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}
           {label}
         </div>
         <div>

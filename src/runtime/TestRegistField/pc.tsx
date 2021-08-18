@@ -701,7 +701,7 @@ const FormField: ISwapFormField = {
       const value = field.getValue();
       const { hanmoney = '', detailedData = [] } = value;
       return (
-        <div>
+        <div className="field-wrapper">
           <div className="label">含税金额</div>
           <div>{hanmoney}</div>
           <div className="label">物资明细</div>
@@ -729,7 +729,12 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div className="label">
-          {required ? <span style={{ color: 'red' }}>*</span> : null} {label}
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}{' '}
+          {label}
         </div>
         {/* {field.getProp('viewMode') ? (
           field.getValue()

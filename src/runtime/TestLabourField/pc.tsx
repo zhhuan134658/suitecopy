@@ -709,7 +709,7 @@ const FormField: ISwapFormField = {
     const field = form.getFieldInstance('TestLabour');
     const label = form.getFieldProp('TestLabour', 'label');
     const placeholder = form.getFieldProp('TestLabour', 'placeholder');
-
+    const required = form.getFieldProp('TestLabour', 'required');
     const { dataSource, selectedRowKeys } = this.state;
     // const treeData = [
     //   {
@@ -943,7 +943,7 @@ const FormField: ISwapFormField = {
         detailedData = [],
       } = value;
       return (
-        <div>
+        <div className="field-wrapper">
           <div className="label">物资明细</div>
 
           {/* <div>
@@ -969,7 +969,14 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div>
-          <div className="label">{label}</div>
+          <div className="label">
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}
+            {label}
+          </div>
           <Input
             onClick={this.newhandleAdd}
             readOnly
