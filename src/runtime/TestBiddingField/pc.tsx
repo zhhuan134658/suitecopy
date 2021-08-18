@@ -826,11 +826,21 @@ const FormField: ISwapFormField = {
           </div>
           {testdate}
           <div>
+            ----本地数据----
             <Table
               scroll={{ x: '50vw' }}
               components={components}
               bordered
               dataSource={this.state.tabledata}
+              columns={deColumns}
+              pagination={false}
+            />
+            -----接口数据----
+            <Table
+              scroll={{ x: '50vw' }}
+              components={components}
+              bordered
+              dataSource={value instanceof Array ? value : detailedData}
               columns={deColumns}
               pagination={false}
             />
