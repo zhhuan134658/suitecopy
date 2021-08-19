@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM, { createPortal } from 'react-dom';
 import 'antd-mobile/dist/antd-mobile.css';
 import { IFormField } from '../../types';
 import {
@@ -19,6 +20,7 @@ import './mobile.less';
  */
 const FormField: IFormField = {
   getInitialState() {
+    console.log('xhf-suite', Drawer);
     const { form } = this.props;
     return {
       SearchBarvalue: '',
@@ -143,23 +145,27 @@ const FormField: IFormField = {
             placeholder="点击选择"
             onFocus={this.onOpenChange}
           ></InputItem>
-          <Drawer
-            className="my-drawer"
-            open={true}
-            style={{
-              minHeight: document.documentElement.clientHeight,
+          {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
+          {createPortal(
+            <Drawer
+              className="my-drawer"
+              open={true}
+              style={{
+                minHeight: document.documentElement.clientHeight,
 
-              display: this.state.showElem,
-            }}
-            enableDragHandle
-            contentStyle={{
-              color: '#A6A6A6',
-              textAlign: 'center',
-              paddingTop: 42,
-            }}
-            sidebar={sidebar}
-            onOpenChange={this.onOpenChange}
-          ></Drawer>
+                display: this.state.showElem,
+              }}
+              enableDragHandle
+              contentStyle={{
+                color: '#A6A6A6',
+                textAlign: 'center',
+                paddingTop: 42,
+              }}
+              sidebar={sidebar}
+              onOpenChange={this.onOpenChange}
+            ></Drawer>, 
+            document.getElementById('MF_APP'))
+          }
         </div>
       </div>
     );
