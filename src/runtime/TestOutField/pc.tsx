@@ -251,6 +251,7 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const FormField: ISwapFormField = {
   getInitialState() {
     return {
+      ck_name: '',
       value: undefined,
       msgdata: '',
       newOptine: [],
@@ -592,17 +593,17 @@ const FormField: ISwapFormField = {
 
           //   表格数据
           const newarr = JSON.parse(res.dataList[0].value).data;
-          if (vlauedata.ck_name) {
-            this.setState({
-              dataSource: [...newarr],
-            });
-          } else {
+        //   if (vlauedata.ck_name) {
+        //     this.setState({
+        //       dataSource: [...newarr],
+        //     });
+        //   } else {
             this.setState({
               listData: [...newarr],
               current_page: JSON.parse(res.dataList[0].value).page,
               total2: JSON.parse(res.dataList[0].value).count,
             });
-          }
+        //   }
 
           //   树状图数据
           const newtarr = JSON.parse(res.dataList[0].extendValue);
@@ -640,6 +641,7 @@ const FormField: ISwapFormField = {
 
     // this.asyncSetFieldProps(newvalue);
     this.setState({
+      ck_name: record.name,
       Inputvalue: record.name,
       ischModalVisible: false,
     });

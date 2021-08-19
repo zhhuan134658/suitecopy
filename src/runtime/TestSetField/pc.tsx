@@ -281,6 +281,7 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const FormField: ISwapFormField = {
   getInitialState() {
     return {
+      defaultActiveKey: 'a',
       value: undefined,
       msgdata: '',
       newOptine: [],
@@ -455,8 +456,10 @@ const FormField: ISwapFormField = {
       });
     }
     this.setState({ dstatus: '1' });
+    const newddd = this.state.defaultActiveKey;
+    console.log(newddd);
     let newpage = {
-      rk_id: ['a'],
+      rk_id: [newddd],
       number: '10',
       page: 1,
       name: '',
@@ -966,6 +969,7 @@ const FormField: ISwapFormField = {
         name: '',
       };
       this.setState({
+        defaultActiveKey: key,
         allData: newpage,
         detdate: key + '1',
       });

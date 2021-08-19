@@ -163,9 +163,9 @@ const FormField: IFormField = {
               }}
               sidebar={sidebar}
               onOpenChange={this.onOpenChange}
-            ></Drawer>, 
-            document.getElementById('MF_APP'))
-          }
+            ></Drawer>,
+            document.getElementById('MF_APP'),
+          )}
         </div>
       </div>
     );

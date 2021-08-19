@@ -256,6 +256,7 @@ const FormField: ISwapFormField = {
     const { form } = this.props;
 
     return {
+      defaultActiveKey: 'a',
       detdate: 'a1',
       detailname: '',
       Inputvalue: form.getFieldInstance('TestRegist').getValue() || '',
@@ -360,12 +361,13 @@ const FormField: ISwapFormField = {
     const { form } = this.props;
     const value = form.getFieldValue('Autopro');
     if (value) {
+      const newddd = this.state.defaultActiveKey;
       const newvalue = this.state.allData;
       newvalue.name = '';
       newvalue.type = 0;
       newvalue.page = 1;
       newvalue.project_name = value;
-      newvalue.rk_id = ['a'];
+      newvalue.rk_id = [newddd];
       this.setState({
         allData: newvalue,
         isModalVisible: true,
@@ -660,6 +662,7 @@ const FormField: ISwapFormField = {
         name: '',
       };
       this.setState({
+        defaultActiveKey: key,
         allData: newpage,
         detdate: key + '1',
       });

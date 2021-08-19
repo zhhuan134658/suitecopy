@@ -1,4 +1,5 @@
 import React from 'react';
+import ReactDOM, { createPortal } from 'react-dom';
 import 'antd-mobile/dist/antd-mobile.css';
 import { IFormField } from '../../types';
 import {
@@ -109,6 +110,18 @@ const FormField: IFormField = {
         this.setState({
           listData: [...newarr],
         });
+        //   树状图数据
+        const newtarr = JSON.parse(res.dataList[0].extendValue);
+        const newtarr1 = [
+          {
+            title: '物资类型',
+            key: '0',
+            children: newtarr,
+          },
+        ];
+        this.setState({
+          treeData: [...newtarr1],
+        });
       });
   },
   onOpenChange(index: any, ...args: any[]) {
@@ -194,7 +207,22 @@ const FormField: IFormField = {
     // arr[index][purchase_riqi] = dateString;
     // this.setState({ materialList: [...arr] });
   },
+  fieldDidUpdate() {
+    if (!this.props.runtimeProps.viewMode) {
+      console.log('发起页：fieldDidUpdate');
 
+      let editData = {
+        detailedData: [], //物资明细
+      };
+
+      editData.detailedData = this.state.materialList;
+      const { form } = this.props;
+      form.setFieldValue('TestBiddingField', editData);
+      form.setExtendFieldValue('TestBiddingField', {
+        data: editData,
+      });
+    }
+  },
   fieldRender() {
     // fix in codepen
     const { form, runtimeProps } = this.props;
@@ -202,7 +230,16 @@ const FormField: IFormField = {
 
     const label = form.getFieldProp('TestBidding', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
-      console.log('selected', selectedKeys, info);
+      let arr = this.state.materialList;
+      let newindex = this.state.checkindex;
+      arr[newindex].typename = info.node.title;
+      this.setState({ showElem2: 'none', materialList: [...arr] });
+      const treedata = { type: selectedKeys[0], number: '10', page: '1' };
+      this.setState({
+        allData: treedata,
+      });
+      this.asyncSetFieldProps(treedata);
+      console.log('selected', selectedKeys, info.node.title);
     };
 
     const onCheck = (checkedKeys: React.Key[], info: any) => {
@@ -216,6 +253,7 @@ const FormField: IFormField = {
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
           showCancelButton
+          onCancel={() => this.setState({ showElem: 'none' })}
         />
 
         <List>
@@ -240,15 +278,11 @@ const FormField: IFormField = {
           placeholder="请输入名称"
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
+          onCancel={() => this.setState({ showElem2: 'none' })}
           showCancelButton
         />
 
-        <Tree
-          checkable
-          onSelect={onSelect}
-          onCheck={onCheck}
-          treeData={this.state.treeData}
-        />
+        <Tree onSelect={onSelect} treeData={this.state.treeData} />
       </div>
     );
     return (
@@ -383,45 +417,63 @@ const FormField: IFormField = {
             );
           })}
         </div>
-
         <Button type="primary" onClick={this.addSon}>
           增加明细
-        </Button>
+        </Button>{' '}
+        {/* 合计 */}
+        {/* <List>
+          <List.Item>
+            <div className="label">候选供应商名单</div>
+            <div>
+              <InputItem
+                clear
+                value={candidate_list}
+                placeholder="请输入"
+                onChange={e => this.onInputchange('candidate_list', index, e)}
+              ></InputItem>
+            </div>
+          </List.Item>
+        </List> */}
         {/* 物资明细 */}
-        <Drawer
-          className="my-drawer"
-          open={true}
-          style={{
-            minHeight: document.documentElement.clientHeight,
+        {createPortal(
+          <Drawer
+            className="my-drawer"
+            open={true}
+            style={{
+              minHeight: document.documentElement.clientHeight,
 
-            display: this.state.showElem,
-          }}
-          enableDragHandle
-          contentStyle={{
-            color: '#A6A6A6',
-            textAlign: 'center',
-            paddingTop: 42,
-          }}
-          sidebar={sidebar}
-          onOpenChange={this.onOpenChange}
-        ></Drawer>
-        <Drawer
-          className="my-drawer"
-          open={true}
-          style={{
-            minHeight: document.documentElement.clientHeight,
-
-            display: this.state.showElem2,
-          }}
-          enableDragHandle
-          contentStyle={{
-            color: '#A6A6A6',
-            textAlign: 'center',
-            paddingTop: 42,
-          }}
-          sidebar={treesidebar}
-          onOpenChange={this.onOpenChange2}
-        ></Drawer>
+              display: this.state.showElem,
+            }}
+            enableDragHandle
+            contentStyle={{
+              color: '#A6A6A6',
+              textAlign: 'center',
+              paddingTop: 42,
+            }}
+            sidebar={sidebar}
+            onOpenChange={this.onOpenChange}
+          ></Drawer>,
+          document.getElementById('MF_APP'),
+        )}
+        {createPortal(
+          <Drawer
+            className="my-drawer"
+            open={true}
+            style={{
+              minHeight: document.documentElement.clientHeight,
+              display: this.state.showElem2,
+            }}
+            enableDragHandle
+            contentStyle={{
+              color: '#A6A6A6',
+              textAlign: 'center',
+              paddingTop: 42,
+            }}
+            sidebar={treesidebar}
+            onOpenChange={this.onOpenChange2}
+          ></Drawer>,
+          document.getElementById('MF_APP'),
+        )}
       </div>
     );
   },

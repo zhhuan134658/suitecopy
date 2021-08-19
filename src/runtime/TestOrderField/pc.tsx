@@ -280,6 +280,7 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const FormField: ISwapFormField = {
   getInitialState() {
     return {
+      defaultActiveKey: '',
       value: undefined,
       msgdata: '',
       newOptine: [],
@@ -454,8 +455,10 @@ const FormField: ISwapFormField = {
       });
     }
     this.setState({ dstatus: '1' });
+    const newaa = this.state.defaultActiveKey;
+    console.log('sdadasdadasdasdfgfhg', newaa);
     let newpage = {
-      rk_id: ['a'],
+      rk_id: ["a"],
       number: '10',
       page: 1,
       name: '',
@@ -970,6 +973,36 @@ const FormField: ISwapFormField = {
       });
       this.asyncSetFieldProps(newpage);
     };
+    const rowSelectiontree = {
+      selectedRowKeys,
+      onChange: (selectedRowKeys, selectedRows) => {
+        // console.log(
+        //   `selectedRowKeys: ${selectedRowKeys}`,
+        //   'selectedRows: ',
+        //   selectedRows,
+        // );
+        let dtar = '';
+        let newData = [...selectedRows];
+        let newDataid = [];
+        if (newData.length > 0) {
+          newData = newData.map(item => {
+            return Object.assign(item, {
+              num: 1,
+            });
+          });
+          newDataid = newData.map(item => {
+            return item.id;
+          });
+        }
+        console.log('======' + JSON.stringify(newDataid));
+
+        this.setState({
+          currentSelectData: newData,
+          currentSelectDataid: newDataid,
+        });
+        this.setState({ selectedRowKeys });
+      },
+    };
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -997,8 +1030,6 @@ const FormField: ISwapFormField = {
         }
 
         this.setState({
-          currentSelectData: newData,
-          currentSelectDataid: newDataid,
           detailname: dtar,
         });
         this.setState({ selectedRowKeys });
@@ -1241,7 +1272,7 @@ const FormField: ISwapFormField = {
                 scroll={{ x: '50vw' }}
                 rowSelection={{
                   type: 'checkbox',
-                  ...rowSelection,
+                  ...rowSelectiontree,
                 }}
                 rowKey={record => record.id}
                 columns={mycolumnstree}

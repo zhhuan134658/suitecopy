@@ -284,6 +284,7 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const FormField: ISwapFormField = {
   getInitialState() {
     return {
+      defaultActiveKey: 'a',
       value: undefined,
       msgdata: '',
       newOptine: [],
@@ -457,9 +458,11 @@ const FormField: ISwapFormField = {
         message: '请先选择项目',
       });
     }
+    const newddd = this.state.defaultActiveKey;
+    console.log(newddd);
     this.setState({ dstatus: '1' });
     let newpage = {
-      rk_id: ['a'],
+      rk_id: [newddd],
       number: '10',
       page: 1,
       name: '',
@@ -770,11 +773,6 @@ const FormField: ISwapFormField = {
   fieldDidUpdate() {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
-      console.log(
-        'uihsiuahfiausfaihiu',
-        this.state.Inputmoney1,
-        this.state.Inputmoney2,
-      );
 
       let editData = {
         hanmoney: '',
@@ -983,6 +981,7 @@ const FormField: ISwapFormField = {
         name: '',
       };
       this.setState({
+        defaultActiveKey: key,
         allData: newpage,
         detdate: key + '1',
       });

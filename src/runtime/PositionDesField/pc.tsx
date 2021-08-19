@@ -195,7 +195,6 @@ const FormField: ISwapFormField = {
 
         <div>
           <Cascader
-            onClick={this.onClick}
             options={this.state.options}
             onChange={this.onChangevalue}
             placeholder="请选择"
