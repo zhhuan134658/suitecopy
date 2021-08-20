@@ -160,8 +160,8 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-        </div>
-        {/* <div className="label" onClick={this.onOpenChange}>
+
+          {/* <div className="label" onClick={this.onOpenChange}>
           {required ? (
             <span style={{ color: '#ea6d5c' }}>*</span>
           ) : (
