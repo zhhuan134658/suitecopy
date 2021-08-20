@@ -78,7 +78,7 @@ const mycolumns = [
   },
   {
     title: '金额',
-    dataIndex: 'money',
+    dataIndex: 'contract_money',
   },
 ];
 interface ISwapFormField extends IFormField {
@@ -452,8 +452,8 @@ const FormField: ISwapFormField = {
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('Selectjia', record.sub_unit);
       form.setExtendFieldValue('Selectjia', record.sub_unit);
-      form.setFieldValue('Conmoney', record.money);
-      form.setExtendFieldValue('Conmoney', record.money);
+      form.setFieldValue('Fenmoney', record.contract_money);
+      form.setExtendFieldValue('Fenmoney', record.contract_money);
       form.setFieldValue('SelectFen', record.name);
       form.setExtendFieldValue('SelectFen', {
         data: record.name,

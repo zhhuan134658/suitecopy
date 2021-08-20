@@ -446,12 +446,12 @@ const FormField: ISwapFormField = {
   },
   rowClick(this, record, rowkey) {
     const { form } = this.props;
-    form.setFieldValue('ConLaomoney', record.contract_money);
-    form.setExtendFieldValue('ConLaomoney', record.contract_money);
-    form.setFieldValue('Selectjia', record.supplier);
-    form.setExtendFieldValue('Selectjia', record.supplier);
 
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
+      form.setFieldValue('Zumoney', record.contract_money);
+      form.setExtendFieldValue('Zumoney', record.contract_money);
+      form.setFieldValue('Selectjia', record.supplier);
+      form.setExtendFieldValue('Selectjia', record.supplier);
       form.setFieldValue('SelectZu', record.name);
       form.setExtendFieldValue('SelectZu', {
         data: record,

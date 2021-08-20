@@ -151,7 +151,7 @@
       "props": {
         "required": false,
         "spread": false,
-        "placeholder": "请选择项目",
+        "placeholder": "请选择",
         "options": [],
 
         "label": "单选框"
@@ -342,7 +342,7 @@
     },
     {
       "componentName": "TextField",
-      "bizAlias": "Conname'",
+      "bizAlias": "Conname",
       "props": {
         "disabled": true,
         "placeholder": "请输入",

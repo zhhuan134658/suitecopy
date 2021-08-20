@@ -369,7 +369,7 @@ const FormField: ISwapFormField = {
     // });
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autotoupro');
-    const Pro_name2 = form.getFieldValue('Selectbaopro');
+    const Pro_name2 = form.getFieldValue('Autopro');
     if (!Pro_name && !Pro_name2) {
       return notification.open({
         message: '请先选择项目',

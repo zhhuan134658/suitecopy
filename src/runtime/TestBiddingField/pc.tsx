@@ -592,19 +592,17 @@ const FormField: ISwapFormField = {
     return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
   },
   fieldDidUpdate() {
-    // let editData = {
-    //   detailedData: [], //物资明细
-    // };
-    // editData.detailedData = this.state.dataSource;
-    // const { form } = this.props;
-    // form.setFieldValue('TestBidding', editData);
-    // form.setExtendFieldValue('TestBidding', {
-    //   data: editData,
-    // });
-    // console.log('909879836573256347856', editData);
-    // this.state.dataSource;
-    // this.state.Inputmoney1;
-    // this.state.Inputmoney2;
+    if (!this.props.runtimeProps.viewMode) {
+      let editData = {
+        detailedData: [], //物资明细
+      };
+      editData.detailedData = this.state.dataSource;
+      const { form } = this.props;
+      form.setFieldValue('TestBidding', editData);
+      form.setExtendFieldValue('TestBidding', {
+        data: editData,
+      });
+    }
   },
   fieldRender() {
     const { form, runtimeProps } = this.props;
@@ -818,12 +816,10 @@ const FormField: ISwapFormField = {
       const testdate = JSON.stringify(this.state.tabledata);
       return (
         <div className="field-wrapper">
-          <div className="label" style={{ color: 'red' }}>
-            测试=========物资1明细
-          </div>
+          <div className="label">物资明细</div>
           {testdate}
           <div>
-            ----本地数据----
+            {/* ----本地数据----
             <Table
               scroll={{ x: '50vw' }}
               components={components}
@@ -832,7 +828,7 @@ const FormField: ISwapFormField = {
               columns={deColumns}
               pagination={false}
             />
-            -----接口数据---- ----{JSON.stringify(value)}
+            -----接口数据---- ----{JSON.stringify(value)} */}
             <Table
               scroll={{ x: '50vw' }}
               components={components}

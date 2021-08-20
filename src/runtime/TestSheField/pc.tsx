@@ -410,13 +410,6 @@ const FormField: ISwapFormField = {
     if (row.pur_price) {
       newData[index].tax_money = row.pur_quantity * row.pur_price;
     }
-    if (row.tax_rate) {
-      newData[index].extend_two = (row.tax_money * row.tax_rate * 0.01).toFixed(
-        2,
-      );
-      newData[index].notax_money =
-        row.tax_money - (row.tax_money * row.tax_rate * 0.01).toFixed(2);
-    }
 
     this.setState({
       dataSource: newData,
@@ -803,29 +796,11 @@ const FormField: ISwapFormField = {
     //详情
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
-      const { hanmoney = '', detailedData = [] } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">含税金额</div>
-          <div>{hanmoney}</div>
-          <div className="label">物资明细</div>
-
-          {/* <div>
-            {detailedData.map(item => {
-              return <div>{item.toString()}</div>;
-            })}
-          </div> */}
-          <div>
-            <Table
-              scroll={{ x: '50vw' }}
-              components={components}
-              rowClassName={() => 'editable-row'}
-              bordered
-              dataSource={value instanceof Array ? value : detailedData}
-              columns={deColumns}
-              pagination={false}
-            />
-          </div>
+          <div className="label">{label}</div>
+          {/* {field.getValue()} */}
+          {JSON.stringify(value)}
         </div>
       );
     }

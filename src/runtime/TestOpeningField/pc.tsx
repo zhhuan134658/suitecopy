@@ -193,13 +193,12 @@ const EditableCell: React.FC<EditableCellProps> = ({
         {/*   */}
         {/* <Input ref={inputRef} /> */}
 
-        <InputNumber
+        <Input
           className="editable-cell-value-inputNumber"
           ref={inputRef}
           onPressEnter={save}
           onBlur={save}
-          min={0}
-          step="0.001"
+       
           placeholder="请输入"
         />
       </Form.Item>

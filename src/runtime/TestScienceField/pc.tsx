@@ -681,7 +681,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'price',
       },
       {
-        title: '小记',
+        title: '小计',
         dataIndex: 'subtotal',
       },
     ];
@@ -710,7 +710,7 @@ const FormField: ISwapFormField = {
         editable: true,
       },
       {
-        title: '小记',
+        title: '小计',
         dataIndex: 'subtotal',
       },
 

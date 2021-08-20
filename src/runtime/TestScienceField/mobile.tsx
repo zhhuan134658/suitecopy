@@ -375,7 +375,7 @@ const FormField: IFormField = {
                 </List.Item>
 
                 <List.Item>
-                  <div className="label">小记</div>
+                  <div className="label">小计</div>
                   <div>
                     <InputItem
                       clear

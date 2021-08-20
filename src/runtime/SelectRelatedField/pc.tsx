@@ -349,13 +349,14 @@ const FormField: ISwapFormField = {
 
   handleAdd() {
     const { form } = this.props;
+    console.log('9999999999', form.getFieldValue('Selectbaopro'));
     const value = form.getFieldValue('SelectHe');
     if (value && value != '暂无合同') {
       const newvalue = this.state.allData;
       newvalue.name = '';
       newvalue.type = 0;
       newvalue.page = 1;
-      newvalue.project_name = value;
+
       this.setState({
         allData: newvalue,
         isModalVisible: true,
@@ -390,7 +391,7 @@ const FormField: ISwapFormField = {
     const { form, spi } = this.props;
 
     const SelectRelatedField = form.getFieldInstance('SelectRelated');
-    const proname = form.getFieldValue('SelectDeposit');
+    const proname = form.getFieldValue('Selectbaopro');
     const bontype = form.getFieldValue('RadioField');
     const contractname = form.getFieldValue('SelectHe');
     vlauedata.project_name = proname;

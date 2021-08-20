@@ -691,24 +691,13 @@ const FormField: ISwapFormField = {
   fieldDidUpdate() {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
-      let editData = {
-        hanmoney: '',
-        nomoney: '',
-        detailname: '',
-        detailedData: [], //物资明细
-      };
-      if (this.state.Inputmoney1) {
-        editData.hanmoney = this.state.Inputmoney1;
-      }
-      if (this.state.Inputmoney2) {
-        editData.nomoney = this.state.Inputmoney2;
-      }
-      editData.detailname = this.state.detailname;
-      editData.detailedData = this.state.dataSource;
+
+      const detailname = this.state.detailname;
+
       const { form } = this.props;
-      form.setFieldValue('TestSubcon', editData);
+      form.setFieldValue('TestSubcon', detailname);
       form.setExtendFieldValue('TestSubcon', {
-        data: editData,
+        data: detailname,
       });
     }
 
@@ -949,29 +938,11 @@ const FormField: ISwapFormField = {
     //详情
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
-      const { hanmoney = '', detailedData = [] } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">含税金额</div>
-          <div>{hanmoney}</div>
-          <div className="label">物资明细</div>
-
-          {/* <div>
-            {detailedData.map(item => {
-              return <div>{item.toString()}</div>;
-            })}
-          </div> */}
-          <div>
-            <Table
-              scroll={{ x: '50vw' }}
-              components={components}
-              rowClassName={() => 'editable-row'}
-              bordered
-              dataSource={value instanceof Array ? value : detailedData}
-              columns={deColumns}
-              pagination={false}
-            />
-          </div>
+          <div className="label">{label}</div>
+          {/* {field.getValue()} */}
+          {JSON.stringify(value)}
         </div>
       );
     }

@@ -640,6 +640,7 @@ const FormField: ISwapFormField = {
       });
       console.log(timenum);
     }
+    this.setState({ dataSource: [...newData] });
   },
   unique(arr) {
     const res = new Map();

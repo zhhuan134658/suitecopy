@@ -826,7 +826,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'size',
       },
       {
-        title: '入库数量',
+        title: '数量',
         dataIndex: 'rk_number',
       },
       {
@@ -874,7 +874,7 @@ const FormField: ISwapFormField = {
         fixed: 'left',
       },
       {
-        title: '入库数量',
+        title: '数量',
         dataIndex: 'rk_number',
         editable: true,
       },
