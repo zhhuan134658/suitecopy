@@ -107,8 +107,6 @@ const FormField: IFormField = {
       });
     });
   },
-  
-  
   onCancel() {
     this.setState({ showElem: 'none' });
   },
