@@ -82,7 +82,7 @@ const FormField: IFormField = {
       },
     ];
     return (
-      <div className="mobile-wrap">
+      <div className="field-wrapper">
         <div className="label">
           {required ? (
             <span style={{ color: '#ea6d5c' }}>*</span>

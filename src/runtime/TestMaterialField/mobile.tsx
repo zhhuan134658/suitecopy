@@ -227,7 +227,7 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
-
+    const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestMaterial', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
@@ -286,8 +286,25 @@ const FormField: IFormField = {
       </div>
     );
     return (
-      <div className="mobile-wrap">
-        <div>{label}</div>
+      <div className="field-wrapper">
+        <div className="m-group m-group-mobile">
+          <div className="m-field-wrapper">
+            <div className="m-field m-field-mobile m-mobile-input vertical">
+              <div className="m-field-head">
+                <label className="m-field-label">
+                  <span>
+                    {required ? (
+                      <span style={{ color: '#ea6d5c' }}>*</span>
+                    ) : (
+                      <span style={{ color: '#fff' }}>*</span>
+                    )}
+                    {label}
+                  </span>
+                </label>
+              </div>
+            </div>
+          </div>
+        </div>
         <div>
           {this.state.materialList.map((item, index) => {
             return (

@@ -113,6 +113,7 @@ const FormField: IFormField = {
           placeholder="请输入名称"
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
+          onCancel={this.onCancel}
           showCancelButton
         />
 
@@ -132,22 +133,42 @@ const FormField: IFormField = {
       </div>
     );
     return (
-      <div className="mobile-wrap">
-        <div className="label" onClick={this.onOpenChange}>
-          {required ? (
-            <span style={{ color: '#ea6d5c' }}>*</span>
-          ) : (
-            <span style={{ color: '#fff' }}>*</span>
-          )}
-          {label}
-        </div>
-        <div>
-          <InputItem
+      <div className="field-wrapper">
+        <div className="m-group m-group-mobile">
+          <div className="m-field-wrapper">
+            <div className="m-field m-field-mobile m-mobile-input vertical">
+              <div className="m-field-head">
+                <label className="m-field-label">
+                  <span>
+                    {required ? (
+                      <span style={{ color: '#ea6d5c' }}>*</span>
+                    ) : (
+                      <span style={{ color: '#fff' }}>*</span>
+                    )}
+                    {label}
+                  </span>
+                </label>
+              </div>
+              <div className="m-field-box">
+                <div className="m-field-content left">
+                  <div className="input-wrapper">
+                    <InputItem
+                      clear
+                      value={this.state.inputvalue}
+                      placeholder="点击选择"
+                      onFocus={this.onOpenChange}
+                    ></InputItem>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          {/* <InputItem
             clear
             value={this.state.inputvalue}
             placeholder="点击选择"
             onFocus={this.onOpenChange}
-          ></InputItem>
+          ></InputItem> */}
           {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
           {createPortal(
             <Drawer

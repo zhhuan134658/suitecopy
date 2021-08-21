@@ -243,7 +243,7 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
-
+    const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestCun', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
@@ -302,10 +302,40 @@ const FormField: IFormField = {
       </div>
     );
     return (
-      <div className="mobile-wrap">
+      <div className="field-wrapper">
         <List>
           <List.Item>
-            <div>调出仓库</div>
+            <div className="m-group m-group-mobile">
+              <div className="m-field-wrapper">
+                <div className="m-field m-field-mobile m-mobile-input vertical">
+                  <div className="m-field-head">
+                    <label className="m-field-label">
+                      <span>
+                        {required ? (
+                          <span style={{ color: '#ea6d5c' }}>*</span>
+                        ) : (
+                          <span style={{ color: '#fff' }}>*</span>
+                        )}
+                        调出仓库
+                      </span>
+                    </label>
+                  </div>
+                  <div className="m-field-box">
+                    <div className="m-field-content left">
+                      <div className="input-wrapper">
+                        <InputItem
+                          clear
+                          value={this.state.inputvalue}
+                          placeholder="点击选择"
+                          onFocus={this.onOpenChange}
+                        ></InputItem>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* <div>调出仓库</div>
             <div>
               <InputItem
                 clear
@@ -313,12 +343,42 @@ const FormField: IFormField = {
                 onFocus={this.chhandleAdd.bind(this, 'out')}
                 placeholder="请输入"
               ></InputItem>
-            </div>
+            </div> */}
           </List.Item>
         </List>
         <List>
           <List.Item>
-            <div>调入仓库</div>
+            <div className="m-group m-group-mobile">
+              <div className="m-field-wrapper">
+                <div className="m-field m-field-mobile m-mobile-input vertical">
+                  <div className="m-field-head">
+                    <label className="m-field-label">
+                      <span>
+                        {required ? (
+                          <span style={{ color: '#ea6d5c' }}>*</span>
+                        ) : (
+                          <span style={{ color: '#fff' }}>*</span>
+                        )}
+                        调入仓库
+                      </span>
+                    </label>
+                  </div>
+                  <div className="m-field-box">
+                    <div className="m-field-content left">
+                      <div className="input-wrapper">
+                        <InputItem
+                          clear
+                          value={this.state.Inputvaluein}
+                          onFocus={this.chhandleAdd.bind(this, 'in')}
+                          placeholder="请输入"
+                        ></InputItem>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* <div>调入仓库</div>
             <div>
               <InputItem
                 clear
@@ -326,7 +386,7 @@ const FormField: IFormField = {
                 onFocus={this.chhandleAdd.bind(this, 'in')}
                 placeholder="请输入"
               ></InputItem>
-            </div>
+            </div> */}
           </List.Item>
         </List>
         <div>

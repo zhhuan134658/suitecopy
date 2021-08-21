@@ -111,6 +111,7 @@ const FormField: IFormField = {
           placeholder="请输入名称"
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
+          onCancel={this.onCancel}
           showCancelButton
         />
 
@@ -130,7 +131,7 @@ const FormField: IFormField = {
       </div>
     );
     return (
-      <div className="mobile-wrap">
+      <div className="field-wrapper">
         <div className="label" onClick={this.onOpenChange}>
           {required ? (
             <span style={{ color: '#ea6d5c' }}>*</span>

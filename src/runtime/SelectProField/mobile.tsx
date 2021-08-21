@@ -111,6 +111,7 @@ const FormField: IFormField = {
           placeholder="请输入名称"
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
+          onCancel={this.onCancel}
           showCancelButton
         />
 
@@ -160,8 +161,9 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
+        </div>
 
-          {/* <div className="label" onClick={this.onOpenChange}>
+        {/* <div className="label" onClick={this.onOpenChange}>
           {required ? (
             <span style={{ color: '#ea6d5c' }}>*</span>
           ) : (
@@ -177,29 +179,29 @@ const FormField: IFormField = {
             placeholder="点击选择"
             onFocus={this.onOpenChange}
           ></InputItem> */}
-          {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
-          {createPortal(
-            <Drawer
-              className="my-drawer"
-              open={true}
-              style={{
-                minHeight: document.documentElement.clientHeight,
+        {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
+        {createPortal(
+          <Drawer
+            className="my-drawer"
+            open={true}
+            style={{
+              minHeight: document.documentElement.clientHeight,
 
-                display: this.state.showElem,
-              }}
-              enableDragHandle
-              contentStyle={{
-                color: '#A6A6A6',
-                textAlign: 'center',
-                paddingTop: 42,
-              }}
-              sidebar={sidebar}
-              onOpenChange={this.onOpenChange}
-            ></Drawer>,
-            document.getElementById('MF_APP'),
-          )}
-        </div>
+              display: this.state.showElem,
+            }}
+            enableDragHandle
+            contentStyle={{
+              color: '#A6A6A6',
+              textAlign: 'center',
+              paddingTop: 42,
+            }}
+            sidebar={sidebar}
+            onOpenChange={this.onOpenChange}
+          ></Drawer>,
+          document.getElementById('MF_APP'),
+        )}
       </div>
+      //   </div>
     );
   },
 };
