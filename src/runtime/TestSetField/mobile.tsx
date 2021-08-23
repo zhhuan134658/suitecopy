@@ -283,7 +283,7 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
-
+    const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestSet', 'label');
     const tabs = [
       { title: '采购合同' },
@@ -408,10 +408,40 @@ const FormField: IFormField = {
       </div>
     );
     return (
-      <div className="mobile-wrap">
+      <div className="field-wrapper">
         <List>
           <List.Item>
-            <div>{label}</div>
+            <div className="m-group m-group-mobile">
+              <div className="m-field-wrapper">
+                <div className="m-field m-field-mobile m-mobile-input vertical">
+                  <div className="m-field-head">
+                    <label className="m-field-label">
+                      <span>
+                        {required ? (
+                          <span style={{ color: '#ea6d5c' }}>*</span>
+                        ) : (
+                          <span style={{ color: '#fff' }}>*</span>
+                        )}
+                        {label}
+                      </span>
+                    </label>
+                  </div>
+                  <div className="m-field-box">
+                    <div className="m-field-content left">
+                      <div className="input-wrapper">
+                        <InputItem
+                          clear
+                          value={this.state.chenkdata}
+                          onFocus={this.getcheckdata}
+                          placeholder="请输入"
+                        ></InputItem>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {/* <div>{label}</div>
             <div>
               <InputItem
                 clear
@@ -419,7 +449,7 @@ const FormField: IFormField = {
                 onFocus={this.getcheckdata}
                 placeholder="请输入"
               ></InputItem>
-            </div>
+            </div> */}
           </List.Item>
         </List>
         <div>
@@ -492,7 +522,9 @@ const FormField: IFormField = {
                       clear
                       value={item.need_quantity}
                       placeholder="请输入"
-                      onChange={e => this.onInputchange('need_quantity', index, e)}
+                      onChange={e =>
+                        this.onInputchange('need_quantity', index, e)
+                      }
                     ></InputItem>
                   </div>
                 </List.Item>
@@ -503,7 +535,9 @@ const FormField: IFormField = {
                       clear
                       value={item.refer_price}
                       placeholder="请输入"
-                      onChange={e => this.onInputchange('refer_price', index, e)}
+                      onChange={e =>
+                        this.onInputchange('refer_price', index, e)
+                      }
                     ></InputItem>
                   </div>
                 </List.Item>
