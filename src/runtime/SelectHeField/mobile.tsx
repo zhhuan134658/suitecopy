@@ -187,7 +187,6 @@ const FormField: IFormField = {
               open={true}
               style={{
                 minHeight: document.documentElement.clientHeight,
-
                 display: this.state.showElem,
               }}
               enableDragHandle
