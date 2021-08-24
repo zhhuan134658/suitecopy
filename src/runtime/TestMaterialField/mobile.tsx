@@ -50,6 +50,7 @@ const FormField: IFormField = {
       SearchBarvalue: '',
       showElem: 'none',
       showElem2: 'none',
+      showElem3: 'none',
       inputvalue: '',
       allData: { type: '0', number: '99999', page: '1', name: '' },
       listData: [],
@@ -61,9 +62,6 @@ const FormField: IFormField = {
           unit: '',
           wz_number: '',
           pd_number: '',
-          purchase_riqi: '',
-          purchase_address: '',
-          candidate_list: '',
         },
       ],
       sonData: {
@@ -73,9 +71,6 @@ const FormField: IFormField = {
         unit: '',
         wz_number: '',
         pd_number: '',
-        purchase_riqi: '',
-        purchase_address: '',
-        candidate_list: '',
       },
     };
   },
@@ -122,6 +117,11 @@ const FormField: IFormField = {
         this.setState({
           treeData: [...newtarr1],
         });
+        if (this.showElem3 == 'inherit') {
+          this.setState({
+            materialList: [...newarr],
+          });
+        }
       });
   },
   onOpenChange(index: any, ...args: any[]) {
@@ -159,7 +159,16 @@ const FormField: IFormField = {
       },
     );
   },
-
+  checkClick(item) {
+    const cDataid = [item.id];
+    const newdate = this.state.allData;
+    newdate.rk_id = ['a1', ...cDataid];
+    this.asyncSetFieldProps(newdate, 1);
+    this.setState({
+      chenkdata: item.name,
+      showElem3: 'none',
+    });
+  },
   onCancel() {
     this.setState({ showElem: 'none' });
   },
@@ -186,6 +195,24 @@ const FormField: IFormField = {
     this.setState({
       materialList: list,
     });
+  },
+  getcheckdata() {
+    const { form } = this.props;
+    const Pro_name = form.getFieldValue('Autopro');
+
+    this.setState({ dstatus: '1' });
+    let newpage = {
+      rk_id: ['a'],
+      number: '10',
+      page: 1,
+      name: '',
+    };
+    this.setState({
+      allData: newpage,
+    });
+    this.asyncSetFieldProps(newpage);
+
+    this.setState({ showElem3: 'inherit' });
   },
   //更新数据
   onInputchange(types, index, e) {
@@ -245,6 +272,32 @@ const FormField: IFormField = {
     const onCheck = (checkedKeys: React.Key[], info: any) => {
       console.log('onCheck', checkedKeys, info);
     };
+    // const checkdebar = (
+    //   <div>
+    //     <SearchBar
+    //       value={this.state.SearchBarvalue}
+    //       placeholder="请输入名称"
+    //       onSubmit={this.onSubmit}
+    //       onChange={this.onSearchBarChange}
+    //       showCancelButton
+    //       onCancel={() => this.setState({ showElem3: 'none' })}
+    //     />
+
+    //     <List>
+    //       {this.state.checkData.map((item, index) => {
+    //         return (
+    //           <List.Item
+    //             onClick={this.checkClick.bind(this, item)}
+    //             key={index}
+    //             multipleLine
+    //           >
+    //             {item.name}/{item.unit}/{item.size}
+    //           </List.Item>
+    //         );
+    //       })}
+    //     </List>
+    //   </div>
+    // );
     const sidebar = (
       <div>
         <SearchBar
@@ -289,114 +342,282 @@ const FormField: IFormField = {
       <div className="field-wrapper">
         <div className="m-group m-group-mobile">
           <div className="m-field-wrapper">
-            <div className="m-field m-field-mobile m-mobile-input vertical">
-              <div className="m-field-head" style={{ marginLeft: '-5px' }}>
-                <label className="m-field-label">
-                  <span>
-                    {required ? (
-                      <span style={{ color: '#ea6d5c' }}>*</span>
-                    ) : (
-                      <span style={{ color: '#fff' }}>*</span>
-                    )}
-                    {label}
-                  </span>
-                </label>
+            <div className="m-field m-field-mobile m-select-field">
+              <div className="m-field-head">
+                <div className="m-field-label">
+                  <span>{label}</span>
+                </div>
+              </div>
+              <div className="m-field-box">
+                <div className="m-field-content left">
+                  <div className="input-wrapper">
+                    <InputItem
+                      value={this.state.chenkdata}
+                      onFocus={this.getcheckdata}
+                      placeholder="请输入"
+                      readOnly
+                    ></InputItem>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <div>
-          {this.state.materialList.map((item, index) => {
-            return (
-              <List>
-                <List.Item>
-                  <div className="mobile_title">
-                    <div>物资明细{index + 1}</div>
-                    <div
-                      style={{ color: '#ea6d5c' }}
-                      onClick={this.deleteItem.bind(this, index)}
-                    >
-                      删除
+
+        <div className="tablefield-mobile">
+          <div className="table-body  tbody  ">
+            {this.state.materialList.map((item, index) => {
+              return (
+                <div>
+                  <div className="tbody-row-wrap">
+                    <div className="tbody-row-pannel">
+                      <div
+                        className="custom-list-title"
+                        style={{
+                          width: '100%',
+                          paddingLeft: '15px',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <div>
+                          {label}-明细({index + 1})
+                        </div>
+                        {this.state.materialList.length > 1 ? (
+                          <div
+                            className="dele_item"
+                            onClick={this.deleteItem.bind(this, index)}
+                          >
+                            删除
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>
+                      <div className="row">
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>物资类型</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.typename}
+                                          placeholder="点击选择"
+                                          onFocus={this.onOpenChange2.bind(
+                                            this,
+                                            index,
+                                          )}
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'typename',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>物资名称</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.name}
+                                          placeholder="点击选择"
+                                          onFocus={this.onOpenChange.bind(
+                                            this,
+                                            index,
+                                          )}
+                                          onChange={e =>
+                                            this.onInputchange('name', index, e)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>规格型号</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.size}
+                                          placeholder="点击选择"
+                                          readOnly
+                                          onChange={e =>
+                                            this.onInputchange('size', index, e)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>单位</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          readOnly
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.unit}
+                                          placeholder="点击选择"
+                                          onChange={e =>
+                                            this.onInputchange('unit', index, e)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>账存数量</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          clear
+                                          value={item.wz_number}
+                                          placeholder="请输入"
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'wz_number',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        ></InputItem>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>盘点数量</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          clear
+                                          value={item.pd_number}
+                                          placeholder="请输入"
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'pd_number',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        ></InputItem>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">物资类型</div>
-                  <div>
-                    <InputItem
-                      clear
-                      value={item.typename}
-                      placeholder="点击选择"
-                      onFocus={this.onOpenChange2.bind(this, index)}
-                      onChange={e => this.onInputchange('typename', index, e)}
-                    ></InputItem>
+                  <div className="table-actions">
+                    <div
+                      className="tbody-add-button tTap"
+                      onClick={this.addSon}
+                    >
+                      <img
+                        style={{ width: '20px' }}
+                        src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
+                        alt=""
+                      />
+                      &nbsp;
+                      <span className="add-button-text">增加明细</span>
+                    </div>
                   </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">物资名称</div>
-                  <div>
-                    <InputItem
-                      clear
-                      value={item.name}
-                      placeholder="点击选择"
-                      onFocus={this.onOpenChange.bind(this, index)}
-                      onChange={e => this.onInputchange('name', index, e)}
-                    ></InputItem>
-                  </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">规格型号</div>
-                  <div>
-                    <InputItem
-                      disabled
-                      clear
-                      value={item.size}
-                      placeholder="自动填充"
-                      onChange={e => this.onInputchange('size', index, e)}
-                    ></InputItem>
-                  </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">单位</div>
-                  <div>
-                    <InputItem
-                      disabled
-                      clear
-                      value={item.unit}
-                      placeholder="自动填充"
-                      onChange={e => this.onInputchange('unit', index, e)}
-                    ></InputItem>
-                  </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">账存数量</div>
-                  <div>
-                    <InputItem
-                      clear
-                      value={item.wz_number}
-                      placeholder="请输入"
-                      onChange={e => this.onInputchange('wz_number', index, e)}
-                    ></InputItem>
-                  </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">盘点数量</div>
-                  <div>
-                    <InputItem
-                      clear
-                      value={item.pd_number}
-                      placeholder="请输入"
-                      onChange={e => this.onInputchange('pd_number', index, e)}
-                    ></InputItem>
-                  </div>
-                </List.Item>
-              </List>
-            );
-          })}
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <Button type="primary" onClick={this.addSon}>
-          增加明细
-        </Button>{' '}
         {/* 合计 */}
         {/* <List>
           <List.Item>

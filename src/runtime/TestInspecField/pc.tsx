@@ -396,7 +396,7 @@ const FormField: ISwapFormField = {
     if (row.num5) {
       const newvalue2 = this.state.Inputmoney2;
       this.setState({
-        Inputmoney2: (newvalue - row.num5).toFixed(2),
+        Inputmoney2: (newvalue2 - row.num5).toFixed(2),
       });
       console.log('ssks');
     }

@@ -58,24 +58,18 @@ const FormField: IFormField = {
           typename: '',
           name: '',
           size: '',
-          unit: '',
           oil_consump: '',
           price: '',
-          purchase_riqi: '',
           total_price: '',
-          candidate_list: '',
         },
       ],
       sonData: {
         typename: '',
         name: '',
         size: '',
-        unit: '',
         oil_consump: '',
         price: '',
-        purchase_riqi: '',
         total_price: '',
-        candidate_list: '',
       },
     };
   },
@@ -83,13 +77,13 @@ const FormField: IFormField = {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const TestOliField = form.getFieldInstance('TestOli');
-    const key = TestOliField.getProp('id');
+    const TestInspecField = form.getFieldInstance('TestInspec');
+    const key = TestInspecField.getProp('id');
     const value = '1';
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'TestOli',
+        bizAlias: 'TestInspec',
         extendValue: vlauedata,
         value,
       },
@@ -99,7 +93,7 @@ const FormField: IFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['TestOli'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['TestInspec'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -152,8 +146,8 @@ const FormField: IFormField = {
     this.setState(
       { inputvalue: item.name, showElem: 'none', materialList: arr },
       () => {
-        form.setFieldValue('TestOli', item.name);
-        form.setExtendFieldValue('TestOli', {
+        form.setFieldValue('TestInspec', item.name);
+        form.setExtendFieldValue('TestInspec', {
           data: item.name,
         });
       },
@@ -217,8 +211,8 @@ const FormField: IFormField = {
 
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
-      form.setFieldValue('TestOliField', editData);
-      form.setExtendFieldValue('TestOliField', {
+      form.setFieldValue('TestInspecField', editData);
+      form.setExtendFieldValue('TestInspecField', {
         data: editData,
       });
     }
@@ -228,7 +222,7 @@ const FormField: IFormField = {
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
     const required = form.getFieldProp('SelectPro', 'required');
-    const label = form.getFieldProp('TestOli', 'label');
+    const label = form.getFieldProp('TestInspec', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;
@@ -287,132 +281,295 @@ const FormField: IFormField = {
     );
     return (
       <div className="field-wrapper">
-        <div className="m-group m-group-mobile">
-          <div className="m-field-wrapper">
-            <div className="m-field m-field-mobile m-mobile-input vertical">
-              <div className="m-field-head" style={{ marginLeft: '-5px' }}>
-                <label className="m-field-label">
-                  <span>
-                    {required ? (
-                      <span style={{ color: '#ea6d5c' }}>*</span>
-                    ) : (
-                      <span style={{ color: '#fff' }}>*</span>
-                    )}
-                    {label}
-                  </span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div>
-          {this.state.materialList.map((item, index) => {
-            return (
-              <List>
-                <List.Item>
-                  <div className="mobile_title">
-                    <div>物资明细{index + 1}</div>
-                    <div
-                      style={{ color: '#ea6d5c' }}
-                      onClick={this.deleteItem.bind(this, index)}
-                    >
-                      删除
+        <div className="tablefield-mobile">
+          <div className="table-body  tbody  ">
+            {this.state.materialList.map((item, index) => {
+              return (
+                <div>
+                  <div className="tbody-row-wrap">
+                    <div className="tbody-row-pannel">
+                      <div
+                        className="custom-list-title"
+                        style={{
+                          width: '100%',
+                          paddingLeft: '15px',
+                          display: 'flex',
+                          justifyContent: 'space-between',
+                        }}
+                      >
+                        <div>
+                          {label}-明细({index + 1})
+                        </div>
+                        {this.state.materialList.length > 1 ? (
+                          <div
+                            className="dele_item"
+                            onClick={this.deleteItem.bind(this, index)}
+                          >
+                            删除
+                          </div>
+                        ) : (
+                          <div></div>
+                        )}
+                      </div>
+                      <div className="row">
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>物资类型</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.typename}
+                                          placeholder="点击选择"
+                                          onFocus={this.onOpenChange2.bind(
+                                            this,
+                                            index,
+                                          )}
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'typename',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>物资名称</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.name}
+                                          placeholder="点击选择"
+                                          onFocus={this.onOpenChange.bind(
+                                            this,
+                                            index,
+                                          )}
+                                          onChange={e =>
+                                            this.onInputchange('name', index, e)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>规格型号</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.size}
+                                          placeholder="点击选择"
+                                          readOnly
+                                          onChange={e =>
+                                            this.onInputchange('size', index, e)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>单位</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          readOnly
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.unit}
+                                          placeholder="点击选择"
+                                          onChange={e =>
+                                            this.onInputchange('unit', index, e)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>耗油量</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.oil_consump}
+                                          placeholder="点击选择"
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'oil_consump',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>油价</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.price}
+                                          placeholder="点击选择"
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'price',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>油费</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.total_price}
+                                          placeholder="点击选择"
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'total_price',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">物资类型</div>
-                  <div>
-                    <InputItem
-                      clear
-                      value={item.typename}
-                      placeholder="点击选择"
-                      onFocus={this.onOpenChange2.bind(this, index)}
-                      onChange={e => this.onInputchange('typename', index, e)}
-                    ></InputItem>
+                  <div className="table-actions">
+                    <div
+                      className="tbody-add-button tTap"
+                      onClick={this.addSon}
+                    >
+                      <img
+                        style={{ width: '20px' }}
+                        src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
+                        alt=""
+                      />
+                      &nbsp;
+                      <span className="add-button-text">增加明细</span>
+                    </div>
                   </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">物资名称</div>
-                  <div>
-                    <InputItem
-                      clear
-                      value={item.name}
-                      placeholder="点击选择"
-                      onFocus={this.onOpenChange.bind(this, index)}
-                      onChange={e => this.onInputchange('name', index, e)}
-                    ></InputItem>
-                  </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">规格型号</div>
-                  <div>
-                    <InputItem
-                      disabled
-                      clear
-                      value={item.size}
-                      placeholder="自动填充"
-                      onChange={e => this.onInputchange('size', index, e)}
-                    ></InputItem>
-                  </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">单位</div>
-                  <div>
-                    <InputItem
-                      disabled
-                      clear
-                      value={item.unit}
-                      placeholder="自动填充"
-                      onChange={e => this.onInputchange('unit', index, e)}
-                    ></InputItem>
-                  </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">耗油量</div>
-                  <div>
-                    <InputItem
-                      clear
-                      value={item.oil_consump}
-                      placeholder="请输入"
-                      onChange={e =>
-                        this.onInputchange('oil_consump', index, e)
-                      }
-                    ></InputItem>
-                  </div>
-                </List.Item>
-                <List.Item>
-                  <div className="label">油价</div>
-                  <div>
-                    <InputItem
-                      clear
-                      value={item.price}
-                      placeholder="请输入"
-                      onChange={e => this.onInputchange('price', index, e)}
-                    ></InputItem>
-                  </div>
-                </List.Item>
-
-                <List.Item>
-                  <div className="label">油费</div>
-                  <div>
-                    <InputItem
-                      clear
-                      value={item.total_price}
-                      placeholder="请输入"
-                      onChange={e =>
-                        this.onInputchange('total_price', index, e)
-                      }
-                    ></InputItem>
-                  </div>
-                </List.Item>
-              </List>
-            );
-          })}
+                </div>
+              );
+            })}
+          </div>
         </div>
-        <Button type="primary" onClick={this.addSon}>
-          增加明细
-        </Button>{' '}
         {/* 合计 */}
         {/* <List>
           <List.Item>
@@ -420,9 +577,9 @@ const FormField: IFormField = {
             <div>
               <InputItem
                 clear
-                value={candidate_list}
+                value={remarks}
                 placeholder="请输入"
-                onChange={e => this.onInputchange('candidate_list', index, e)}
+                onChange={e => this.onInputchange('remarks', index, e)}
               ></InputItem>
             </div>
           </List.Item>

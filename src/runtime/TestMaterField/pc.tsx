@@ -917,7 +917,7 @@ const FormField: ISwapFormField = {
         if (newData[0].supplier) {
           form.setFieldValue('Selectjia', newData[0].supplier);
         }
-
+        form.setFieldValue('Conname', newData[0].contract_name);
         this.setState({
           currentSelectData: newData,
           currentSelectDataid: newDataid,
