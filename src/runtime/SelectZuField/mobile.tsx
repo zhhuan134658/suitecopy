@@ -149,7 +149,7 @@ const FormField: IFormField = {
         <div className="m-group m-group-mobile">
           <div className="m-field-wrapper">
             <div className="m-field m-field-mobile m-mobile-input vertical">
-              <div className="m-field-head">
+              <div className="m-field-head" style={{ marginLeft: '-5px' }}>
                 <label className="m-field-label">
                   <span>
                     {required ? (
@@ -164,12 +164,14 @@ const FormField: IFormField = {
               <div className="m-field-box">
                 <div className="m-field-content left">
                   <div className="input-wrapper">
-                    <InputItem
-                      clear
-                      value={this.state.inputvalue}
+                    <input
+                      readOnly
+                      className="ant-input m-mobile-inner-input"
+                      type="text"
                       placeholder="点击选择"
+                      value={this.state.inputvalue}
                       onFocus={this.onOpenChange}
-                    ></InputItem>
+                    />
                   </div>
                 </div>
               </div>

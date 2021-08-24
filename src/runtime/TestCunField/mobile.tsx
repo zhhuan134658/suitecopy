@@ -308,7 +308,7 @@ const FormField: IFormField = {
             <div className="m-group m-group-mobile">
               <div className="m-field-wrapper">
                 <div className="m-field m-field-mobile m-mobile-input vertical">
-                  <div className="m-field-head">
+                  <div className="m-field-head" style={{ marginLeft: '-5px' }}>
                     <label className="m-field-label">
                       <span>
                         {required ? (
@@ -351,7 +351,7 @@ const FormField: IFormField = {
             <div className="m-group m-group-mobile">
               <div className="m-field-wrapper">
                 <div className="m-field m-field-mobile m-mobile-input vertical">
-                  <div className="m-field-head">
+                  <div className="m-field-head" style={{ marginLeft: '-5px' }}>
                     <label className="m-field-label">
                       <span>
                         {required ? (

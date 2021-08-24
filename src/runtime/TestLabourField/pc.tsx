@@ -910,9 +910,8 @@ const FormField: ISwapFormField = {
         }
 
         const { form } = this.props;
-        if (newData[0].supplier) {
-          form.setFieldValue('Selectjia', newData[0].team);
-        }
+
+        form.setFieldValue('Selectjia', newData[0].team);
 
         this.setState({
           currentSelectData: newData,

@@ -689,12 +689,15 @@ const FormField: ISwapFormField = {
     }
     return (
       <div className="pc-custom-field-wrap">
-        {required ? (
-          <span style={{ color: '#ea6d5c' }}>*</span>
-        ) : (
-          <span style={{ color: '#fff' }}>*</span>
-        )}{' '}
-        {label}
+        <div className="label">
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}{' '}
+          {label}
+        </div>
+
         {/* {field.getProp('viewMode') ? (
           field.getValue()
             ) :

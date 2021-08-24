@@ -810,14 +810,13 @@ const FormField: ISwapFormField = {
     //详情
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
-      const value2 = field.getExtendValue();
+
       const { detailedData = [] } = value;
-      console.log('详情数据', value, value2);
-      const testdate = JSON.stringify(this.state.tabledata);
+
       return (
         <div className="field-wrapper">
           <div className="label">物资明细</div>
-          {testdate}
+          {/* {testdate} */}
           <div>
             {/* ----本地数据----
             <Table

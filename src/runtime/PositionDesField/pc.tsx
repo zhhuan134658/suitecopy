@@ -174,10 +174,11 @@ const FormField: ISwapFormField = {
     // 详情页
     if (viewMode) {
       const value = field.getValue();
+      const { Optionsname = '' } = value;
       return (
         <div>
           <div className="label">{label}</div>
-          {JSON.stringify(value)}
+          {JSON.stringify(Optionsname)}
         </div>
       );
     }

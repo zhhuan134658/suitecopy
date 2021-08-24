@@ -411,10 +411,13 @@ const FormField: IFormField = {
       <div className="field-wrapper">
         <List>
           <List.Item>
-            <div className="m-group m-group-mobile">
+            <div
+              className="m-group m-group-mobile"
+              style={{ marginBottom: '0px' }}
+            >
               <div className="m-field-wrapper">
                 <div className="m-field m-field-mobile m-mobile-input vertical">
-                  <div className="m-field-head">
+                  <div className="m-field-head" style={{ marginLeft: '-5px' }}>
                     <label className="m-field-label">
                       <span>
                         {required ? (
@@ -429,12 +432,14 @@ const FormField: IFormField = {
                   <div className="m-field-box">
                     <div className="m-field-content left">
                       <div className="input-wrapper">
-                        <InputItem
-                          clear
+                        <input
+                          readOnly
+                          className="ant-input m-mobile-inner-input"
+                          type="text"
+                          placeholder="点击选择"
                           value={this.state.chenkdata}
                           onFocus={this.getcheckdata}
-                          placeholder="请输入"
-                        ></InputItem>
+                        />
                       </div>
                     </div>
                   </div>
