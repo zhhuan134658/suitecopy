@@ -47,6 +47,7 @@ const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
   TreeSelect,
+  DatePicker,
   Select,
   Table,
   Tooltip,
@@ -58,6 +59,7 @@ import {
   Popconfirm,
   Form,
 } from 'antd';
+import moment from 'moment';
 const { Search } = Input;
 const { Option } = Select;
 import { IFormField } from '../../types';
@@ -604,6 +606,13 @@ const FormField: ISwapFormField = {
       });
     }
   },
+  timeChange(record, index, name, date, dateString) {
+    const newData = [...this.state.dataSource];
+    newData[index][name] = dateString;
+    console.log(record, index, name, date, dateString, newData);
+
+    this.setState({ dataSource: [...newData] });
+  },
   fieldRender() {
     const { form, runtimeProps } = this.props;
 
@@ -692,10 +701,29 @@ const FormField: ISwapFormField = {
         dataIndex: 'purchase_unit',
         editable: true,
       },
+      //   {
+      //     title: '采购日期',
+      //     dataIndex: 'purchase_riqi',
+      //     editable: true,
+      //   },
       {
-        title: '采购日期',
+        title: '计划进场日期',
         dataIndex: 'purchase_riqi',
-        editable: true,
+        key: 'purchase_riqi',
+        render: (text, record, index) => {
+          return (
+            <DatePicker
+              format="YYYY-MM-DD"
+              value={text !== '' ? moment(text) : ''}
+              onChange={this.timeChange.bind(
+                this,
+                record,
+                index,
+                'purchase_riqi',
+              )}
+            />
+          );
+        },
       },
       {
         title: '采购地点',

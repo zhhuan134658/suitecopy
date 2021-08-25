@@ -268,13 +268,22 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
+        hanmoney: '',
+        nomoney: '',
+        detailname: '',
         detailedData: [], //物资明细
       };
-
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
+      editData.detailname = this.state.chenkdata;
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
-      form.setFieldValue('TestCinField', editData);
-      form.setExtendFieldValue('TestCinField', {
+      form.setFieldValue('TestCin', editData);
+      form.setExtendFieldValue('TestCin', {
         data: editData,
       });
     }
@@ -472,7 +481,7 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -509,7 +518,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">

@@ -27,6 +27,29 @@ const FormField: IFormField = {
     const { form } = this.props;
     return {
       treevalue: undefined,
+      deColumns: [
+        {
+          title: '物资名称',
+          dataIndex: 'name',
+        },
+        {
+          title: '规格型号',
+          dataIndex: 'size',
+        },
+        {
+          title: '单位',
+          dataIndex: 'unit',
+        },
+
+        {
+          title: '账存数量',
+          dataIndex: 'wz_number',
+        },
+        {
+          title: '盘点数量',
+          dataIndex: 'pd_number',
+        },
+      ],
       treeData: [
         {
           title: 'parent 0',
@@ -165,7 +188,7 @@ const FormField: IFormField = {
     newdate.rk_id = ['a1', ...cDataid];
     this.asyncSetFieldProps(newdate, 1);
     this.setState({
-      chenkdata: item.name,
+      Inputvalue: item.name,
       showElem3: 'none',
     });
   },
@@ -239,13 +262,14 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
+        warehouse: '',
         detailedData: [], //物资明细
       };
-
+      editData.warehouse = this.state.Inputvalue;
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
-      form.setFieldValue('TestMaterialField', editData);
-      form.setExtendFieldValue('TestMaterialField', {
+      form.setFieldValue('TestMaterial', editData);
+      form.setExtendFieldValue('TestMaterial', {
         data: editData,
       });
     }
@@ -254,6 +278,7 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
+    const field = form.getFieldInstance('TestMaterial');
     const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestMaterial', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
@@ -338,6 +363,55 @@ const FormField: IFormField = {
         <Tree onSelect={onSelect} treeData={this.state.treeData} />
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+
+      const { warehouse = '', detailedData = [] } = value;
+      return (
+        <div className="field-wrapper">
+          <div className="tablefield-mobile">
+            <div className="tbody-row-wrap">
+              {detailedData.map((item, index) => {
+                return (
+                  <div className="row">
+                    <label className="label row-label-title">
+                      {label}明细({index + 1})
+                    </label>
+                    {this.state.deColumns.map((itemname, indexname) => {
+                      return (
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-field-view">
+                              <label className="m-field-view-label">
+                                {itemname.title}
+                              </label>
+                              <div className="m-field-view-value">
+                                <span>{item[itemname.dataIndex]}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <div className="field-wrapper">
+              <div className="m-field-view">
+                <label className="m-field-view-label">仓库</label>
+                <div className="m-field-view-value">
+                  <span>{warehouse}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="m-group m-group-mobile">
@@ -352,7 +426,7 @@ const FormField: IFormField = {
                 <div className="m-field-content left">
                   <div className="input-wrapper">
                     <InputItem
-                      value={this.state.chenkdata}
+                      value={this.state.Inputvalue}
                       onFocus={this.getcheckdata}
                       placeholder="请输入"
                       readOnly
@@ -395,7 +469,7 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -432,7 +506,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">

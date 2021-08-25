@@ -27,6 +27,28 @@ const FormField: IFormField = {
     const { form } = this.props;
     return {
       treevalue: undefined,
+      deColumns: [
+        {
+          title: '物资名称',
+          dataIndex: 'name',
+        },
+        {
+          title: '单位',
+          dataIndex: 'unit',
+        },
+        {
+          title: '规格',
+          dataIndex: 'size',
+        },
+        {
+          title: '需用量',
+          dataIndex: 'need_number',
+        },
+        {
+          title: '备注',
+          dataIndex: 'remarks',
+        },
+      ],
       treeData: [
         {
           title: 'parent 0',
@@ -212,13 +234,20 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
+        hanmoney: '',
+        nomoney: '',
         detailedData: [], //物资明细
       };
-
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
-      form.setFieldValue('TestDemandField', editData);
-      form.setExtendFieldValue('TestDemandField', {
+      form.setFieldValue('TestDemand', editData);
+      form.setExtendFieldValue('TestDemand', {
         data: editData,
       });
     }
@@ -227,6 +256,7 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
+    const field = form.getFieldInstance('TestDemand');
     const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestDemand', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
@@ -285,6 +315,45 @@ const FormField: IFormField = {
         <Tree onSelect={onSelect} treeData={this.state.treeData} />
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+
+      const { detailedData = [] } = value;
+      return (
+        <div className="field-wrapper">
+          <div className="tablefield-mobile">
+            <div className="tbody-row-wrap">
+              {detailedData.map((item, index) => {
+                return (
+                  <div className="row">
+                    <label className="label row-label-title">
+                      {label}明细({index + 1})
+                    </label>
+                    {this.state.deColumns.map((itemname, indexname) => {
+                      return (
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-field-view">
+                              <label className="m-field-view-label">
+                                {itemname.title}
+                              </label>
+                              <div className="m-field-view-value">
+                                <span>{item[itemname.dataIndex]}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="tablefield-mobile">
@@ -318,7 +387,7 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -355,7 +424,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">

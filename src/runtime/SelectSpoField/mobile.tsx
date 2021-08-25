@@ -79,7 +79,7 @@ const FormField: IFormField = {
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('SelectSpo', item.name);
       form.setExtendFieldValue('SelectSpo', {
-        data: item.name,
+        data: item,
       });
     });
   },
@@ -131,6 +131,18 @@ const FormField: IFormField = {
         </List>
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+      return (
+        <div className="field-wrapper">
+          <div className="m-field-view">
+            <label className="m-field-view-label">{label}</label>
+            <div className="m-field-view-value"> {JSON.stringify(value)}</div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="m-group m-group-mobile">

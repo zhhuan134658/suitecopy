@@ -26,6 +26,32 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      deColumns: [
+        {
+          title: '设备名称',
+          dataIndex: 'name',
+        },
+        {
+          title: '单位',
+          dataIndex: 'unit',
+        },
+        {
+          title: '规格',
+          dataIndex: 'size',
+        },
+        {
+          title: '耗油量',
+          dataIndex: 'oil_consump',
+        },
+        {
+          title: '油价',
+          dataIndex: 'price',
+        },
+        {
+          title: '油费',
+          dataIndex: 'total_price',
+        },
+      ],
       treevalue: undefined,
       treeData: [
         {
@@ -77,13 +103,13 @@ const FormField: IFormField = {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const TestInspecField = form.getFieldInstance('TestInspec');
-    const key = TestInspecField.getProp('id');
+    const TestOliField = form.getFieldInstance('TestOli');
+    const key = TestOliField.getProp('id');
     const value = '1';
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'TestInspec',
+        bizAlias: 'TestOli',
         extendValue: vlauedata,
         value,
       },
@@ -93,7 +119,7 @@ const FormField: IFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['TestInspec'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['TestOli'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -146,8 +172,8 @@ const FormField: IFormField = {
     this.setState(
       { inputvalue: item.name, showElem: 'none', materialList: arr },
       () => {
-        form.setFieldValue('TestInspec', item.name);
-        form.setExtendFieldValue('TestInspec', {
+        form.setFieldValue('TestOli', item.name);
+        form.setExtendFieldValue('TestOli', {
           data: item.name,
         });
       },
@@ -211,8 +237,8 @@ const FormField: IFormField = {
 
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
-      form.setFieldValue('TestInspecField', editData);
-      form.setExtendFieldValue('TestInspecField', {
+      form.setFieldValue('TestOliField', editData);
+      form.setExtendFieldValue('TestOliField', {
         data: editData,
       });
     }
@@ -221,8 +247,9 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
+    const field = form.getFieldInstance('TestOli');
     const required = form.getFieldProp('SelectPro', 'required');
-    const label = form.getFieldProp('TestInspec', 'label');
+    const label = form.getFieldProp('TestOli', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;
@@ -279,6 +306,45 @@ const FormField: IFormField = {
         <Tree onSelect={onSelect} treeData={this.state.treeData} />
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+
+      const { detailedData = [] } = value;
+      return (
+        <div className="field-wrapper">
+          <div className="tablefield-mobile">
+            <div className="tbody-row-wrap">
+              {detailedData.map((item, index) => {
+                return (
+                  <div className="row">
+                    <label className="label row-label-title">
+                      {label}明细({index + 1})
+                    </label>
+                    {this.state.deColumns.map((itemname, indexname) => {
+                      return (
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-field-view">
+                              <label className="m-field-view-label">
+                                {itemname.title}
+                              </label>
+                              <div className="m-field-view-value">
+                                <span>{item[itemname.dataIndex]}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="tablefield-mobile">
@@ -312,7 +378,7 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -349,7 +415,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">

@@ -84,14 +84,14 @@ const FormField: IFormField = {
     }
     this.setState({ showElem: 'inherit' });
   },
-  habdlClick(item: { name: any; sub_unit: any; money: any }) {
+  habdlClick(item: { name: any; sub_unit: any; contract_money: any }) {
     const { form } = this.props;
     console.log(item);
     this.setState({ Inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('Selectjia', item.sub_unit);
       form.setExtendFieldValue('Selectjia', item.sub_unit);
-      form.setFieldValue('Conmoney', item.money);
-      form.setExtendFieldValue('Conmoney', item.money);
+      form.setFieldValue('Fenmoney', item.contract_money);
+      form.setExtendFieldValue('Fenmoney', item.contract_money);
       form.setFieldValue('SelectFen', item.name);
       form.setExtendFieldValue('SelectFen', {
         data: item.name,
@@ -146,6 +146,18 @@ const FormField: IFormField = {
         </List>
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+      return (
+        <div className="field-wrapper">
+          <div className="m-field-view">
+            <label className="m-field-view-label">{label}</label>
+            <div className="m-field-view-value"> {JSON.stringify(value)}</div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="m-group m-group-mobile">

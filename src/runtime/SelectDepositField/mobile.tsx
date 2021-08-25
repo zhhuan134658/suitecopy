@@ -96,11 +96,6 @@ const FormField: IFormField = {
     const { form } = this.props;
     console.log(item);
     this.setState({ Inputvalue: item.name, showElem: 'none' }, () => {
-      form.setFieldValue('Conmoney', item.money);
-      form.setExtendFieldValue('Conmoney', item.money);
-      form.setFieldProp('Selectjia', 'value', item.party_a);
-      form.setFieldValue('Selectjia', item.party_a);
-      form.setExtendFieldValue('Selectjia', item.party_a);
       form.setFieldValue('SelectDeposit', item.name);
       form.setExtendFieldValue('SelectDeposit', {
         data: item.name,
@@ -155,6 +150,18 @@ const FormField: IFormField = {
         </List>
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+      return (
+        <div className="field-wrapper">
+          <div className="m-field-view">
+            <label className="m-field-view-label">{label}</label>
+            <div className="m-field-view-value"> {JSON.stringify(value)}</div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="m-group m-group-mobile">

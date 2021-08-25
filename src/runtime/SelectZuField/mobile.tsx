@@ -84,15 +84,17 @@ const FormField: IFormField = {
     }
     this.setState({ showElem: 'inherit' });
   },
-  habdlClick(item: { name: any; money: any }) {
+  habdlClick(item: { name: any; contract_money: any; supplier: any }) {
     const { form } = this.props;
     console.log(item);
     this.setState({ Inputvalue: item.name, showElem: 'none' }, () => {
-      form.setFieldValue('Conmoney', item.money);
-      form.setExtendFieldValue('Conmoney', item.money);
+      form.setFieldValue('Zumoney', item.contract_money);
+      form.setExtendFieldValue('Zumoney', item.contract_money);
+      form.setFieldValue('Selectjia', item.supplier);
+      form.setExtendFieldValue('Selectjia', item.supplier);
       form.setFieldValue('SelectZu', item.name);
       form.setExtendFieldValue('SelectZu', {
-        data: item.name,
+        data: item,
       });
     });
   },

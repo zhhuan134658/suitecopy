@@ -83,13 +83,13 @@ const FormField: IFormField = {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const TestExpe = form.getFieldInstance('TestDemand');
+    const TestExpe = form.getFieldInstance('TestExpe');
     const key = TestExpe.getProp('id');
     const value = '1';
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'TestDemand',
+        bizAlias: 'TestExpe',
         extendValue: vlauedata,
         value,
       },
@@ -99,7 +99,7 @@ const FormField: IFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['TestDemand'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['TestExpe'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -152,8 +152,8 @@ const FormField: IFormField = {
     this.setState(
       { inputvalue: item.name, showElem: 'none', materialList: arr },
       () => {
-        form.setFieldValue('TestDemand', item.name);
-        form.setExtendFieldValue('TestDemand', {
+        form.setFieldValue('TestExpe', item.name);
+        form.setExtendFieldValue('TestExpe', {
           data: item.name,
         });
       },
@@ -212,9 +212,23 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
+        hanmoney: '',
+        nomoney: '',
         detailedData: [], //物资明细
+        petty_sele: '', //备用金抵扣
+        Numbervalue1: '', //备用金余额
+        Numbervalue2: '', //折扣后合计
       };
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
 
+      editData.petty_sele = this.state.petty_sele;
+      editData.Numbervalue1 = this.state.Numbervalue1;
+      editData.Numbervalue2 = this.state.Numbervalue2;
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
       form.setFieldValue('TestExpe', editData);
@@ -227,8 +241,9 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
+    const field = form.getFieldInstance('TestExpe');
     const required = form.getFieldProp('SelectPro', 'required');
-    const label = form.getFieldProp('TestDemand', 'label');
+    const label = form.getFieldProp('TestExpe', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;
@@ -436,7 +451,32 @@ const FormField: IFormField = {
         </div>
         <Button type="primary" onClick={this.addSon}>
           增加明细
-        </Button>{' '}
+        </Button>
+        <div className="m-group m-group-mobile">
+          <div className="m-field-wrapper">
+            <div className="m-field m-field-mobile m-mobile-input vertical">
+              <div className="m-field-head" style={{ marginLeft: '-5px' }}>
+                <label className="m-field-label">
+                  <span>报销合计</span>
+                </label>
+              </div>
+              <div className="m-field-box">
+                <div className="m-field-content left">
+                  <div className="input-wrapper">
+                    <input
+                      readOnly
+                      className="ant-input m-mobile-inner-input"
+                      type="text"
+                      placeholder="点击选择"
+                      value={this.state.Inputmoney1}
+                      onFocus={this.onOpenChange}
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* 合计 */}
         {/* <List>
           <List.Item>

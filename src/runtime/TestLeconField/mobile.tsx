@@ -26,6 +26,41 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      deColumns: [
+        {
+          title: '物资名称',
+          dataIndex: 'name',
+        },
+        {
+          title: '单位',
+          dataIndex: 'unit',
+        },
+        {
+          title: '规格',
+          dataIndex: 'size',
+        },
+        {
+          title: '计划进场日期',
+          dataIndex: 'plan_in_riqi',
+        },
+        {
+          title: '计划退场日期',
+          dataIndex: 'plan_out_riqi',
+        },
+        {
+          title: '数量',
+          dataIndex: 'zl_number',
+        },
+        {
+          title: '单价',
+          dataIndex: 'price',
+        },
+
+        {
+          title: '小计',
+          dataIndex: 'subtotal',
+        },
+      ],
       treevalue: undefined,
       treeData: [
         {
@@ -227,6 +262,7 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
+    const field = form.getFieldInstance('TestLecon');
     const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestLecon', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
@@ -285,6 +321,55 @@ const FormField: IFormField = {
         <Tree onSelect={onSelect} treeData={this.state.treeData} />
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+      const { hanmoney = '', detailedData = [] } = value;
+
+      return (
+        <div className="field-wrapper">
+          <div className="tablefield-mobile">
+            <div className="tbody-row-wrap">
+              {detailedData.map((item, index) => {
+                return (
+                  <div className="row">
+                    <label className="label row-label-title">
+                      {label}明细({index + 1})
+                    </label>
+                    {this.state.deColumns.map((itemname, indexname) => {
+                      return (
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-field-view">
+                              <label className="m-field-view-label">
+                                {itemname.title}
+                              </label>
+                              <div className="m-field-view-value">
+                                <span>{item[itemname.dataIndex]}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <div className="field-wrapper">
+              <div className="m-field-view">
+                <label className="m-field-view-label">合计</label>
+                <div className="m-field-view-value">
+                  <span>{hanmoney}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="tablefield-mobile">
@@ -318,7 +403,7 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -355,7 +440,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">

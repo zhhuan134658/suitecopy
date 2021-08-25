@@ -26,7 +26,42 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      Inputmoney1: '',
       treevalue: undefined,
+      deColumns: [
+        {
+          title: '设备名称',
+          dataIndex: 'name',
+        },
+        {
+          title: '单位',
+          dataIndex: 'unit',
+        },
+        {
+          title: '规格',
+          dataIndex: 'size',
+        },
+        {
+          title: '维保内容',
+          dataIndex: 'content',
+        },
+        {
+          title: '工时数',
+          dataIndex: 'hours',
+        },
+        {
+          title: '人工合价',
+          dataIndex: 'person_total',
+        },
+        {
+          title: '材料合价',
+          dataIndex: 'material_total',
+        },
+        {
+          title: '小计',
+          dataIndex: 'total_price',
+        },
+      ],
       treeData: [
         {
           title: 'parent 0',
@@ -81,13 +116,13 @@ const FormField: IFormField = {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const TestInspecField = form.getFieldInstance('TestInspec');
-    const key = TestInspecField.getProp('id');
+    const TestMainField = form.getFieldInstance('TestMain');
+    const key = TestMainField.getProp('id');
     const value = '1';
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'TestInspec',
+        bizAlias: 'TestMain',
         extendValue: vlauedata,
         value,
       },
@@ -97,7 +132,7 @@ const FormField: IFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['TestInspec'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['TestMain'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -150,8 +185,8 @@ const FormField: IFormField = {
     this.setState(
       { inputvalue: item.name, showElem: 'none', materialList: arr },
       () => {
-        form.setFieldValue('TestInspec', item.name);
-        form.setExtendFieldValue('TestInspec', {
+        form.setFieldValue('TestMain', item.name);
+        form.setExtendFieldValue('TestMain', {
           data: item.name,
         });
       },
@@ -198,6 +233,21 @@ const FormField: IFormField = {
     arr[newindex][newtype] = arrindex;
     this.setState({ materialList: [...arr] });
     console.log(arr);
+    const newarr1 = [...this.state.dataSource];
+    let newarr2 = [];
+
+    newarr2 = newarr1.filter(item => {
+      if (item.total_price) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.total_price;
+    });
+
+    this.setState({
+      Inputmoney1: eval(newarr2.join('+')),
+    });
   },
   onDatechange(types, index, dateString) {
     // let arr = this.state.materialList;
@@ -210,13 +260,20 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
+        hanmoney: '',
+        nomoney: '',
         detailedData: [], //物资明细
       };
-
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
-      form.setFieldValue('TestInspecField', editData);
-      form.setExtendFieldValue('TestInspecField', {
+      form.setFieldValue('TestMain', editData);
+      form.setExtendFieldValue('TestMain', {
         data: editData,
       });
     }
@@ -225,8 +282,9 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
+    const field = form.getFieldInstance('TestMain');
     const required = form.getFieldProp('SelectPro', 'required');
-    const label = form.getFieldProp('TestInspec', 'label');
+    const label = form.getFieldProp('TestMain', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;
@@ -283,6 +341,55 @@ const FormField: IFormField = {
         <Tree onSelect={onSelect} treeData={this.state.treeData} />
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+
+      const { hanmoney = '', detailedData = [] } = value;
+      return (
+        <div className="field-wrapper">
+          <div className="tablefield-mobile">
+            <div className="tbody-row-wrap">
+              {detailedData.map((item, index) => {
+                return (
+                  <div className="row">
+                    <label className="label row-label-title">
+                      {label}明细({index + 1})
+                    </label>
+                    {this.state.deColumns.map((itemname, indexname) => {
+                      return (
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-field-view">
+                              <label className="m-field-view-label">
+                                {itemname.title}
+                              </label>
+                              <div className="m-field-view-value">
+                                <span>{item[itemname.dataIndex]}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <div className="field-wrapper">
+              <div className="m-field-view">
+                <label className="m-field-view-label">含税金额</label>
+                <div className="m-field-view-value">
+                  <span>{hanmoney}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="tablefield-mobile">
@@ -316,7 +423,7 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -353,7 +460,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">

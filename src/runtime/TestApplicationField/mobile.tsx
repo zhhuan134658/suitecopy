@@ -26,6 +26,43 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      deColumns: [
+        {
+          title: '物资名称',
+          dataIndex: 'name',
+        },
+        {
+          title: '单位',
+          dataIndex: 'unit',
+        },
+        {
+          title: '规格型号',
+          dataIndex: 'size',
+        },
+        {
+          title: '总计划量',
+          dataIndex: 'zh_plan_quantity',
+        },
+        {
+          title: '需用数量',
+          dataIndex: 'need_quantity',
+  
+        },
+        {
+          title: '参考价格',
+          dataIndex: 'refer_price',
+    
+        },
+
+        {
+          title: '小计',
+          dataIndex: 'subtotal',
+        },
+        {
+          title: '备注',
+          dataIndex: 'remarks',
+        },
+      ],
       Inputmoney1: '',
       checkData: [],
       chenkdata: '',
@@ -265,13 +302,14 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
+        detailname: '',
         detailedData: [], //物资明细
       };
-
+      editData.detailname = this.state.chenkdata;
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
-      form.setFieldValue('TestApplicationField', editData);
-      form.setExtendFieldValue('TestApplicationField', {
+      form.setFieldValue('TestApplication', editData);
+      form.setExtendFieldValue('TestApplication', {
         data: editData,
       });
     }
@@ -280,6 +318,7 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
+    const field = form.getFieldInstance('TestApplication');
     const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestApplication', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
@@ -364,6 +403,50 @@ const FormField: IFormField = {
         <Tree onSelect={onSelect} treeData={this.state.treeData} />
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+      const { detailname = '', detailedData = [] } = value;
+      return (
+        <div className="field-wrapper">
+          <div className="m-field-view">
+            <label className="m-field-view-label">名称</label>
+            <div className="m-field-view-value">
+              <span>{detailname}</span>
+            </div>
+          </div>
+          <div className="tablefield-mobile">
+            <div className="tbody-row-wrap">
+              {detailedData.map((item, index) => {
+                return (
+                  <div className="row">
+                    <label className="label row-label-title">
+                      {label}明细({index + 1})
+                    </label>
+                    {this.state.deColumns.map((itemname, indexname) => {
+                      return (
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-field-view">
+                              <label className="m-field-view-label">
+                                {itemname.title}
+                              </label>
+                              <div className="m-field-view-value">
+                                <span>{item[itemname.dataIndex]}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="m-group m-group-mobile" style={{ marginBottom: '0px' }}>

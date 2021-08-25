@@ -27,6 +27,45 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      deColumns: [
+        {
+          title: '物资名称',
+          dataIndex: 'name',
+        },
+        {
+          title: '单位',
+          dataIndex: 'unit',
+        },
+        {
+          title: '规格型号',
+          dataIndex: 'size',
+        },
+        {
+          title: '需用数量',
+          dataIndex: 'need_quantity',
+        },
+        {
+          title: '含税单价',
+          dataIndex: 'refer_price',
+        },
+        {
+          title: '税率(%)',
+          dataIndex: 'tax_rate',
+        },
+
+        {
+          title: '税额',
+          dataIndex: 'notax_price',
+        },
+        {
+          title: '含税金额',
+          dataIndex: 'tax_money',
+        },
+        {
+          title: '不含税金额',
+          dataIndex: 'notax_money',
+        },
+      ],
       Inputmoney1: '',
       checkData: [],
       chenkdata: '',
@@ -268,13 +307,22 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
+        hanmoney: '',
+        nomoney: '',
+        detailname: '',
         detailedData: [], //物资明细
       };
-
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
+      editData.detailname = this.state.chenkdata;
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
-      form.setFieldValue('TestPurField', editData);
-      form.setExtendFieldValue('TestPurField', {
+      form.setFieldValue('TestPur', editData);
+      form.setExtendFieldValue('TestPur', {
         data: editData,
       });
     }
@@ -283,7 +331,8 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
-    const required = form.getFieldProp('SelectPro', 'required');
+    const field = form.getFieldInstance('TestPur');
+    const required = form.getFieldProp('TestPur', 'required');
     const label = form.getFieldProp('TestPur', 'label');
     const tabs = [{ title: '采购申请' }, { title: '材料总计划' }];
     const onTabClick = index => {
@@ -402,6 +451,76 @@ const FormField: IFormField = {
         <Tree onSelect={onSelect} treeData={this.state.treeData} />
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+
+      const {
+        detailname = '',
+        nomoney = '',
+        hanmoney = '',
+        detailedData = [],
+      } = value;
+      return (
+        <div>
+          <div className="field-wrapper">
+            <div className="m-field-view">
+              <label className="m-field-view-label">名称</label>
+              <div className="m-field-view-value">
+                <span>{detailname}</span>
+              </div>
+            </div>
+          </div>
+          <div className="field-wrapper">
+            <div className="tablefield-mobile">
+              <div className="tbody-row-wrap">
+                {detailedData.map((item, index) => {
+                  return (
+                    <div className="row">
+                      <label className="label row-label-title">
+                        {label}明细({index + 1})
+                      </label>
+                      {this.state.deColumns.map((itemname, indexname) => {
+                        return (
+                          <div>
+                            <div className="field-wrapper">
+                              <div className="m-field-view">
+                                <label className="m-field-view-label">
+                                  {itemname.title}
+                                </label>
+                                <div className="m-field-view-value">
+                                  <span>{item[itemname.dataIndex]}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  );
+                })}
+              </div>
+            </div>
+          </div>
+          <div className="field-wrapper">
+            <div className="m-field-view">
+              <label className="m-field-view-label">含税金额</label>
+              <div className="m-field-view-value">
+                <span>{hanmoney}</span>
+              </div>
+            </div>
+          </div>
+          <div className="field-wrapper">
+            <div className="m-field-view">
+              <label className="m-field-view-label">不含税金额</label>
+              <div className="m-field-view-value">
+                <span>{nomoney}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="m-group m-group-mobile" style={{ marginBottom: '0px' }}>
@@ -467,7 +586,7 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -504,7 +623,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">

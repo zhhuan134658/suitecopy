@@ -27,6 +27,28 @@ const FormField: IFormField = {
     const { form } = this.props;
     return {
       treevalue: undefined,
+      deColumns: [
+        {
+          title: '设备名称',
+          dataIndex: 'name',
+        },
+        {
+          title: '单位',
+          dataIndex: 'unit',
+        },
+        {
+          title: '规格',
+          dataIndex: 'size',
+        },
+        {
+          title: '设备检查',
+          dataIndex: 'check_situation',
+        },
+        {
+          title: '整改措施',
+          dataIndex: 'rectify',
+        },
+      ],
       treeData: [
         {
           title: 'parent 0',
@@ -217,8 +239,8 @@ const FormField: IFormField = {
 
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
-      form.setFieldValue('TestInspecField', editData);
-      form.setExtendFieldValue('TestInspecField', {
+      form.setFieldValue('TestInspec', editData);
+      form.setExtendFieldValue('TestInspec', {
         data: editData,
       });
     }
@@ -227,6 +249,7 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
+    const field = form.getFieldInstance('TestInspec');
     const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestInspec', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
@@ -285,6 +308,45 @@ const FormField: IFormField = {
         <Tree onSelect={onSelect} treeData={this.state.treeData} />
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+
+      const { detailedData = [] } = value;
+      return (
+        <div className="field-wrapper">
+          <div className="tablefield-mobile">
+            <div className="tbody-row-wrap">
+              {detailedData.map((item, index) => {
+                return (
+                  <div className="row">
+                    <label className="label row-label-title">
+                      {label}明细({index + 1})
+                    </label>
+                    {this.state.deColumns.map((itemname, indexname) => {
+                      return (
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-field-view">
+                              <label className="m-field-view-label">
+                                {itemname.title}
+                              </label>
+                              <div className="m-field-view-value">
+                                <span>{item[itemname.dataIndex]}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="tablefield-mobile">
@@ -318,7 +380,7 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -355,7 +417,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">

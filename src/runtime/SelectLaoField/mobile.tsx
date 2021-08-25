@@ -71,16 +71,18 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit' });
   },
-  habdlClick(item: { name: any; contract_money: any }) {
+  habdlClick(item: { name: any; contract_money: any; team: any }) {
     const { form } = this.props;
     console.log(item);
 
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
+      form.setFieldValue('Selectjia', item.team);
+      form.setExtendFieldValue('Selectjia', item.team);
       form.setFieldValue('ConLaomoney', item.contract_money);
-      form.setExtendFieldValue('ConLaomoney', item.money);
+      form.setExtendFieldValue('ConLaomoney', item.contract_money);
       form.setFieldValue('SelectLao', item.name);
       form.setExtendFieldValue('SelectLao', {
-        data: item.name,
+        data: item,
       });
     });
   },
@@ -132,6 +134,18 @@ const FormField: IFormField = {
         </List>
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+      return (
+        <div className="field-wrapper">
+          <div className="m-field-view">
+            <label className="m-field-view-label">{label}</label>
+            <div className="m-field-view-value"> {JSON.stringify(value)}</div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="m-group m-group-mobile">

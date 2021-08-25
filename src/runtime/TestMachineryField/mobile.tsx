@@ -26,6 +26,46 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      eColumns: [
+        {
+          title: '机械名称',
+          dataIndex: 'name',
+          width: '30%',
+        },
+        {
+          title: '单位',
+          dataIndex: 'unit',
+        },
+        {
+          title: '规格',
+          dataIndex: 'size',
+        },
+
+        {
+          title: '工作日期',
+          dataIndex: 'riqi',
+        },
+        {
+          title: '施工内容',
+          dataIndex: 'content',
+        },
+        {
+          title: '工时',
+          dataIndex: 'work_hours',
+        },
+        {
+          title: '单价',
+          dataIndex: 'price',
+        },
+        {
+          title: '小计',
+          dataIndex: 'subtotal',
+        },
+        {
+          title: '备注',
+          dataIndex: 'remarks',
+        },
+      ],
       treevalue: undefined,
       treeData: [
         {
@@ -85,13 +125,13 @@ const FormField: IFormField = {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const TestLeaseField = form.getFieldInstance('TestLease');
-    const key = TestLeaseField.getProp('id');
+    const TestMachineryField = form.getFieldInstance('TestMachinery');
+    const key = TestMachineryField.getProp('id');
     const value = '1';
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'TestLease',
+        bizAlias: 'TestMachinery',
         extendValue: vlauedata,
         value,
       },
@@ -101,7 +141,7 @@ const FormField: IFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['TestLease'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['TestMachinery'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -154,8 +194,8 @@ const FormField: IFormField = {
     this.setState(
       { inputvalue: item.name, showElem: 'none', materialList: arr },
       () => {
-        form.setFieldValue('TestLease', item.name);
-        form.setExtendFieldValue('TestLease', {
+        form.setFieldValue('TestMachinery', item.name);
+        form.setExtendFieldValue('TestMachinery', {
           data: item.name,
         });
       },
@@ -199,9 +239,26 @@ const FormField: IFormField = {
     let newindex = index;
     let newtype = types;
     arr[newindex].subtotal = arr[newindex].price * arr[newindex].work_hours;
+
     // arr[newindex] = {};
     arr[newindex][newtype] = arrindex;
     this.setState({ materialList: [...arr] });
+    // 含税金额合计;
+    const newarr1 = [...this.state.dataSource];
+    let newarr2 = [];
+
+    newarr2 = newarr1.filter(item => {
+      if (item.subtotal) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.subtotal;
+    });
+
+    this.setState({
+      Inputmoney1: eval(newarr2.join('+')),
+    });
     console.log(arr);
   },
   onDatechange(types, index, dateString) {
@@ -215,13 +272,20 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
+        hanmoney: '',
+        nomoney: '',
         detailedData: [], //物资明细
       };
-
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
-      form.setFieldValue('TestLease', editData);
-      form.setExtendFieldValue('TestLease', {
+      form.setFieldValue('TestMachinery', editData);
+      form.setExtendFieldValue('TestMachinery', {
         data: editData,
       });
     }
@@ -230,8 +294,9 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
+    const field = form.getFieldInstance('TestMachinery');
     const required = form.getFieldProp('SelectPro', 'required');
-    const label = form.getFieldProp('TestLease', 'label');
+    const label = form.getFieldProp('TestMachinery', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;
@@ -288,6 +353,55 @@ const FormField: IFormField = {
         <Tree onSelect={onSelect} treeData={this.state.treeData} />
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+
+      const { hanmoney = '', detailedData = [] } = value;
+      return (
+        <div className="field-wrapper">
+          <div className="tablefield-mobile">
+            <div className="tbody-row-wrap">
+              {detailedData.map((item, index) => {
+                return (
+                  <div className="row">
+                    <label className="label row-label-title">
+                      {label}明细({index + 1})
+                    </label>
+                    {this.state.deColumns.map((itemname, indexname) => {
+                      return (
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-field-view">
+                              <label className="m-field-view-label">
+                                {itemname.title}
+                              </label>
+                              <div className="m-field-view-value">
+                                <span>{item[itemname.dataIndex]}</span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+          <div>
+            <div className="field-wrapper">
+              <div className="m-field-view">
+                <label className="m-field-view-label">合计</label>
+                <div className="m-field-view-value">
+                  <span>{hanmoney}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="tablefield-mobile">
@@ -321,7 +435,7 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -358,7 +472,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
@@ -675,6 +789,33 @@ const FormField: IFormField = {
                 </div>
               );
             })}
+          </div>
+        </div>
+        <div>
+          <div className="field-wrapper">
+            <div className="m-group m-group-mobile">
+              <div className="m-field-wrapper">
+                <div className="m-field m-field-mobile m-select-field">
+                  <div className="m-field-head">
+                    <div className="m-field-label">
+                      <span>合计</span>
+                    </div>
+                  </div>
+                  <div className="m-field-box">
+                    <div className="m-field-content left">
+                      <div className="input-wrapper">
+                        <InputItem
+                          type="text"
+                          className="ant-input m-mobile-inner-input"
+                          value={this.state.Inputmoney1}
+                          placeholder="点击选择"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
         {/*  */}

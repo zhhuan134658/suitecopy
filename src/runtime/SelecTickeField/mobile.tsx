@@ -99,10 +99,9 @@ const FormField: IFormField = {
       dtar = '租赁合同-' + item[0].name;
     }
     this.setState({ Inputvalue: dtar, showElem: 'none' }, () => {
-      form.setFieldValue('Conmoney', item.money);
-      form.setFieldValue('SelecTicke', item.name);
+      form.setFieldValue('SelecTicke', dtar);
       form.setExtendFieldValue('SelecTicke', {
-        data: item.name,
+        data: dtar,
       });
     });
   },
@@ -193,6 +192,18 @@ const FormField: IFormField = {
         </List>
       </div>
     );
+    //详情
+    if (this.props.runtimeProps.viewMode) {
+      const value = field.getValue();
+      return (
+        <div className="field-wrapper">
+          <div className="m-field-view">
+            <label className="m-field-view-label">{label}</label>
+            <div className="m-field-view-value"> {JSON.stringify(value)}</div>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="field-wrapper">
         <div className="m-group m-group-mobile">
