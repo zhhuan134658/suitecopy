@@ -22,7 +22,6 @@ import './mobile.less';
  */
 const FormField: IFormField = {
   getInitialState() {
-    
     const { form } = this.props;
     return {
       detdate: 'a1',
@@ -117,10 +116,11 @@ const FormField: IFormField = {
   onSearchBarChange(value) {
     this.setState({ SearchBarvalue: value });
   },
+
   fieldRender() {
     // fix in codepen
     const { form, runtimeProps } = this.props;
-    const { viewMod e } = runtimeProps;
+    const { viewMode } = runtimeProps;
     const field = form.getFieldInstance('TestRegist');
     const label = form.getFieldProp('TestRegist', 'label');
     const required = form.getFieldProp('TestRegist', 'required');
