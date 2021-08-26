@@ -6,6 +6,7 @@ import './mobile.less';
 /**
  * 自定义控件运行态 Mobile 视图
  */
+
 const FormField: IFormField = {
   fieldRender() {
     // 如果不需要定制视图 这里直接return null即可 引擎会默认识别children进行渲染

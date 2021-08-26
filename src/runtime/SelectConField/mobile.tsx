@@ -30,6 +30,7 @@ const FormField: IFormField = {
       listData: [],
     };
   },
+
   asyncSetFieldProps(vlauedata) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');

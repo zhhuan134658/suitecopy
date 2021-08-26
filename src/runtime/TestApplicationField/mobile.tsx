@@ -14,6 +14,7 @@ import {
   WhiteSpace,
   WingBlank,
 } from 'antd-mobile';
+
 import { Tree } from 'antd';
 import './mobile.less';
 const Item = List.Item;
@@ -46,12 +47,10 @@ const FormField: IFormField = {
         {
           title: '需用数量',
           dataIndex: 'need_quantity',
-  
         },
         {
           title: '参考价格',
           dataIndex: 'refer_price',
-    
         },
 
         {

@@ -359,6 +359,7 @@ const FormField: IFormField = {
         </div>
       );
     }
+
     return (
       <div className="field-wrapper">
         <div className="tablefield-mobile">
