@@ -22,7 +22,7 @@ import './mobile.less';
  */
 const FormField: IFormField = {
   getInitialState() {
-    console.log('xhf-suite', Drawer);
+    
     const { form } = this.props;
     return {
       detdate: 'a1',
