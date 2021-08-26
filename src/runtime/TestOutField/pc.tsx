@@ -581,7 +581,13 @@ const FormField: ISwapFormField = {
       .then((res: { dataList: { value: string }[] }) => {
         if (typename == '1') {
           //   表格数据
-          const newarr = JSON.parse(res.dataList[0].value).data;
+          let newarr;
+          console.log('weqweq', JSON.parse(res.dataList[0].value));
+
+          //   表格数据
+          try {
+            newarr = JSON.parse(res.dataList[0].value).data;
+          } catch (e) {}
 
           this.setState({
             listchData: [...newarr],
@@ -592,18 +598,24 @@ const FormField: ISwapFormField = {
           console.log(JSON.parse(res.dataList[0].value));
 
           //   表格数据
-          const newarr = JSON.parse(res.dataList[0].value).data;
-        //   if (vlauedata.ck_name) {
-        //     this.setState({
-        //       dataSource: [...newarr],
-        //     });
-        //   } else {
-            this.setState({
-              listData: [...newarr],
-              current_page: JSON.parse(res.dataList[0].value).page,
-              total2: JSON.parse(res.dataList[0].value).count,
-            });
-        //   }
+          let newarr;
+          console.log('weqweq', JSON.parse(res.dataList[0].value));
+
+          //   表格数据
+          try {
+            newarr = JSON.parse(res.dataList[0].value).data;
+          } catch (e) {}
+          //   if (vlauedata.ck_name) {
+          //     this.setState({
+          //       dataSource: [...newarr],
+          //     });
+          //   } else {
+          this.setState({
+            listData: [...newarr],
+            current_page: JSON.parse(res.dataList[0].value).page,
+            total2: JSON.parse(res.dataList[0].value).count,
+          });
+          //   }
 
           //   树状图数据
           const newtarr = JSON.parse(res.dataList[0].extendValue);

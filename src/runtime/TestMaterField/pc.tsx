@@ -567,7 +567,13 @@ const FormField: ISwapFormField = {
         console.log(JSON.parse(res.dataList[0].value));
 
         //   表格数据
-        const newarr = JSON.parse(res.dataList[0].value).data;
+        let newarr;
+        console.log('weqweq', JSON.parse(res.dataList[0].value));
+
+        //   表格数据
+        try {
+          newarr = JSON.parse(res.dataList[0].value).data;
+        } catch (e) {}
         //   树状图数据
         const newtarr = JSON.parse(res.dataList[0].extendValue);
         const newtarr1 = [

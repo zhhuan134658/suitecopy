@@ -436,20 +436,13 @@ const FormField: ISwapFormField = {
         bizAsyncData,
       })
       .then(res => {
-        console.log(JSON.parse(res.dataList[0].value));
+        let newarr;
+        console.log('weqweq', JSON.parse(res.dataList[0].value));
 
-        // this.state.listData = find(
-        //   res.dataList,
-        //   item => item.bizAlias === 'TestRegist',
-        // );
-
-        // this.state.listData = res.dataList[0].value;
-
-        // this.setState({
-        //   listData: res.dataList[0].value,
-        // });
         //   表格数据
-        const newarr = JSON.parse(res.dataList[0].value).data;
+        try {
+          newarr = JSON.parse(res.dataList[0].value).data;
+        } catch (e) {}
 
         this.setState({
           listData: [...newarr],

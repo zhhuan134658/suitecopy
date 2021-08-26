@@ -430,8 +430,13 @@ const FormField: ISwapFormField = {
         // this.setState({
         //   listData: res.dataList[0].value,
         // });
+        let newarr;
+        console.log('weqweq', JSON.parse(res.dataList[0].value));
+
         //   表格数据
-        const newarr = JSON.parse(res.dataList[0].value).data;
+        try {
+          newarr = JSON.parse(res.dataList[0].value).data;
+        } catch (e) {}
         if (newarr.length == 0) {
           this.setState({ Inputvalue: '暂无合同' });
           form.setFieldValue('SelectHe', '暂无合同');

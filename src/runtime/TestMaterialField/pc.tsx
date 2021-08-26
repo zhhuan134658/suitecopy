@@ -610,10 +610,13 @@ const FormField: ISwapFormField = {
       })
       .then(res => {
         if (typename == 'CorpHouse') {
-          console.log(JSON.parse(res.dataList[0].value));
+          let newarr;
+          console.log('weqweq', JSON.parse(res.dataList[0].value));
 
           //   表格数据
-          const newarr = JSON.parse(res.dataList[0].value).data;
+          try {
+            newarr = JSON.parse(res.dataList[0].value).data;
+          } catch (e) {}
 
           this.setState({
             listchData: [...newarr],
@@ -621,10 +624,13 @@ const FormField: ISwapFormField = {
             totalch2: JSON.parse(res.dataList[0].value).count,
           });
         } else {
-          console.log(JSON.parse(res.dataList[0].value));
+          let newarr;
+          console.log('weqweq', JSON.parse(res.dataList[0].value));
 
           //   表格数据
-          const newarr = JSON.parse(res.dataList[0].value).data;
+          try {
+            newarr = JSON.parse(res.dataList[0].value).data;
+          } catch (e) {}
           if (vlauedata.ck_name) {
             this.setState({
               dataSource: [...newarr],

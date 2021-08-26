@@ -96,9 +96,13 @@ const FormField: IFormField = {
       .then(res => {
         console.log('weqweq111111111111111111', res);
         console.log('weqweq', JSON.parse(res.dataList[0].value));
+        let newarr;
+        console.log('weqweq', JSON.parse(res.dataList[0].value));
 
         //   表格数据
-        const newarr = JSON.parse(res.dataList[0].value);
+        try {
+          newarr = JSON.parse(res.dataList[0].value).data;
+        } catch (e) {}
 
         this.setState({
           province: [...newarr],

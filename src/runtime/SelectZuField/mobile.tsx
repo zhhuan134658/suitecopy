@@ -21,7 +21,6 @@ import './mobile.less';
  */
 const FormField: IFormField = {
   getInitialState() {
-    
     const { form } = this.props;
     return {
       SearchBarvalue: '',
@@ -55,9 +54,13 @@ const FormField: IFormField = {
         bizAsyncData,
       })
       .then(res => {
-        console.log(JSON.parse(res.dataList[0].value));
+        let newarr;
+        console.log('weqweq', JSON.parse(res.dataList[0].value));
+
         //   表格数据
-        const newarr = JSON.parse(res.dataList[0].value).data;
+        try {
+          newarr = JSON.parse(res.dataList[0].value).data;
+        } catch (e) {}
 
         this.setState({
           listData: [...newarr],
@@ -69,17 +72,17 @@ const FormField: IFormField = {
     console.log(args);
     const { form } = this.props;
     const value = form.getFieldValue('Autopro');
-   
-      const newvalue = this.state.allData;
-      newvalue.name = '';
-      newvalue.type = 0;
-      newvalue.page = 1;
-      newvalue.project_name = value;
-      this.setState({
-        allData: newvalue,
-      });
-      this.asyncSetFieldProps(newvalue);
-  
+
+    const newvalue = this.state.allData;
+    newvalue.name = '';
+    newvalue.type = 0;
+    newvalue.page = 1;
+    newvalue.project_name = value;
+    this.setState({
+      allData: newvalue,
+    });
+    this.asyncSetFieldProps(newvalue);
+
     this.setState({ showElem: 'inherit' });
   },
   habdlClick(item: { name: any; contract_money: any; supplier: any }) {

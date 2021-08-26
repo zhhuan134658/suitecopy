@@ -144,11 +144,13 @@ const FormField: ISwapFormField = {
         bizAsyncData,
       })
       .then(res => {
-        console.log('weqweq111111111111111111', res);
+        let newarr;
         console.log('weqweq', JSON.parse(res.dataList[0].value));
 
         //   表格数据
-        const newarr = JSON.parse(res.dataList[0].value);
+        try {
+          newarr = JSON.parse(res.dataList[0].value).data;
+        } catch (e) {}
 
         this.setState({
           options: [...newarr],

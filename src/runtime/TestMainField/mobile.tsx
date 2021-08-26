@@ -139,7 +139,13 @@ const FormField: IFormField = {
       .then(res => {
         console.log(JSON.parse(res.dataList[0].value));
         //   表格数据
-        const newarr = JSON.parse(res.dataList[0].value).data;
+        let newarr;
+        console.log('weqweq', JSON.parse(res.dataList[0].value));
+
+        //   表格数据
+        try {
+          newarr = JSON.parse(res.dataList[0].value).data;
+        } catch (e) {}
 
         this.setState({
           listData: [...newarr],
