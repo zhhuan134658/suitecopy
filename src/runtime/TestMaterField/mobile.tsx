@@ -22,7 +22,6 @@ import './mobile.less';
  */
 const FormField: IFormField = {
   getInitialState() {
-    
     const { form } = this.props;
     return {
       detdate: 'a1',
@@ -120,7 +119,7 @@ const FormField: IFormField = {
   fieldRender() {
     // fix in codepen
     const { form, runtimeProps } = this.props;
-    const { viewMode } = ru ntimeProps;
+    const { viewMode } = runtimeProps;
     const field = form.getFieldInstance('TestMater');
     const label = form.getFieldProp('TestMater', 'label');
     const required = form.getFieldProp('TestMater', 'required');

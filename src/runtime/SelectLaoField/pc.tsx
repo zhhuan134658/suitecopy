@@ -644,17 +644,7 @@ const FormField: ISwapFormField = {
           )}{' '}
           {label}
         </div>
-        {/* {field.getProp('viewMode') ? (
-          field.getValue()
-            ) :
-                (
-          <Input
-            id="ptID"
-            placeholder={placeholder}
-            onFocus={this.handleChange}
-            value={this.state.leaveLongVal}
-          />
-        )} */}
+
         <div>
           <Input
             readOnly
