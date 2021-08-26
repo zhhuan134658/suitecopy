@@ -292,7 +292,7 @@
     },
     {
       "componentName": "TextField",
-      "bizAlias": "ConLaomoney'",
+      "bizAlias": "ConLaomoney",
       "props": {
         "disabled": true,
         "placeholder": "请输入",
@@ -320,6 +320,7 @@
         "maxLength": "100"
       }
     },
+
     {
       "componentName": "SelecTickeField",
       "bizAlias": "SelecTicke",
@@ -327,6 +328,16 @@
         "required": false,
         "placeholder": "请输入",
         "label": "收票登记"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "SelecTickefaField",
+      "bizAlias": "SelecTickefa",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "法务管理"
       },
       "type": "custom"
     },

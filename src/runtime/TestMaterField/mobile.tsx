@@ -25,6 +25,7 @@ const FormField: IFormField = {
     console.log('xhf-suite', Drawer);
     const { form } = this.props;
     return {
+      detdate: 'a1',
       SearchBarvalue: '',
       showElem: 'none',
       inputvalue: '',
@@ -61,7 +62,7 @@ const FormField: IFormField = {
         const newarr = JSON.parse(res.dataList[0].value).data;
 
         this.setState({
-          listData: [...newarr],
+          listData: newarr,
         });
       });
   },
@@ -69,40 +70,38 @@ const FormField: IFormField = {
     console.log('sss');
     console.log(args);
     const { form } = this.props;
-    const value = form.getFieldValue('Autopro');
-    if (value) {
-      const newvalue = this.state.allData;
-      newvalue.name = '';
-      newvalue.type = 0;
-      newvalue.page = 1;
-      newvalue.project_name = value;
-      this.setState({
-        allData: newvalue,
-      });
-      this.asyncSetFieldProps(newvalue);
-    } else {
-      Toast.info('请先选择项目', 1);
-    }
+    const newvalue = this.state.allData;
+    newvalue.name = '';
+    newvalue.type = 0;
+    newvalue.page = 1;
+    newvalue.rk_id = ['a'];
+    newvalue.project_name = '';
+    // this.setState({
+    //   allData: newvalue,
+    // });
+    this.asyncSetFieldProps(newvalue);
+
     this.setState({ showElem: 'inherit' });
   },
-  habdlClick(item: { name: any; money: any }) {
+  habdlClick(item) {
     const { form } = this.props;
-    console.log(item);
+
     let dtar = '';
     if (this.state.detdate === 'a1') {
-      dtar = '材料结算-' + item[0].name;
+      dtar = '材料结算-' + item.name;
     } else if (this.state.detdate === 'b1') {
-      dtar = '采购合同-' + item[0].name;
+      dtar = '采购合同-' + item.name;
     } else if (this.state.detdate === 'c1') {
-      dtar = '采购订单-' + item[0].name;
+      dtar = '采购订单-' + item.name;
     } else if (this.state.detdate === 'd1') {
-      dtar = '材料入库-' + item[0].name;
+      dtar = '材料入库-' + item.name;
     }
-    this.setState({ Inputvalue: dtar, showElem: 'none' }, () => {
-      form.setFieldValue('TestMater', dtar);
-      form.setExtendFieldValue('TestMater', {
-        data: dtar,
-      });
+    console.log(dtar);
+    form.setFieldValue('Conname', item.contract_name);
+    this.setState({ inputvalue: dtar, showElem: 'none' });
+    form.setFieldValue('TestMater', dtar);
+    form.setExtendFieldValue('TestMater', {
+      data: dtar,
     });
   },
   onCancel() {
@@ -121,7 +120,7 @@ const FormField: IFormField = {
   fieldRender() {
     // fix in codepen
     const { form, runtimeProps } = this.props;
-    const { viewMode } = runtimeProps;
+    const { viewMode } = ru ntimeProps;
     const field = form.getFieldInstance('TestMater');
     const label = form.getFieldProp('TestMater', 'label');
     const required = form.getFieldProp('TestMater', 'required');
@@ -132,33 +131,7 @@ const FormField: IFormField = {
       { title: '采购订单' },
       { title: '材料入库' },
     ];
-    const onTabClick = index => {
-      let newpage = {
-        defaultActiveKey: 'a',
-        rk_id: ['a'],
-        number: '10',
-        page: 1,
-        name: '',
-      };
-      if (index === 0) {
-        newpage.defaultActiveKey = 'a';
-        newpage.rk_id = ['a'];
-      } else if (index === 1) {
-        newpage.defaultActiveKey = 'b';
-        newpage.rk_id = ['b'];
-      } else if (index === 2) {
-        newpage.defaultActiveKey = 'c';
-        newpage.rk_id = ['c'];
-      } else if (index === 3) {
-        newpage.defaultActiveKey = 'd';
-        newpage.rk_id = ['d'];
-      }
-      this.setState({
-        allData: newpage,
-        detdate: newpage.defaultActiveKey + '1',
-      });
-      this.asyncSetFieldProps(newpage);
-    };
+
     const sidebar = (
       <div>
         <SearchBar
@@ -171,11 +144,35 @@ const FormField: IFormField = {
         />
         <Tabs
           tabs={tabs}
-          initialPage={1}
+          initialPage={0}
           onChange={(tab, index) => {
             console.log('onChange', index, tab);
+            this.setState({ detdate: 'a1' });
+            let newpage = {
+              defaultActiveKey: 'a',
+              rk_id: ['a'],
+              number: '1000',
+              page: 1,
+              name: '',
+            };
+            if (index === 0) {
+              this.setState({ detdate: 'a1' });
+              newpage.rk_id = ['a'];
+            } else if (index === 1) {
+              this.setState({ detdate: 'b1' });
+              newpage.rk_id = ['b'];
+            } else if (index === 2) {
+              this.setState({ detdate: 'c1' });
+              newpage.rk_id = ['c'];
+            } else if (index === 3) {
+              this.setState({ detdate: 'd1' });
+              newpage.rk_id = ['d'];
+            }
+            this.setState({
+              allData: newpage,
+            });
+            this.asyncSetFieldProps(newpage);
           }}
-          onTabClick={onTabClick}
         ></Tabs>
         <List>
           {this.state.listData.map((item, index) => {
@@ -237,12 +234,7 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-          {/* <InputItem
-            clear
-            value={this.state.inputvalue}
-            placeholder="点击选择"
-            onFocus={this.onOpenChange}
-          ></InputItem> */}
+
           {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
 
           {createPortal(

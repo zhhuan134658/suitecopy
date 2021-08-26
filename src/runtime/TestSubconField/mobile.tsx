@@ -6,6 +6,8 @@ import {
   InputItem,
   Drawer,
   List,
+  Tabs,
+  Toast,
   NavBar,
   Icon,
   SearchBar,
@@ -23,6 +25,7 @@ const FormField: IFormField = {
     console.log('xhf-suite', Drawer);
     const { form } = this.props;
     return {
+      detdate: 'a1',
       SearchBarvalue: '',
       showElem: 'none',
       inputvalue: '',
@@ -59,27 +62,46 @@ const FormField: IFormField = {
         const newarr = JSON.parse(res.dataList[0].value).data;
 
         this.setState({
-          listData: [...newarr],
+          listData: newarr,
         });
       });
   },
   onOpenChange(...args) {
     console.log('sss');
     console.log(args);
-    const newdate = this.state.allData;
+    const { form } = this.props;
+    const newvalue = this.state.allData;
+    newvalue.name = '';
+    newvalue.type = 0;
+    newvalue.page = 1;
+    newvalue.rk_id = ['a'];
+    newvalue.project_name = '';
+    // this.setState({
+    //   allData: newvalue,
+    // });
+    this.asyncSetFieldProps(newvalue);
 
-    this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit' });
   },
-  habdlClick(item: { name: any }) {
+  habdlClick(item) {
     const { form } = this.props;
-    console.log(item);
 
-    this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
-      form.setFieldValue('TestSubcon', item.name);
-      form.setExtendFieldValue('TestSubcon', {
-        data: item.name,
-      });
+    let dtar = '';
+    if (this.state.detdate === 'a1') {
+      dtar = '分包进度款结算-' + item.name;
+    } else if (this.state.detdate === 'b1') {
+      dtar = '分包完工结算-' + item.name;
+    } else if (this.state.detdate === 'c1') {
+      dtar = '分包质保金结算-' + item.name;
+    } else if (this.state.detdate === 'd1') {
+      dtar = '材料入库-' + item.name;
+    }
+    console.log(dtar);
+    form.setFieldValue('Conname', item.contract_name);
+    this.setState({ inputvalue: dtar, showElem: 'none' });
+    form.setFieldValue('TestSubcon', dtar);
+    form.setExtendFieldValue('TestSubcon', {
+      data: dtar,
     });
   },
   onCancel() {
@@ -103,6 +125,11 @@ const FormField: IFormField = {
     const label = form.getFieldProp('TestSubcon', 'label');
     const required = form.getFieldProp('TestSubcon', 'required');
     const placeholder = form.getFieldProp('TestSubcon', 'placeholder');
+    const tabs = [
+      { title: '分包进度款结算' },
+      { title: '分包完工结算' },
+      { title: '分包质保金结算' },
+    ];
 
     const sidebar = (
       <div>
@@ -114,7 +141,38 @@ const FormField: IFormField = {
           onCancel={this.onCancel}
           showCancelButton
         />
-
+        <Tabs
+          tabs={tabs}
+          initialPage={0}
+          onChange={(tab, index) => {
+            console.log('onChange', index, tab);
+            this.setState({ detdate: 'a1' });
+            let newpage = {
+              defaultActiveKey: 'a',
+              rk_id: ['a'],
+              number: '1000',
+              page: 1,
+              name: '',
+            };
+            if (index === 0) {
+              this.setState({ detdate: 'a1' });
+              newpage.rk_id = ['a'];
+            } else if (index === 1) {
+              this.setState({ detdate: 'b1' });
+              newpage.rk_id = ['b'];
+            } else if (index === 2) {
+              this.setState({ detdate: 'c1' });
+              newpage.rk_id = ['c'];
+            } else if (index === 3) {
+              this.setState({ detdate: 'd1' });
+              newpage.rk_id = ['d'];
+            }
+            this.setState({
+              allData: newpage,
+            });
+            this.asyncSetFieldProps(newpage);
+          }}
+        ></Tabs>
         <List>
           {this.state.listData.map((item, index) => {
             return (
@@ -175,47 +233,31 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-        </div>
 
-        {/* <div className="label" onClick={this.onOpenChange}>
-          {required ? (
-            <span style={{ color: '#ea6d5c' }}>*</span>
-          ) : (
-            <span style={{ color: '#fff' }}>*</span>
+          {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
+
+          {createPortal(
+            <Drawer
+              className="my-drawer"
+              open={true}
+              style={{
+                minHeight: document.documentElement.clientHeight,
+
+                display: this.state.showElem,
+              }}
+              enableDragHandle
+              contentStyle={{
+                color: '#A6A6A6',
+                textAlign: 'center',
+                paddingTop: 42,
+              }}
+              sidebar={sidebar}
+              onOpenChange={this.onOpenChange}
+            ></Drawer>,
+            document.getElementById('MF_APP'),
           )}
-          {label}
         </div>
-
-        <div>
-          <InputItem
-            clear
-            value={this.state.inputvalue}
-            placeholder="点击选择"
-            onFocus={this.onOpenChange}
-          ></InputItem> */}
-        {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
-        {createPortal(
-          <Drawer
-            className="my-drawer"
-            open={true}
-            style={{
-              minHeight: document.documentElement.clientHeight,
-
-              display: this.state.showElem,
-            }}
-            enableDragHandle
-            contentStyle={{
-              color: '#A6A6A6',
-              textAlign: 'center',
-              paddingTop: 42,
-            }}
-            sidebar={sidebar}
-            onOpenChange={this.onOpenChange}
-          ></Drawer>,
-          document.getElementById('MF_APP'),
-        )}
       </div>
-      //   </div>
     );
   },
 };

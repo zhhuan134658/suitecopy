@@ -6,6 +6,8 @@ import {
   InputItem,
   Drawer,
   List,
+  Tabs,
+  Toast,
   NavBar,
   Icon,
   SearchBar,
@@ -23,6 +25,7 @@ const FormField: IFormField = {
     console.log('xhf-suite', Drawer);
     const { form } = this.props;
     return {
+      detdate: 'a1',
       SearchBarvalue: '',
       showElem: 'none',
       inputvalue: '',
@@ -30,18 +33,17 @@ const FormField: IFormField = {
       listData: [],
     };
   },
-
   asyncSetFieldProps(vlauedata) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const SelectConField = form.getFieldInstance('SelectCon');
-    const key = SelectConField.getProp('id');
+    const SelecTickefaField = form.getFieldInstance('SelecTickefa');
+    const key = SelecTickefaField.getProp('id');
     const value = '1';
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'SelectCon',
+        bizAlias: 'SelecTickefa',
         extendValue: vlauedata,
         value,
       },
@@ -51,7 +53,7 @@ const FormField: IFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['SelectCon'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['SelecTickefa'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -60,31 +62,47 @@ const FormField: IFormField = {
         const newarr = JSON.parse(res.dataList[0].value).data;
 
         this.setState({
-          listData: [...newarr],
+          listData: newarr,
         });
       });
   },
   onOpenChange(...args) {
     console.log('sss');
     console.log(args);
-    const newdate = this.state.allData;
+    const { form } = this.props;
+    const newvalue = this.state.allData;
+    newvalue.name = '';
+    newvalue.type = 0;
+    newvalue.page = 1;
+    newvalue.rk_id = ['a'];
+    newvalue.project_name = '';
+    // this.setState({
+    //   allData: newvalue,
+    // });
+    this.asyncSetFieldProps(newvalue);
 
-    this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit' });
   },
-  habdlClick(item: { name: any; money: any; party_a: any }) {
+  habdlClick(item) {
     const { form } = this.props;
-    console.log(item);
-    this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
-      form.setFieldValue('Conmoney', item.money);
-      form.setExtendFieldValue('Conmoney', item.money);
-      form.setFieldProp('Selectjia', 'value', item.party_a);
-      form.setFieldValue('Selectjia', item.party_a);
-      form.setExtendFieldValue('Selectjia', item.party_a);
-      form.setFieldValue('SelectCon', item.name);
-      form.setExtendFieldValue('SelectCon', {
-        data: item.name,
-      });
+
+    let dtar = '';
+    if (this.state.detdate === 'a1') {
+      dtar = '材料合同-' + item.name;
+    } else if (this.state.detdate === 'b1') {
+      dtar = '劳务合同-' + item.name;
+    } else if (this.state.detdate === 'c1') {
+      dtar = '分包合同-' + item.name;
+    } else if (this.state.detdate === 'd1') {
+      dtar = '租赁合同-' + item.name;
+    } else if (this.state.detdate === 'e1') {
+      dtar = '收入合同-' + item.name;
+    }
+    console.log(dtar);
+    this.setState({ inputvalue: dtar, showElem: 'none' });
+    form.setFieldValue('SelecTickefa', dtar);
+    form.setExtendFieldValue('SelecTickefa', {
+      data: dtar,
     });
   },
   onCancel() {
@@ -104,10 +122,17 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
-    const field = form.getFieldInstance('SelectCon');
-    const label = form.getFieldProp('SelectCon', 'label');
-    const required = form.getFieldProp('SelectCon', 'required');
-    const placeholder = form.getFieldProp('SelectCon', 'placeholder');
+    const field = form.getFieldInstance('SelecTickefa');
+    const label = form.getFieldProp('SelecTickefa', 'label');
+    const required = form.getFieldProp('SelecTickefa', 'required');
+    const placeholder = form.getFieldProp('SelecTickefa', 'placeholder');
+    const tabs = [
+      { title: '材料合同' },
+      { title: '劳务合同' },
+      { title: '分包合同' },
+      { title: '租赁合同' },
+      { title: '收入合同' },
+    ];
 
     const sidebar = (
       <div>
@@ -119,7 +144,38 @@ const FormField: IFormField = {
           onCancel={this.onCancel}
           showCancelButton
         />
-
+        <Tabs
+          tabs={tabs}
+          initialPage={0}
+          onChange={(tab, index) => {
+            console.log('onChange', index, tab);
+            this.setState({ detdate: 'a1' });
+            let newpage = {
+              defaultActiveKey: 'a',
+              rk_id: ['a'],
+              number: '1000',
+              page: 1,
+              name: '',
+            };
+            if (index === 0) {
+              this.setState({ detdate: 'a1' });
+              newpage.rk_id = ['a'];
+            } else if (index === 1) {
+              this.setState({ detdate: 'b1' });
+              newpage.rk_id = ['b'];
+            } else if (index === 2) {
+              this.setState({ detdate: 'c1' });
+              newpage.rk_id = ['c'];
+            } else if (index === 3) {
+              this.setState({ detdate: 'd1' });
+              newpage.rk_id = ['d'];
+            }
+            this.setState({
+              allData: newpage,
+            });
+            this.asyncSetFieldProps(newpage);
+          }}
+        ></Tabs>
         <List>
           {this.state.listData.map((item, index) => {
             return (
@@ -180,13 +236,9 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-          {/* <InputItem
-            clear
-            value={this.state.inputvalue}
-            placeholder="点击选择"
-            onFocus={this.onOpenChange}
-          ></InputItem> */}
+
           {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
+
           {createPortal(
             <Drawer
               className="my-drawer"

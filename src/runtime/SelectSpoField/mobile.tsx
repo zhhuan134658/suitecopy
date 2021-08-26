@@ -72,11 +72,13 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit' });
   },
-  habdlClick(item: { name: any }) {
+  habdlClick(item: { name: any; detailed_money: any }) {
     const { form } = this.props;
     console.log(item);
 
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
+      form.setFieldValue('Jiesmoney', item.detailed_money);
+      form.setExtendFieldValue('Jiesmoney', item.detailed_money);
       form.setFieldValue('SelectSpo', item.name);
       form.setExtendFieldValue('SelectSpo', {
         data: item,

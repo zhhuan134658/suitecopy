@@ -713,22 +713,6 @@ const FormField: IFormField = {
             })}
           </div>
         </div>
-
-        {/* 合计 */}
-        {/* <List>
-          <List.Item>
-            <div className="label">候选供应商名单</div>
-            <div>
-              <InputItem
-                clear
-                value={candidate_list}
-                placeholder="请输入"
-                onChange={e => this.onInputchange('candidate_list', index, e)}
-              ></InputItem>
-            </div>
-          </List.Item>
-        </List> */}
-        {/* 物资明细 */}
         {createPortal(
           <Drawer
             className="my-drawer"

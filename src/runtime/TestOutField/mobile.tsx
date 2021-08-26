@@ -432,7 +432,7 @@ const FormField: IFormField = {
     }
     return (
       <div className="field-wrapper">
-        <div className="m-group m-group-mobile" style={{ marginBottom: '0px' }}>
+        {/* <div className="m-group m-group-mobile" style={{ marginBottom: '0px' }}>
           <div className="m-field-wrapper">
             <div className="m-field m-field-mobile m-mobile-input vertical">
               <div className="m-field-head" style={{ marginLeft: '-5px' }}>
@@ -463,7 +463,7 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         <div className="tablefield-mobile">
           <div className="table-body  tbody  ">
             {this.state.materialList.map((item, index) => {

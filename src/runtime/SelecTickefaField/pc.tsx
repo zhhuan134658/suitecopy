@@ -1,4 +1,3 @@
-// 选择项目
 // import React from 'react';
 // import { Input } from 'antd';
 // import { IFormField } from '../../types';
@@ -15,14 +14,14 @@
 // const FormField: ISwapFormField = {
 //   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
 //     const { form } = this.props;
-//     form.setFieldValue('SelectSpo', e.target.value);
+//     form.setFieldValue('SelecTickefa', e.target.value);
 //   },
 
 //   fieldRender() {
 //     const { form } = this.props;
-//     const field = form.getFieldInstance('SelectSpo');
-//     const label = form.getFieldProp('SelectSpo', 'label');
-//     const placeholder = form.getFieldProp('SelectSpo', 'placeholders');
+//     const field = form.getFieldInstance('SelecTickefa');
+//     const label = form.getFieldProp('SelecTickefa', 'label');
+//     const placeholder = form.getFieldProp('SelecTickefa', 'placeholders');
 
 //     return (
 //       <div className="pc-custom-field-wrap">
@@ -46,9 +45,10 @@ import { Layout } from 'antd';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
+  Tabs,
+  notification,
   Table,
   Tooltip,
-  notification,
   Modal,
   Input,
   InputNumber,
@@ -60,6 +60,7 @@ const { Search } = Input;
 import { IFormField } from '../../types';
 const { Column } = Table;
 import { FormInstance } from 'antd/lib/form';
+const { TabPane } = Tabs;
 
 import './pc.less';
 const mycolumns = [
@@ -76,7 +77,12 @@ const mycolumns = [
     title: '项目名称',
     dataIndex: 'project_name',
   },
+  {
+    title: '金额',
+    dataIndex: 'reply_money',
+  },
 ];
+
 interface ISwapFormField extends IFormField {
   //   handleChange: () => void;
   handleOk: () => void;
@@ -151,7 +157,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
   const save = async () => {
     try {
       const values = await form.validateFields();
-      //   toggleEdit();   //onchange事件 输入一次失去焦点
+      toggleEdit(); //onchange事件 输入一次失去焦点
       handleSave({ ...record, ...values });
     } catch (errInfo) {
       console.log('11Save failed:', errInfo);
@@ -184,7 +190,8 @@ const EditableCell: React.FC<EditableCellProps> = ({
           ref={inputRef}
           onPressEnter={save}
           onBlur={save}
-          min={1}
+          min={0}
+          step="0.001"
           placeholder="请输入"
         />
       </Form.Item>
@@ -197,7 +204,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
         {children}
       </div>
     );
-
     // childNode = (
     //   <Form.Item
     //     style={{ margin: 0 }}
@@ -226,8 +232,10 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   id: any;
-  num2: any;
-  num1: any;
+  rk_number: any;
+  tax_price: any;
+  tax_rate: any;
+  tax_money: any;
   key: React.Key;
   name: string;
   size: string;
@@ -246,23 +254,23 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
  */
 const FormField: ISwapFormField = {
   getInitialState() {
-    const { form } = this.props;
-
     return {
+      defaultActiveKey: 'a',
       detdate: 'a1',
+      dstatus: '1',
       detailname: '',
-      Inputvalue: form.getFieldInstance('SelectSpo').getValue() || '',
-      //   Inputvalue: '123',
+      Inputmoney2: '',
+      Inputmoney1: '',
       current_page: '', //当前页
       total2: '',
       allData: {
-        type: '0',
+        rk_id: ['a'],
         number: '10',
         page: '1',
         name: '',
-        project_name: '',
       },
       isModalVisible: false,
+      isModalVisibletree: false,
       listData: [],
 
       treeData: [
@@ -291,11 +299,13 @@ const FormField: ISwapFormField = {
       loading: false,
       leaveLongVal: '',
 
+      //   dataSource: [],
       dataSource: [],
       count: 1,
 
       currentEditId: 0,
       currentSelectData: [],
+      currentSelectDataid: [],
       selectedRowKeys: [],
     };
   },
@@ -308,8 +318,9 @@ const FormField: ISwapFormField = {
     console.log(value);
     const newvalue = this.state.allData;
     newvalue.name = value;
-    newvalue.type = 0;
+
     newvalue.page = 1;
+    newvalue.rk_id = [];
     this.setState({
       allData: newvalue,
     });
@@ -328,10 +339,24 @@ const FormField: ISwapFormField = {
     //   loading: true,
     // });
   },
+  onChangepagetree(page) {
+    const newpage = this.state.allData;
+    newpage.page = page;
+    newpage.rk_id = ['-1'];
+    console.log(newpage);
+    this.setState({
+      allData: newpage,
+    });
+    this.asyncSetFieldProps(newpage);
+    // this.getData(page);
+    // this.setState({
+    //   loading: true,
+    // });
+  },
   handleChange(row: DataType) {
     // const inputRef = useRef<Input>(null);
     // const { form } = this.props;
-    // form.setFieldValue('SelectSpo', e.target.value);
+    // form.setFieldValue('SelecTickefa', e.target.value);
     // document.getElementsByClassName('ptID').blur();
     // inputRef.current!.focus();
     this.setState({ currentEditId: row.key });
@@ -342,69 +367,186 @@ const FormField: ISwapFormField = {
     this.setState({ isModalVisible: false });
     this.setState({ selectedRowKeys: [] });
   },
+  handleCanceltree() {
+    this.setState({ isModalVisibletree: false });
+    this.setState({ selectedRowKeys: [] });
+  },
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
+    console.log(row);
+    if (row.tax_money) {
+      const newvalue = this.state.Inputmoney1;
+      this.setState({
+        Inputmoney1: (newvalue - row.tax_money).toFixed(2),
+      });
+      console.log('ssks');
+    }
+    if (row.notax_money) {
+      const newvalue2 = this.state.Inputmoney2;
+      this.setState({
+        Inputmoney2: (newvalue2 - row.notax_money).toFixed(2),
+      });
+      console.log('ssks');
+    }
     this.setState({
       dataSource: dataSource.filter(item => item.id !== row.id),
     });
   },
-
-  handleAdd() {
+  newhandleAdd() {
     const { form } = this.props;
-    const value = form.getFieldValue('Autopro');
-    if (value) {
-      const newvalue = this.state.allData;
-      newvalue.name = '';
-      newvalue.type = 0;
-      newvalue.page = 1;
-      newvalue.project_name = value;
-      newvalue.rk_id = ['a'];
-      this.setState({
-        allData: newvalue,
-        isModalVisible: true,
-      });
-      this.asyncSetFieldProps(newvalue);
-    } else {
-      notification.open({
+    const Pro_name = form.getFieldValue('Autopro');
+    if (!Pro_name) {
+      return notification.open({
         message: '请先选择项目',
       });
     }
-  },
+    const newddd = this.state.defaultActiveKey;
+    console.log(newddd);
+    this.setState({ dstatus: '1' });
+    let newpage = {
+      rk_id: [newddd],
+      number: '10',
+      page: 1,
+      name: '',
+      project_name: Pro_name,
+    };
 
+    this.setState({
+      allData: newpage,
+    });
+    this.asyncSetFieldProps(newpage);
+    this.setState({
+      isModalVisible: true,
+    });
+  },
+  handleAdd() {
+    this.setState({ dstatus: '2' });
+    console.log(this.state.allData);
+    let newpage = {
+      rk_id: ['-1'],
+      number: '10',
+      page: 1,
+      name: '',
+    };
+
+    this.asyncSetFieldProps(newpage);
+    this.setState({
+      isModalVisibletree: true,
+    });
+  },
   handleSave(row: DataType) {
+    const { form } = this.props;
     const newData = [...this.state.dataSource];
+
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
-    newData.splice(index, 1, {
-      ...item,
-      ...row,
-    });
-    console.log(newData);
-    console.log(index);
-    console.log(item);
-
-    if (row.num2) {
-      newData[index].num3 = row.num1 * row.num2;
+    newData.splice(index, 1, { ...item, ...row });
+    if (row.rk_number) {
+      newData[index].tax_money = row.rk_number * row.tax_price;
+    }
+    if (row.tax_rate) {
+      newData[index].notax_price = (
+        row.tax_money *
+        row.tax_rate *
+        0.01
+      ).toFixed(2);
+      newData[index].notax_money = (
+        row.tax_money *
+        (100 - row.tax_rate) *
+        0.01
+      ).toFixed(2);
     }
 
-    this.setState({ dataSource: newData });
+    this.setState({
+      dataSource: newData,
+    });
+
+    // console.log('sss', newarr2);
+    console.log(newData);
+    // 含税金额合计;
+    const newarr1 = [...this.state.dataSource];
+    let newarr2 = [];
+
+    newarr2 = newarr1.filter(item => {
+      if (item.tax_money) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.tax_money;
+    });
+
+    this.setState({
+      Inputmoney1: eval(newarr2.join('+')),
+    });
+    // 不含税金额合计;
+    const newarr3 = [...this.state.dataSource];
+    let newarr4 = [];
+
+    newarr4 = newarr3.filter(item => {
+      if (item.notax_money) {
+        return item;
+      }
+    });
+    newarr4 = newarr4.map(item => {
+      return item.notax_money;
+    });
+
+    this.setState({
+      Inputmoney2: eval(newarr4.join('+')),
+    });
+
+    // if (this.state.Inputmoney2) {
+    //   console.log('saadasdasdas', this.state.Inputmoney2);
+    //   form.setFieldValue('SelecTickefa', newData);
+    //   form.setExtendFieldValue('SelecTickefa', {
+    //     data: newData,
+    //   });
+    // }
+
+    // this.setState({ dataSource: newData, isModalVisible: false }, () => {
+    //   form.setFieldValue('SelecTickefa', newData);
+    //   form.setExtendFieldValue('SelecTickefa', {
+    //     data: newData,
+    //   });
+    // });
+
+    console.log('sss', eval(newarr3.join('+')));
   },
+
+  //   handleSave(row: DataType) {
+  //     const newData = [...this.state.dataSource];
+  //     const index = newData.findIndex(item => row.id === item.id);
+  //     const item = newData[index];
+  //     newData.splice(index, 1, {
+  //       ...item,
+  //       ...row,
+  //     });
+  //     console.log(newData);
+  //     console.log(index);
+  //     console.log(item);
+
+  //     if (row.num2) {
+  //       newData[index].num3 = row.num1 * row.num2;
+  //     }
+
+  //     this.setState({ dataSource: newData });
+  //     },
+
   asyncSetFieldProps(vlauedata) {
     const { form, spi } = this.props;
+
+    const SelecTickefaField = form.getFieldInstance('SelecTickefa');
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const SelectSpoField = form.getFieldInstance('SelectSpo');
+    const key = SelecTickefaField.getProp('id');
 
-    // const leaveReasonField = form.getFieldInstance('leaveReason');
-    const key = SelectSpoField.getProp('id');
-    // const value = SelectSpoField.getValue();
     const value = '1';
 
-    // const extendValue = SelectSpoField.getExtendValue();
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'SelectSpo',
+        bizAlias: 'SelecTickefa',
         extendValue: vlauedata,
         value,
       },
@@ -414,30 +556,78 @@ const FormField: ISwapFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['SelectSpo'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['SelecTickefa'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
         console.log(JSON.parse(res.dataList[0].value));
 
-        // this.state.listData = find(
-        //   res.dataList,
-        //   item => item.bizAlias === 'SelectSpo',
-        // );
-
-        // this.state.listData = res.dataList[0].value;
-
-        // this.setState({
-        //   listData: res.dataList[0].value,
-        // });
         //   表格数据
         const newarr = JSON.parse(res.dataList[0].value).data;
-
+        //   树状图数据
+        const newtarr = JSON.parse(res.dataList[0].extendValue);
+        const newtarr1 = [
+          {
+            title: '物资类型',
+            key: '0',
+            children: newtarr,
+          },
+        ];
         this.setState({
-          listData: [...newarr],
+          treeData: [...newtarr1],
           current_page: JSON.parse(res.dataList[0].value).page,
-          total2: JSON.parse(res.dataList[0].value).count,
+          total3: JSON.parse(res.dataList[0].value).count,
         });
+        const checked = this.state.currentSelectDataid;
+        const dstatus = this.state.dstatus;
+        if (dstatus === '2') {
+          const newssarr = [...newarr];
+          this.setState({
+            treelistData: newssarr,
+          });
+          // 含税金额合计;
+
+          let newarr2 = [];
+
+          newarr2 = newssarr.filter(item => {
+            if (item.tax_money) {
+              return item;
+            }
+          });
+          newarr2 = newarr2.map(item => {
+            return item.tax_money;
+          });
+
+          this.setState({
+            Inputmoney1: eval(newarr2.join('+')),
+          });
+          // 不含税金额合计;
+
+          let newarr4 = [];
+
+          newarr4 = newssarr.filter(item => {
+            if (item.notax_money) {
+              return item;
+            }
+          });
+          newarr4 = newarr4.map(item => {
+            return item.notax_money;
+          });
+
+          this.setState({
+            Inputmoney2: eval(newarr4.join('+')),
+          });
+        } else if (dstatus === '1') {
+          this.setState({
+            listData: [...newarr],
+            current_page: JSON.parse(res.dataList[0].value).page,
+            total2: JSON.parse(res.dataList[0].value).count,
+          });
+        } else if (dstatus === '3') {
+          this.setState({
+            dataSource: [...newarr],
+          });
+        }
 
         // console.log(JSON.parse(newarr));
         // console.log(this.state.listData);
@@ -445,34 +635,26 @@ const FormField: ISwapFormField = {
   },
   rowClick(this, record, rowkey) {
     const { form } = this.props;
-    console.log(record);
-
-    this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
-      form.setFieldValue('Jiesmoney', record.detailed_money);
-      form.setExtendFieldValue('Jiesmoney', record.detailed_money);
-      form.setFieldValue('SelectSpo', record.name);
-      form.setExtendFieldValue('SelectSpo', {
-        data: record,
-      });
-    });
-
-    // form.getFormData().then(res => {
-    //   debugger
-    // })
-
-    // console.log(`formData: ${.}`);
-
-    // const newData = [...this.state.dataSource];
-    // const index = newData.findIndex(
-    //   item => this.state.currentEditId === item.key,
-    // );
-    // const currentKey = newData[index].key;
-    // newData[index] = record;
-    // newData[index].key = currentKey;
+    const newData = [...this.state.dataSource];
+    const index = newData.findIndex(
+      item => this.state.currentEditId === item.key,
+    );
+    const currentKey = newData[index].key;
+    newData[index] = record;
+    newData[index].key = currentKey;
     // this.setState({ dataSource: newData });
     // this.setState({ isModalVisible: false });
+
+    this.setState({ dataSource: newData, isModalVisible: false }, () => {
+      form.setFieldValue('SelecTickefa', record);
+      form.setExtendFieldValue('SelecTickefa', {
+        record: record,
+        Inputmoney1: this.state.Inputmoney1,
+        Inputmoney2: this.state.Inputmoney2,
+      });
+    });
   },
-  handleOk() {
+  handleOktree() {
     const newData = [...this.state.dataSource];
     const cData = [...this.state.currentSelectData];
     let lData = [];
@@ -484,7 +666,17 @@ const FormField: ISwapFormField = {
     lData = this.unique(newData);
     console.log('pp+' + JSON.stringify(lData));
     this.setState({ dataSource: lData });
-    this.setState({ isModalVisible: false });
+    this.setState({ isModalVisibletree: false });
+    this.setState({ selectedRowKeys: [] });
+  },
+  handleOk() {
+    this.setState({ dstatus: '3' });
+    console.log(this.state.detdate);
+    const cDataid = [...this.state.currentSelectDataid];
+
+    this.setState({
+      isModalVisible: false,
+    });
     this.setState({ selectedRowKeys: [] });
   },
   unique(arr) {
@@ -492,19 +684,40 @@ const FormField: ISwapFormField = {
     return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
   },
   fieldDidUpdate() {
+    if (!this.props.runtimeProps.viewMode) {
+      console.log('发起页：fieldDidUpdate');
+      let editData = {
+        hanmoney: '',
+        nomoney: '',
+        detailname: '',
+        detailedData: [], //物资明细
+      };
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
+      editData.detailname = this.state.detailname;
+      editData.detailedData = this.state.dataSource;
+      const { form } = this.props;
+      form.setFieldValue('SelecTickefa', editData);
+      form.setExtendFieldValue('SelecTickefa', {
+        data: editData,
+      });
+    }
+
     // this.state.dataSource;
     // this.state.Inputmoney1;
     // this.state.Inputmoney2;
   },
   fieldRender() {
-    const { form, runtimeProps } = this.props;
-    const { viewMode } = runtimeProps;
-    const field = form.getFieldInstance('SelectSpo');
-    const label = form.getFieldProp('SelectSpo', 'label');
-    const required = form.getFieldProp('SelectSpo', 'required');
-    const placeholder = form.getFieldProp('SelectSpo', 'placeholder');
+    const { form } = this.props;
+    const field = form.getFieldInstance('SelecTickefa');
+    const label = form.getFieldProp('SelecTickefa', 'label');
+    const placeholder = form.getFieldProp('SelecTickefa', 'placeholder');
+    const required = form.getFieldProp('SelecTickefa', 'required');
     const { dataSource, selectedRowKeys } = this.state;
-
     // const treeData = [
     //   {
     //     title: 'parent 0',
@@ -525,35 +738,60 @@ const FormField: ISwapFormField = {
     // ];
     const etColumns = [
       {
-        title: '名称',
+        title: '物资名称',
         dataIndex: 'name',
-        width: '30%',
+        width: 100,
+        key: 'name',
+        fixed: 'left',
       },
       {
-        title: '类型',
-        dataIndex: 'type',
+        title: '单位',
+        dataIndex: 'unit',
+        width: 100,
+        key: 'unit',
+        fixed: 'left',
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
+        width: 100,
+        key: 'size',
+        fixed: 'left',
       },
       {
-        title: '数量',
-        dataIndex: 'num1',
+        title: '入库数量',
+        dataIndex: 'rk_number',
         editable: true,
       },
       {
-        title: '单价',
-        dataIndex: 'num2',
+        title: '含税单价',
+        dataIndex: 'tax_price',
         editable: true,
       },
       {
-        title: '金额',
-        dataIndex: 'num3',
+        title: '税率(%)',
+        dataIndex: 'tax_rate',
+        editable: true,
+      },
+
+      {
+        title: '税额',
+        dataIndex: 'notax_price',
+      },
+      {
+        title: '含税金额',
+        dataIndex: 'tax_money',
+      },
+      {
+        title: '不含税金额',
+        dataIndex: 'notax_money',
       },
       {
         title: '操作',
         dataIndex: 'operation',
+        key: 'operation',
+        fixed: 'right',
+        width: 100,
         render: (_, record: any) =>
           this.state.dataSource.length >= 1 ? (
             <Popconfirm
@@ -590,7 +828,12 @@ const FormField: ISwapFormField = {
 
     const onSelect = (keys: React.Key[], info: any) => {
       console.log('Trigger Select', keys, info);
-      const treedata = { type: keys[0], number: '10', page: '1' };
+      const treedata = {
+        type: keys[0],
+        number: '10',
+        page: '1',
+        rk_id: ['-1'],
+      };
       this.setState({
         allData: treedata,
       });
@@ -600,7 +843,22 @@ const FormField: ISwapFormField = {
     const onExpand = () => {
       console.log('Trigger Expand');
     };
+    const Tabschange = key => {
+      console.log(key);
 
+      let newpage = {
+        defaultActiveKey: key,
+        rk_id: [key],
+        number: '10',
+        page: 1,
+        name: '',
+      };
+      this.setState({
+        allData: newpage,
+        detdate: key + '1',
+      });
+      this.asyncSetFieldProps(newpage);
+    };
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -609,73 +867,73 @@ const FormField: ISwapFormField = {
         //   'selectedRows: ',
         //   selectedRows,
         // );
-        const { form } = this.props;
         let dtar = '';
         let newData = [...selectedRows];
+        let newDataid = [];
         if (newData.length > 0) {
           newData = newData.map(item => {
             return Object.assign(item, {
               num: 1,
             });
           });
+          newDataid = newData.map(item => {
+            return item.id;
+          });
         }
+        console.log('======' + JSON.stringify(newDataid));
         if (this.state.detdate === 'a1') {
-          dtar = newData[0].name;
+          dtar = '材料合同-' + newData[0].name;
+        } else if (this.state.detdate === 'b1') {
+          dtar = '劳务合同-' + newData[0].name;
+        } else if (this.state.detdate === 'c1') {
+          dtar = '分包合同-' + newData[0].name;
+        } else if (this.state.detdate === 'd1') {
+          dtar = '租赁合同-' + newData[0].name;
+        } else if (this.state.detdate === 'e1') {
+          dtar = '收入-' + newData[0].name;
         }
-        console.log('======' + JSON.stringify(newData));
-        this.setState({ currentSelectData: newData, detailname: dtar });
-        //   Jiesmoney;
-        form.setFieldValue('Jiesmoney', newData[0].reply_money);
-        form.setExtendFieldValue('Jiesmoney', newData[0].reply_money);
+
+        this.setState({
+          currentSelectData: newData,
+          currentSelectDataid: newDataid,
+          detailname: dtar,
+        });
         this.setState({ selectedRowKeys });
       },
     };
-    // 详情页
-    //详情
+    // 详情页  detailname
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
       const { detailname = '' } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">物资明细</div>
-          {/* <div>{detailname}</div> */}
+          <div className="label">名称</div>
           {JSON.stringify(value)}
+          {/* <div>{detailname}</div> */}
         </div>
       );
     }
-
     return (
       <div className="pc-custom-field-wrap">
-        <div className="label">
-          {required ? (
-            <span style={{ color: '#ea6d5c' }}>*</span>
-          ) : (
-            <span style={{ color: '#fff' }}>*</span>
-          )}{' '}
-          {label}
-        </div>
-        {/* {field.getProp('viewMode') ? (
-          field.getValue()
-            ) :
-                (
-          <Input
-            id="ptID"
-            placeholder={placeholder}
-            onFocus={this.handleChange}
-            value={this.state.leaveLongVal}
-          />
-        )} */}
         <div>
+          <div className="label">
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}
+            {label}
+          </div>
           <Input
+            onClick={this.newhandleAdd}
             readOnly
             value={this.state.detailname}
-            onClick={this.handleAdd}
-            placeholder="请选择合同"
+            placeholder="请选择"
           />
         </div>
 
         <Modal
-          title="选择合同"
+          title="关联"
           width={1000}
           visible={this.state.isModalVisible}
           footer={[
@@ -693,8 +951,16 @@ const FormField: ISwapFormField = {
           ]}
           onCancel={this.handleCancel}
         >
+          <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
+            <TabPane tab="材料合同" key="a"></TabPane>
+            <TabPane tab="劳务合同" key="b"></TabPane>
+            <TabPane tab="分包合同 " key="c"></TabPane>
+            <TabPane tab="租赁合同" key="d"></TabPane>
+            <TabPane tab="收入合同" key="e"></TabPane>
+          </Tabs>
+
           <Search
-            placeholder="请输入合同名称"
+            placeholder="请输入物品名称"
             allowClear
             enterButton="搜索"
             size="large"
@@ -720,6 +986,7 @@ const FormField: ISwapFormField = {
             onChange={this.onChangepage}
           />
         </Modal>
+        {/* 树形 */}
       </div>
     );
   },

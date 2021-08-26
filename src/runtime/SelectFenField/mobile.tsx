@@ -69,25 +69,23 @@ const FormField: IFormField = {
     console.log(args);
     const { form } = this.props;
     const value = form.getFieldValue('Autopro');
-    if (value) {
-      const newvalue = this.state.allData;
-      newvalue.name = '';
-      newvalue.type = 0;
-      newvalue.page = 1;
-      newvalue.project_name = value;
-      this.setState({
-        allData: newvalue,
-      });
-      this.asyncSetFieldProps(newvalue);
-    } else {
-      Toast.info('请先选择项目', 1);
-    }
+
+    const newvalue = this.state.allData;
+    newvalue.name = '';
+    newvalue.type = 0;
+    newvalue.page = 1;
+    newvalue.project_name = value;
+    this.setState({
+      allData: newvalue,
+    });
+    this.asyncSetFieldProps(newvalue);
+
     this.setState({ showElem: 'inherit' });
   },
   habdlClick(item: { name: any; sub_unit: any; contract_money: any }) {
     const { form } = this.props;
     console.log(item);
-    this.setState({ Inputvalue: item.name, showElem: 'none' }, () => {
+    this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('Selectjia', item.sub_unit);
       form.setExtendFieldValue('Selectjia', item.sub_unit);
       form.setFieldValue('Fenmoney', item.contract_money);
