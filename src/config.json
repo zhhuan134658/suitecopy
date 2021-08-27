@@ -173,7 +173,7 @@
       "props": {
         "required": false,
         "placeholder": "请输入",
-        "label": "保证金付款登记-项目"
+        "label": "保证金付款登记-项目（废弃）"
       },
       "type": "custom"
     },

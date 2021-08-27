@@ -137,7 +137,6 @@ const FormField: IFormField = {
         bizAsyncData,
       })
       .then(res => {
-
         let newarr;
         console.log('weqweq', JSON.parse(res.dataList[0].value));
 
@@ -699,23 +698,20 @@ const FormField: IFormField = {
                       </div>
                     </div>
                   </div>
-                  <div className="table-actions">
-                    <div
-                      className="tbody-add-button tTap"
-                      onClick={this.addSon}
-                    >
-                      <img
-                        style={{ width: '20px' }}
-                        src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
-                        alt=""
-                      />
-                      &nbsp;
-                      <span className="add-button-text">增加明细</span>
-                    </div>
-                  </div>
                 </div>
               );
             })}
+            <div className="table-actions">
+              <div className="tbody-add-button tTap" onClick={this.addSon}>
+                <img
+                  style={{ width: '20px' }}
+                  src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
+                  alt=""
+                />
+                &nbsp;
+                <span className="add-button-text">增加明细</span>
+              </div>
+            </div>
           </div>
         </div>
         {createPortal(

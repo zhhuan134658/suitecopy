@@ -131,7 +131,7 @@ const FormField: IFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['TestOut'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['TestOut'], // spi接口要改动的是leaveReaso n的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -176,7 +176,7 @@ const FormField: IFormField = {
 
     this.setState({ dstatus: '1' });
     let newpage = {
-      rk_id: ['a'],
+      isHouse: '1',
       number: '10',
       page: 1,
       name: '',
@@ -192,7 +192,8 @@ const FormField: IFormField = {
     console.log('sss');
     console.log(args);
     const newdate = this.state.allData;
-
+    newdate.isHouse = '2';
+    newdate.ck_name = this.state.chenkdata;
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit', checkindex: index });
   },
@@ -224,10 +225,10 @@ const FormField: IFormField = {
     );
   },
   checkClick(item) {
-    const cDataid = [item.id];
-    const newdate = this.state.allData;
-    newdate.rk_id = ['a1', ...cDataid];
-    this.asyncSetFieldProps(newdate, 1);
+    // const cDataid = [item.id];
+    // const newdate = this.state.allData;
+    // newdate.rk_id = ['a1', ...cDataid];
+    // this.asyncSetFieldProps(newdate, 1);
     this.setState({
       chenkdata: item.name,
       showElem3: 'none',
@@ -438,7 +439,7 @@ const FormField: IFormField = {
     }
     return (
       <div className="field-wrapper">
-        {/* <div className="m-group m-group-mobile" style={{ marginBottom: '0px' }}>
+        <div className="m-group m-group-mobile" style={{ marginBottom: '0px' }}>
           <div className="m-field-wrapper">
             <div className="m-field m-field-mobile m-mobile-input vertical">
               <div className="m-field-head" style={{ marginLeft: '-5px' }}>
@@ -469,7 +470,7 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="tablefield-mobile">
           <div className="table-body  tbody  ">
             {this.state.materialList.map((item, index) => {
@@ -825,7 +826,7 @@ const FormField: IFormField = {
         </div>
 
         {/* 合计 */}
-        <div className="field-wrapper">
+        {/* <div className="field-wrapper">
           <div className="m-group m-group-mobile">
             <div className="m-field-wrapper">
               <div className="m-field m-field-mobile m-select-field">
@@ -872,7 +873,7 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* 物资明细 */}
         {createPortal(
           <Drawer

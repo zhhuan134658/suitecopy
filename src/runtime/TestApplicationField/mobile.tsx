@@ -14,10 +14,10 @@ import {
   WhiteSpace,
   WingBlank,
 } from 'antd-mobile';
-
 import { Tree } from 'antd';
 import './mobile.less';
 const Item = List.Item;
+
 /**
  * 自定义控件运行态 Mobile 视图
  */
@@ -47,10 +47,12 @@ const FormField: IFormField = {
         {
           title: '需用数量',
           dataIndex: 'need_quantity',
+          editable: true,
         },
         {
           title: '参考价格',
           dataIndex: 'refer_price',
+          editable: true,
         },
 
         {
@@ -99,12 +101,12 @@ const FormField: IFormField = {
           name: '',
           size: '',
           unit: '',
-          zh_plan_quantity: '',
-          need_quantity: '',
-          purchase_riqi: '',
-          refer_price: '',
-          subtotal: '',
-          remarks: '',
+          rk_number: '',
+          tax_price: '',
+          tax_rate: '',
+          notax_price: '',
+          tax_money: '',
+          notax_money: '',
         },
       ],
       sonData: {
@@ -112,12 +114,12 @@ const FormField: IFormField = {
         name: '',
         size: '',
         unit: '',
-        zh_plan_quantity: '',
-        need_quantity: '',
-        purchase_riqi: '',
-        refer_price: '',
-        subtotal: '',
-        remarks: '',
+        rk_number: '',
+        tax_price: '',
+        tax_rate: '',
+        notax_price: '',
+        tax_money: '',
+        notax_money: '',
       },
     };
   },
@@ -128,7 +130,7 @@ const FormField: IFormField = {
     const TestApplicationField = form.getFieldInstance('TestApplication');
     const key = TestApplicationField.getProp('id');
     const value = '1';
-    const bizAsyncData = [
+    con st bizAsyncData = [
       {
         key,
         bizAlias: 'TestApplication',
@@ -145,6 +147,8 @@ const FormField: IFormField = {
         bizAsyncData,
       })
       .then(res => {
+        console.log(JSON.parse(res.dataList[0].value));
+        //   表格数据
         let newarr;
         console.log('weqweq', JSON.parse(res.dataList[0].value));
 
@@ -172,8 +176,9 @@ const FormField: IFormField = {
           checkData: [...newarr],
         });
         if (type === 1) {
+          console.log('9887987', newarr);
           this.setState({
-            materialList: [...newarr],
+            materialList: newarr,
           });
         }
       });
@@ -200,7 +205,7 @@ const FormField: IFormField = {
     console.log('sss');
     console.log(args);
     const newdate = this.state.allData;
-
+    newdate.rk_id = ['-1'];
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit', checkindex: index });
   },
@@ -273,26 +278,34 @@ const FormField: IFormField = {
   onInputchange(types, index, e) {
     console.log(types, index, e, this);
     let arr = this.state.materialList;
-    console.log(this.state.materialList);
-    // let arrindex = e.target.value;
+    console.log('120', this.state.materialList);
+
     let arrindex = e;
     let newindex = index;
     let newtype = types;
-    // arr[newindex] = {};
+
     arr[newindex][newtype] = arrindex;
+
     arr[newindex].subtotal =
       arr[newindex].need_quantity * arr[newindex].refer_price;
 
-    const newlistdata = [...arr];
+    //   含税金额
     let newarr2 = [];
-    newarr2 = newlistdata.map(item => {
+
+    newarr2 = arr.filter(item => {
+      if (item.subtotal) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
       return item.subtotal;
     });
+
     this.setState({
       materialList: [...arr],
       Inputmoney1: eval(newarr2.join('+')),
     });
-    console.log(arr);
+    console.log('12', arr);
   },
   onDatechange(types, index, dateString) {
     // let arr = this.state.materialList;
@@ -305,9 +318,17 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
+        hanmoney: '',
+        nomoney: '',
         detailname: '',
         detailedData: [], //物资明细
       };
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
       editData.detailname = this.state.chenkdata;
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
@@ -409,15 +430,15 @@ const FormField: IFormField = {
     //详情
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
-      const { detailname = '', detailedData = [] } = value;
+
+      const {
+        hanmoney = '',
+        nomoney = '',
+        detailname = '',
+        detailedData = [],
+      } = value;
       return (
         <div className="field-wrapper">
-          <div className="m-field-view">
-            <label className="m-field-view-label">名称</label>
-            <div className="m-field-view-value">
-              <span>{detailname}</span>
-            </div>
-          </div>
           <div className="tablefield-mobile">
             <div className="tbody-row-wrap">
               {detailedData.map((item, index) => {
@@ -447,43 +468,54 @@ const FormField: IFormField = {
               })}
             </div>
           </div>
+          <div>
+            <div className="field-wrapper">
+              <div className="m-field-view">
+                <label className="m-field-view-label">含税金额</label>
+                <div className="m-field-view-value">
+                  <span>{hanmoney}</span>
+                </div>
+              </div>
+            </div>
+            <div className="field-wrapper">
+              <div className="m-field-view">
+                <label className="m-field-view-label">不含税金额</label>
+                <div className="m-field-view-value">
+                  <span>{nomoney}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
     return (
       <div className="field-wrapper">
-        {/* <div className="m-group m-group-mobile" style={{ marginBottom: '0px' }}>
-          <div className="m-field-wrapper">
-            <div className="m-field m-field-mobile m-mobile-input vertical">
-              <div className="m-field-head" style={{ marginLeft: '-5px' }}>
-                <label className="m-field-label">
-                  <span>
-                    {required ? (
-                      <span style={{ color: '#ea6d5c' }}>*</span>
-                    ) : (
-                      <span style={{ color: '#fff' }}>*</span>
-                    )}
-                    {label}
-                  </span>
-                </label>
-              </div>
-              <div className="m-field-box">
-                <div className="m-field-content left">
-                  <div className="input-wrapper">
-                    <input
-                      readOnly
-                      className="ant-input m-mobile-inner-input"
-                      type="text"
-                      placeholder="点击选择"
-                      value={this.state.chenkdata}
-                      onFocus={this.getcheckdata}
-                    />
+        <div className="field-wrapper">
+          <div className="m-group m-group-mobile">
+            <div className="m-field-wrapper">
+              <div className="m-field m-field-mobile m-select-field">
+                <div className="m-field-head">
+                  <div className="m-field-label">
+                    <span>{label}</span>
+                  </div>
+                </div>
+                <div className="m-field-box">
+                  <div className="m-field-content left">
+                    <div className="input-wrapper">
+                      <InputItem
+                        value={this.state.chenkdata}
+                        onFocus={this.getcheckdata}
+                        placeholder="请输入"
+                        readOnly
+                      ></InputItem>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="tablefield-mobile">
           <div className="table-body  tbody  ">
             {this.state.materialList.map((item, index) => {
@@ -515,7 +547,7 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -552,7 +584,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
@@ -664,7 +696,6 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
-                                          clear
                                           value={item.zh_plan_quantity}
                                           placeholder="请输入"
                                           onChange={e =>
@@ -815,28 +846,59 @@ const FormField: IFormField = {
                             </div>
                           </div>
                         </div>
+                        {/* <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>不含税金额</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          clear
+                                          value={item.notax_money}
+                                          placeholder="请输入"
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'notax_money',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        ></InputItem>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div> */}
                       </div>
-                    </div>
-                  </div>
-                  <div className="table-actions">
-                    <div
-                      className="tbody-add-button tTap"
-                      onClick={this.addSon}
-                    >
-                      <img
-                        style={{ width: '20px' }}
-                        src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
-                        alt=""
-                      />
-                      &nbsp;
-                      <span className="add-button-text">增加明细</span>
                     </div>
                   </div>
                 </div>
               );
             })}
+            <div className="table-actions">
+              <div className="tbody-add-button tTap" onClick={this.addSon}>
+                <img
+                  style={{ width: '20px' }}
+                  src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
+                  alt=""
+                />
+                &nbsp;
+                <span className="add-button-text">增加明细</span>
+              </div>
+            </div>
           </div>
         </div>
+        {/*  */}
 
         {/* 合计 */}
         <div className="field-wrapper">
@@ -845,7 +907,7 @@ const FormField: IFormField = {
               <div className="m-field m-field-mobile m-select-field">
                 <div className="m-field-head">
                   <div className="m-field-label">
-                    <span>含税金额合计</span>
+                    <span>含税金额</span>
                   </div>
                 </div>
                 <div className="m-field-box">
@@ -863,7 +925,30 @@ const FormField: IFormField = {
             </div>
           </div>
         </div>
-
+        <div className="field-wrapper">
+          <div className="m-group m-group-mobile">
+            <div className="m-field-wrapper">
+              <div className="m-field m-field-mobile m-select-field">
+                <div className="m-field-head">
+                  <div className="m-field-label">
+                    <span>不含税金额合计</span>
+                  </div>
+                </div>
+                <div className="m-field-box">
+                  <div className="m-field-content left">
+                    <div className="input-wrapper">
+                      <InputItem
+                        value={this.state.Inputmoney2}
+                        placeholder="请输入"
+                        readOnly
+                      ></InputItem>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* 物资明细 */}
         {createPortal(
           <Drawer

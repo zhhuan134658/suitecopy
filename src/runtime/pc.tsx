@@ -62,30 +62,15 @@ const SwapDemoSuite: ISwapDemoSuite = {
   },
   // 关联选项
   formDataLinkagehandler() {
-    // const { form } = this.props;
-    // const leaveTypeField = form.getFieldInstance('leaveType');
-    // const leaveReasonField = form.getFieldInstance('leaveReason');
-    // leaveTypeField.onExtendValueChange(option => {
-    //   if (option.key === 'option_2') {
-    //     leaveReasonField.show();
-    //   } else {
-    //     leaveReasonField.hide();
-    //   }
-    // });
+
   },
 
   // 动态获取业务数据
   asyncSetFieldProps(vlauedata: any) {
     const { form, spi } = this.props;
-
     const SelectbaoproField = form.getFieldInstance('Selectbaopro');
-
-    // const leaveReasonField = form.getFieldInstance('leaveReason');
     const key = SelectbaoproField.getProp('id');
-    // const value = SelectbaoproField.getValue();
     const value = '1';
-
-    // const extendValue = SelectbaoproField.getExtendValue();
     const bizAsyncData = [
       {
         key,
@@ -94,9 +79,6 @@ const SwapDemoSuite: ISwapDemoSuite = {
         value,
       },
     ];
-
-    // 入参和返回参考套件数据刷新集成接口文档
-
     spi
       .refreshData({
         modifiedBizAlias: ['Selectbaopro'], // spi接口要改动的是leaveReason的属性值
@@ -105,15 +87,9 @@ const SwapDemoSuite: ISwapDemoSuite = {
       .then(res => {
         let newarr;
         console.log('weqweq', JSON.parse(res.dataList[0].value));
-
-        //   表格数据
         try {
           newarr = JSON.parse(res.dataList[0].value).data;
         } catch (e) {}
-
-        console.log(form);
-        console.log(form.getFieldProps('RadioField'));
-        // form.setFieldProp('Selectbaopro', { options: newarr });
         form.setFieldProp('Selectbaopro', 'options', newarr);
       });
   },

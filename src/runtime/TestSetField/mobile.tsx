@@ -6,9 +6,9 @@ import {
   DatePicker,
   InputItem,
   Drawer,
+  Tabs,
   List,
   NavBar,
-  Tabs,
   Icon,
   SearchBar,
   Button,
@@ -42,7 +42,7 @@ const FormField: IFormField = {
           dataIndex: 'size',
         },
         {
-          title: '需用数量',
+          title: '数量',
           dataIndex: 'need_quantity',
         },
         {
@@ -89,6 +89,7 @@ const FormField: IFormField = {
           ],
         },
       ],
+      detdate: '',
       date: now,
       checkindex: '',
       SearchBarvalue: '',
@@ -106,7 +107,6 @@ const FormField: IFormField = {
           unit: '',
           need_quantity: '',
           refer_price: '',
-          purchase_riqi: '',
           tax_rate: '',
           notax_price: '',
           tax_money: '',
@@ -120,7 +120,6 @@ const FormField: IFormField = {
         unit: '',
         need_quantity: '',
         refer_price: '',
-        purchase_riqi: '',
         tax_rate: '',
         notax_price: '',
         tax_money: '',
@@ -152,7 +151,8 @@ const FormField: IFormField = {
         bizAsyncData,
       })
       .then(res => {
-      
+        console.log(JSON.parse(res.dataList[0].value));
+        //   表格数据
         let newarr;
         console.log('weqweq', JSON.parse(res.dataList[0].value));
 
@@ -180,8 +180,9 @@ const FormField: IFormField = {
           checkData: [...newarr],
         });
         if (type === 1) {
+          console.log('9887987', newarr);
           this.setState({
-            materialList: [...newarr],
+            materialList: newarr,
           });
         }
       });
@@ -208,7 +209,7 @@ const FormField: IFormField = {
     console.log('sss');
     console.log(args);
     const newdate = this.state.allData;
-
+    newdate.rk_id = ['-1'];
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit', checkindex: index });
   },
@@ -223,29 +224,34 @@ const FormField: IFormField = {
   habdlClick(item: { name: any; size: any; unit: any }) {
     const { form } = this.props;
     console.log(item);
+
     let arr = this.state.materialList;
     let arrindex = this.state.checkindex;
 
     arr[arrindex].name = item.name;
     arr[arrindex].size = item.size;
     arr[arrindex].unit = item.unit;
-    this.setState(
-      { inputvalue: item.name, showElem: 'none', materialList: arr },
-      () => {
-        form.setFieldValue('TestSet', item.name);
-        form.setExtendFieldValue('TestSet', {
-          data: item.name,
-        });
-      },
-    );
+    this.setState({
+      chenkdata: item.name,
+      showElem: 'none',
+      materialList: arr,
+    });
   },
   checkClick(item) {
     const cDataid = [item.id];
     const newdate = this.state.allData;
-    newdate.rk_id = ['a1', ...cDataid];
+    let dtar = '';
+    if (this.state.detdate === 'a1') {
+      dtar = '采购合同-' + item.name;
+    } else if (this.state.detdate === 'b1') {
+      dtar = '采购订单-' + item.name;
+    } else if (this.state.detdate === 'c1') {
+      dtar = '材料入库-' + item.name;
+    }
+    newdate.rk_id = [this.state.detdate, ...cDataid];
     this.asyncSetFieldProps(newdate, 1);
     this.setState({
-      chenkdata: item.name,
+      chenkdata: dtar,
       showElem3: 'none',
     });
   },
@@ -281,26 +287,49 @@ const FormField: IFormField = {
   onInputchange(types, index, e) {
     console.log(types, index, e, this);
     let arr = this.state.materialList;
-    console.log(this.state.materialList);
-    // let arrindex = e.target.value;
+    console.log('120', this.state.materialList);
+
     let arrindex = e;
     let newindex = index;
     let newtype = types;
-    // arr[newindex] = {};
-    arr[newindex][newtype] = arrindex;
-    arr[newindex].notax_price =
-      arr[newindex].refer_price * arr[newindex].tax_rate;
 
-    const newlistdata = [...arr];
+    arr[newindex][newtype] = arrindex;
+    arr[newindex].tax_money =
+      arr[newindex].need_quantity * arr[newindex].refer_price;
+    arr[newindex].notax_money =
+      (arr[newindex].need_quantity *
+        arr[newindex].refer_price *
+        arr[newindex].tax_rate) /
+      100;
+
+    //   含税金额
     let newarr2 = [];
-    newarr2 = newlistdata.map(item => {
-      return item.notax_price;
+
+    newarr2 = arr.filter(item => {
+      if (item.tax_money) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.tax_money;
+    });
+    //不含税金额
+    let newarr4 = [];
+
+    newarr4 = arr.filter(item => {
+      if (item.notax_money) {
+        return item;
+      }
+    });
+    newarr4 = newarr4.map(item => {
+      return item.notax_money;
     });
     this.setState({
       materialList: [...arr],
       Inputmoney1: eval(newarr2.join('+')),
+      Inputmoney2: eval(newarr4.join('+')),
     });
-    console.log(arr);
+    console.log('12', arr);
   },
   onDatechange(types, index, dateString) {
     // let arr = this.state.materialList;
@@ -338,40 +367,14 @@ const FormField: IFormField = {
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
     const field = form.getFieldInstance('TestSet');
-    const required = form.getFieldProp('TestSet', 'required');
+    const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestSet', 'label');
     const tabs = [
       { title: '采购合同' },
       { title: '采购订单' },
       { title: '材料入库' },
+      { title: '收入质保金结算' },
     ];
-    const onTabClick = index => {
-      let newpage = {
-        defaultActiveKey: 'a',
-        rk_id: ['a'],
-        number: '10',
-        page: 1,
-        name: '',
-      };
-      if (index === 0) {
-        newpage.defaultActiveKey = 'a';
-        newpage.rk_id = ['a'];
-      } else if (index === 1) {
-        newpage.defaultActiveKey = 'b';
-        newpage.rk_id = ['b'];
-      } else if (index === 2) {
-        newpage.defaultActiveKey = 'c';
-        newpage.rk_id = ['c'];
-      } else if (index === 3) {
-        newpage.defaultActiveKey = 'd';
-        newpage.rk_id = ['d'];
-      }
-      this.setState({
-        allData: newpage,
-        detdate: newpage.defaultActiveKey + '1',
-      });
-      this.asyncSetFieldProps(newpage);
-    };
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;
@@ -426,11 +429,35 @@ const FormField: IFormField = {
         />
         <Tabs
           tabs={tabs}
-          initialPage={1}
+          initialPage={0}
           onChange={(tab, index) => {
             console.log('onChange', index, tab);
+            this.setState({ detdate: 'a1' });
+            let newpage = {
+              defaultActiveKey: 'a',
+              rk_id: ['a'],
+              number: '1000',
+              page: 1,
+              name: '',
+            };
+            if (index === 0) {
+              this.setState({ detdate: 'a1' });
+              newpage.rk_id = ['a'];
+            } else if (index === 1) {
+              this.setState({ detdate: 'b1' });
+              newpage.rk_id = ['b'];
+            } else if (index === 2) {
+              this.setState({ detdate: 'c1' });
+              newpage.rk_id = ['c'];
+            } else if (index === 3) {
+              this.setState({ detdate: 'd1' });
+              newpage.rk_id = ['d'];
+            }
+            this.setState({
+              allData: newpage,
+            });
+            this.asyncSetFieldProps(newpage);
           }}
-          onTabClick={onTabClick}
         ></Tabs>
         <List>
           {this.state.checkData.map((item, index) => {
@@ -466,52 +493,40 @@ const FormField: IFormField = {
       const value = field.getValue();
 
       const {
-        detailname = '',
-        nomoney = '',
         hanmoney = '',
+        nomoney = '',
+        detailname = '',
         detailedData = [],
       } = value;
       return (
-        <div>
-          <div>
-            <div className="field-wrapper">
-              <div className="m-field-view">
-                <label className="m-field-view-label">名称</label>
-                <div className="m-field-view-value">
-                  <span>{detailname}</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="field-wrapper">
-            <div className="tablefield-mobile">
-              <div className="tbody-row-wrap">
-                {detailedData.map((item, index) => {
-                  return (
-                    <div className="row">
-                      <label className="label row-label-title">
-                        {label}明细({index + 1})
-                      </label>
-                      {this.state.deColumns.map((itemname, indexname) => {
-                        return (
-                          <div>
-                            <div className="field-wrapper">
-                              <div className="m-field-view">
-                                <label className="m-field-view-label">
-                                  {itemname.title}
-                                </label>
-                                <div className="m-field-view-value">
-                                  <span>{item[itemname.dataIndex]}</span>
-                                </div>
+        <div className="field-wrapper">
+          <div className="tablefield-mobile">
+            <div className="tbody-row-wrap">
+              {detailedData.map((item, index) => {
+                return (
+                  <div className="row">
+                    <label className="label row-label-title">
+                      {label}明细({index + 1})
+                    </label>
+                    {this.state.deColumns.map((itemname, indexname) => {
+                      return (
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-field-view">
+                              <label className="m-field-view-label">
+                                {itemname.title}
+                              </label>
+                              <div className="m-field-view-value">
+                                <span>{item[itemname.dataIndex]}</span>
                               </div>
                             </div>
                           </div>
-                        );
-                      })}
-                    </div>
-                  );
-                })}
-              </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                );
+              })}
             </div>
           </div>
           <div>
@@ -523,8 +538,6 @@ const FormField: IFormField = {
                 </div>
               </div>
             </div>
-          </div>{' '}
-          <div>
             <div className="field-wrapper">
               <div className="m-field-view">
                 <label className="m-field-view-label">不含税金额</label>
@@ -539,36 +552,31 @@ const FormField: IFormField = {
     }
     return (
       <div className="field-wrapper">
-        {/* <div className="m-group m-group-mobile">
-          <div className="m-field-wrapper">
-            <div className="m-field m-field-mobile m-mobile-input vertical">
-              <div className="m-field-head">
-                <label className="m-field-label">
-                  <span>
-                    {required ? (
-                      <span style={{ color: '#ea6d5c' }}>*</span>
-                    ) : (
-                      <span style={{ color: '#fff' }}>*</span>
-                    )}
-                    {label}
-                  </span>
-                </label>
-              </div>
-              <div className="m-field-box">
-                <div className="m-field-content left">
-                  <div className="input-wrapper">
-                    <InputItem
-                      clear
-                      value={this.state.chenkdata}
-                      onFocus={this.getcheckdata}
-                      placeholder="请输入"
-                    ></InputItem>
+        <div className="field-wrapper">
+          <div className="m-group m-group-mobile">
+            <div className="m-field-wrapper">
+              <div className="m-field m-field-mobile m-select-field">
+                <div className="m-field-head">
+                  <div className="m-field-label">
+                    <span>{label}</span>
+                  </div>
+                </div>
+                <div className="m-field-box">
+                  <div className="m-field-content left">
+                    <div className="input-wrapper">
+                      <InputItem
+                        value={this.state.chenkdata}
+                        onFocus={this.getcheckdata}
+                        placeholder="请输入"
+                        readOnly
+                      ></InputItem>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="tablefield-mobile">
           <div className="table-body  tbody  ">
             {this.state.materialList.map((item, index) => {
@@ -742,14 +750,13 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>需用数量</span>
+                                      <span>数量</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
-                                          clear
                                           value={item.need_quantity}
                                           placeholder="请输入"
                                           onChange={e =>
@@ -783,11 +790,11 @@ const FormField: IFormField = {
                                       <div className="input-wrapper">
                                         <InputItem
                                           clear
-                                          value={item.tax_price}
+                                          value={item.refer_price}
                                           placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
-                                              'tax_price',
+                                              'refer_price',
                                               index,
                                               e,
                                             )
@@ -936,39 +943,73 @@ const FormField: IFormField = {
                       </div>
                     </div>
                   </div>
-                  <div className="table-actions">
-                    <div
-                      className="tbody-add-button tTap"
-                      onClick={this.addSon}
-                    >
-                      <img
-                        style={{ width: '20px' }}
-                        src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
-                        alt=""
-                      />
-                      &nbsp;
-                      <span className="add-button-text">增加明细</span>
-                    </div>
-                  </div>
                 </div>
               );
             })}
+            <div className="table-actions">
+              <div className="tbody-add-button tTap" onClick={this.addSon}>
+                <img
+                  style={{ width: '20px' }}
+                  src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
+                  alt=""
+                />
+                &nbsp;
+                <span className="add-button-text">增加明细</span>
+              </div>
+            </div>
           </div>
         </div>
+        {/*  */}
 
         {/* 合计 */}
-        <List>
-          <List.Item>
-            <div className="label">含税金额合计</div>
-            <div>
-              <InputItem
-                clear
-                value={this.state.Inputmoney1}
-                placeholder="请输入"
-              ></InputItem>
+        <div className="field-wrapper">
+          <div className="m-group m-group-mobile">
+            <div className="m-field-wrapper">
+              <div className="m-field m-field-mobile m-select-field">
+                <div className="m-field-head">
+                  <div className="m-field-label">
+                    <span>含税金额</span>
+                  </div>
+                </div>
+                <div className="m-field-box">
+                  <div className="m-field-content left">
+                    <div className="input-wrapper">
+                      <InputItem
+                        value={this.state.Inputmoney1}
+                        placeholder="请输入"
+                        readOnly
+                      ></InputItem>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </List.Item>
-        </List>
+          </div>
+        </div>
+        <div className="field-wrapper">
+          <div className="m-group m-group-mobile">
+            <div className="m-field-wrapper">
+              <div className="m-field m-field-mobile m-select-field">
+                <div className="m-field-head">
+                  <div className="m-field-label">
+                    <span>不含税金额合计</span>
+                  </div>
+                </div>
+                <div className="m-field-box">
+                  <div className="m-field-content left">
+                    <div className="input-wrapper">
+                      <InputItem
+                        value={this.state.Inputmoney2}
+                        placeholder="请输入"
+                        readOnly
+                      ></InputItem>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
         {/* 物资明细 */}
         {createPortal(
           <Drawer

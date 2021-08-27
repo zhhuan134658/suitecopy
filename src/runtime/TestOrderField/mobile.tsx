@@ -178,8 +178,9 @@ const FormField: IFormField = {
           checkData: [...newarr],
         });
         if (type === 1) {
+          console.log('9887987', newarr);
           this.setState({
-            materialList: [...newarr],
+            materialList: newarr,
           });
         }
       });
@@ -206,7 +207,7 @@ const FormField: IFormField = {
     console.log('sss');
     console.log(args);
     const newdate = this.state.allData;
-
+    newdate.rk_id = ['-1'];
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit', checkindex: index });
   },
@@ -279,12 +280,12 @@ const FormField: IFormField = {
   onInputchange(types, index, e) {
     console.log(types, index, e, this);
     let arr = this.state.materialList;
-    console.log(this.state.materialList);
-    // let arrindex = e.target.value;
+    console.log('120', this.state.materialList);
+
     let arrindex = e;
     let newindex = index;
     let newtype = types;
-    // arr[newindex] = {};
+
     arr[newindex][newtype] = arrindex;
     arr[newindex].tax_money = arr[newindex].rk_number * arr[newindex].tax_price;
     arr[newindex].notax_money =
@@ -292,16 +293,35 @@ const FormField: IFormField = {
         arr[newindex].tax_price *
         arr[newindex].tax_rate) /
       100;
-    const newlistdata = [...arr];
+
+    //   含税金额
     let newarr2 = [];
-    newarr2 = newlistdata.map(item => {
-      return item.subtotal;
+
+    newarr2 = arr.filter(item => {
+      if (item.tax_money) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.tax_money;
+    });
+    //不含税金额
+    let newarr4 = [];
+
+    newarr4 = arr.filter(item => {
+      if (item.notax_money) {
+        return item;
+      }
+    });
+    newarr4 = newarr4.map(item => {
+      return item.notax_money;
     });
     this.setState({
       materialList: [...arr],
       Inputmoney1: eval(newarr2.join('+')),
+      Inputmoney2: eval(newarr4.join('+')),
     });
-    console.log(arr);
+    console.log('12', arr);
   },
   onDatechange(types, index, dateString) {
     // let arr = this.state.materialList;
@@ -487,7 +507,7 @@ const FormField: IFormField = {
     }
     return (
       <div className="field-wrapper">
-        {/* <div className="field-wrapper">
+        <div className="field-wrapper">
           <div className="m-group m-group-mobile">
             <div className="m-field-wrapper">
               <div className="m-field m-field-mobile m-select-field">
@@ -511,7 +531,7 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="tablefield-mobile">
           <div className="table-body  tbody  ">
             {this.state.materialList.map((item, index) => {
@@ -692,7 +712,6 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
-                                          clear
                                           value={item.rk_number}
                                           placeholder="请输入"
                                           onChange={e =>
@@ -879,23 +898,20 @@ const FormField: IFormField = {
                       </div>
                     </div>
                   </div>
-                  <div className="table-actions">
-                    <div
-                      className="tbody-add-button tTap"
-                      onClick={this.addSon}
-                    >
-                      <img
-                        style={{ width: '20px' }}
-                        src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
-                        alt=""
-                      />
-                      &nbsp;
-                      <span className="add-button-text">增加明细</span>
-                    </div>
-                  </div>
                 </div>
               );
             })}
+            <div className="table-actions">
+              <div className="tbody-add-button tTap" onClick={this.addSon}>
+                <img
+                  style={{ width: '20px' }}
+                  src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
+                  alt=""
+                />
+                &nbsp;
+                <span className="add-button-text">增加明细</span>
+              </div>
+            </div>
           </div>
         </div>
         {/*  */}

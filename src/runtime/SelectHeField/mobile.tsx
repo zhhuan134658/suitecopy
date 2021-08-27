@@ -6,7 +6,6 @@ import {
   InputItem,
   Drawer,
   List,
-  Toast,
   NavBar,
   Icon,
   SearchBar,
@@ -35,6 +34,11 @@ const FormField: IFormField = {
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
     const SelectHeField = form.getFieldInstance('SelectHe');
+    const proname = form.getFieldValue('SelectDeposit');
+    const bontype = form.getFieldValue('RadioField');
+    vlauedata.project_name = proname;
+    vlauedata.bond_type = bontype;
+    // vlauedata.bond_type = '履约保证金支出';
     const key = SelectHeField.getProp('id');
     const value = '1';
     const bizAsyncData = [
@@ -54,13 +58,13 @@ const FormField: IFormField = {
         bizAsyncData,
       })
       .then(res => {
-          let newarr;
-          console.log('weqweq', JSON.parse(res.dataList[0].value));
+        let newarr;
+        console.log('weqweq', JSON.parse(res.dataList[0].value));
 
-          //   表格数据
-          try {
-            newarr = JSON.parse(res.dataList[0].value).data;
-          } catch (e) {}
+        //   表格数据
+        try {
+          newarr = JSON.parse(res.dataList[0].value).data;
+        } catch (e) {}
 
         this.setState({
           listData: [...newarr],
@@ -70,28 +74,16 @@ const FormField: IFormField = {
   onOpenChange(...args) {
     console.log('sss');
     console.log(args);
-    const { form } = this.props;
-    const value = form.getFieldValue('Autopro');
-    if (value) {
-      const newvalue = this.state.allData;
-      newvalue.name = '';
-      newvalue.type = 0;
-      newvalue.page = 1;
-      newvalue.project_name = value;
-      this.setState({
-        allData: newvalue,
-      });
-      this.asyncSetFieldProps(newvalue);
-    } else {
-      Toast.info('请先选择项目', 1);
-    }
+    const newdate = this.state.allData;
+
+    this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit' });
   },
-  habdlClick(item: { name: any; money: any }) {
+  habdlClick(item: { name: any }) {
     const { form } = this.props;
     console.log(item);
-    this.setState({ Inputvalue: item.name, showElem: 'none' }, () => {
-      form.setFieldValue('Conmoney', item.money);
+
+    this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('SelectHe', item.name);
       form.setExtendFieldValue('SelectHe', {
         data: item.name,
@@ -158,6 +150,7 @@ const FormField: IFormField = {
         </div>
       );
     }
+
     return (
       <div className="field-wrapper">
         <div className="m-group m-group-mobile">
@@ -191,34 +184,47 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-          {/* <InputItem
+        </div>
+
+        {/* <div className="label" onClick={this.onOpenChange}>
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}
+          {label}
+        </div>
+
+        <div>
+          <InputItem
             clear
             value={this.state.inputvalue}
             placeholder="点击选择"
             onFocus={this.onOpenChange}
           ></InputItem> */}
-          {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
-          {createPortal(
-            <Drawer
-              className="my-drawer"
-              open={true}
-              style={{
-                minHeight: document.documentElement.clientHeight,
-                display: this.state.showElem,
-              }}
-              enableDragHandle
-              contentStyle={{
-                color: '#A6A6A6',
-                textAlign: 'center',
-                paddingTop: 42,
-              }}
-              sidebar={sidebar}
-              onOpenChange={this.onOpenChange}
-            ></Drawer>,
-            document.getElementById('MF_APP'),
-          )}
-        </div>
+        {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
+        {createPortal(
+          <Drawer
+            className="my-drawer"
+            open={true}
+            style={{
+              minHeight: document.documentElement.clientHeight,
+
+              display: this.state.showElem,
+            }}
+            enableDragHandle
+            contentStyle={{
+              color: '#A6A6A6',
+              textAlign: 'center',
+              paddingTop: 42,
+            }}
+            sidebar={sidebar}
+            onOpenChange={this.onOpenChange}
+          ></Drawer>,
+          document.getElementById('MF_APP'),
+        )}
       </div>
+      //   </div>
     );
   },
 };

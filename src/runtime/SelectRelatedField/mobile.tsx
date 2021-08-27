@@ -20,7 +20,6 @@ import './mobile.less';
  */
 const FormField: IFormField = {
   getInitialState() {
-    
     const { form } = this.props;
     return {
       SearchBarvalue: '',
@@ -34,13 +33,20 @@ const FormField: IFormField = {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const SelectRelatedField = form.getFieldInstance('SelectRelated');
-    const key = SelectRelatedField.getProp('id');
+    const SelectHeField = form.getFieldInstance('SelectHe');
+    const proname = form.getFieldValue('SelectDeposit');
+    const bontype = form.getFieldValue('RadioField');
+    const contractname = form.getFieldValue('SelectHe');
+    vlauedata.contract_name = contractname;
+    vlauedata.project_name = proname;
+    vlauedata.bond_type = bontype;
+    // vlauedata.bond_type = '履约保证金支出';
+    const key = SelectHeField.getProp('id');
     const value = '1';
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'SelectRelated',
+        bizAlias: 'SelectHe',
         extendValue: vlauedata,
         value,
       },
@@ -50,7 +56,7 @@ const FormField: IFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['SelectRelated'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['SelectHe'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -80,9 +86,9 @@ const FormField: IFormField = {
     console.log(item);
 
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
-      form.setFieldValue('SelectRelated', item.name);
-      form.setExtendFieldValue('SelectRelated', {
-        data: item,
+      form.setFieldValue('SelectHe', item.name);
+      form.setExtendFieldValue('SelectHe', {
+        data: item.name,
       });
     });
   },
@@ -103,10 +109,10 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
-    const field = form.getFieldInstance('SelectRelated');
-    const label = form.getFieldProp('SelectRelated', 'label');
-    const required = form.getFieldProp('SelectRelated', 'required');
-    const placeholder = form.getFieldProp('SelectRelated', 'placeholder');
+    const field = form.getFieldInstance('SelectHe');
+    const label = form.getFieldProp('SelectHe', 'label');
+    const required = form.getFieldProp('SelectHe', 'required');
+    const placeholder = form.getFieldProp('SelectHe', 'placeholder');
 
     const sidebar = (
       <div>
@@ -146,6 +152,7 @@ const FormField: IFormField = {
         </div>
       );
     }
+
     return (
       <div className="field-wrapper">
         <div className="m-group m-group-mobile">
@@ -179,35 +186,47 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-          {/* <InputItem
+        </div>
+
+        {/* <div className="label" onClick={this.onOpenChange}>
+          {required ? (
+            <span style={{ color: '#ea6d5c' }}>*</span>
+          ) : (
+            <span style={{ color: '#fff' }}>*</span>
+          )}
+          {label}
+        </div>
+
+        <div>
+          <InputItem
             clear
             value={this.state.inputvalue}
             placeholder="点击选择"
             onFocus={this.onOpenChange}
           ></InputItem> */}
-          {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
-          {createPortal(
-            <Drawer
-              className="my-drawer"
-              open={true}
-              style={{
-                minHeight: document.documentElement.clientHeight,
+        {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
+        {createPortal(
+          <Drawer
+            className="my-drawer"
+            open={true}
+            style={{
+              minHeight: document.documentElement.clientHeight,
 
-                display: this.state.showElem,
-              }}
-              enableDragHandle
-              contentStyle={{
-                color: '#A6A6A6',
-                textAlign: 'center',
-                paddingTop: 42,
-              }}
-              sidebar={sidebar}
-              onOpenChange={this.onOpenChange}
-            ></Drawer>,
-            document.getElementById('MF_APP'),
-          )}
-        </div>
+              display: this.state.showElem,
+            }}
+            enableDragHandle
+            contentStyle={{
+              color: '#A6A6A6',
+              textAlign: 'center',
+              paddingTop: 42,
+            }}
+            sidebar={sidebar}
+            onOpenChange={this.onOpenChange}
+          ></Drawer>,
+          document.getElementById('MF_APP'),
+        )}
       </div>
+      //   </div>
     );
   },
 };

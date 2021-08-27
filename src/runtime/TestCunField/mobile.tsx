@@ -196,11 +196,9 @@ const FormField: IFormField = {
       });
     }
 
-    this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
-      form.setFieldValue('TestCun', item.name);
-      form.setExtendFieldValue('TestCun', {
-        data: item.name,
-      });
+    form.setFieldValue('TestCun', item.name);
+    form.setExtendFieldValue('TestCun', {
+      data: item.name,
     });
   },
 
@@ -406,7 +404,7 @@ const FormField: IFormField = {
                       clear
                       value={this.state.inputvalue}
                       placeholder="点击选择"
-                      onFocus={this.onOpenChange}
+                      onFocus={this.chhandleAdd.bind(this, 'out')}
                     ></InputItem>
                   </div>
                 </div>
