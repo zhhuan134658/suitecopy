@@ -509,7 +509,6 @@ const FormField: ISwapFormField = {
         bizAsyncData,
       })
       .then(res => {
-       
         let newarr;
         console.log('weqweq', JSON.parse(res.dataList[0].value));
 

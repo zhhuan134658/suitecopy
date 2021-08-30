@@ -130,7 +130,7 @@ const FormField: IFormField = {
     const TestApplicationField = form.getFieldInstance('TestApplication');
     const key = TestApplicationField.getProp('id');
     const value = '1';
-    con st bizAsyncData = [
+    const bizAsyncData = [
       {
         key,
         bizAlias: 'TestApplication',

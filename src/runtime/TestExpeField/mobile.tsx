@@ -130,7 +130,7 @@ const FormField: IFormField = {
         });
         //   树状图数据
         this.setState({
-          Numberva lue1: newarr,
+          Numbervalue1: newarr,
         });
       });
   },

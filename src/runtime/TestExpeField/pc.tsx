@@ -256,6 +256,7 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const FormField: ISwapFormField = {
   getInitialState() {
     return {
+      Optionlist: [],
       petty_sele: '否',
       Numbervalue1: 0,
       Numbervalue2: '',
@@ -313,10 +314,10 @@ const FormField: ISwapFormField = {
     };
   },
   /** 控件首次渲染完成之后 */
-  fieldDidMount() {
-    // const newdate = this.state.allData;
-    // this.asyncSetFieldProps(newdate);
-  }, //新增
+  fieldDidMount() {}, //新增
+  SelectChange(value, record) {
+    console.log(value, record);
+  },
   newAdd() {
     this.setState({
       visibleModal: true,
@@ -413,6 +414,9 @@ const FormField: ISwapFormField = {
   },
 
   handleAdd() {
+    const newdate = this.state.allData;
+    newdate.rk_id = ['a'];
+    this.asyncSetFieldProps(newdate, '12');
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     if (!Pro_name) {
@@ -423,7 +427,7 @@ const FormField: ISwapFormField = {
     const { count, dataSource } = this.state;
     const newData: DataType = {
       key: count,
-      ke_name: '企业管理费',
+      ke_name: '',
       money: '',
       remarks: '',
     };
@@ -433,6 +437,7 @@ const FormField: ISwapFormField = {
     });
   },
   handleSave(row: DataType) {
+    console.log('表格数据：', row);
     const { form } = this.props;
     const newData = [...this.state.dataSource];
 
@@ -484,7 +489,7 @@ const FormField: ISwapFormField = {
   //     this.setState({ dataSource: newData });
   //     },
 
-  asyncSetFieldProps(vlauedata) {
+  asyncSetFieldProps(vlauedata, type) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
@@ -527,7 +532,11 @@ const FormField: ISwapFormField = {
         this.setState({
           Numbervalue1: newarr,
         });
-
+        if (type == '12') {
+          this.setState({
+            Optionlist: newarr,
+          });
+        }
         // console.log(JSON.parse(newarr));
         // console.log(this.state.listData);
       });
@@ -664,6 +673,16 @@ const FormField: ISwapFormField = {
       {
         title: '费用科目',
         dataIndex: 'ke_name',
+        render: (text, record, index) => (
+          <Select
+            onChange={() => this.SelectChange(record)}
+            style={{ width: 120 }}
+          >
+            {this.state.Optionlist.map((item, index) => {
+              return <Option value={item}>{item}</Option>;
+            })}
+          </Select>
+        ),
       },
       {
         title: '金额',
