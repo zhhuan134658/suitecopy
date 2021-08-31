@@ -27,6 +27,7 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      datadate: '',
       Housetype: '',
       treevalue: undefined,
       deColumns: [
@@ -153,6 +154,20 @@ const FormField: IFormField = {
           treeData: [...newtarr1],
         });
       });
+  },
+  onChangedata(data, index) {
+    const newdata = new Date(data);
+
+    var datetime =
+      newdata.getFullYear() +
+      '-' +
+      (newdata.getMonth() + 1) +
+      '-' +
+      newdata.getDate();
+    let arr = this.state.materialList;
+    arr[index].purchase_riqi = datetime;
+    this.setState({ materialList: [...arr] });
+    console.log(datetime, index);
   },
   chhandleAdd(val) {
     const newdate = this.state.allData;
@@ -675,35 +690,41 @@ const FormField: IFormField = {
                           </div>
                         </div>
                         <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>采购日期</span>
+                          <DatePicker
+                            mode="date"
+                            title="Select Date"
+                            extra="Optional"
+                            value={this.state.datadate}
+                            onChange={date => this.onChangedata(date, index)}
+                          >
+                            <div className="field-wrapper">
+                              <div className="m-group m-group-mobile">
+                                <div className="m-field-wrapper">
+                                  <div className="m-field m-field-mobile m-select-field">
+                                    <div className="m-field-head">
+                                      <div className="m-field-label">
+                                        <span>采购日期</span>
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <DatePicker
-                                          mode="date"
-                                          title="Select Date"
-                                          extra="Optional"
-                                          value={this.state.date}
-                                          onChange={date =>
-                                            this.setState({ date })
-                                          }
-                                        ></DatePicker>
+
+                                    <div className="m-field-box">
+                                      <div className="m-field-content left">
+                                        <div className="input-wrapper">
+                                          <InputItem
+                                            clear
+                                            value={item.purchase_riqi}
+                                            placeholder="请输入"
+                                          ></InputItem>
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
+                          </DatePicker>
                         </div>
+
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
@@ -773,23 +794,20 @@ const FormField: IFormField = {
                       </div>
                     </div>
                   </div>
-                  <div className="table-actions">
-                    <div
-                      className="tbody-add-button tTap"
-                      onClick={this.addSon}
-                    >
-                      <img
-                        style={{ width: '20px' }}
-                        src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
-                        alt=""
-                      />
-                      &nbsp;
-                      <span className="add-button-text">增加明细</span>
-                    </div>
-                  </div>
                 </div>
               );
             })}
+            <div className="table-actions">
+              <div className="tbody-add-button tTap" onClick={this.addSon}>
+                <img
+                  style={{ width: '20px' }}
+                  src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
+                  alt=""
+                />
+                &nbsp;
+                <span className="add-button-text">增加明细</span>
+              </div>
+            </div>
           </div>
         </div>
 

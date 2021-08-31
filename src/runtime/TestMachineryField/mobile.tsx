@@ -27,6 +27,7 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      datadate: '',
       eColumns: [
         {
           title: '机械名称',
@@ -173,6 +174,20 @@ const FormField: IFormField = {
         });
       });
   },
+  onChangedata(data, index) {
+    const newdata = new Date(data);
+
+    var datetime =
+      newdata.getFullYear() +
+      '-' +
+      (newdata.getMonth() + 1) +
+      '-' +
+      newdata.getDate();
+    let arr = this.state.materialList;
+    arr[index].riqi = datetime;
+    this.setState({ materialList: [...arr] });
+    console.log(datetime, index);
+  },
   onOpenChange(index: any, ...args: any[]) {
     console.log('sss');
     console.log(args);
@@ -270,8 +285,8 @@ const FormField: IFormField = {
   },
   onDatechange(types, index, dateString) {
     // let arr = this.state.materialList;
-    // let purchase_riqi = 'purchase_riqi';
-    // arr[index][purchase_riqi] = dateString;
+    // let riqi = 'riqi';
+    // arr[index][riqi] = dateString;
     // this.setState({ materialList: [...arr] });
   },
   fieldDidUpdate() {
@@ -576,6 +591,41 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
+                        </div>
+                        <div>
+                          <DatePicker
+                            mode="date"
+                            title="Select Date"
+                            extra="Optional"
+                            value={this.state.datadate}
+                            onChange={date => this.onChangedata(date, index)}
+                          >
+                            <div className="field-wrapper">
+                              <div className="m-group m-group-mobile">
+                                <div className="m-field-wrapper">
+                                  <div className="m-field m-field-mobile m-select-field">
+                                    <div className="m-field-head">
+                                      <div className="m-field-label">
+                                        <span>日期</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="m-field-box">
+                                      <div className="m-field-content left">
+                                        <div className="input-wrapper">
+                                          <InputItem
+                                            clear
+                                            value={item.riqi}
+                                            placeholder="请输入"
+                                          ></InputItem>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </DatePicker>
                         </div>
                         <div>
                           <div className="field-wrapper">

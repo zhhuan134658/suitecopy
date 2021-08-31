@@ -27,6 +27,8 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      datadate1: '',
+      datadate2: '',
       deColumns: [
         {
           title: '物资名称',
@@ -131,7 +133,7 @@ const FormField: IFormField = {
       },
     ];
 
-    // 入参和返回参考套件数据刷新集成接口文档
+    // 入参和 返回参考套件数据刷新集成接口文档
 
     spi
       .refreshData({
@@ -165,6 +167,34 @@ const FormField: IFormField = {
           treeData: [...newtarr1],
         });
       });
+  },
+  onChangedata1(data, index) {
+    const newdata = new Date(data);
+
+    var datetime =
+      newdata.getFullYear() +
+      '-' +
+      (newdata.getMonth() + 1) +
+      '-' +
+      newdata.getDate();
+    let arr = this.state.materialList;
+    arr[index].plan_in_riqi = datetime;
+    this.setState({ materialList: [...arr] });
+    console.log(datetime, index);
+  },
+  onChangedata2(data, index) {
+    const newdata = new Date(data);
+
+    var datetime =
+      newdata.getFullYear() +
+      '-' +
+      (newdata.getMonth() + 1) +
+      '-' +
+      newdata.getDate();
+    let arr = this.state.materialList;
+    arr[index].plan_out_riqi = datetime;
+    this.setState({ materialList: [...arr] });
+    console.log(datetime, index);
   },
   onOpenChange(index: any, ...args: any[]) {
     console.log('sss');
@@ -613,6 +643,41 @@ const FormField: IFormField = {
                           </div>
                         </div>
                         <div>
+                          <DatePicker
+                            mode="date"
+                            title="Select Date"
+                            extra="Optional"
+                            value={this.state.datadate1}
+                            onChange={date => this.onChangedata1(date, index)}
+                          >
+                            <div className="field-wrapper">
+                              <div className="m-group m-group-mobile">
+                                <div className="m-field-wrapper">
+                                  <div className="m-field m-field-mobile m-select-field">
+                                    <div className="m-field-head">
+                                      <div className="m-field-label">
+                                        <span>计划进场日期</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="m-field-box">
+                                      <div className="m-field-content left">
+                                        <div className="input-wrapper">
+                                          <InputItem
+                                            clear
+                                            value={item.plan_in_riqi}
+                                            placeholder="请输入"
+                                          ></InputItem>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </DatePicker>
+                        </div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -643,8 +708,43 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
+                          <DatePicker
+                            mode="date"
+                            title="Select Date"
+                            extra="Optional"
+                            value={this.state.datadate2}
+                            onChange={date => this.onChangedata2(date, index)}
+                          >
+                            <div className="field-wrapper">
+                              <div className="m-group m-group-mobile">
+                                <div className="m-field-wrapper">
+                                  <div className="m-field m-field-mobile m-select-field">
+                                    <div className="m-field-head">
+                                      <div className="m-field-label">
+                                        <span>计划退场日期</span>
+                                      </div>
+                                    </div>
+
+                                    <div className="m-field-box">
+                                      <div className="m-field-content left">
+                                        <div className="input-wrapper">
+                                          <InputItem
+                                            clear
+                                            value={item.plan_out_riqi}
+                                            placeholder="请输入"
+                                          ></InputItem>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </DatePicker>
+                        </div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -675,13 +775,13 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                       </div>
                     </div>
                   </div>
                 </div>
               );
-            })}{' '}
+            })}
             <div className="table-actions">
               <div className="tbody-add-button tTap" onClick={this.addSon}>
                 <img

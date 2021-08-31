@@ -98,8 +98,6 @@ const FormField: IFormField = {
       dtar = '劳务完工结算-' + item.name;
     } else if (this.state.detdate === 'c1') {
       dtar = '劳务质保金结算-' + item.name;
-    } else if (this.state.detdate === 'd1') {
-      dtar = '材料入库-' + item.name;
     }
     console.log(dtar);
     form.setFieldValue('Conname', item.contract_name);

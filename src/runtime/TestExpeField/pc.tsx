@@ -1,42 +1,3 @@
-// import React from 'react';
-// import { Input } from 'antd';
-// import { IFormField } from '../../types';
-
-// import './pc.less';
-
-// interface ISwapFormField extends IFormField {
-//   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-// }
-
-// /**
-//  * 自定义控件运行态 PC 视图
-//  */
-// const FormField: ISwapFormField = {
-//   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-//     const { form } = this.props;
-//     form.setFieldValue('TestExpe', e.target.value);
-//   },
-
-//   fieldRender() {
-//     const { form } = this.props;
-//     const field = form.getFieldInstance('TestExpe');
-//     const label = form.getFieldProp('TestExpe', 'label');
-//     const placeholder = form.getFieldProp('TestExpe', 'placeholders');
-
-//     return (
-//       <div className="pc-custom-field-wrap">
-//         <div className="label">{label}</div>
-//         {field.getProp('viewMode') ? (
-//           field.getValue()
-//         ) : (
-//           <Input placeholder={placeholder} onChange={this.handleChange} />
-//         )}
-//       </div>
-//     );
-//   },
-// };
-
-// export default Fo,rmField;
 import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
@@ -316,6 +277,15 @@ const FormField: ISwapFormField = {
   /** 控件首次渲染完成之后 */
   fieldDidMount() {}, //新增
   SelectChange(value, record) {
+    record.ke_name = value;
+    const newData = [...this.state.dataSource];
+    const index = newData.findIndex(item => record.key === item.key);
+    const item = newData[index];
+    newData.splice(index, 1, { ...item, ...record });
+
+    this.setState({
+      dataSource: newData,
+    });
     console.log(value, record);
   },
   newAdd() {
@@ -675,7 +645,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'ke_name',
         render: (text, record, index) => (
           <Select
-            onChange={() => this.SelectChange(record)}
+            onChange={value => this.SelectChange(value, record)}
             style={{ width: 120 }}
           >
             {this.state.Optionlist.map((item, index) => {

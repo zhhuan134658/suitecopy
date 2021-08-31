@@ -264,8 +264,7 @@ const FormField: ISwapFormField = {
       isModalVisible: false,
       listData: [],
 
-      treeData: [
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -491,7 +490,6 @@ const FormField: ISwapFormField = {
     const required = form.getFieldProp('SelectHe', 'required');
     const placeholder = form.getFieldProp('SelectHe', 'placeholder');
     const { dataSource, selectedRowKeys } = this.state;
-
 
     const etColumns = [
       {

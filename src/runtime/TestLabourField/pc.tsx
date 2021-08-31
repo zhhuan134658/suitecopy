@@ -496,42 +496,8 @@ const FormField: ISwapFormField = {
       Inputmoney2: eval(newarr4.join('+')),
     });
 
-    // if (this.state.Inputmoney2) {
-    //   console.log('saadasdasdas', this.state.Inputmoney2);
-    //   form.setFieldValue('TestLabour', newData);
-    //   form.setExtendFieldValue('TestLabour', {
-    //     data: newData,
-    //   });
-    // }
-
-    // this.setState({ dataSource: newData, isModalVisible: false }, () => {
-    //   form.setFieldValue('TestLabour', newData);
-    //   form.setExtendFieldValue('TestLabour', {
-    //     data: newData,
-    //   });
-    // });
-
     console.log('sss', eval(newarr3.join('+')));
   },
-
-  //   handleSave(row: DataType) {
-  //     const newData = [...this.state.dataSource];
-  //     const index = newData.findIndex(item => row.id === item.id);
-  //     const item = newData[index];
-  //     newData.splice(index, 1, {
-  //       ...item,
-  //       ...row,
-  //     });
-  //     console.log(newData);
-  //     console.log(index);
-  //     console.log(item);
-
-  //     if (row.num2) {
-  //       newData[index].num3 = row.num1 * row.num2;
-  //     }
-
-  //     this.setState({ dataSource: newData });
-  //     },
 
   asyncSetFieldProps(vlauedata) {
     const { form, spi } = this.props;
@@ -705,24 +671,6 @@ const FormField: ISwapFormField = {
     const placeholder = form.getFieldProp('TestLabour', 'placeholder');
     const required = form.getFieldProp('TestLabour', 'required');
     const { dataSource, selectedRowKeys } = this.state;
-    // const treeData = [
-    //   {
-    //     title: 'parent 0',
-    //     key: '0-0',
-    //     children: [
-    //       { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-    //       { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
-    //     ],
-    //   },
-    //   {
-    //     title: 'parent 1',
-    //     key: '0-1',
-    //     children: [
-    //       { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
-    //       { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
-    //     ],
-    //   },
-    // ];
     const deColumns = [
       {
         title: '物资名称',
@@ -851,24 +799,6 @@ const FormField: ISwapFormField = {
         }),
       };
     });
-
-    const onSelect = (keys: React.Key[], info: any) => {
-      console.log('Trigger Select', keys, info);
-      const treedata = {
-        type: keys[0],
-        number: '10',
-        page: '1',
-        rk_id: ['-1'],
-      };
-      this.setState({
-        allData: treedata,
-      });
-      this.asyncSetFieldProps(treedata);
-    };
-
-    const onExpand = () => {
-      console.log('Trigger Expand');
-    };
     const Tabschange = key => {
       console.log(key);
 
@@ -933,7 +863,6 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">{label}</div>
-          {/* {field.getValue()} */}
           {JSON.stringify(value)}
         </div>
       );
