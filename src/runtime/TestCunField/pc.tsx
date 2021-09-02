@@ -609,10 +609,7 @@ const FormField: ISwapFormField = {
       })
       .then(res => {
         if (typename == '1') {
-          
           let newarr;
-          console.log('weqweq', JSON.parse(res.dataList[0].value));
-
           //   表格数据
           try {
             newarr = JSON.parse(res.dataList[0].value).data;
@@ -624,10 +621,7 @@ const FormField: ISwapFormField = {
             totalch2: JSON.parse(res.dataList[0].value).count,
           });
         } else {
-         
           let newarr;
-          console.log('weqweq', JSON.parse(res.dataList[0].value));
-
           //   表格数据
           try {
             newarr = JSON.parse(res.dataList[0].value).data;

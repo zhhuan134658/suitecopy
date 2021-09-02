@@ -267,8 +267,7 @@ const FormField: ISwapFormField = {
       isModalVisible: false,
       listData: [],
 
-      treeData: [
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -417,8 +416,6 @@ const FormField: ISwapFormField = {
         //   listData: res.dataList[0].value,
         // });
         let newarr;
-        console.log('weqweq', JSON.parse(res.dataList[0].value));
-
         //   表格数据
         try {
           newarr = JSON.parse(res.dataList[0].value).data;
@@ -492,7 +489,6 @@ const FormField: ISwapFormField = {
     const required = form.getFieldProp('SelectFen', 'required');
     const placeholder = form.getFieldProp('SelectFen', 'placeholder');
     const { dataSource, selectedRowKeys } = this.state;
-
 
     const etColumns = [
       {

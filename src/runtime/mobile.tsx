@@ -82,7 +82,6 @@ const SwapDemoSuite: ISwapDemoSuite = {
       })
       .then(res => {
         let newarr;
-        console.log('weqweq', JSON.parse(res.dataList[0].value));
         try {
           newarr = JSON.parse(res.dataList[0].value).data;
         } catch (e) {}

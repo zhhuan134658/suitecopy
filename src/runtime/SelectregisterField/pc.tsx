@@ -81,11 +81,9 @@ const FormField: ISwapFormField = {
       })
       .then(res => {
         let newarr;
-        console.log('weqweq', JSON.parse(res.dataList[0].value));
-
         //   表格数据
         try {
-          newarr = JSON.parse(res.dataList[0].value).data;
+          newarr = JSON.parse(res?.dataList[0]?.value).data;
         } catch (e) {}
 
         this.setState({

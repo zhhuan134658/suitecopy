@@ -582,8 +582,6 @@ const FormField: ISwapFormField = {
         if (typename == '1') {
           //   表格数据
           let newarr;
-          console.log('weqweq', JSON.parse(res.dataList[0].value));
-
           //   表格数据
           try {
             newarr = JSON.parse(res.dataList[0].value).data;
@@ -599,8 +597,6 @@ const FormField: ISwapFormField = {
 
           //   表格数据
           let newarr;
-          console.log('weqweq', JSON.parse(res.dataList[0].value));
-
           //   表格数据
           try {
             newarr = JSON.parse(res.dataList[0].value).data;
