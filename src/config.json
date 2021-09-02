@@ -124,16 +124,7 @@
       },
       "type": "custom"
     },
-    {
-      "componentName": "SelectregisterField",
-      "bizAlias": "Selectregister",
-      "props": {
-        "required": false,
-        "placeholder": "请输入",
-        "label": "执行登记"
-      },
-      "type": "custom"
-    },
+
     {
       "componentName": "SelectField",
       "bizAlias": "RadioField",
