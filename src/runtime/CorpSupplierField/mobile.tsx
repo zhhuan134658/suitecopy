@@ -24,7 +24,7 @@ const FormField: IFormField = {
     return {
       SearchBarvalue: '',
       showElem: 'none',
-      inputvalue: '',
+      inputvalue: form.getFieldInstance('CorpSupplier').getValue() || '',
       allData: { type: '0', number: '99999', page: '1', name: '' },
       listData: [],
     };
@@ -137,7 +137,7 @@ const FormField: IFormField = {
         <div className="field-wrapper">
           <div className="m-field-view">
             <label className="m-field-view-label">{label}</label>
-            <div className="m-field-view-value"> {JSON.stringify(value)}</div>
+            <div className="m-field-view-value"> {value}</div>
           </div>
         </div>
       );

@@ -412,6 +412,9 @@ const FormField: IFormField = {
                       {label}明细({index + 1})
                     </label>
                     {this.state.deColumns.map((itemname, indexname) => {
+                      if (!item[itemname.dataIndex]) {
+                        return null;
+                      }
                       return (
                         <div>
                           <div className="field-wrapper">

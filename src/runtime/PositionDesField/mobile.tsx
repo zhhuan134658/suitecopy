@@ -124,7 +124,8 @@ const FormField: IFormField = {
           <div className="m-field-view">
             <label className="m-field-view-label">{label}</label>
             <div className="m-field-view-value">
-              {JSON.stringify(Optionsname)}
+              {/* {JSON.stringify(Optionsname)} */}
+              {Optionsname}
             </div>
           </div>
         </div>

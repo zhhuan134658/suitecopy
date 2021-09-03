@@ -762,7 +762,7 @@ const FormField: ISwapFormField = {
       {
         title: '物资名称',
         dataIndex: 'name',
-        width: '30%',
+      
       },
       {
         title: '规格型号',
@@ -787,15 +787,23 @@ const FormField: ISwapFormField = {
       {
         title: '物资名称',
         dataIndex: 'name',
-        width: '30%',
-      },
-      {
-        title: '规格型号',
-        dataIndex: 'size',
+        width: 100,
+        key: 'name',
+        fixed: 'left',
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        width: 100,
+        key: 'unit',
+        fixed: 'left',
+      },
+      {
+        title: '规格型号',
+        dataIndex: 'size',
+        width: 100,
+        key: 'size',
+        fixed: 'left',
       },
 
       {
@@ -811,6 +819,9 @@ const FormField: ISwapFormField = {
       {
         title: '操作',
         dataIndex: 'operation',
+        key: 'operation',
+        fixed: 'right',
+        width: 100,
         render: (_: any, record: any) =>
           this.state.dataSource.length >= 1 ? (
             <Popconfirm

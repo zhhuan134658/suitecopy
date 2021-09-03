@@ -178,7 +178,7 @@ const FormField: ISwapFormField = {
       return (
         <div>
           <div className="label">{label}</div>
-          {JSON.stringify(Optionsname)}
+          <div style={{ marginTop: '10px' }}>{Optionsname}</div>
         </div>
       );
     }

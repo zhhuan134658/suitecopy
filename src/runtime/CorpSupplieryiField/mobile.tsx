@@ -24,7 +24,7 @@ const FormField: IFormField = {
     return {
       SearchBarvalue: '',
       showElem: 'none',
-      inputvalue: '',
+      inputvalue: form.getFieldInstance('CorpSupplieryi').getValue() || '',
       allData: { type: '0', number: '99999', page: '1', name: '' },
       listData: [],
     };

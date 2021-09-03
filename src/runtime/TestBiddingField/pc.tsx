@@ -652,7 +652,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'number',
       },
       {
-        title: '物资采购部门',
+        title: '物资采购单位',
         dataIndex: 'purchase_unit',
       },
       {
@@ -688,7 +688,7 @@ const FormField: ISwapFormField = {
         editable: true,
       },
       {
-        title: '物资采购部门',
+        title: '物资采购单位',
         dataIndex: 'purchase_unit',
         editable: true,
       },
@@ -698,9 +698,10 @@ const FormField: ISwapFormField = {
       //     editable: true,
       //   },
       {
-        title: '计划进场日期',
+        title: '采购日期',
         dataIndex: 'purchase_riqi',
         key: 'purchase_riqi',
+        width: 300,
         render: (text, record, index) => {
           return (
             <DatePicker
