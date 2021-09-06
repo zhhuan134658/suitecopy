@@ -512,7 +512,7 @@ const FormField: ISwapFormField = {
         <div>
           <div className="label">{label}</div>
           {/* {field.getValue()} */}
-          {JSON.stringify(value)}
+          <div style={{ marginTop: '10px' }}> {value}</div>
         </div>
       );
     }

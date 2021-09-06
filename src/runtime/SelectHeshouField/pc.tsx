@@ -893,7 +893,7 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">物资明细</div>
-          {JSON.stringify(value)}
+          <div style={{ marginTop: '10px' }}> {value}</div>
         </div>
       );
     }

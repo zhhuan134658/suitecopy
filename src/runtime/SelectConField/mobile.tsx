@@ -6,6 +6,7 @@ import {
   InputItem,
   Drawer,
   List,
+  Toast,
   NavBar,
   Icon,
   SearchBar,
@@ -68,6 +69,11 @@ const FormField: IFormField = {
   onOpenChange(...args) {
     console.log('sss');
     console.log(args);
+    const { form } = this.props;
+    const value = form.getFieldValue('Autopro');
+    if (!value) {
+      return Toast.info('请先选择项目', 1);
+    }
     const newdate = this.state.allData;
 
     this.asyncSetFieldProps(newdate);
