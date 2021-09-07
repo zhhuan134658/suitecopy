@@ -416,11 +416,11 @@ const FormField: ISwapFormField = {
     // });
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-    if (!Pro_name) {
-      return notification.open({
-        message: '请先选择项目',
-      });
-    }
+    // if (!Pro_name) {
+    //   return notification.open({
+    //     message: '请先选择项目',
+    //   });
+    // }
     const newdate = this.state.allData;
 
     this.asyncSetFieldProps(newdate);
@@ -641,6 +641,7 @@ const FormField: ISwapFormField = {
       }
       this.setState({
         timenum: timenum,
+        dataSource: newData,
       });
       console.log(timenum);
     }
@@ -708,7 +709,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'unit',
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
       },
       {
@@ -743,7 +744,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'unit',
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
       },
       {
@@ -973,7 +974,7 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
 
-          <div className="label">含税金额合计</div>
+          <div className="label">合计</div>
           <div>
             <Input readOnly value={this.state.Inputmoney1} placeholder="合计" />
           </div>

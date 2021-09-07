@@ -39,7 +39,7 @@ const FormField: IFormField = {
           dataIndex: 'unit',
         },
         {
-          title: '规格',
+          title: '规格型号',
           dataIndex: 'size',
         },
         {
@@ -91,6 +91,7 @@ const FormField: IFormField = {
       inputvalue: '',
       allData: { type: '0', number: '99999', page: '1', name: '' },
       listData: [],
+      Inputmoney1: '',
       materialList: [
         {
           typename: '',
@@ -267,7 +268,31 @@ const FormField: IFormField = {
     let newindex = index;
     let newtype = types;
     // arr[newindex] = {};
-    arr[newindex][newtype] = arrindex;
+    if (types === 'zl_number' || types === 'price') {
+      arr[newindex][newtype] = Number(arrindex);
+    } else {
+      arr[newindex][newtype] = arrindex;
+    }
+
+    if (arr[newindex].zl_number && arr[newindex].price) {
+      arr[newindex].subtotal = arr[newindex].zl_number * arr[newindex].price;
+    }
+    const newarr1 = [...this.state.materialList];
+    let newarr2 = [];
+
+    newarr2 = newarr1.filter(item => {
+      if (item.subtotal) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.subtotal;
+    });
+
+    this.setState({
+      Inputmoney1: eval(newarr2.join('+')),
+    });
+
     this.setState({ materialList: [...arr] });
     console.log(arr);
   },
@@ -493,6 +518,7 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
@@ -503,38 +529,6 @@ const FormField: IFormField = {
                                           )}
                                           onChange={e =>
                                             this.onInputchange('name', index, e)
-                                          }
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>规格型号</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          type="text"
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.size}
-                                          placeholder="点击选择"
-                                          readOnly
-                                          onChange={e =>
-                                            this.onInputchange('size', index, e)
                                           }
                                         />
                                       </div>
@@ -583,6 +577,38 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
+                                      <span>规格型号</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.size}
+                                          placeholder="点击选择"
+                                          readOnly
+                                          onChange={e =>
+                                            this.onInputchange('size', index, e)
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
                                       <span>数量</span>
                                     </div>
                                   </div>
@@ -616,6 +642,39 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
+                                      <span>单价</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.price}
+                                          placeholder="点击选择"
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'price',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        {/* <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
                                       <span>物资采购部门</span>
                                     </div>
                                   </div>
@@ -642,7 +701,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <DatePicker
                             mode="date"
@@ -665,6 +724,7 @@ const FormField: IFormField = {
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
+                                            editable={false}
                                             clear
                                             value={item.plan_in_riqi}
                                             placeholder="请输入"
@@ -732,6 +792,7 @@ const FormField: IFormField = {
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
+                                            editable={false}
                                             clear
                                             value={item.plan_out_riqi}
                                             placeholder="请输入"
@@ -744,6 +805,40 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </DatePicker>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>小计</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.subtotal}
+                                          placeholder="点击选择"
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'subtotal',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         {/* <div>
                           <div className="field-wrapper">
@@ -799,19 +894,19 @@ const FormField: IFormField = {
         {/*  */}
 
         {/* 合计 */}
-        {/* <List>
+        <List>
           <List.Item>
-            <div className="label">候选供应商名单</div>
+            <div className="label">合计</div>
             <div>
               <InputItem
+                editable={false}
                 clear
-                value={candidate_list}
+                value={this.state.Inputmoney1}
                 placeholder="请输入"
-                onChange={e => this.onInputchange('candidate_list', index, e)}
               ></InputItem>
             </div>
           </List.Item>
-        </List> */}
+        </List>
         {/* 物资明细 */}
         {createPortal(
           <Drawer

@@ -419,11 +419,11 @@ const FormField: ISwapFormField = {
     // });
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-    if (!Pro_name) {
-      return notification.open({
-        message: '请先选择项目',
-      });
-    }
+    // if (!Pro_name) {
+    //   return notification.open({
+    //     message: '请先选择项目',
+    //   });
+    // }
     const newdate = this.state.allData;
 
     this.asyncSetFieldProps(newdate);
@@ -693,7 +693,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'unit',
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
       },
       {
@@ -716,7 +716,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'unit',
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
       },
       {

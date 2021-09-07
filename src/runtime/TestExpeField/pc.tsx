@@ -356,11 +356,11 @@ const FormField: ISwapFormField = {
         petty_sele: '否',
       });
     }
-    if (!Pro_name) {
-      return notification.open({
-        message: '请先选择项目',
-      });
-    }
+    // if (!Pro_name) {
+    //   return notification.open({
+    //     message: '请先选择项目',
+    //   });
+    // }
   },
 
   handleCancel() {
@@ -389,11 +389,11 @@ const FormField: ISwapFormField = {
     this.asyncSetFieldProps(newdate, '12');
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-    if (!Pro_name) {
-      return notification.open({
-        message: '请先选择项目',
-      });
-    }
+    // if (!Pro_name) {
+    //   return notification.open({
+    //     message: '请先选择项目',
+    //   });
+    // }
     const { count, dataSource } = this.state;
     const newData: DataType = {
       key: count,

@@ -564,17 +564,17 @@ const FormField: ISwapFormField = {
     });
   },
   handleOk() {
-    const newData = [...this.state.dataSource];
-    const cData = [...this.state.currentSelectData];
-    let lData = [];
-    if (cData.length > 0) {
-      cData.forEach(element => {
-        newData.push(element);
-      });
-    }
-    lData = this.unique(newData);
-    console.log('pp+' + JSON.stringify(lData));
-    this.setState({ dataSource: lData });
+    // const newData = [...this.state.dataSource];
+    // const cData = [...this.state.currentSelectData];
+    // let lData = [];
+    // if (cData.length > 0) {
+    //   cData.forEach(element => {
+    //     newData.push(element);
+    //   });
+    // }
+    // lData = this.unique(newData);
+    // console.log('pp+' + JSON.stringify(lData));
+    // this.setState({ Inputmoney1: lData });
     this.setState({ isModalVisible: false });
     this.setState({ selectedRowKeys: [] });
   },
@@ -779,7 +779,6 @@ const FormField: ISwapFormField = {
             selectedRows[0].size +
             '/' +
             selectedRows[0].unit,
-          isModalVisible: false,
         });
         this.setState({ selectedRowKeys });
       },
@@ -874,14 +873,14 @@ const FormField: ISwapFormField = {
             <Button key="back" onClick={this.handleCancel}>
               返回
             </Button>,
-            // <Button
-            //   key="submit"
-            //   type="primary"
-            //   loading={this.state.loading}
-            //   onClick={this.handleOk}
-            // >
-            //   确定
-            // </Button>,
+            <Button
+              key="submit"
+              type="primary"
+              loading={this.state.loading}
+              onClick={this.handleOk}
+            >
+              确定
+            </Button>,
           ]}
           onCancel={this.handleCancel}
         >

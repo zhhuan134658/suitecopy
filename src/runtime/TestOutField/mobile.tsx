@@ -556,6 +556,7 @@ const FormField: IFormField = {
                                       <div className="input-wrapper">
                                         <InputItem
                                           type="text"
+                                          editable={false}
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
                                           placeholder="点击选择"

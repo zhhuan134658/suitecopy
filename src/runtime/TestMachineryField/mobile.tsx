@@ -258,13 +258,16 @@ const FormField: IFormField = {
     let arrindex = e;
     let newindex = index;
     let newtype = types;
-    arr[newindex].subtotal = arr[newindex].price * arr[newindex].work_hours;
+    arr[newindex][newtype] = arrindex;
+    if (arr[newindex].price && arr[newindex].work_hours) {
+      arr[newindex].subtotal = arr[newindex].price * arr[newindex].work_hours;
+    }
 
     // arr[newindex] = {};
-    arr[newindex][newtype] = arrindex;
+
     this.setState({ materialList: [...arr] });
     // 含税金额合计;
-    const newarr1 = [...this.state.dataSource];
+    const newarr1 = [...this.state.materialList];
     let newarr2 = [];
 
     newarr2 = newarr1.filter(item => {
@@ -510,6 +513,7 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
@@ -615,6 +619,7 @@ const FormField: IFormField = {
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
+                                            editable={false}
                                             clear
                                             value={item.riqi}
                                             placeholder="请输入"
@@ -642,6 +647,7 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           className="ant-input m-mobile-inner-input"
                                           value={item.riqi}
                                           placeholder="点击选择"
@@ -773,17 +779,11 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.subtotal}
                                           placeholder="点击选择"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'subtotal',
-                                              index,
-                                              e,
-                                            )
-                                          }
                                         />
                                       </div>
                                     </div>
@@ -860,10 +860,10 @@ const FormField: IFormField = {
                     <div className="m-field-content left">
                       <div className="input-wrapper">
                         <InputItem
+                          editable={false}
                           type="text"
                           className="ant-input m-mobile-inner-input"
                           value={this.state.Inputmoney1}
-                          placeholder="点击选择"
                         />
                       </div>
                     </div>

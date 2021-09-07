@@ -417,11 +417,11 @@ const FormField: ISwapFormField = {
     // });
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-    if (!Pro_name) {
-      return notification.open({
-        message: '请先选择项目',
-      });
-    }
+    // if (!Pro_name) {
+    //   return notification.open({
+    //     message: '请先选择项目',
+    //   });
+    // }
     const newdate = this.state.allData;
 
     this.asyncSetFieldProps(newdate);
@@ -436,8 +436,10 @@ const FormField: ISwapFormField = {
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
-    if (row.material_total) {
+    if (row.material_total && row.person_total) {
       newData[index].total_price = row.person_total + row.material_total;
+    } else {
+      newData[index].total_price="请输入";
     }
 
     this.setState({
@@ -446,7 +448,7 @@ const FormField: ISwapFormField = {
 
     // console.log('sss', newarr2);
     console.log(newData);
-    // 含税金额合计;
+    // 合计;
     const newarr1 = [...this.state.dataSource];
     let newarr2 = [];
 
@@ -670,7 +672,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'unit',
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
       },
       {
@@ -705,7 +707,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'unit',
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
       },
       {
@@ -906,12 +908,12 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
 
-          <div className="label">含税金额合计</div>
+          <div className="label">合计</div>
           <div>
             <Input
               readOnly
               value={this.state.Inputmoney1}
-              placeholder="含税金额合计"
+              placeholder="合计"
             />
           </div>
         </div>

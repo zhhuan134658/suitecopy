@@ -89,10 +89,8 @@ const FormField: IFormField = {
           size: '',
           unit: '',
           zl_number: '',
-          purchase_unit: '',
-          purchase_riqi: '',
-          purchase_address: '',
-          candidate_list: '',
+          plan_out_riqi: '',
+          plan_in_riqi: '',
         },
       ],
     };
@@ -231,8 +229,8 @@ const FormField: IFormField = {
       size: '',
       unit: '',
       zl_number: '',
-      purchase_unit: '',
-      purchase_riqi: '',
+
+      plan_in_riqi: '',
       purchase_address: '',
       candidate_list: '',
     };
@@ -264,8 +262,8 @@ const FormField: IFormField = {
   },
   onDatechange(types, index, dateString) {
     // let arr = this.state.materialList;
-    // let purchase_riqi = 'purchase_riqi';
-    // arr[index][purchase_riqi] = dateString;
+    // let plan_in_riqi = 'plan_in_riqi';
+    // arr[index][plan_in_riqi] = dateString;
     // this.setState({ materialList: [...arr] });
   },
   fieldDidUpdate() {
@@ -293,7 +291,7 @@ const FormField: IFormField = {
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
     const field = form.getFieldInstance('TestLease');
-    const required = form.getFieldProp('SelectPro', 'required');
+    const required = form.getFieldProp('TestLease', 'required');
     const label = form.getFieldProp('TestLease', 'label');
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
@@ -478,11 +476,12 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
                                           placeholder="点击选择"
-                                          onFocus={this.onOpenChange.bind(
+                                          onClick={this.onOpenChange.bind(
                                             this,
                                             index,
                                           )}
@@ -594,7 +593,7 @@ const FormField: IFormField = {
                             </div>
                           </div>
                         </div>
-                        <div>
+                        {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -627,7 +626,7 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
+                        </div> */}
                         <div>
                           <DatePicker
                             mode="date"
@@ -650,6 +649,7 @@ const FormField: IFormField = {
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
+                                            editable={false}
                                             clear
                                             value={item.plan_in_riqi}
                                             placeholder="请输入"
@@ -685,6 +685,7 @@ const FormField: IFormField = {
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
+                                            editable={false}
                                             clear
                                             value={item.plan_out_riqi}
                                             placeholder="请输入"

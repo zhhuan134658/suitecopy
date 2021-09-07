@@ -38,7 +38,7 @@ const FormField: IFormField = {
           dataIndex: 'unit',
         },
         {
-          title: '规格',
+          title: '规格型号',
           dataIndex: 'size',
         },
         {
@@ -440,6 +440,7 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
@@ -539,7 +540,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           className="ant-input m-mobile-inner-input"
                                           value={item.check_situation}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'check_situation',
@@ -573,7 +574,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.rectify}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'rectify',

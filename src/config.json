@@ -100,7 +100,7 @@
       "props": {
         "required": false,
         "placeholder": "请输入",
-        "label": "项目1名称"
+        "label": "项目名称"
       },
       "type": "custom"
     },

@@ -39,7 +39,7 @@ const FormField: IFormField = {
           dataIndex: 'unit',
         },
         {
-          title: '规格',
+          title: '规格型号',
           dataIndex: 'size',
         },
         {
@@ -236,9 +236,16 @@ const FormField: IFormField = {
     let newtype = types;
     // arr[newindex] = {};
     arr[newindex][newtype] = arrindex;
+    if (arr[newindex].material_total && arr[newindex].person_total) {
+      arr[newindex].total_price =
+        Number(arr[newindex].person_total) +
+        Number(arr[newindex].material_total);
+    } else {
+      arr[index].total_price = '请输入';
+    }
     this.setState({ materialList: [...arr] });
     console.log(arr);
-    const newarr1 = [...this.state.dataSource];
+    const newarr1 = [...this.state.materialList];
     let newarr2 = [];
 
     newarr2 = newarr1.filter(item => {
@@ -448,7 +455,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.typename}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onFocus={this.onOpenChange2.bind(
                                             this,
                                             index,
@@ -483,10 +490,11 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onFocus={this.onOpenChange.bind(
                                             this,
                                             index,
@@ -521,7 +529,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           readOnly
                                           onChange={e =>
                                             this.onInputchange('size', index, e)
@@ -553,7 +561,7 @@ const FormField: IFormField = {
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange('unit', index, e)
                                           }
@@ -582,7 +590,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           className="ant-input m-mobile-inner-input"
                                           value={item.check_situation}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'check_situation',
@@ -616,7 +624,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.hours}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'hours',
@@ -650,7 +658,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.person_total}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'person_total',
@@ -684,7 +692,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.material_total}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'material_total',
@@ -718,7 +726,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.total_price}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'total_price',
@@ -755,19 +763,19 @@ const FormField: IFormField = {
           </div>
         </div>
         {/* 合计 */}
-        {/* <List>
+        <List>
           <List.Item>
-            <div className="label">候选供应商名单</div>
+            <div className="label">合计</div>
             <div>
               <InputItem
+                editable={false}
                 clear
-                value={remarks}
+                value={this.state.Inputmoney1}
                 placeholder="请输入"
-                onChange={e => this.onInputchange('remarks', index, e)}
               ></InputItem>
             </div>
           </List.Item>
-        </List> */}
+        </List>
         {/* 物资明细 */}
         {createPortal(
           <Drawer

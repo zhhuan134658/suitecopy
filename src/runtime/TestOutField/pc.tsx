@@ -421,11 +421,11 @@ const FormField: ISwapFormField = {
   chhandleAdd() {
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-    if (!Pro_name) {
-      return notification.open({
-        message: '请先选择项目',
-      });
-    }
+    // if (!Pro_name) {
+    //   return notification.open({
+    //     message: '请先选择项目',
+    //   });
+    // }
     const newdate = this.state.allData;
 
     this.asyncSetFieldProps(newdate, '1');
@@ -447,11 +447,11 @@ const FormField: ISwapFormField = {
     // });
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-    if (!Pro_name) {
-      return notification.open({
-        message: '请先选择项目',
-      });
-    }
+    // if (!Pro_name) {
+    //   return notification.open({
+    //     message: '请先选择项目',
+    //   });
+    // }
     const newdate = this.state.allData;
 
     newdate.ck_name = this.state.ck_name;

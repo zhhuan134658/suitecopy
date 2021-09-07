@@ -558,6 +558,7 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
@@ -729,6 +730,7 @@ const FormField: IFormField = {
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
+                                            editable={false}
                                             clear
                                             value={item.purchase_riqi}
                                             placeholder="请输入"

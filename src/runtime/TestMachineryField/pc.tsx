@@ -421,11 +421,11 @@ const FormField: ISwapFormField = {
     // });
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-    if (!Pro_name) {
-      return notification.open({
-        message: '请先选择项目',
-      });
-    }
+    // if (!Pro_name) {
+    //   return notification.open({
+    //     message: '请先选择项目',
+    //   });
+    // }
     const newdate = this.state.allData;
 
     this.asyncSetFieldProps(newdate);
@@ -611,6 +611,7 @@ const FormField: ISwapFormField = {
   timeChange(record, index, name, date, dateString) {
     const newData = [...this.state.dataSource];
     newData[index][name] = dateString;
+    this.setState({ dataSource: newData });
     console.log(record, index, name, date, dateString, newData);
   },
   unique(arr) {
@@ -713,7 +714,6 @@ const FormField: ISwapFormField = {
       {
         title: '机械名称',
         dataIndex: 'name',
-        width: '30%',
       },
       {
         title: '单位',
@@ -727,6 +727,7 @@ const FormField: ISwapFormField = {
       {
         title: '工作日期',
         dataIndex: 'riqi',
+        width: 200,
         key: 'riqi',
         render: (text, record, index) => {
           return (
@@ -747,11 +748,13 @@ const FormField: ISwapFormField = {
         title: '工时',
         dataIndex: 'work_hours',
         editable: true,
+        width: 100,
       },
       {
         title: '单价',
         dataIndex: 'price',
         editable: true,
+        width: 100,
       },
       {
         title: '小计',
