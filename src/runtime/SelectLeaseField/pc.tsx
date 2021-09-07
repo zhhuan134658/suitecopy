@@ -337,23 +337,17 @@ const FormField: ISwapFormField = {
   handleAdd() {
     const { form } = this.props;
     const value = form.getFieldValue('Autopro');
-    if (value) {
-      const newvalue = this.state.allData;
-      newvalue.name = '';
-      newvalue.type = 0;
-      newvalue.page = 1;
-      newvalue.project_name = value;
-      this.setState({
-        allData: newvalue,
-        isModalVisible: true,
-      });
-      this.asyncSetFieldProps(newvalue);
-    } else {
-      notification.open({
-        message: '请先选择项目',
-        duration: 2,
-      });
-    }
+
+    const newvalue = this.state.allData;
+    newvalue.name = '';
+    newvalue.type = 0;
+    newvalue.page = 1;
+    newvalue.project_name = value;
+    this.setState({
+      allData: newvalue,
+      isModalVisible: true,
+    });
+    this.asyncSetFieldProps(newvalue);
   },
 
   handleSave(row: DataType) {

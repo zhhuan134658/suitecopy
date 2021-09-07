@@ -174,13 +174,15 @@ const FormField: IFormField = {
         this.setState({
           treeData: [...newtarr1],
         });
-        this.setState({
-          checkData: [...newarr],
-        });
+
         if (type === 1) {
           console.log('9887987', newarr);
           this.setState({
             materialList: newarr,
+          });
+        } else if (type === 2) {
+          this.setState({
+            checkData: [...newarr],
           });
         }
       });
@@ -199,7 +201,7 @@ const FormField: IFormField = {
     this.setState({
       allData: newpage,
     });
-    this.asyncSetFieldProps(newpage);
+    this.asyncSetFieldProps(newpage, 2);
 
     this.setState({ showElem3: 'inherit' });
   },

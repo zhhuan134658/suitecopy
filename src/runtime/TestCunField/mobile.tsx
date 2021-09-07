@@ -188,7 +188,7 @@ const FormField: IFormField = {
     console.log(item);
     if (this.state.Housetype === 'out') {
       this.setState({
-        Inputvalue: item.name,
+        inputvalue: item.name,
         showElem: 'none',
       });
     } else if (this.state.Housetype === 'in') {
