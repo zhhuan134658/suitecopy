@@ -247,9 +247,9 @@ const FormField: IFormField = {
       dtar = '采购合同-' + item.name;
     } else if (this.state.detdate === 'b1') {
       dtar = '采购订单-' + item.name;
-    } else if (this.state.detdate === 'b1') {
+    } else if (this.state.detdate === 'c1') {
       dtar = '材料总计划-' + item.name;
-    } else if (this.state.detdate === 'b1') {
+    } else if (this.state.detdate === 'd1') {
       dtar = '采购申请-' + item.name;
     }
     newdate.rk_id = [this.state.detdate, ...cDataid];

@@ -184,7 +184,7 @@ const FormField: IFormField = {
           });
         } else if (type === 2) {
           this.setState({
-            checkData: [...newarr],
+            checkData: newarr,
           });
         }
       });
@@ -203,7 +203,7 @@ const FormField: IFormField = {
     this.setState({
       allData: newpage,
     });
-    this.asyncSetFieldProps(newpage,2);
+    this.asyncSetFieldProps(newpage, 2);
 
     this.setState({ showElem3: 'inherit' });
   },
@@ -234,7 +234,7 @@ const FormField: IFormField = {
     arr[arrindex].size = item.size;
     arr[arrindex].unit = item.unit;
     this.setState({
-      chenkdata: item.name,
+      //   chenkdata: item.name,
       showElem: 'none',
       materialList: arr,
     });
@@ -247,6 +247,8 @@ const FormField: IFormField = {
       dtar = '采购申请-' + item.name;
     } else if (this.state.detdate === 'b1') {
       dtar = '采购订单-' + item.name;
+    } else {
+      dtar = '采购申请-' + item.name;
     }
     newdate.rk_id = [this.state.detdate, ...cDataid];
     this.asyncSetFieldProps(newdate, 1);
@@ -379,7 +381,7 @@ const FormField: IFormField = {
       this.setState({
         allData: treedata,
       });
-      this.asyncSetFieldProps(treedata);
+      this.asyncSetFieldProps(treedata, 2);
       console.log('selected', selectedKeys, info.node.title);
     };
 
@@ -441,17 +443,11 @@ const FormField: IFormField = {
             } else if (index === 1) {
               this.setState({ detdate: 'b1' });
               newpage.rk_id = ['b'];
-            } else if (index === 2) {
-              this.setState({ detdate: 'c1' });
-              newpage.rk_id = ['c'];
-            } else if (index === 3) {
-              this.setState({ detdate: 'd1' });
-              newpage.rk_id = ['d'];
             }
             this.setState({
               allData: newpage,
             });
-            this.asyncSetFieldProps(newpage);
+            this.asyncSetFieldProps(newpage, 2);
           }}
         ></Tabs>
         <List>

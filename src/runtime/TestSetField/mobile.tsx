@@ -182,7 +182,7 @@ const FormField: IFormField = {
           });
         } else if (type === 2) {
           this.setState({
-            checkData: [...newarr],
+            checkData: newarr,
           });
         }
       });
@@ -232,7 +232,7 @@ const FormField: IFormField = {
     arr[arrindex].size = item.size;
     arr[arrindex].unit = item.unit;
     this.setState({
-      chenkdata: item.name,
+    //   chenkdata: item.name,
       showElem: 'none',
       materialList: arr,
     });
@@ -247,6 +247,8 @@ const FormField: IFormField = {
       dtar = '采购订单-' + item.name;
     } else if (this.state.detdate === 'c1') {
       dtar = '材料入库-' + item.name;
+    } else if (this.state.detdate === 'd1') {
+      dtar = '收入质保金结算-' + item.name;
     }
     newdate.rk_id = [this.state.detdate, ...cDataid];
     this.asyncSetFieldProps(newdate, 1);
@@ -456,7 +458,7 @@ const FormField: IFormField = {
             this.setState({
               allData: newpage,
             });
-            this.asyncSetFieldProps(newpage);
+            this.asyncSetFieldProps(newpage,2);
           }}
         ></Tabs>
         <List>

@@ -171,9 +171,14 @@ const FormField: IFormField = {
     console.log('sss');
     console.log(args);
     const newdate = this.state.allData;
-
+    newdate.isHouse = '2';
+    newdate.ck_name = this.state.inputvalue;
     this.asyncSetFieldProps(newdate);
-    this.setState({ showElem: 'inherit', checkindex: index });
+    this.setState({
+      showElem: 'inherit',
+      checkindex: index,
+      Housetype: 'tree',
+    });
   },
   onOpenChange2(index: any, ...args: any[]) {
     console.log('sss');
@@ -186,6 +191,7 @@ const FormField: IFormField = {
   habdlClick(item: { name: any; size: any; unit: any }) {
     const { form } = this.props;
     console.log(item);
+
     if (this.state.Housetype === 'out') {
       this.setState({
         inputvalue: item.name,
@@ -194,6 +200,17 @@ const FormField: IFormField = {
     } else if (this.state.Housetype === 'in') {
       this.setState({
         Inputvaluein: item.name,
+        showElem: 'none',
+      });
+    } else if (this.state.Housetype === 'tree') {
+      let arr = this.state.materialList;
+      let arrindex = this.state.checkindex;
+
+      arr[arrindex].name = item.name;
+      arr[arrindex].size = item.size;
+      arr[arrindex].unit = item.unit;
+      this.setState({
+        materialList: arr,
         showElem: 'none',
       });
     }
