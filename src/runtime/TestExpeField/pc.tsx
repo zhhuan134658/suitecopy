@@ -9,6 +9,7 @@ import {
   TreeSelect,
   Select,
   Table,
+  Cascader,
   Tooltip,
   notification,
   Modal,
@@ -217,6 +218,7 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const FormField: ISwapFormField = {
   getInitialState() {
     return {
+      maxnum: 0,
       Optionlist: [],
       petty_sele: '否',
       Numbervalue1: 0,
@@ -349,7 +351,7 @@ const FormField: ISwapFormField = {
       const newdate = this.state.allData;
       newdate.rk_id = ['是'];
 
-      this.asyncSetFieldProps(newdate);
+      this.asyncSetFieldProps(newdate, '11');
     } else {
       this.setState({
         isShow: false,
@@ -436,7 +438,6 @@ const FormField: ISwapFormField = {
     const joindata = eval(newarr2.join('+'));
     this.setState({
       Inputmoney1: joindata,
-      Numbervalue2: joindata - this.state.Numbervalue1,
     });
   },
 
@@ -497,12 +498,19 @@ const FormField: ISwapFormField = {
           newarr = JSON.parse(res.dataList[0].value).data;
         } catch (e) {}
 
-        this.setState({
-          Numbervalue1: newarr,
-        });
         if (type == '12') {
           this.setState({
             Optionlist: newarr,
+          });
+        } else if (type == '11') {
+          this.setState({
+            Numbervalue1: Number(newarr.sy),
+            Numbervalue3: Number(newarr.fybx_dk_spz),
+            Numbervalue4: Number(newarr.re_money_spz),
+            maxnum:
+              Number(newarr.sy) -
+              Number(newarr.fybx_dk_spz) -
+              Number(newarr.re_money_spz),
           });
         }
         // console.log(JSON.parse(newarr));
@@ -642,14 +650,19 @@ const FormField: ISwapFormField = {
         title: '费用科目',
         dataIndex: 'ke_name',
         render: (text, record, index) => (
-          <Select
+          <Cascader
+            options={this.state.Optionlist}
             onChange={value => this.SelectChange(value, record)}
-            style={{ width: 120 }}
-          >
-            {this.state.Optionlist.map((item, index) => {
-              return <Option value={item}>{item}</Option>;
-            })}
-          </Select>
+            placeholder="请选择"
+          />
+          //   <Select
+          //     onChange={value => this.SelectChange(value, record)}
+          //     style={{ width: 120 }}
+          //   >
+          //     {this.state.Optionlist.map((item, index) => {
+          //       return <Option value={item}>{item}</Option>;
+          //     })}
+          //   </Select>
         ),
       },
       {
@@ -845,13 +858,28 @@ const FormField: ISwapFormField = {
               <div>
                 <div className="label">备用金余额</div>
                 <InputNumber
+                  readOnly
                   style={{ width: 200 }}
                   min={0}
                   value={this.state.Numbervalue1}
-                  onChange={this.onChangenum}
+                />
+                <div className="label">审批中的费用报销抵扣</div>
+                <InputNumber
+                  readOnly
+                  style={{ width: 200 }}
+                  min={0}
+                  value={this.state.Numbervalue3}
+                />
+                <div className="label">审批中的归还</div>
+                <InputNumber
+                  readOnly
+                  style={{ width: 200 }}
+                  min={0}
+                  value={this.state.Numbervalue4}
                 />
                 <div className="label">折扣后合计</div>
                 <InputNumber
+                  max={this.state.maxnum}
                   style={{ width: 200 }}
                   value={this.state.Numbervalue2}
                   //   onChange={this.onChange}
