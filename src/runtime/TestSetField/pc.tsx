@@ -818,7 +818,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'size',
       },
       {
-        title: '需用数量',
+        title: '数量',
         dataIndex: 'need_quantity',
       },
       {
@@ -835,11 +835,11 @@ const FormField: ISwapFormField = {
         dataIndex: 'notax_price',
       },
       {
-        title: '含税金额',
+        title: '含税金额(元)',
         dataIndex: 'tax_money',
       },
       {
-        title: '不含税金额',
+        title: '不含税金额(元)',
         dataIndex: 'notax_money',
       },
     ];
@@ -866,7 +866,7 @@ const FormField: ISwapFormField = {
         fixed: 'left',
       },
       {
-        title: '需用数量',
+        title: '数量',
         dataIndex: 'need_quantity',
         editable: true,
       },
@@ -886,11 +886,11 @@ const FormField: ISwapFormField = {
         dataIndex: 'notax_price',
       },
       {
-        title: '含税金额',
+        title: '含税金额(元)',
         dataIndex: 'tax_money',
       },
       {
-        title: '不含税金额',
+        title: '不含税金额(元)',
         dataIndex: 'notax_money',
       },
       {
@@ -966,7 +966,7 @@ const FormField: ISwapFormField = {
       });
       this.asyncSetFieldProps(newpage);
     };
-    const rowSelection = {
+    const rowSelection1 = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
         // console.log(
@@ -1000,6 +1000,36 @@ const FormField: ISwapFormField = {
           currentSelectData: newData,
           currentSelectDataid: newDataid,
           detailname: dtar,
+        });
+        this.setState({ selectedRowKeys });
+      },
+    };
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: (selectedRowKeys, selectedRows) => {
+        // console.log(
+        //   `selectedRowKeys: ${selectedRowKeys}`,
+        //   'selectedRows: ',
+        //   selectedRows,
+        // );
+        let dtar = '';
+        let newData = [...selectedRows];
+        let newDataid = [];
+        if (newData.length > 0) {
+          newData = newData.map(item => {
+            return Object.assign(item, {
+              num: 1,
+            });
+          });
+          newDataid = newData.map(item => {
+            return item.id;
+          });
+        }
+        console.log('======' + JSON.stringify(newDataid));
+
+        this.setState({
+          currentSelectData: newData,
+          currentSelectDataid: newDataid,
         });
         this.setState({ selectedRowKeys });
       },
@@ -1043,20 +1073,26 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">名称</div>
-          <div>{detailname}</div>
-          <div className="label">含税金额</div>
-          <div>{hanmoney}</div>
-          <div className="label">不含税金额</div>
-          <div>{nomoney}</div>
+          <div style={{ marginTop: '10px' }}>{detailname}</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            含税金额(元)
+          </div>
+          <div style={{ marginTop: '10px' }}>{hanmoney}</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            不含税金额(元)
+          </div>
+          <div style={{ marginTop: '10px' }}>{nomoney}</div>
 
-          <div className="label">物资明细</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            物资明细
+          </div>
 
           {/* <div>
             {detailedData.map(item => {
               return <div>{item.toString()}</div>;
             })}
           </div> */}
-          <div>
+          <div style={{ marginTop: '10px' }}>
             <Table
               scroll={{ x: '50vw' }}
               components={components}
@@ -1105,7 +1141,7 @@ const FormField: ISwapFormField = {
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}
-        <div>
+        <div style={{ marginTop: '10px' }}>
           <Table
             scroll={{ x: '50vw' }}
             components={components}
@@ -1123,22 +1159,22 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
 
-          <div className="label">含税金额合计</div>
+          <div className="label">含税金额合计(元)</div>
           <div>
             <Input
               readOnly
               value={this.state.Inputmoney1}
-              placeholder="含税金额合计"
+              placeholder="自动计算"
             />
           </div>
           <div className="label" style={{ marginTop: '10px' }}>
-            不含税金额合计
+            不含税金额合计(元)
           </div>
           <div>
             <Input
               readOnly
               value={this.state.Inputmoney2}
-              placeholder="不含税金额合计"
+              placeholder="自动计算"
             />
           </div>
         </div>
@@ -1179,7 +1215,7 @@ const FormField: ISwapFormField = {
             scroll={{ x: '50vw' }}
             rowSelection={{
               type: 'radio',
-              ...rowSelection,
+              ...rowSelection1,
             }}
             rowKey={record => record.id}
             columns={mycolumns}

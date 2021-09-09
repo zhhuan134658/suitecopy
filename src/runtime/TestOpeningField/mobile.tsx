@@ -479,11 +479,8 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                           readOnly
-                                          onChange={e =>
-                                            this.onInputchange('size', index, e)
-                                          }
                                         />
                                       </div>
                                     </div>
@@ -511,10 +508,7 @@ const FormField: IFormField = {
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="点击选择"
-                                          onChange={e =>
-                                            this.onInputchange('unit', index, e)
-                                          }
+                                          placeholder="自动获取"
                                         />
                                       </div>
                                     </div>
@@ -540,7 +534,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           className="ant-input m-mobile-inner-input"
                                           value={item.wz_number}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'wz_number',
@@ -574,7 +568,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.remarks}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'remarks',

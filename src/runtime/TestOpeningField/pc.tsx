@@ -833,7 +833,7 @@ const FormField: ISwapFormField = {
               return <div>{item.toString()}</div>;
             })}
           </div> */}
-          <div>
+          <div style={{ marginTop: '10px' }}>
             <Table
               scroll={{ x: '50vw' }}
               components={components}

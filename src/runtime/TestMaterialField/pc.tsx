@@ -1044,17 +1044,19 @@ const FormField: ISwapFormField = {
       const { warehouse = '', detailedData = [] } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">仓库</div>
-          <div>{warehouse}</div>
+          <div className="label">库房</div>
+          <div style={{ marginTop: '10px' }}>{warehouse}</div>
 
-          <div className="label">物资明细</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            物资明细
+          </div>
 
           {/* <div>
             {detailedData.map(item => {
               return <div>{item.toString()}</div>;
             })}
           </div> */}
-          <div>
+          <div style={{ marginTop: '10px' }}>
             <Table
               scroll={{ x: '50vw' }}
               components={components}

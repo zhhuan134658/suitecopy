@@ -989,7 +989,7 @@ const FormField: ISwapFormField = {
           ) : (
             <span style={{ color: '#fff' }}>*</span>
           )}
-          {label}
+          调出仓库
         </div>
         <div>
           <Input
@@ -1066,7 +1066,7 @@ const FormField: ISwapFormField = {
             scroll={{ x: '50vw' }}
             components={components}
             rowClassName={() => 'editable-row'}
-            borderedƒ
+            bordered
             dataSource={dataSource}
             columns={columns as ColumnTypes}
             pagination={false}

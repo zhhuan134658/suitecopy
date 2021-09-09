@@ -221,6 +221,12 @@ const FormField: IFormField = {
     let newtype = types;
     // arr[newindex] = {};
     arr[newindex][newtype] = arrindex;
+    if (arr[newindex].wz_number && arr[newindex].price) {
+      arr[newindex].subtotal = arr[newindex].wz_number * arr[newindex].price;
+    } else {
+      arr[newindex].subtotal = '请输入数量或者单价';
+    }
+
     this.setState({ materialList: [...arr] });
     console.log(arr);
   },
@@ -441,7 +447,7 @@ const FormField: IFormField = {
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
                                           placeholder="点击选择"
-                                          onFocus={this.onOpenChange.bind(
+                                          onClick={this.onOpenChange.bind(
                                             this,
                                             index,
                                           )}
@@ -536,7 +542,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           className="ant-input m-mobile-inner-input"
                                           value={item.wz_number}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'wz_number',
@@ -570,7 +576,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.price}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'price',
@@ -601,17 +607,11 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.subtotal}
-                                          placeholder="点击选择"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'subtotal',
-                                              index,
-                                              e,
-                                            )
-                                          }
+                                          placeholder="自动计算"
                                         />
                                       </div>
                                     </div>

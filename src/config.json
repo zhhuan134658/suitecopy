@@ -223,7 +223,7 @@
       "bizAlias": "Zumoney",
       "props": {
         "disabled": true,
-        "placeholder": "请输入",
+        "placeholder": "自动获取",
         "label": "租赁合同金额",
         "maxLength": "100"
       }
@@ -243,7 +243,7 @@
       "bizAlias": "Fenmoney",
       "props": {
         "disabled": true,
-        "placeholder": "请输入",
+        "placeholder": "自动获取",
         "label": "分包合同金额",
         "maxLength": "100"
       }
@@ -275,7 +275,7 @@
       "bizAlias": "Conmoney",
       "props": {
         "disabled": true,
-        "placeholder": "请输入",
+        "placeholder": "自动获取",
         "label": "收入合同金额",
         "maxLength": "100"
       }
@@ -286,7 +286,7 @@
       "bizAlias": "SelectLao",
       "props": {
         "required": false,
-        "placeholder": "请输入",
+        "placeholder": "请选择",
         "label": "劳务合同名称"
       },
       "type": "custom"
@@ -296,7 +296,7 @@
       "bizAlias": "ConLaomoney",
       "props": {
         "disabled": true,
-        "placeholder": "请输入",
+        "placeholder": "自动获取",
         "label": "劳务合同金额",
         "maxLength": "100"
       }
@@ -306,7 +306,7 @@
       "bizAlias": "SelectSpo",
       "props": {
         "required": false,
-        "placeholder": "请输入",
+        "placeholder": "请选择",
         "label": "关联零星劳务结算"
       },
       "type": "custom"
@@ -316,7 +316,7 @@
       "bizAlias": "Jiesmoney'",
       "props": {
         "disabled": true,
-        "placeholder": "请输入",
+        "placeholder": "自动获取",
         "label": "结算金额",
         "maxLength": "100"
       }
@@ -994,7 +994,7 @@
           "componentName": "TextField",
           "bizAlias": "Teammoney",
           "props": {
-            "placeholder": "请输入",
+            "placeholder": "自动获取",
             "label": "代发金额",
             "maxLength": "100",
             "id": "CalculateField_YINGFA"

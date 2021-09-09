@@ -87,7 +87,7 @@ const FormField: IFormField = {
           size: '',
           unit: '',
           number: '',
-          purchase_unit: '',
+          ku_cun: '',
           purchase_riqi: '',
           purchase_address: '',
           candidate_list: '',
@@ -128,6 +128,7 @@ const FormField: IFormField = {
         this.setState({
           listData: [...newarr],
         });
+
         //   树状图数据
         const newtarr = JSON.parse(res.dataList[0].extendValue);
         const newtarr1 = [
@@ -188,7 +189,7 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem2: 'inherit', checkindex: index });
   },
-  habdlClick(item: { name: any; size: any; unit: any }) {
+  habdlClick(item: { name: any; size: any; unit: any; ku_cun: any }) {
     const { form } = this.props;
     console.log(item);
 
@@ -209,6 +210,7 @@ const FormField: IFormField = {
       arr[arrindex].name = item.name;
       arr[arrindex].size = item.size;
       arr[arrindex].unit = item.unit;
+      arr[arrindex].ku_cun = item.ku_cun;
       this.setState({
         materialList: arr,
         showElem: 'none',
@@ -242,7 +244,7 @@ const FormField: IFormField = {
       size: '',
       unit: '',
       number: '',
-      purchase_unit: '',
+      ku_cun: '',
       purchase_riqi: '',
       purchase_address: '',
       candidate_list: '',
@@ -597,11 +599,8 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                           readOnly
-                                          onChange={e =>
-                                            this.onInputchange('size', index, e)
-                                          }
                                         />
                                       </div>
                                     </div>
@@ -629,10 +628,7 @@ const FormField: IFormField = {
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="点击选择"
-                                          onChange={e =>
-                                            this.onInputchange('unit', index, e)
-                                          }
+                                          placeholder="自动获取"
                                         />
                                       </div>
                                     </div>
@@ -649,7 +645,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>数量</span>
+                                      <span>调拨数量</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -657,11 +653,11 @@ const FormField: IFormField = {
                                       <div className="input-wrapper">
                                         <InputItem
                                           clear
-                                          value={item.rk_number}
+                                          value={item.wz_number}
                                           placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
-                                              'rk_number',
+                                              'wz_number',
                                               index,
                                               e,
                                             )
@@ -682,126 +678,17 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>物资采购部门</span>
+                                      <span>库存数量</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           clear
-                                          value={item.purchase_unit}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'purchase_unit',
-                                              index,
-                                              e,
-                                            )
-                                          }
-                                        ></InputItem>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <DatePicker
-                            mode="date"
-                            title="Select Date"
-                            extra="Optional"
-                            value={this.state.datadate}
-                            onChange={date => this.onChangedata(date, index)}
-                          >
-                            <div className="field-wrapper">
-                              <div className="m-group m-group-mobile">
-                                <div className="m-field-wrapper">
-                                  <div className="m-field m-field-mobile m-select-field">
-                                    <div className="m-field-head">
-                                      <div className="m-field-label">
-                                        <span>采购日期</span>
-                                      </div>
-                                    </div>
-
-                                    <div className="m-field-box">
-                                      <div className="m-field-content left">
-                                        <div className="input-wrapper">
-                                          <InputItem
-                                            editable={false}
-                                            clear
-                                            value={item.purchase_riqi}
-                                            placeholder="请输入"
-                                          ></InputItem>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </DatePicker>
-                        </div>
-
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>采购地点</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          clear
-                                          value={item.purchase_address}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'purchase_address',
-                                              index,
-                                              e,
-                                            )
-                                          }
-                                        ></InputItem>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>候选供应商名单</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          clear
-                                          value={item.candidate_list}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'candidate_list',
-                                              index,
-                                              e,
-                                            )
-                                          }
+                                          value={item.ku_cun}
+                                          placeholder="自动获取"
                                         ></InputItem>
                                       </div>
                                     </div>

@@ -89,7 +89,7 @@ const FormField: IFormField = {
           ],
         },
       ],
-      detdate: '',
+      detdate: 'a1',
       date: now,
       checkindex: '',
       SearchBarvalue: '',
@@ -234,7 +234,7 @@ const FormField: IFormField = {
     arr[arrindex].size = item.size;
     arr[arrindex].unit = item.unit;
     this.setState({
-      chenkdata: item.name,
+      //   chenkdata: item.name,
       showElem: 'none',
       materialList: arr,
     });
@@ -572,8 +572,9 @@ const FormField: IFormField = {
                   <div className="m-field-content left">
                     <div className="input-wrapper">
                       <InputItem
+                        editable={false}
                         value={this.state.chenkdata}
-                        onFocus={this.getcheckdata}
+                        onClick={this.getcheckdata}
                         placeholder="请输入"
                         readOnly
                       ></InputItem>

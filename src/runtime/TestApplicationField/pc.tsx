@@ -906,6 +906,7 @@ const FormField: ISwapFormField = {
       {
         title: '备注',
         dataIndex: 'remarks',
+        editable: true,
       },
       {
         title: '操作',
@@ -979,14 +980,9 @@ const FormField: ISwapFormField = {
     //   });
     //   this.asyncSetFieldProps(newpage);
     // };
-    const rowSelection = {
+    const rowSelection1 = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
-        // console.log(
-        //   `selectedRowKeys: ${selectedRowKeys}`,
-        //   'selectedRows: ',
-        //   selectedRows,
-        // );
         let dtar = '';
         let newData = [...selectedRows];
         let newDataid = [];
@@ -1011,6 +1007,37 @@ const FormField: ISwapFormField = {
           currentSelectData: newData,
           currentSelectDataid: newDataid,
           detailname: dtar,
+        });
+        this.setState({ selectedRowKeys });
+      },
+    };
+    const rowSelection = {
+      selectedRowKeys,
+      onChange: (selectedRowKeys, selectedRows) => {
+        // console.log(
+        //   `selectedRowKeys: ${selectedRowKeys}`,
+        //   'selectedRows: ',
+        //   selectedRows,
+        // );
+        let dtar = '';
+        let newData = [...selectedRows];
+        let newDataid = [];
+        if (newData.length > 0) {
+          newData = newData.map(item => {
+            return Object.assign(item, {
+              num: 1,
+            });
+          });
+          newDataid = newData.map(item => {
+            return item.id;
+          });
+        }
+        console.log('======' + JSON.stringify(newDataid));
+
+        this.setState({
+          currentSelectData: newData,
+          currentSelectDataid: newDataid,
+          //   detailname: dtar,
         });
         this.setState({ selectedRowKeys });
       },
@@ -1102,7 +1129,7 @@ const FormField: ISwapFormField = {
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}
-        <div>
+        <div style={{ marginTop: '10px' }}>
           <Table
             scroll={{ x: '50vw' }}
             components={components}
@@ -1125,7 +1152,7 @@ const FormField: ISwapFormField = {
             <Input
               readOnly
               value={this.state.Inputmoney1}
-              placeholder="含税金额合计"
+              placeholder="自动计算"
             />
           </div>
         </div>
@@ -1165,7 +1192,7 @@ const FormField: ISwapFormField = {
             scroll={{ x: '50vw' }}
             rowSelection={{
               type: 'radio',
-              ...rowSelection,
+              ...rowSelection1,
             }}
             rowKey={record => record.id}
             columns={mycolumns}

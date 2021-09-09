@@ -289,13 +289,15 @@ const FormField: IFormField = {
     let newtype = types;
 
     arr[newindex][newtype] = arrindex;
+
     arr[newindex].tax_money = arr[newindex].rk_number * arr[newindex].tax_price;
-    arr[newindex].notax_money =
+    arr[newindex].notax_price =
       (arr[newindex].rk_number *
         arr[newindex].tax_price *
         arr[newindex].tax_rate) /
       100;
-
+    arr[newindex].notax_money =
+      arr[newindex].tax_money + arr[newindex].notax_price;
     //   含税金额
     let newarr2 = [];
 
@@ -816,9 +818,10 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          readOnly
                                           clear
                                           value={item.notax_price}
-                                          placeholder="请输入"
+                                          placeholder="自动计算"
                                           onChange={e =>
                                             this.onInputchange(
                                               'notax_price',
@@ -849,9 +852,10 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          readOnly
                                           clear
                                           value={item.tax_money}
-                                          placeholder="请输入"
+                                          placeholder="自动计算"
                                           onChange={e =>
                                             this.onInputchange(
                                               'tax_money',
@@ -883,8 +887,9 @@ const FormField: IFormField = {
                                       <div className="input-wrapper">
                                         <InputItem
                                           clear
+                                          readOnly
                                           value={item.notax_money}
-                                          placeholder="请输入"
+                                          placeholder="自动计算"
                                           onChange={e =>
                                             this.onInputchange(
                                               'notax_money',

@@ -27,6 +27,7 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      checkData: [],
       treevalue: undefined,
       deColumns: [
         {
@@ -98,7 +99,7 @@ const FormField: IFormField = {
       },
     };
   },
-  asyncSetFieldProps(vlauedata) {
+  asyncSetFieldProps(vlauedata, typename) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
@@ -128,26 +129,35 @@ const FormField: IFormField = {
           newarr = JSON.parse(res.dataList[0].value).data;
         } catch (e) {}
 
-        this.setState({
-          listData: [...newarr],
-        });
+        // this.setState({
+        //   listData: [...newarr],
+        // });
         //   树状图数据
-        const newtarr = JSON.parse(res.dataList[0].extendValue);
-        const newtarr1 = [
-          {
-            title: '物资类型',
-            key: '0',
-            children: newtarr,
-          },
-        ];
-        this.setState({
-          treeData: [...newtarr1],
-        });
-        if (this.showElem3 == 'inherit') {
+        // const newtarr = JSON.parse(res.dataList[0].extendValue);
+        // const newtarr1 = [
+        //   {
+        //     title: '物资类型',
+        //     key: '0',
+        //     children: newtarr,
+        //   },
+        // ];
+        // this.setState({
+        //   treeData: [...newtarr1],
+        // });
+        if (typename == 'CorpHouse') {
+          this.setState({
+            checkData: [...newarr],
+          });
+        } else if (typename == 'TestMaterial') {
           this.setState({
             materialList: [...newarr],
           });
         }
+        // if (this.showElem3 == 'inherit') {
+        //   this.setState({
+        //     materialList: [...newarr],
+        //   });
+        // }
       });
   },
   onOpenChange(index: any, ...args: any[]) {
@@ -163,10 +173,10 @@ const FormField: IFormField = {
     console.log(args);
     const newdate = this.state.allData;
 
-    this.asyncSetFieldProps(newdate);
-    this.setState({ showElem2: 'inherit', checkindex: index });
+    this.asyncSetFieldProps(newdate, 'CorpHouse');
+    this.setState({ showElem3: 'inherit', checkindex: index });
   },
-  habdlClick(item: { name: any; size: any; unit: any }) {
+  habdlClick(item: { name: any; size: any; unit: any; wz_number: any }) {
     const { form } = this.props;
     console.log(item);
     let arr = this.state.materialList;
@@ -175,6 +185,7 @@ const FormField: IFormField = {
     arr[arrindex].name = item.name;
     arr[arrindex].size = item.size;
     arr[arrindex].unit = item.unit;
+    arr[arrindex].wz_number = item.wz_number;
     this.setState(
       { inputvalue: item.name, showElem: 'none', materialList: arr },
       () => {
@@ -188,8 +199,8 @@ const FormField: IFormField = {
   checkClick(item) {
     const cDataid = [item.id];
     const newdate = this.state.allData;
-    newdate.rk_id = ['a1', ...cDataid];
-    this.asyncSetFieldProps(newdate, 1);
+    newdate.isHouse = '2';
+    this.asyncSetFieldProps(newdate, 'TestMaterial');
     this.setState({
       Inputvalue: item.name,
       showElem3: 'none',
@@ -232,11 +243,12 @@ const FormField: IFormField = {
       number: '10',
       page: 1,
       name: '',
+      isHouse: '1',
     };
     this.setState({
       allData: newpage,
     });
-    this.asyncSetFieldProps(newpage);
+    this.asyncSetFieldProps(newpage, 'CorpHouse');
 
     this.setState({ showElem3: 'inherit' });
   },
@@ -300,32 +312,32 @@ const FormField: IFormField = {
     const onCheck = (checkedKeys: React.Key[], info: any) => {
       console.log('onCheck', checkedKeys, info);
     };
-    // const checkdebar = (
-    //   <div>
-    //     <SearchBar
-    //       value={this.state.SearchBarvalue}
-    //       placeholder="请输入名称"
-    //       onSubmit={this.onSubmit}
-    //       onChange={this.onSearchBarChange}
-    //       showCancelButton
-    //       onCancel={() => this.setState({ showElem3: 'none' })}
-    //     />
+    const checkdebar = (
+      <div>
+        <SearchBar
+          value={this.state.SearchBarvalue}
+          placeholder="请输入名称"
+          onSubmit={this.onSubmit}
+          onChange={this.onSearchBarChange}
+          showCancelButton
+          onCancel={() => this.setState({ showElem3: 'none' })}
+        />
 
-    //     <List>
-    //       {this.state.checkData.map((item, index) => {
-    //         return (
-    //           <List.Item
-    //             onClick={this.checkClick.bind(this, item)}
-    //             key={index}
-    //             multipleLine
-    //           >
-    //             {item.name}/{item.unit}/{item.size}
-    //           </List.Item>
-    //         );
-    //       })}
-    //     </List>
-    //   </div>
-    // );
+        <List>
+          {this.state.checkData.map((item, index) => {
+            return (
+              <List.Item
+                onClick={this.checkClick.bind(this, item)}
+                key={index}
+                multipleLine
+              >
+                {item.name}/{item.unit}/{item.size}
+              </List.Item>
+            );
+          })}
+        </List>
+      </div>
+    );
     const sidebar = (
       <div>
         <SearchBar
@@ -420,7 +432,7 @@ const FormField: IFormField = {
     }
     return (
       <div className="field-wrapper">
-        {/* <div className="m-group m-group-mobile">
+        <div className="m-group m-group-mobile">
           <div className="m-field-wrapper">
             <div className="m-field m-field-mobile m-select-field">
               <div className="m-field-head">
@@ -432,8 +444,9 @@ const FormField: IFormField = {
                 <div className="m-field-content left">
                   <div className="input-wrapper">
                     <InputItem
+                      editable={false}
                       value={this.state.Inputvalue}
-                      onFocus={this.getcheckdata}
+                      onClick={this.getcheckdata}
                       placeholder="请输入"
                       readOnly
                     ></InputItem>
@@ -442,7 +455,7 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
 
         <div className="tablefield-mobile">
           <div className="table-body  tbody  ">
@@ -566,11 +579,8 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                           readOnly
-                                          onChange={e =>
-                                            this.onInputchange('size', index, e)
-                                          }
                                         />
                                       </div>
                                     </div>
@@ -598,10 +608,7 @@ const FormField: IFormField = {
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="点击选择"
-                                          onChange={e =>
-                                            this.onInputchange('unit', index, e)
-                                          }
+                                          placeholder="自动获取"
                                         />
                                       </div>
                                     </div>
@@ -737,7 +744,7 @@ const FormField: IFormField = {
             open={true}
             style={{
               minHeight: document.documentElement.clientHeight,
-              display: this.state.showElem2,
+              display: this.state.showElem3,
             }}
             enableDragHandle
             contentStyle={{
@@ -745,7 +752,7 @@ const FormField: IFormField = {
               textAlign: 'center',
               paddingTop: 42,
             }}
-            sidebar={treesidebar}
+            sidebar={checkdebar}
             onOpenChange={this.onOpenChange2}
           ></Drawer>,
           document.getElementById('MF_APP'),

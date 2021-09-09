@@ -639,7 +639,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                           readOnly
                                           onChange={e =>
                                             this.onInputchange('size', index, e)
@@ -671,7 +671,7 @@ const FormField: IFormField = {
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                           onChange={e =>
                                             this.onInputchange('unit', index, e)
                                           }
@@ -699,7 +699,7 @@ const FormField: IFormField = {
                                       <div className="input-wrapper">
                                         <InputItem
                                           value={item.zh_plan_quantity}
-                                          placeholder="请输入"
+                                          placeholder="自动获取"
                                           onChange={e =>
                                             this.onInputchange(
                                               'zh_plan_quantity',
@@ -798,7 +798,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           clear
                                           value={item.subtotal}
-                                          placeholder="请输入"
+                                          placeholder="自动计算"
                                           onChange={e =>
                                             this.onInputchange(
                                               'subtotal',
@@ -917,7 +917,7 @@ const FormField: IFormField = {
                     <div className="input-wrapper">
                       <InputItem
                         value={this.state.Inputmoney1}
-                        placeholder="请输入"
+                        placeholder="自动计算"
                         readOnly
                       ></InputItem>
                     </div>
@@ -927,7 +927,7 @@ const FormField: IFormField = {
             </div>
           </div>
         </div>
-        <div className="field-wrapper">
+        {/* <div className="field-wrapper">
           <div className="m-group m-group-mobile">
             <div className="m-field-wrapper">
               <div className="m-field m-field-mobile m-select-field">
@@ -941,7 +941,7 @@ const FormField: IFormField = {
                     <div className="input-wrapper">
                       <InputItem
                         value={this.state.Inputmoney2}
-                        placeholder="请输入"
+                        placeholder="自动计算"
                         readOnly
                       ></InputItem>
                     </div>
@@ -950,7 +950,7 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
         {/* 物资明细 */}
         {createPortal(
           <Drawer

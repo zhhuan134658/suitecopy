@@ -1103,7 +1103,7 @@ const FormField: ISwapFormField = {
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}
-        <div>
+        <div style={{ marginTop: '10px' }}>
           <Table
             scroll={{ x: '50vw' }}
             components={components}
@@ -1126,7 +1126,7 @@ const FormField: ISwapFormField = {
             <Input
               readOnly
               value={this.state.Inputmoney1}
-              placeholder="含税金额合计"
+              placeholder="自动计算"
             />
           </div>
           <div className="label" style={{ marginTop: '10px' }}>
@@ -1136,7 +1136,7 @@ const FormField: ISwapFormField = {
             <Input
               readOnly
               value={this.state.Inputmoney2}
-              placeholder="不含税金额合计"
+              placeholder="自动计算"
             />
           </div>
         </div>

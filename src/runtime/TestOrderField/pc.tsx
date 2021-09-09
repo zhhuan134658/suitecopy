@@ -898,11 +898,11 @@ const FormField: ISwapFormField = {
         dataIndex: 'notax_price',
       },
       {
-        title: '含税金额',
+        title: '含税金额 （元）',
         dataIndex: 'tax_money',
       },
       {
-        title: '不含税金额',
+        title: '不含税金额 （元）',
         dataIndex: 'notax_money',
       },
       {
@@ -1078,19 +1078,25 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">{label}</div>
-          <div>{detailname}</div>
-          <div className="label">含税金额</div>
-          <div>{hanmoney}</div>
-          <div className="label">不含税金额</div>
-          <div>{nomoney}</div>
-          <div className="label">物资明细</div>
+          <div style={{ marginTop: '10px' }}>{detailname}</div>
+          <div className="label" style={{ marginTop: '10px' }}>
+            含税金额 （元）
+          </div>
+          <div style={{ marginTop: '10px' }}>{hanmoney}</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            不含税金额 （元）
+          </div>
+          <div style={{ marginTop: '10px' }}>{nomoney}</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            物资明细
+          </div>
 
           {/* <div>
             {detailedData.map(item => {
               return <div>{item.toString()}</div>;
             })}
           </div> */}
-          <div>
+          <div style={{ marginTop: '10px' }}>
             <Table
               scroll={{ x: '50vw' }}
               components={components}
@@ -1139,7 +1145,7 @@ const FormField: ISwapFormField = {
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}
-        <div>
+        <div style={{ marginTop: '10px' }}>
           <Table
             scroll={{ x: '50vw' }}
             components={components}
@@ -1157,22 +1163,22 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
 
-          <div className="label">含税金额合计</div>
+          <div className="label">含税金额合计（元）</div>
           <div>
             <Input
               readOnly
               value={this.state.Inputmoney1}
-              placeholder="含税金额合计"
+              placeholder="自动计算"
             />
           </div>
           <div className="label" style={{ marginTop: '10px' }}>
-            不含税金额合计
+            不含税金额合计 （元）
           </div>
           <div>
             <Input
               readOnly
               value={this.state.Inputmoney2}
-              placeholder="不含税金额合计"
+              placeholder="自动计算"
             />
           </div>
         </div>
