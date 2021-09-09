@@ -208,7 +208,7 @@ const FormField: IFormField = {
             <div className="m-field m-field-mobile m-mobile-input vertical">
               <div className="m-field-head" style={{ marginLeft: '-5px' }}>
                 <label className="m-field-label">
-                  <span style={{ color: 'red' }}>
+                  <span>
                     {required ? (
                       <span style={{ color: '#ea6d5c' }}>*</span>
                     ) : (
