@@ -429,7 +429,7 @@ const FormField: IFormField = {
                                           className="ant-input m-mobile-inner-input"
                                           value={item.typename}
                                           placeholder="请输入"
-                                          onFocus={this.onOpenChange2.bind(
+                                          onClick={this.onOpenChange2.bind(
                                             this,
                                             index,
                                           )}
@@ -467,8 +467,8 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
-                                          placeholder="请输入"
-                                          onFocus={this.onOpenChange.bind(
+                                          placeholder="请选择"
+                                          onClick={this.onOpenChange.bind(
                                             this,
                                             index,
                                           )}
@@ -502,11 +502,8 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
-                                          placeholder="请输入"
+                                          placeholder="自动获取"
                                           readOnly
-                                          onChange={e =>
-                                            this.onInputchange('size', index, e)
-                                          }
                                         />
                                       </div>
                                     </div>
@@ -534,10 +531,7 @@ const FormField: IFormField = {
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange('unit', index, e)
-                                          }
+                                          placeholder="自动获取"
                                         />
                                       </div>
                                     </div>
@@ -631,14 +625,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.total_price}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'total_price',
-                                              index,
-                                              e,
-                                            )
-                                          }
+                                          placeholder="自动计算"
                                         />
                                       </div>
                                     </div>
@@ -670,13 +657,13 @@ const FormField: IFormField = {
         {/* 合计 */}
         <List>
           <List.Item>
-            <div className="label">候选供应商名单</div>
+            <div className="label">合计</div>
             <div>
               <InputItem
                 editable={false}
                 clear
                 value={this.state.Inputmoney1}
-                placeholder="请输入"
+                placeholder="自动计算"
               ></InputItem>
             </div>
           </List.Item>

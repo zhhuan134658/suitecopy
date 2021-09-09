@@ -411,7 +411,7 @@ const FormField: IFormField = {
                                           className="ant-input m-mobile-inner-input"
                                           value={item.typename}
                                           placeholder="点击选择"
-                                          onFocus={this.onOpenChange2.bind(
+                                          onClick={this.onOpenChange2.bind(
                                             this,
                                             index,
                                           )}
@@ -450,44 +450,12 @@ const FormField: IFormField = {
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
                                           placeholder="点击选择"
-                                          onFocus={this.onOpenChange.bind(
+                                          onClick={this.onOpenChange.bind(
                                             this,
                                             index,
                                           )}
                                           onChange={e =>
                                             this.onInputchange('name', index, e)
-                                          }
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>规格型号</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          type="text"
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.size}
-                                          placeholder="点击选择"
-                                          readOnly
-                                          onChange={e =>
-                                            this.onInputchange('size', index, e)
                                           }
                                         />
                                       </div>
@@ -517,9 +485,6 @@ const FormField: IFormField = {
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
                                           placeholder="点击选择"
-                                          onChange={e =>
-                                            this.onInputchange('unit', index, e)
-                                          }
                                         />
                                       </div>
                                     </div>
@@ -529,6 +494,35 @@ const FormField: IFormField = {
                             </div>
                           </div>
                         </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>规格型号</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          type="text"
+                                          className="ant-input m-mobile-inner-input"
+                                          value={item.size}
+                                          placeholder="点击选择"
+                                          readOnly
+                                        />
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">

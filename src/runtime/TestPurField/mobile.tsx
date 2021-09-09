@@ -695,9 +695,6 @@ const FormField: IFormField = {
                                           value={item.size}
                                           placeholder="点击选择"
                                           readOnly
-                                          onChange={e =>
-                                            this.onInputchange('size', index, e)
-                                          }
                                         />
                                       </div>
                                     </div>
@@ -726,9 +723,6 @@ const FormField: IFormField = {
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
                                           placeholder="点击选择"
-                                          onChange={e =>
-                                            this.onInputchange('unit', index, e)
-                                          }
                                         />
                                       </div>
                                     </div>

@@ -623,6 +623,7 @@ const FormField: ISwapFormField = {
         )} */}
         <div>
           <Input
+            allowClear
             readOnly
             value={this.state.Inputvalue}
             onClick={this.handleAdd}

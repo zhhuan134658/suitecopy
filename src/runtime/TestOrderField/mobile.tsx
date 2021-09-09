@@ -528,7 +528,7 @@ const FormField: IFormField = {
                     <div className="input-wrapper">
                       <InputItem
                         value={this.state.chenkdata}
-                        onFocus={this.getcheckdata}
+                        onClick={this.getcheckdata}
                         placeholder="请输入"
                         readOnly
                       ></InputItem>
@@ -588,7 +588,7 @@ const FormField: IFormField = {
                                           className="ant-input m-mobile-inner-input"
                                           value={item.typename}
                                           placeholder="点击选择"
-                                          onFocus={this.onOpenChange2.bind(
+                                          onClick={this.onOpenChange2.bind(
                                             this,
                                             index,
                                           )}
@@ -627,7 +627,7 @@ const FormField: IFormField = {
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
                                           placeholder="点击选择"
-                                          onFocus={this.onOpenChange.bind(
+                                          onClick={this.onOpenChange.bind(
                                             this,
                                             index,
                                           )}
@@ -663,9 +663,6 @@ const FormField: IFormField = {
                                           value={item.size}
                                           placeholder="点击选择"
                                           readOnly
-                                          onChange={e =>
-                                            this.onInputchange('size', index, e)
-                                          }
                                         />
                                       </div>
                                     </div>
@@ -694,9 +691,6 @@ const FormField: IFormField = {
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
                                           placeholder="点击选择"
-                                          onChange={e =>
-                                            this.onInputchange('unit', index, e)
-                                          }
                                         />
                                       </div>
                                     </div>

@@ -159,7 +159,7 @@ const FormField: IFormField = {
                           type="text"
                           placeholder="点击选择"
                           value={this.state.pickerValuedata}
-                          onFocus={this.sublisk}
+                          onClick={this.sublisk}
                         />
                       </div>
                     </div>

@@ -177,7 +177,7 @@ const FormField: IFormField = {
                       type="text"
                       placeholder="点击选择"
                       value={this.state.inputvalue}
-                      onFocus={this.onOpenChange}
+                      onClick={this.onOpenChange}
                     />
                   </div>
                 </div>
@@ -200,7 +200,7 @@ const FormField: IFormField = {
             clear
             value={this.state.inputvalue}
             placeholder="点击选择"
-            onFocus={this.onOpenChange}
+            onClick={this.onOpenChange}
           ></InputItem> */}
         {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
         {createPortal(

@@ -927,7 +927,7 @@ const FormField: ISwapFormField = {
           </Tabs>
 
           <Search
-            placeholder="请输入物品名称"
+            placeholder="请输入"
             allowClear
             enterButton="搜索"
             size="large"

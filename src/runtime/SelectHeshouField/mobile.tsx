@@ -91,11 +91,11 @@ const FormField: IFormField = {
     if (this.state.detdate === 'a1') {
       dtar = '收入合同-' + item.name;
     } else if (this.state.detdate === 'b1') {
-      dtar = '收入进度款结算-' + item.name;
+      dtar = '进度款结算-' + item.name;
     } else if (this.state.detdate === 'c1') {
-      dtar = '收入完工结算-' + item.name;
+      dtar = '完工结算-' + item.name;
     } else if (this.state.detdate === 'd1') {
-      dtar = '收入质保金结算-' + item.name;
+      dtar = '质保金结算-' + item.name;
     }
     console.log(dtar);
     this.setState({ inputvalue: dtar, showElem: 'none' });
@@ -208,7 +208,7 @@ const FormField: IFormField = {
             <div className="m-field m-field-mobile m-mobile-input vertical">
               <div className="m-field-head" style={{ marginLeft: '-5px' }}>
                 <label className="m-field-label">
-                  <span>
+                  <span style={{ color: 'red' }}>
                     {required ? (
                       <span style={{ color: '#ea6d5c' }}>*</span>
                     ) : (
@@ -227,7 +227,7 @@ const FormField: IFormField = {
                       type="text"
                       placeholder="点击选择"
                       value={this.state.inputvalue}
-                      onFocus={this.onOpenChange}
+                      onClick={this.onOpenChange}
                     />
                   </div>
                 </div>

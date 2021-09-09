@@ -71,7 +71,7 @@ const FormField: IFormField = {
     const { form } = this.props;
     const value = form.getFieldValue('Autopro');
     if (!value) {
-      Toast.info('请先选择项目', 1);
+      return Toast.info('请先选择项目', 1);
     }
     const newdate = this.state.allData;
 
@@ -179,7 +179,7 @@ const FormField: IFormField = {
                       type="text"
                       placeholder="点击选择"
                       value={this.state.inputvalue}
-                      onFocus={this.onOpenChange}
+                      onClick={this.onOpenChange}
                     />
                   </div>
                 </div>
@@ -190,7 +190,7 @@ const FormField: IFormField = {
             clear
             value={this.state.inputvalue}
             placeholder="点击选择"
-            onFocus={this.onOpenChange}
+            onClick={this.onOpenChange}
           ></InputItem> */}
           {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
           {createPortal(

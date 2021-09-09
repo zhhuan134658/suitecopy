@@ -227,7 +227,7 @@ const FormField: IFormField = {
                       type="text"
                       placeholder="点击选择"
                       value={this.state.inputvalue}
-                      onFocus={this.onOpenChange}
+                      onClick={this.onOpenChange}
                     />
                   </div>
                 </div>

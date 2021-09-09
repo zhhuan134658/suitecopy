@@ -639,7 +639,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'unit',
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
       },
       {
@@ -662,7 +662,7 @@ const FormField: ISwapFormField = {
         dataIndex: 'unit',
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
       },
       {
