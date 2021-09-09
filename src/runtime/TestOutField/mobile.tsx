@@ -97,18 +97,6 @@ const FormField: IFormField = {
           remarks: '',
         },
       ],
-      sonData: {
-        typename: '',
-        name: '',
-        size: '',
-        unit: '',
-        wz_number: '',
-        ku_cun: '',
-        purchase_riqi: '',
-        refer_price: '',
-        subtotal: '',
-        remarks: '',
-      },
     };
   },
   asyncSetFieldProps(vlauedata, type) {
@@ -249,8 +237,20 @@ const FormField: IFormField = {
   },
   //增加明细
   addSon() {
+    var sonData = {
+      typename: '',
+      name: '',
+      size: '',
+      unit: '',
+      wz_number: '',
+      ku_cun: '',
+      purchase_riqi: '',
+      refer_price: '',
+      subtotal: '',
+      remarks: '',
+    };
     this.setState({
-      materialList: [...this.state.materialList, this.state.sonData],
+      materialList: [...this.state.materialList, sonData],
     });
   },
   //删除明细

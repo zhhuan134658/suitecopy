@@ -90,14 +90,6 @@ const FormField: IFormField = {
           subtotal: '',
         },
       ],
-      sonData: {
-        typename: '',
-        name: '',
-        size: '',
-        wz_number: '',
-        price: '',
-        subtotal: '',
-      },
     };
   },
   asyncSetFieldProps(vlauedata) {
@@ -198,8 +190,16 @@ const FormField: IFormField = {
   },
   //增加明细
   addSon() {
+    var sonData = {
+      typename: '',
+      name: '',
+      size: '',
+      wz_number: '',
+      price: '',
+      subtotal: '',
+    };
     this.setState({
-      materialList: [...this.state.materialList, this.state.sonData],
+      materialList: [...this.state.materialList, sonData],
     });
   },
   //删除明细

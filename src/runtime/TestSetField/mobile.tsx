@@ -113,18 +113,6 @@ const FormField: IFormField = {
           notax_money: '',
         },
       ],
-      sonData: {
-        typename: '',
-        name: '',
-        size: '',
-        unit: '',
-        need_quantity: '',
-        refer_price: '',
-        tax_rate: '',
-        notax_price: '',
-        tax_money: '',
-        notax_money: '',
-      },
     };
   },
   asyncSetFieldProps(vlauedata, type) {
@@ -273,8 +261,20 @@ const FormField: IFormField = {
   },
   //增加明细
   addSon() {
+    var sonData = {
+      typename: '',
+      name: '',
+      size: '',
+      unit: '',
+      need_quantity: '',
+      refer_price: '',
+      tax_rate: '',
+      notax_price: '',
+      tax_money: '',
+      notax_money: '',
+    };
     this.setState({
-      materialList: [...this.state.materialList, this.state.sonData],
+      materialList: [...this.state.materialList, sonData],
     });
   },
   //删除明细
