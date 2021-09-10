@@ -236,7 +236,7 @@ const FormField: IFormField = {
     } else if (this.state.detdate === 'c1') {
       dtar = '材料入库-' + item.name;
     } else if (this.state.detdate === 'd1') {
-      dtar = '收入质保金结算-' + item.name;
+      dtar = '质保金结算-' + item.name;
     }
     newdate.rk_id = [this.state.detdate, ...cDataid];
     this.asyncSetFieldProps(newdate, 1);
@@ -571,6 +571,7 @@ const FormField: IFormField = {
                   <div className="m-field-content left">
                     <div className="input-wrapper">
                       <InputItem
+                        editable={false}
                         value={this.state.chenkdata}
                         onClick={this.getcheckdata}
                         placeholder="请输入"

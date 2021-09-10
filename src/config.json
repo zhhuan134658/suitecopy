@@ -482,6 +482,7 @@
         ]
       }
     },
+
     {
       "componentName": "SelectField",
       "bizAlias": "Autotoupro",
@@ -493,6 +494,46 @@
           { "key": "1", "value": "是" },
           { "key": "2", "value": "否" }
         ]
+      }
+    },
+    {
+      "componentName": "SelectField",
+      "bizAlias": "Autoprobei",
+      "props": {
+        "required": false,
+        "placeholder": "请输入",
+        "label": "项目",
+        "options": [
+          { "key": "1", "value": "是" },
+          { "key": "2", "value": "否" }
+        ]
+      }
+    },
+    {
+      "componentName": "MoneyField",
+      "bizAlias": "Ljjiemoney",
+      "props": {
+        "placeholder": "请输入",
+        "label": "累计借款金额",
+        "notUpper": "0"
+      }
+    },
+    {
+      "componentName": "MoneyField",
+      "bizAlias": "Ljhuanmoney",
+      "props": {
+        "placeholder": "请输入",
+        "label": "累计还款金额",
+        "notUpper": "0"
+      }
+    },
+    {
+      "componentName": "MoneyField",
+      "bizAlias": "Beimoneyyu",
+      "props": {
+        "placeholder": "请输入",
+        "label": "备用金余额",
+        "notUpper": "0"
       }
     },
     {

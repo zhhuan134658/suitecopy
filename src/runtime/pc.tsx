@@ -52,34 +52,40 @@ const SwapDemoSuite: ISwapDemoSuite = {
       ) {
         const newdate = { isProject: '' };
         newdate.isProject = '2';
-        this.asyncSetFieldProps(newdate);
+        this.asyncSetFieldProps(newdate, 'Selectbaopro');
       } else {
         const newdate = { isProject: '' };
         newdate.isProject = '1';
-        this.asyncSetFieldProps(newdate);
+        this.asyncSetFieldProps(newdate, 'Selectbaopro');
       }
+    });
+    form.onFieldExtendValueChange('Autoprobei', extendValue => {
+      console.log('sdasdasdsads11111111', extendValue);
+      const newdate = { project_name: '' };
+      newdate.project_name = extendValue.label;
+      this.asyncSetFieldProps(newdate, 'Autoprobei');
     });
   },
   // 关联选项
   formDataLinkagehandler() {},
 
   // 动态获取业务数据
-  asyncSetFieldProps(vlauedata: any) {
+  asyncSetFieldProps(vlauedata: any, apiname) {
     const { form, spi } = this.props;
-    const SelectbaoproField = form.getFieldInstance('Selectbaopro');
+    const SelectbaoproField = form.getFieldInstance(apiname);
     const key = SelectbaoproField.getProp('id');
     const value = '1';
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'Selectbaopro',
+        bizAlias: apiname,
         extendValue: vlauedata,
         value,
       },
     ];
     spi
       .refreshData({
-        modifiedBizAlias: ['Selectbaopro'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: [apiname], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -87,7 +93,14 @@ const SwapDemoSuite: ISwapDemoSuite = {
         try {
           newarr = JSON.parse(res.dataList[0].value).data;
         } catch (e) {}
-        form.setFieldProp('Selectbaopro', 'options', newarr);
+        if (apiname == 'Selectbaopro') {
+          form.setFieldProp(apiname, 'options', newarr);
+        } else if (apiname == 'Autoprobei') {
+          console.log(newarr);
+          form.setFieldValue('Ljjiemoney', newarr.lj_jie);
+          form.setFieldValue('Ljhuanmoney', newarr.lj_huan);
+          form.setFieldValue('Beimoneyyu', newarr.bei_yu);
+        }
       });
   },
 };

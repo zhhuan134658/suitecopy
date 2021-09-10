@@ -9,10 +9,12 @@ import {
   List,
   NavBar,
   Icon,
+  Switch,
   SearchBar,
   Button,
   WhiteSpace,
   WingBlank,
+  Toast,
 } from 'antd-mobile';
 import { Tree } from 'antd';
 import './mobile.less';
@@ -27,23 +29,16 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      checked: false,
       treevalue: undefined,
       deColumns: [
         {
-          title: '物资名称',
-          dataIndex: 'name',
+          title: '费用科目',
+          dataIndex: 'ke_name',
         },
         {
-          title: '单位',
-          dataIndex: 'unit',
-        },
-        {
-          title: '规格',
-          dataIndex: 'size',
-        },
-        {
-          title: '库存数量',
-          dataIndex: 'wz_number',
+          title: '金额',
+          dataIndex: 'money',
         },
         {
           title: '备注',
@@ -68,44 +63,36 @@ const FormField: IFormField = {
           ],
         },
       ],
+      maxnum: '',
       date: now,
       checkindex: '',
       SearchBarvalue: '',
       showElem: 'none',
       showElem2: 'none',
       inputvalue: '',
+      Numbervalue1: '',
+      Numbervalue2: '',
+      Numbervalue3: '',
+      Numbervalue4: '',
       allData: { type: '0', number: '99999', page: '1', name: '' },
       listData: [],
+      petty_sele: '否',
       materialList: [
         {
-          typename: '',
-          name: '',
-          size: '',
-          unit: '',
-          wz_number: '',
-          purchase_unit: '',
-          purchase_riqi: '',
-          purchase_address: '',
+          ke_name: '',
+          money: '',
           remarks: '',
         },
       ],
-      sonData: {
-        typename: '',
-        name: '',
-        size: '',
-        unit: '',
-        wz_number: '',
-        purchase_unit: '',
-        purchase_riqi: '',
-        purchase_address: '',
-        remarks: '',
-      },
     };
   },
-  asyncSetFieldProps(vlauedata) {
+  asyncSetFieldProps(vlauedata, type) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
+    vlauedata.petty_sele = this.state.petty_sele;
+    // vlauedata.petty_yu = this.state.Numbervalue1;
+    // vlauedata.project_name = this.state.Numbervalue2;
     const TestExpeField = form.getFieldInstance('TestExpe');
     const key = TestExpeField.getProp('id');
     const value = '1';
@@ -134,29 +121,61 @@ const FormField: IFormField = {
           newarr = JSON.parse(res.dataList[0].value).data;
         } catch (e) {}
 
-        this.setState({
-          listData: [...newarr],
-        });
+        if (type == '12') {
+          var menuId = [];
+          var len = newarr.length;
+          for (var i = 0; i < len; i++) {
+            var item = newarr[i];
+            if (item.children && item.children.length != 0) {
+              var children = item.children;
+              for (var j = 0; j < children.length; j++) {
+                newarr[len + j] = children[j];
+              }
+              len = newarr.length;
+            }
+            menuId.push(item);
+          }
+          var add = menuId.filter(item => {
+            if (!item.children) {
+              return item;
+            }
+          });
+          this.setState({
+            listData: add,
+          });
+          console.log('2222222', add);
+        } else if (type == '11') {
+          this.setState({
+            Numbervalue1: Number(newarr.sy),
+            Numbervalue3: Number(newarr.fybx_dk_spz),
+            Numbervalue4: Number(newarr.re_money_spz),
+            maxnum:
+              Number(newarr.sy) -
+              Number(newarr.fybx_dk_spz) -
+              Number(newarr.re_money_spz),
+          });
+        }
+
         //   树状图数据
-        const newtarr = JSON.parse(res.dataList[0].extendValue);
-        const newtarr1 = [
-          {
-            title: '物资类型',
-            key: '0',
-            children: newtarr,
-          },
-        ];
-        this.setState({
-          treeData: [...newtarr1],
-        });
+        // const newtarr = JSON.parse(res.dataList[0].extendValue);
+        // const newtarr1 = [
+        //   {
+        //     title: '物资类型',
+        //     key: '0',
+        //     children: newtarr,
+        //   },
+        // ];
+        // this.setState({
+        //   treeData: [...newtarr1],
+        // });
       });
   },
   onOpenChange(index: any, ...args: any[]) {
     console.log('sss');
     console.log(args);
     const newdate = this.state.allData;
-
-    this.asyncSetFieldProps(newdate);
+    newdate.rk_id = ['a'];
+    this.asyncSetFieldProps(newdate, '12');
     this.setState({ showElem: 'inherit', checkindex: index });
   },
   onOpenChange2(index: any, ...args: any[]) {
@@ -167,21 +186,20 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem2: 'inherit', checkindex: index });
   },
-  habdlClick(item: { name: any; size: any; unit: any }) {
+  habdlClick(item: { value: any }) {
     const { form } = this.props;
     console.log(item);
     let arr = this.state.materialList;
     let arrindex = this.state.checkindex;
 
-    arr[arrindex].name = item.name;
-    arr[arrindex].size = item.size;
-    arr[arrindex].unit = item.unit;
+    arr[arrindex].ke_name = item.value;
+
     this.setState(
-      { inputvalue: item.name, showElem: 'none', materialList: arr },
+      { inputvalue: item.value, showElem: 'none', materialList: arr },
       () => {
-        form.setFieldValue('TestExpe', item.name);
+        form.setFieldValue('TestExpe', item.value);
         form.setExtendFieldValue('TestExpe', {
-          data: item.name,
+          data: item.value,
         });
       },
     );
@@ -202,8 +220,13 @@ const FormField: IFormField = {
   },
   //增加明细
   addSon() {
+    var sonData = {
+      ke_name: '',
+      money: '',
+      remarks: '',
+    };
     this.setState({
-      materialList: [...this.state.materialList, this.state.sonData],
+      materialList: [...this.state.materialList, sonData],
     });
   },
   //删除明细
@@ -237,18 +260,35 @@ const FormField: IFormField = {
   fieldDidUpdate() {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
-
       let editData = {
+        hanmoney: '',
+        nomoney: '',
         detailedData: [], //物资明细
+        petty_sele: '', //备用金抵扣
+        Numbervalue1: '', //备用金余额
+        Numbervalue2: '', //折扣后合计
       };
+      if (this.state.Inputmoney1) {
+        editData.hanmoney = this.state.Inputmoney1;
+      }
+      if (this.state.Inputmoney2) {
+        editData.nomoney = this.state.Inputmoney2;
+      }
 
-      editData.detailedData = this.state.materialList;
+      editData.detailedData = this.state.dataSource;
+      editData.petty_sele = this.state.petty_sele;
+      editData.Numbervalue1 = this.state.Numbervalue1;
+      editData.Numbervalue2 = this.state.Numbervalue2;
       const { form } = this.props;
       form.setFieldValue('TestExpe', editData);
       form.setExtendFieldValue('TestExpe', {
         data: editData,
       });
     }
+
+    // this.state.dataSource;
+    // this.state.Inputmoney1;
+    // this.state.Inputmoney2;
   },
   fieldRender() {
     // fix in codepen
@@ -260,7 +300,7 @@ const FormField: IFormField = {
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;
-      arr[newindex].typename = info.node.title;
+      arr[newindex].ke_name = info.node.title;
       this.setState({ showElem2: 'none', materialList: [...arr] });
       const treedata = { type: selectedKeys[0], number: '10', page: '1' };
       this.setState({
@@ -292,7 +332,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}/{item.unit}/{item.size}
+                {item.value}
               </List.Item>
             );
           })}
@@ -373,7 +413,7 @@ const FormField: IFormField = {
                           justifyContent: 'space-between',
                         }}
                       >
-                        <div>
+                        <div style={{ color: 'red' }}>
                           {label}-明细({index + 1})
                         </div>
                         {this.state.materialList.length > 1 ? (
@@ -388,44 +428,6 @@ const FormField: IFormField = {
                         )}
                       </div>
                       <div className="row">
-                        {/* <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>物资类型</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          type="text"
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.typename}
-                                          placeholder="点击选择"
-                                          onClick={this.onOpenChange2.bind(
-                                            this,
-                                            index,
-                                          )}
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'typename',
-                                              index,
-                                              e,
-                                            )
-                                          }
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div> */}
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
@@ -433,7 +435,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>物资名称</span>
+                                      <span>费用科目</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -443,14 +445,18 @@ const FormField: IFormField = {
                                           editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
-                                          value={item.name}
+                                          value={item.ke_name}
                                           placeholder="点击选择"
                                           onClick={this.onOpenChange.bind(
                                             this,
                                             index,
                                           )}
                                           onChange={e =>
-                                            this.onInputchange('name', index, e)
+                                            this.onInputchange(
+                                              'ke_name',
+                                              index,
+                                              e,
+                                            )
                                           }
                                         />
                                       </div>
@@ -469,7 +475,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>规格型号</span>
+                                      <span>金额</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -478,66 +484,11 @@ const FormField: IFormField = {
                                         <InputItem
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
-                                          value={item.size}
-                                          placeholder="点击选择"
-                                          readOnly
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>单位</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          type="text"
-                                          readOnly
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.unit}
-                                          placeholder="点击选择"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>库存数量</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.wz_number}
+                                          value={item.money}
                                           placeholder="点击选择"
                                           onChange={e =>
                                             this.onInputchange(
-                                              'wz_number',
+                                              'money',
                                               index,
                                               e,
                                             )
@@ -601,6 +552,176 @@ const FormField: IFormField = {
                 &nbsp;
                 <span className="add-button-text">增加明细</span>
               </div>
+            </div>
+            <div>
+              <div className="field-wrapper">
+                <div className="m-group m-group-mobile">
+                  <div className="m-field-wrapper">
+                    <div className="m-field m-field-mobile m-select-field">
+                      <div className="m-field-head">
+                        <div className="m-field-label">
+                          <span>备用金抵扣</span>
+                        </div>
+                      </div>
+                      <div className="m-field-box">
+                        <div className="m-field-content left">
+                          <div className="input-wrapper">
+                            <Switch
+                              checked={this.state.checked}
+                              onChange={checked => {
+                                console.log(checked);
+                                if (checked == false) {
+                                  this.setState({
+                                    petty_sele: '否',
+                                  });
+                                } else {
+                                  this.setState({
+                                    petty_sele: '是',
+                                  });
+                                  const newdate = this.state.allData;
+                                  newdate.rk_id = ['是'];
+                                  this.asyncSetFieldProps(newdate, '11');
+                                }
+
+                                this.setState({
+                                  checked: !this.state.checked,
+                                });
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              {this.state.checked ? (
+                <div>
+                  <div className="field-wrapper">
+                    <div className="m-group m-group-mobile">
+                      <div className="m-field-wrapper">
+                        <div className="m-field m-field-mobile m-select-field">
+                          <div className="m-field-head">
+                            <div className="m-field-label">
+                              <span>备用金余额</span>
+                            </div>
+                          </div>
+                          <div className="m-field-box">
+                            <div className="m-field-content left">
+                              <div className="input-wrapper">
+                                <InputItem
+                                  type="text"
+                                  className="ant-input m-mobile-inner-input"
+                                  value={this.state.Numbervalue1}
+                                  placeholder="点击选择"
+                                  readOnly
+                                  editable={false}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="field-wrapper">
+                    <div className="m-group m-group-mobile">
+                      <div className="m-field-wrapper">
+                        <div className="m-field m-field-mobile m-select-field">
+                          <div className="m-field-head">
+                            <div className="m-field-label">
+                              <span>审批中的费用报销抵扣</span>
+                            </div>
+                          </div>
+                          <div className="m-field-box">
+                            <div className="m-field-content left">
+                              <div className="input-wrapper">
+                                <InputItem
+                                  type="text"
+                                  className="ant-input m-mobile-inner-input"
+                                  value={this.state.Numbervalue3}
+                                  placeholder="点击选择"
+                                  readOnly
+                                  editable={false}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="field-wrapper">
+                    <div className="m-group m-group-mobile">
+                      <div className="m-field-wrapper">
+                        <div className="m-field m-field-mobile m-select-field">
+                          <div className="m-field-head">
+                            <div className="m-field-label">
+                              <span>审批中的归还</span>
+                            </div>
+                          </div>
+                          <div className="m-field-box">
+                            <div className="m-field-content left">
+                              <div className="input-wrapper">
+                                <InputItem
+                                  type="text"
+                                  className="ant-input m-mobile-inner-input"
+                                  value={this.state.Numbervalue4}
+                                  placeholder="点击选择"
+                                  readOnly
+                                  editable={false}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="field-wrapper">
+                    <div className="m-group m-group-mobile">
+                      <div className="m-field-wrapper">
+                        <div className="m-field m-field-mobile m-select-field">
+                          <div className="m-field-head">
+                            <div className="m-field-label">
+                              <span>折扣后合计</span>
+                            </div>
+                          </div>
+                          <div className="m-field-box">
+                            <div className="m-field-content left">
+                              <div className="input-wrapper">
+                                <input
+                                  type="number"
+                                  max={this.state.maxnum}
+                                  className="ant-input m-mobile-inner-input"
+                                  value={this.state.Numbervalue2}
+                                  placeholder="点击选择"
+                                  onChange={e => {
+                                    if (e.target.value > this.state.maxnum) {
+                                      Toast.info('超出', 1);
+                                      this.setState({
+                                        Numbervalue2: this.state.maxnum,
+                                      });
+                                    } else {
+                                      this.setState({
+                                        Numbervalue2: e.target.value,
+                                      });
+                                    }
+
+                                    console.log(e.target.value);
+                                  }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
             </div>
           </div>
         </div>

@@ -223,6 +223,7 @@ const FormField: ISwapFormField = {
       petty_sele: '否',
       Numbervalue1: 0,
       Numbervalue2: '',
+      Numbervalue3: '',
       isShow: false,
       value: undefined,
       msgdata: '',
@@ -464,9 +465,9 @@ const FormField: ISwapFormField = {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    vlauedata.petty_sele = this.state.petty_sele;
-    vlauedata.petty_yu = this.state.Numbervalue1;
-    vlauedata.project_name = this.state.Numbervalue2;
+    // vlauedata.petty_sele = this.state.petty_sele;
+    // vlauedata.petty_yu = this.state.Numbervalue1;
+    // vlauedata.project_name = this.state.Numbervalue2;
     const TestExpeField = form.getFieldInstance('TestExpe');
 
     // const leaveReasonField = form.getFieldInstance('leaveReason');
@@ -497,6 +498,8 @@ const FormField: ISwapFormField = {
         try {
           newarr = JSON.parse(res.dataList[0].value).data;
         } catch (e) {}
+
+        // this.menusTree = menuId;
 
         if (type == '12') {
           this.setState({

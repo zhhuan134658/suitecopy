@@ -527,6 +527,7 @@ const FormField: IFormField = {
                   <div className="m-field-content left">
                     <div className="input-wrapper">
                       <InputItem
+                        editable={false}
                         value={this.state.chenkdata}
                         onClick={this.getcheckdata}
                         placeholder="请输入"
