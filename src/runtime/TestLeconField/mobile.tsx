@@ -888,19 +888,35 @@ const FormField: IFormField = {
         {/*  */}
 
         {/* 合计 */}
-        <List>
-          <List.Item>
-            <div className="label">合计</div>
-            <div>
-              <InputItem
-                editable={false}
-                clear
-                value={this.state.Inputmoney1}
-                placeholder="请输入"
-              ></InputItem>
+        <div>
+          <div className="field-wrapper">
+            <div className="m-group m-group-mobile">
+              <div className="m-field-wrapper">
+                <div className="m-field m-field-mobile m-select-field">
+                  <div className="m-field-head">
+                    <div className="m-field-label">
+                      <span>合计</span>
+                    </div>
+                  </div>
+                  <div className="m-field-box">
+                    <div className="m-field-content left">
+                      <div className="input-wrapper">
+                        <InputItem
+                          type="text"
+                          className="ant-input m-mobile-inner-input"
+                          value={this.state.Inputmoney1}
+                          placeholder="点击选择"
+                          editable={false}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-          </List.Item>
-        </List>
+          </div>
+        </div>
+
         {/* 物资明细 */}
         {createPortal(
           <Drawer

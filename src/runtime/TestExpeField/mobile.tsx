@@ -413,7 +413,7 @@ const FormField: IFormField = {
                           justifyContent: 'space-between',
                         }}
                       >
-                        <div style={{ color: 'red' }}>
+                        <div>
                           {label}-明细({index + 1})
                         </div>
                         {this.state.materialList.length > 1 ? (

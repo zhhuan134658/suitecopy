@@ -990,7 +990,7 @@ const FormField: IFormField = {
                     <div className="input-wrapper">
                       <InputItem
                         value={this.state.Inputmoney2}
-                        placeholder="请输入"
+                        placeholder="自动计算"
                         readOnly
                       ></InputItem>
                     </div>

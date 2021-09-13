@@ -1076,11 +1076,10 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">名称</div>
-          <div>{detailname}</div>
-
+          <div style={{ marginTop: '10px' }}>{detailname}</div>
           <div className="label">物资明细</div>
 
-          <div>
+          <div style={{ marginTop: '10px' }}>
             <Table
               scroll={{ x: '50vw' }}
               components={components}

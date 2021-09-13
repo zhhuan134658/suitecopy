@@ -418,7 +418,7 @@
       "bizAlias": "Inputvalue1",
       "props": {
         "disabled": true,
-        "placeholder": "请输入",
+        "placeholder": "自动获取",
         "label": "账号",
         "maxLength": "100"
       }
@@ -428,7 +428,7 @@
       "bizAlias": "Inputvalue2",
       "props": {
         "disabled": true,
-        "placeholder": "请输入",
+        "placeholder": "自动获取",
         "label": "开户行",
         "maxLength": "100"
       }
@@ -561,7 +561,7 @@
       "bizAlias": "PositionDes",
       "props": {
         "placeholder": "请选择",
-        "label": "位置"
+        "label": "项目位置"
       },
       "type": "custom"
     },

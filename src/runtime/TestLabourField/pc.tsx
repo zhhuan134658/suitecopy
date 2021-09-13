@@ -861,7 +861,7 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">{label}</div>
-          {JSON.stringify(value)}
+          <div style={{ marginTop: '10px' }}> {value}</div>
         </div>
       );
     }
@@ -875,7 +875,7 @@ const FormField: ISwapFormField = {
             ) : (
               <span style={{ color: '#fff' }}>*</span>
             )}
-            {label}
+            <div style={{ margin: '10px' }}>{label}</div>
           </div>
           <Input
             onClick={this.newhandleAdd}

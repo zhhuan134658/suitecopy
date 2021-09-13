@@ -70,9 +70,9 @@ const FormField: IFormField = {
     console.log(args);
     const { form } = this.props;
     const value = form.getFieldValue('Autopro');
-    if (!value) {
-      return Toast.info('请先选择项目', 1);
-    }
+    // if (!value) {
+    //   return Toast.info('请先选择项目', 1);
+    // }
     const newdate = this.state.allData;
 
     this.asyncSetFieldProps(newdate);
@@ -148,7 +148,7 @@ const FormField: IFormField = {
         <div className="field-wrapper">
           <div className="m-field-view">
             <label className="m-field-view-label">{label}</label>
-            <div className="m-field-view-value"> {JSON.stringify(value)}</div>
+            <div className="m-field-view-value"> {value}</div>
           </div>
         </div>
       );
