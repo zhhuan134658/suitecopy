@@ -388,20 +388,14 @@ const FormField: ISwapFormField = {
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
     console.log(row);
-    if (row.num3) {
+    if (row.subtotal) {
       const newvalue = this.state.Inputmoney1;
       this.setState({
-        Inputmoney1: (newvalue - row.num3).toFixed(2),
+        Inputmoney1: (newvalue - row.subtotal).toFixed(2),
       });
       console.log('ssks');
     }
-    if (row.num5) {
-      const newvalue2 = this.state.Inputmoney2;
-      this.setState({
-        Inputmoney2: (newvalue2 - row.num5).toFixed(2),
-      });
-      console.log('ssks');
-    }
+
     this.setState({
       dataSource: dataSource.filter(item => item.id !== row.id),
     });
@@ -1052,7 +1046,7 @@ const FormField: ISwapFormField = {
                 value={this.state.value}
                 dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
                 treeData={this.state.treeData}
-                placeholder="请选择"
+                placeholder="请输入"
                 treeDefaultExpandAll
                 onChange={onChangetree}
               />

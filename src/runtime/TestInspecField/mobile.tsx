@@ -479,7 +479,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                           readOnly
                                         />
                                       </div>
@@ -508,7 +508,7 @@ const FormField: IFormField = {
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                         />
                                       </div>
                                     </div>

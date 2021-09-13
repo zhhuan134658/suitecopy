@@ -252,12 +252,6 @@ const FormField: IFormField = {
     this.setState({ materialList: [...arr] });
     console.log(arr);
   },
-  onDatechange(types, index, dateString) {
-    // let arr = this.state.materialList;
-    // let purchase_riqi = 'purchase_riqi';
-    // arr[index][purchase_riqi] = dateString;
-    // this.setState({ materialList: [...arr] });
-  },
   fieldDidUpdate() {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');

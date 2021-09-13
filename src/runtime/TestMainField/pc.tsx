@@ -384,10 +384,10 @@ const FormField: ISwapFormField = {
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
     console.log(row);
-    if (row.num3) {
+    if (row.total_price) {
       const newvalue = this.state.Inputmoney1;
       this.setState({
-        Inputmoney1: (newvalue - row.num3).toFixed(2),
+        Inputmoney1: (newvalue - row.total_price).toFixed(2),
       });
       console.log('ssks');
     }

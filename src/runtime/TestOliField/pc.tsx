@@ -384,20 +384,14 @@ const FormField: ISwapFormField = {
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
     console.log(row);
-    if (row.num3) {
+    if (row.total_price) {
       const newvalue = this.state.Inputmoney1;
       this.setState({
-        Inputmoney1: (newvalue - row.num3).toFixed(2),
+        Inputmoney1: (newvalue - row.total_price).toFixed(2),
       });
       console.log('ssks');
     }
-    if (row.total_price) {
-      const newvalue2 = this.state.Inputmoney2;
-      this.setState({
-        Inputmoney2: (newvalue2 - row.total_price).toFixed(2),
-      });
-      console.log('ssks');
-    }
+
     this.setState({
       dataSource: dataSource.filter(item => item.id !== row.id),
     });
@@ -436,11 +430,11 @@ const FormField: ISwapFormField = {
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
-      if (row.price && row.oil_consump) {
-          newData[index].total_price = row.price * row.oil_consump;
-      } else {
-          newData[index].total_price="请输入";
-      }
+    if (row.price && row.oil_consump) {
+      newData[index].total_price = row.price * row.oil_consump;
+    } else {
+      newData[index].total_price = '请输入';
+    }
 
     this.setState({
       dataSource: newData,

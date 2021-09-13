@@ -242,8 +242,14 @@ const FormField: IFormField = {
     });
   },
   //删除明细
-  deleteItem(index) {
+  deleteItem(item, index) {
     let list = this.state.materialList;
+    if (item.subtotal) {
+      const newvalue = this.state.Inputmoney1;
+      this.setState({
+        Inputmoney1: (newvalue - item.subtotal).toFixed(2),
+      });
+    }
     list.splice(index, 1);
     this.setState({
       materialList: list,
@@ -452,7 +458,7 @@ const FormField: IFormField = {
                         {this.state.materialList.length > 1 ? (
                           <div
                             className="dele_item"
-                            onClick={this.deleteItem.bind(this, index)}
+                            onClick={this.deleteItem.bind(this, item, index)}
                           >
                             删除
                           </div>
@@ -605,7 +611,7 @@ const FormField: IFormField = {
                                   <div className="m-field m-field-mobile m-select-field">
                                     <div className="m-field-head">
                                       <div className="m-field-label">
-                                        <span>日期</span>
+                                        <span>工作日期</span>
                                       </div>
                                     </div>
 
@@ -627,36 +633,7 @@ const FormField: IFormField = {
                             </div>
                           </DatePicker>
                         </div>
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>工作日期</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          editable={false}
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.riqi}
-                                          placeholder="点击选择"
-                                          onChange={e =>
-                                            this.onInputchange('riqi', index, e)
-                                          }
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
+
                         <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">

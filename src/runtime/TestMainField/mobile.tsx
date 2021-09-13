@@ -218,8 +218,15 @@ const FormField: IFormField = {
     });
   },
   //删除明细
-  deleteItem(index) {
+  deleteItem(item, index) {
     let list = this.state.materialList;
+    if (item.total_price) {
+      const newvalue = this.state.Inputmoney1;
+      this.setState({
+        Inputmoney1: (newvalue - item.total_price).toFixed(2),
+      });
+      console.log('ssks');
+    }
     list.splice(index, 1);
     this.setState({
       materialList: list,
@@ -429,7 +436,7 @@ const FormField: IFormField = {
                         {this.state.materialList.length > 1 ? (
                           <div
                             className="dele_item"
-                            onClick={this.deleteItem.bind(this, index)}
+                            onClick={this.deleteItem.bind(this, item, index)}
                           >
                             删除
                           </div>
@@ -558,7 +565,7 @@ const FormField: IFormField = {
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="请输入"
+                                          placeholder="自动获取"
                                         />
                                       </div>
                                     </div>
