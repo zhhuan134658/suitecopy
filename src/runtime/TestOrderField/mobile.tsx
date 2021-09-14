@@ -166,7 +166,7 @@ const FormField: IFormField = {
         if (type === 1) {
           console.log('9887987', newarr);
           this.setState({
-            materialList: newarr,
+            materialList: [...newarr],
           });
         } else if (type === 2) {
           this.setState({
@@ -290,14 +290,23 @@ const FormField: IFormField = {
 
     arr[newindex][newtype] = arrindex;
 
-    arr[newindex].tax_money = arr[newindex].rk_number * arr[newindex].tax_price;
-    arr[newindex].notax_price =
-      (arr[newindex].rk_number *
-        arr[newindex].tax_price *
-        arr[newindex].tax_rate) /
-      100;
+    if (
+      arr[newindex].rk_number &&
+      arr[newindex].tax_price &&
+      arr[newindex].tax_rate
+    ) {
+      arr[newindex].notax_price =
+        (arr[newindex].rk_number *
+          arr[newindex].tax_price *
+          arr[newindex].tax_rate) /
+        100;
+    }
+    if (arr[newindex].rk_number && arr[newindex].tax_price) {
+      arr[newindex].tax_money =
+        arr[newindex].rk_number * arr[newindex].tax_price;
+    }
     arr[newindex].notax_money =
-      arr[newindex].tax_money + arr[newindex].notax_price;
+      arr[newindex].tax_money - arr[newindex].notax_price;
     //   含税金额
     let newarr2 = [];
 

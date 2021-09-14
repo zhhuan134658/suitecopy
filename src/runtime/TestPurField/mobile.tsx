@@ -292,16 +292,26 @@ const FormField: IFormField = {
     let arrindex = e;
     let newindex = index;
     let newtype = types;
-
     arr[newindex][newtype] = arrindex;
-    arr[newindex].tax_money =
-      arr[newindex].need_quantity * arr[newindex].refer_price;
-    arr[newindex].notax_money =
-      (arr[newindex].need_quantity *
-        arr[newindex].refer_price *
-        arr[newindex].tax_rate) /
-      100;
-
+    if (
+      arr[newindex].need_quantity &&
+      arr[newindex].refer_price &&
+      arr[newindex].tax_rate
+    ) {
+      arr[newindex].notax_price =
+        (arr[newindex].need_quantity *
+          arr[newindex].refer_price *
+          arr[newindex].tax_rate) /
+        100;
+    }
+    if (arr[newindex].need_quantity && arr[newindex].refer_price) {
+      arr[newindex].tax_money =
+        arr[newindex].need_quantity * arr[newindex].refer_price;
+    }
+    if (arr[newindex].notax_price && arr[newindex].tax_money) {
+      arr[newindex].notax_money =
+        arr[newindex].tax_money - arr[newindex].notax_price;
+    }
     //   含税金额
     let newarr2 = [];
 

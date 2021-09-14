@@ -472,17 +472,9 @@ const FormField: IFormField = {
           <div>
             <div className="field-wrapper">
               <div className="m-field-view">
-                <label className="m-field-view-label">含税金额</label>
+                <label className="m-field-view-label">合计总额</label>
                 <div className="m-field-view-value">
                   <span>{hanmoney}</span>
-                </div>
-              </div>
-            </div>
-            <div className="field-wrapper">
-              <div className="m-field-view">
-                <label className="m-field-view-label">不含税金额</label>
-                <div className="m-field-view-value">
-                  <span>{nomoney}</span>
                 </div>
               </div>
             </div>
@@ -900,7 +892,7 @@ const FormField: IFormField = {
               <div className="m-field m-field-mobile m-select-field">
                 <div className="m-field-head">
                   <div className="m-field-label">
-                    <span>含税金额</span>
+                    <span>合计总额</span>
                   </div>
                 </div>
                 <div className="m-field-box">

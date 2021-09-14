@@ -618,7 +618,7 @@ const FormField: ISwapFormField = {
             readOnly
             value={this.state.Inputvalue}
             onClick={this.handleAdd}
-            placeholder="请租赁计划"
+            placeholder="请选择"
           />
         </div>
 

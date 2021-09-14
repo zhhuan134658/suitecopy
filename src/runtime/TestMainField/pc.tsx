@@ -439,7 +439,7 @@ const FormField: ISwapFormField = {
     if (row.material_total && row.person_total) {
       newData[index].total_price = row.person_total + row.material_total;
     } else {
-      newData[index].total_price="请输入";
+      newData[index].total_price = '请输入';
     }
 
     this.setState({

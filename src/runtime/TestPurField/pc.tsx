@@ -835,11 +835,11 @@ const FormField: ISwapFormField = {
         dataIndex: 'notax_price',
       },
       {
-        title: '含税金额',
+        title: '含税金额(元)',
         dataIndex: 'tax_money',
       },
       {
-        title: '不含税金额',
+        title: '不含税金额(元)',
         dataIndex: 'notax_money',
       },
     ];
@@ -886,11 +886,11 @@ const FormField: ISwapFormField = {
         dataIndex: 'notax_price',
       },
       {
-        title: '含税金额',
+        title: '含税金额(元)',
         dataIndex: 'tax_money',
       },
       {
-        title: '不含税金额',
+        title: '不含税金额(元)',
         dataIndex: 'notax_money',
       },
       {
@@ -1042,9 +1042,9 @@ const FormField: ISwapFormField = {
         <div className="field-wrapper">
           <div className="label">名称</div>
           <div>{detailname}</div>
-          <div className="label">含税金额</div>
+          <div className="label">含税金额 (元)</div>
           <div>{hanmoney}</div>
-          <div className="label">不含税金额</div>
+          <div className="label">不含税金额(元)</div>
           <div>{nomoney}</div>
 
           <div className="label">物资明细</div>
@@ -1121,7 +1121,7 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
 
-          <div className="label">含税金额合计</div>
+          <div className="label">含税金额合计(元)</div>
           <div>
             <Input
               readOnly
@@ -1130,7 +1130,7 @@ const FormField: ISwapFormField = {
             />
           </div>
           <div className="label" style={{ marginTop: '10px' }}>
-            不含税金额合计
+            不含税金额合计(元)
           </div>
           <div>
             <Input

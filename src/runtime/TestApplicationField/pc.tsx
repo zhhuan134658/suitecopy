@@ -854,7 +854,7 @@ const FormField: ISwapFormField = {
       },
 
       {
-        title: '小计',
+        title: '小计(元)',
         dataIndex: 'subtotal',
       },
       {
@@ -900,7 +900,7 @@ const FormField: ISwapFormField = {
       },
 
       {
-        title: '小计',
+        title: '小计(元)',
         dataIndex: 'subtotal',
       },
       {
@@ -1146,7 +1146,7 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
 
-          <div className="label">含税金额合计</div>
+          <div className="label">合计总额（元）</div>
           <div>
             <Input
               readOnly

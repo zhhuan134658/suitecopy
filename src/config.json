@@ -439,7 +439,7 @@
       "bizAlias": "CorpSupplier",
       "props": {
         "required": false,
-        "placeholder": "请输入",
+        "placeholder": "请选择",
         "label": "供应商"
       },
       "type": "custom"
@@ -449,7 +449,7 @@
       "bizAlias": "CorpSupplieryi",
       "props": {
         "required": false,
-        "placeholder": "请输入",
+        "placeholder": "请选择",
         "label": "供应商"
       },
       "type": "custom"
@@ -679,7 +679,7 @@
       "componentName": "TestLeaseField",
       "bizAlias": "TestLease",
       "props": {
-        "placeholder": "请输入",
+        "placeholder": "请选择",
         "label": "租赁计划添加物资材料"
       },
       "type": "custom"
@@ -789,7 +789,7 @@
           "bizAlias": "SimpleMo",
           "props": {
             "id": "CalculateField_JINE",
-            "placeholder": "请输入",
+            "placeholder": "自动获取",
             "label": "金额（元）大写",
             "notUpper": "0"
           }

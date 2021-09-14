@@ -59,11 +59,11 @@ const FormField: IFormField = {
           dataIndex: 'notax_price',
         },
         {
-          title: '含税金额',
+          title: '含税金额合计',
           dataIndex: 'tax_money',
         },
         {
-          title: '不含税金额',
+          title: '不含税金额合计',
           dataIndex: 'notax_money',
         },
       ],
@@ -539,7 +539,7 @@ const FormField: IFormField = {
           <div>
             <div className="field-wrapper">
               <div className="m-field-view">
-                <label className="m-field-view-label">含税金额</label>
+                <label className="m-field-view-label">含税金额合计</label>
                 <div className="m-field-view-value">
                   <span>{hanmoney}</span>
                 </div>
@@ -547,7 +547,7 @@ const FormField: IFormField = {
             </div>
             <div className="field-wrapper">
               <div className="m-field-view">
-                <label className="m-field-view-label">不含税金额</label>
+                <label className="m-field-view-label">不含税金额合计</label>
                 <div className="m-field-view-value">
                   <span>{nomoney}</span>
                 </div>
@@ -880,7 +880,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>含税金额</span>
+                                      <span>含税金额合计</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -907,7 +907,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>不含税金额</span>
+                                      <span>不含税金额合计</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -955,7 +955,7 @@ const FormField: IFormField = {
               <div className="m-field m-field-mobile m-select-field">
                 <div className="m-field-head">
                   <div className="m-field-label">
-                    <span>含税金额</span>
+                    <span>含税金额合计</span>
                   </div>
                 </div>
                 <div className="m-field-box">

@@ -454,7 +454,7 @@ const FormField: ISwapFormField = {
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
-    if (row.price) {
+    if (row.price && row.zl_number) {
       newData[index].subtotal = row.zl_number * row.price;
     }
 
@@ -976,7 +976,11 @@ const FormField: ISwapFormField = {
 
           <div className="label">合计</div>
           <div>
-            <Input readOnly value={this.state.Inputmoney1} placeholder="自动计算" />
+            <Input
+              readOnly
+              value={this.state.Inputmoney1}
+              placeholder="自动计算"
+            />
           </div>
         </div>
 

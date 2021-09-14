@@ -584,7 +584,8 @@ const FormField: ISwapFormField = {
 
         <div>
           <Input
-            readOnly
+            allowClear
+            // readOnly
             value={this.state.Inputvalue}
             onClick={this.handleAdd}
             placeholder="请选择库房"
