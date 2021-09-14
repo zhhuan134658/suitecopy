@@ -157,7 +157,7 @@ const FormField: IFormField = {
                           readOnly
                           className="ant-input m-mobile-inner-input"
                           type="text"
-                          placeholder="点击选择"
+                          placeholder="请选择"
                           value={this.state.pickerValuedata}
                           onClick={this.sublisk}
                         />

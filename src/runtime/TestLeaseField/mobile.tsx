@@ -441,7 +441,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.typename}
-                                          placeholder="点击选择"
+                                          placeholder="请选择"
                                           onClick={this.onOpenChange2.bind(
                                             this,
                                             index,
@@ -480,7 +480,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
-                                          placeholder="点击选择"
+                                          placeholder="请选择"
                                           onClick={this.onOpenChange.bind(
                                             this,
                                             index,
@@ -512,10 +512,11 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                           readOnly
                                         />
                                       </div>
@@ -540,11 +541,12 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                         />
                                       </div>
                                     </div>
@@ -570,7 +572,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           className="ant-input m-mobile-inner-input"
                                           value={item.zl_number}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'zl_number',
@@ -604,7 +606,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.purchase_unit}
-                                          placeholder="点击选择"
+                                          placeholder="请选择"
                                           onChange={e =>
                                             this.onInputchange(
                                               'purchase_unit',
@@ -646,7 +648,7 @@ const FormField: IFormField = {
                                             editable={false}
                                             clear
                                             value={item.plan_in_riqi}
-                                            placeholder="请输入"
+                                            placeholder="请选择"
                                           ></InputItem>
                                         </div>
                                       </div>
@@ -682,7 +684,7 @@ const FormField: IFormField = {
                                             editable={false}
                                             clear
                                             value={item.plan_out_riqi}
-                                            placeholder="请输入"
+                                            placeholder="请选择"
                                           ></InputItem>
                                         </div>
                                       </div>

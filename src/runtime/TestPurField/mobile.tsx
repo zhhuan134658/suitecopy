@@ -234,9 +234,7 @@ const FormField: IFormField = {
     if (this.state.detdate === 'a1') {
       dtar = '采购申请-' + item.name;
     } else if (this.state.detdate === 'b1') {
-      dtar = '采购订单-' + item.name;
-    } else {
-      dtar = '采购申请-' + item.name;
+      dtar = '材料总计划-' + item.name;
     }
     newdate.rk_id = [this.state.detdate, ...cDataid];
     this.asyncSetFieldProps(newdate, 1);
@@ -371,7 +369,7 @@ const FormField: IFormField = {
     const field = form.getFieldInstance('TestPur');
     const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestPur', 'label');
-    const tabs = [{ title: '采购申请' }, { title: '采购订单' }];
+    const tabs = [{ title: '采购申请' }, { title: '材料总计划' }];
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;
@@ -561,8 +559,8 @@ const FormField: IFormField = {
                       <InputItem
                         editable={false}
                         value={this.state.chenkdata}
-                        onFocus={this.getcheckdata}
-                        placeholder="请输入"
+                        onClick={this.getcheckdata}
+                        placeholder="请选择"
                         readOnly
                       ></InputItem>
                     </div>
@@ -620,7 +618,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.typename}
-                                          placeholder="点击选择"
+                                          placeholder="请选择"
                                           onFocus={this.onOpenChange2.bind(
                                             this,
                                             index,
@@ -659,7 +657,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
-                                          placeholder="点击选择"
+                                          placeholder="请选择"
                                           onFocus={this.onOpenChange.bind(
                                             this,
                                             index,
@@ -691,10 +689,11 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                           readOnly
                                         />
                                       </div>
@@ -719,11 +718,12 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                         />
                                       </div>
                                     </div>
@@ -845,16 +845,10 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           clear
                                           value={item.notax_price}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'notax_price',
-                                              index,
-                                              e,
-                                            )
-                                          }
+                                          placeholder="自动计算"
                                         ></InputItem>
                                       </div>
                                     </div>
@@ -878,16 +872,10 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           clear
                                           value={item.tax_money}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'tax_money',
-                                              index,
-                                              e,
-                                            )
-                                          }
+                                          placeholder="自动计算"
                                         ></InputItem>
                                       </div>
                                     </div>
@@ -911,16 +899,10 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           clear
                                           value={item.notax_money}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'notax_money',
-                                              index,
-                                              e,
-                                            )
-                                          }
+                                          placeholder="自动计算"
                                         ></InputItem>
                                       </div>
                                     </div>
@@ -965,8 +947,9 @@ const FormField: IFormField = {
                   <div className="m-field-content left">
                     <div className="input-wrapper">
                       <InputItem
+                        editable={false}
                         value={this.state.Inputmoney1}
-                        placeholder="请输入"
+                        placeholder="自动计算"
                         readOnly
                       ></InputItem>
                     </div>
@@ -989,6 +972,7 @@ const FormField: IFormField = {
                   <div className="m-field-content left">
                     <div className="input-wrapper">
                       <InputItem
+                        editable={false}
                         value={this.state.Inputmoney2}
                         placeholder="自动计算"
                         readOnly

@@ -204,7 +204,7 @@
       "props": {
         "required": false,
         "placeholder": "请输入",
-        "label": "关联租赁计划"
+        "label": "请选择"
       },
       "type": "custom"
     },
@@ -264,7 +264,7 @@
       "bizAlias": "Selectjia",
       "props": {
         "required": false,
-        "placeholder": "请输入",
+        "placeholder": "请选择",
         "label": "甲方"
       },
       "type": "custom"
@@ -474,7 +474,7 @@
       "bizAlias": "Autopro",
       "props": {
         "required": false,
-        "placeholder": "请输入",
+        "placeholder": "请选择",
         "label": "项目",
         "options": [
           { "key": "1", "value": "是" },
@@ -488,7 +488,7 @@
       "bizAlias": "Autotoupro",
       "props": {
         "required": false,
-        "placeholder": "请输入",
+        "placeholder": "请选择",
         "label": "项目",
         "options": [
           { "key": "1", "value": "是" },
@@ -501,7 +501,7 @@
       "bizAlias": "Autoprobei",
       "props": {
         "required": false,
-        "placeholder": "请输入",
+        "placeholder": "请选择",
         "label": "项目",
         "options": [
           { "key": "1", "value": "是" },

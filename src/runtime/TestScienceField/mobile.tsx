@@ -407,7 +407,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.typename}
-                                          placeholder="点击选择"
+                                          placeholder="请选择"
                                           onClick={this.onOpenChange2.bind(
                                             this,
                                             index,
@@ -446,7 +446,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.name}
-                                          placeholder="点击选择"
+                                          placeholder="请选择"
                                           onClick={this.onOpenChange.bind(
                                             this,
                                             index,
@@ -478,10 +478,11 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                           readOnly
                                         />
                                       </div>
@@ -506,11 +507,12 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
                                           value={item.unit}
-                                          placeholder="点击选择"
+                                          placeholder="自动获取"
                                         />
                                       </div>
                                     </div>

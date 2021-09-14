@@ -586,6 +586,8 @@ const FormField: ISwapFormField = {
         petty_sele: '', //备用金抵扣
         Numbervalue1: '', //备用金余额
         Numbervalue2: '', //折扣后合计
+        Numbervalue3: '', //审批中的费用报销抵扣
+        Numbervalue4: '', //审批中的归还
       };
       if (this.state.Inputmoney1) {
         editData.hanmoney = this.state.Inputmoney1;
@@ -598,6 +600,10 @@ const FormField: ISwapFormField = {
       editData.petty_sele = this.state.petty_sele;
       editData.Numbervalue1 = this.state.Numbervalue1;
       editData.Numbervalue2 = this.state.Numbervalue2;
+
+      editData.Numbervalue3 = this.state.Numbervalue3;
+      editData.Numbervalue4 = this.state.Numbervalue4;
+
       const { form } = this.props;
       form.setFieldValue('TestExpe', editData);
       form.setExtendFieldValue('TestExpe', {
@@ -846,7 +852,9 @@ const FormField: ISwapFormField = {
             />
           </div>
           <div>
-            <div className="label">备用金抵扣</div>
+            <div className="label" style={{ marginTop: '10px' }}>
+              备用金抵扣
+            </div>
             <Select
               defaultValue="2"
               style={{ width: 200 }}
@@ -859,28 +867,36 @@ const FormField: ISwapFormField = {
           <div>
             {this.state.isShow ? (
               <div>
-                <div className="label">备用金余额</div>
+                <div style={{ marginTop: '10px' }} className="label">
+                  备用金余额
+                </div>
                 <InputNumber
                   readOnly
                   style={{ width: 200 }}
                   min={0}
                   value={this.state.Numbervalue1}
                 />
-                <div className="label">审批中的费用报销抵扣</div>
+                <div style={{ marginTop: '10px' }} className="label">
+                  审批中的费用报销抵扣
+                </div>
                 <InputNumber
                   readOnly
                   style={{ width: 200 }}
                   min={0}
                   value={this.state.Numbervalue3}
                 />
-                <div className="label">审批中的归还</div>
+                <div style={{ marginTop: '10px' }} className="label">
+                  审批中的归还
+                </div>
                 <InputNumber
                   readOnly
                   style={{ width: 200 }}
                   min={0}
                   value={this.state.Numbervalue4}
                 />
-                <div className="label">折扣后合计</div>
+                <div style={{ marginTop: '10px' }} className="label">
+                  折扣后合计
+                </div>
                 <InputNumber
                   max={this.state.maxnum}
                   style={{ width: 200 }}

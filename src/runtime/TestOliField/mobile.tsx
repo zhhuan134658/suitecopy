@@ -506,6 +506,7 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.size}
@@ -534,6 +535,7 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           readOnly
                                           className="ant-input m-mobile-inner-input"
@@ -629,6 +631,7 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
+                                          editable={false}
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.total_price}

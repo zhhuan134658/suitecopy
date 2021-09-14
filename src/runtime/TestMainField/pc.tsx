@@ -913,7 +913,7 @@ const FormField: ISwapFormField = {
             <Input
               readOnly
               value={this.state.Inputmoney1}
-              placeholder="合计"
+              placeholder="自动计算"
             />
           </div>
         </div>

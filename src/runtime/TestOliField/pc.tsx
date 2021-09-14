@@ -884,7 +884,7 @@ const FormField: ISwapFormField = {
 
           <div className="label">合计</div>
           <div>
-            <Input readOnly value={this.state.Inputmoney1} placeholder="合计" />
+            <Input readOnly value={this.state.Inputmoney1} placeholder="自动计算" />
           </div>
         </div>
 

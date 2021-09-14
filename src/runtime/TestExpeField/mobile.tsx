@@ -267,6 +267,8 @@ const FormField: IFormField = {
         petty_sele: '', //备用金抵扣
         Numbervalue1: '', //备用金余额
         Numbervalue2: '', //折扣后合计
+        Numbervalue3: '', //审批中的费用报销抵扣
+        Numbervalue4: '', //审批中的归还
       };
       if (this.state.Inputmoney1) {
         editData.hanmoney = this.state.Inputmoney1;
@@ -279,6 +281,8 @@ const FormField: IFormField = {
       editData.petty_sele = this.state.petty_sele;
       editData.Numbervalue1 = this.state.Numbervalue1;
       editData.Numbervalue2 = this.state.Numbervalue2;
+      editData.Numbervalue3 = this.state.Numbervalue3;
+      editData.Numbervalue4 = this.state.Numbervalue4;
       const { form } = this.props;
       form.setFieldValue('TestExpe', editData);
       form.setExtendFieldValue('TestExpe', {
@@ -446,7 +450,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.ke_name}
-                                          placeholder="点击选择"
+                                          placeholder="请选择"
                                           onClick={this.onOpenChange.bind(
                                             this,
                                             index,
@@ -485,7 +489,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.money}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'money',
@@ -519,7 +523,7 @@ const FormField: IFormField = {
                                           type="text"
                                           className="ant-input m-mobile-inner-input"
                                           value={item.remarks}
-                                          placeholder="点击选择"
+                                          placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
                                               'remarks',
@@ -615,7 +619,7 @@ const FormField: IFormField = {
                                   type="text"
                                   className="ant-input m-mobile-inner-input"
                                   value={this.state.Numbervalue1}
-                                  placeholder="点击选择"
+                                  placeholder="自动获取"
                                   readOnly
                                   editable={false}
                                 />
@@ -642,7 +646,7 @@ const FormField: IFormField = {
                                   type="text"
                                   className="ant-input m-mobile-inner-input"
                                   value={this.state.Numbervalue3}
-                                  placeholder="点击选择"
+                                  placeholder="自动获取"
                                   readOnly
                                   editable={false}
                                 />
@@ -669,7 +673,7 @@ const FormField: IFormField = {
                                   type="text"
                                   className="ant-input m-mobile-inner-input"
                                   value={this.state.Numbervalue4}
-                                  placeholder="点击选择"
+                                  placeholder="自动获取"
                                   readOnly
                                   editable={false}
                                 />
@@ -697,7 +701,7 @@ const FormField: IFormField = {
                                   max={this.state.maxnum}
                                   className="ant-input m-mobile-inner-input"
                                   value={this.state.Numbervalue2}
-                                  placeholder="点击选择"
+                                  placeholder="请输入"
                                   onChange={e => {
                                     if (e.target.value > this.state.maxnum) {
                                       Toast.info('超出', 1);

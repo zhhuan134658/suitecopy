@@ -78,8 +78,8 @@ const mycolumns = [
     title: '项目名称',
     dataIndex: 'project_name',
     render: (_, record: any) => (
-      <Tooltip placement="topLeft" title={record.name}>
-        <span>{record.name}</span>
+      <Tooltip placement="topLeft" title={record.project_name}>
+        <span>{record.project_name}</span>
       </Tooltip>
     ),
   },
@@ -87,8 +87,8 @@ const mycolumns = [
     title: '金额',
     dataIndex: 'reply_money',
     render: (_, record: any) => (
-      <Tooltip placement="topLeft" title={record.name}>
-        <span>{record.name}</span>
+      <Tooltip placement="topLeft" title={record.reply_money}>
+        <span>{record.reply_money}</span>
       </Tooltip>
     ),
   },

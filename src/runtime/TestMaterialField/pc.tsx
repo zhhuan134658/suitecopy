@@ -1085,7 +1085,7 @@ const FormField: ISwapFormField = {
             readOnly
             value={this.state.Inputvalue}
             onClick={this.chhandleAdd}
-            placeholder="请选择库房"
+            placeholder="请选择"
           />
         </div>
         <Modal
