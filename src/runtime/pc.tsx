@@ -14,7 +14,7 @@ const SwapDemoSuite: ISwapDemoSuite = {
     const { form } = this.props;
 
     // const hiddenReason = form.getSuiteProp('hiddenReason');
-    form.setFieldValue('DateFielddate', new Date().toLocaleDateString());
+    // form.setFieldValue('DateFielddate', new Date().toLocaleDateString());
     const IsAutoOutExtendValue = form.getFieldExtendValue('IsAutoOut');
     const outPeopleField = form.getFieldInstance('outPeople');
     console.log(IsAutoOutExtendValue);

@@ -224,6 +224,7 @@ const FormField: ISwapFormField = {
       Numbervalue1: 0,
       Numbervalue2: '',
       Numbervalue3: '',
+      Numbervalue5: '',
       isShow: false,
       value: undefined,
       msgdata: '',
@@ -520,6 +521,19 @@ const FormField: ISwapFormField = {
         // console.log(this.state.listData);
       });
   },
+  onNumbervalue2Change(val) {
+    console.log(val);
+
+    if (val > this.state.maxnum) {
+      const aa = this.state.Inputmoney1;
+      const bb = aa - this.state.maxnum;
+      this.setState({ Numbervalue2: this.state.maxnum, Numbervalue5: bb });
+    } else {
+      const aa = this.state.Inputmoney1;
+      const bb = aa - val;
+      this.setState({ Numbervalue2: val, Numbervalue5: bb });
+    }
+  },
   rowClick(this, record, rowkey) {
     const { form } = this.props;
     const newData = [...this.state.dataSource];
@@ -585,9 +599,10 @@ const FormField: ISwapFormField = {
         detailedData: [], //物资明细
         petty_sele: '', //备用金抵扣
         Numbervalue1: '', //备用金余额
-        Numbervalue2: '', //折扣后合计
+        Numbervalue2: '', //本次抵扣金额
         Numbervalue3: '', //审批中的费用报销抵扣
         Numbervalue4: '', //审批中的归还
+        Numbervalue5: '', //财务应支付金额
       };
       if (this.state.Inputmoney1) {
         editData.hanmoney = this.state.Inputmoney1;
@@ -603,7 +618,7 @@ const FormField: ISwapFormField = {
 
       editData.Numbervalue3 = this.state.Numbervalue3;
       editData.Numbervalue4 = this.state.Numbervalue4;
-
+      editData.Numbervalue5 = this.state.Numbervalue5;
       const { form } = this.props;
       form.setFieldValue('TestExpe', editData);
       form.setExtendFieldValue('TestExpe', {
@@ -787,13 +802,23 @@ const FormField: ISwapFormField = {
     //详情
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
-      const { hanmoney = '', detailedData = [] } = value;
+      const {
+        hanmoney = '',
+        detailedData = [],
+        petty_sele = '',
+        Numbervalue1 = '',
+        Numbervalue2 = '',
+        Numbervalue3 = '',
+        Numbervalue4 = '',
+        Numbervalue5 = '', //财务应支付金额
+      } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">含税金额</div>
-          <div>{hanmoney}</div>
-          <div className="label">物资明细</div>
-
+          <div className="label">报销合计</div>
+          <div style={{ marginTop: '10px' }}>{hanmoney}</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            物资明细
+          </div>
           {/* <div>
             {detailedData.map(item => {
               return <div>{item.toString()}</div>;
@@ -810,6 +835,30 @@ const FormField: ISwapFormField = {
               pagination={false}
             />
           </div>
+          <div style={{ marginTop: '10px' }} className="label">
+            备用金抵扣
+          </div>
+          <div style={{ marginTop: '10px' }}>{petty_sele}</div>{' '}
+          <div style={{ marginTop: '10px' }} className="label">
+            备用金余额
+          </div>
+          <div style={{ marginTop: '10px' }}>{Numbervalue1}</div>{' '}
+          <div style={{ marginTop: '10px' }} className="label">
+            本次抵扣金额
+          </div>
+          <div style={{ marginTop: '10px' }}>{Numbervalue2}</div>{' '}
+          <div style={{ marginTop: '10px' }} className="label">
+            审批中的费用报销抵扣
+          </div>
+          <div style={{ marginTop: '10px' }}>{Numbervalue3}</div>{' '}
+          <div style={{ marginTop: '10px' }} className="label">
+            审批中的归还
+          </div>
+          <div style={{ marginTop: '10px' }}>{Numbervalue4}</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            财务应支付金额
+          </div>
+          <div style={{ marginTop: '10px' }}>{Numbervalue5}</div>
         </div>
       );
     }
@@ -847,7 +896,6 @@ const FormField: ISwapFormField = {
             <InputNumber
               readOnly
               value={this.state.Inputmoney1}
-              onChange={this.onChangenum2}
               placeholder="报销合计"
             />
           </div>
@@ -895,14 +943,23 @@ const FormField: ISwapFormField = {
                   value={this.state.Numbervalue4}
                 />
                 <div style={{ marginTop: '10px' }} className="label">
-                  折扣后合计
+                  本次抵扣金额
                 </div>
                 <InputNumber
-                  max={this.state.maxnum}
+                  //   max={this.state.maxnum}
                   style={{ width: 200 }}
                   value={this.state.Numbervalue2}
-                  //   onChange={this.onChange}
+                  onChange={this.onNumbervalue2Change}
                 />
+                <div style={{ marginTop: '10px' }} className="label">
+                  财务应支付金额
+                </div>
+                <InputNumber
+                  readOnly
+                  style={{ width: 200 }}
+                  value={this.state.Numbervalue5}
+                />
+                ·
               </div>
             ) : null}
           </div>

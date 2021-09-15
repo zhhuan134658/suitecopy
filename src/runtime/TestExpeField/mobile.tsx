@@ -74,6 +74,7 @@ const FormField: IFormField = {
       Numbervalue2: '',
       Numbervalue3: '',
       Numbervalue4: '',
+      Numbervalue5: '',
       allData: { type: '0', number: '99999', page: '1', name: '' },
       listData: [],
       petty_sele: '否',
@@ -266,9 +267,10 @@ const FormField: IFormField = {
         detailedData: [], //物资明细
         petty_sele: '', //备用金抵扣
         Numbervalue1: '', //备用金余额
-        Numbervalue2: '', //折扣后合计
+        Numbervalue2: '', //本次抵扣金额
         Numbervalue3: '', //审批中的费用报销抵扣
         Numbervalue4: '', //审批中的归还
+        Numbervalue5: '', //财务应支付金额
       };
       if (this.state.Inputmoney1) {
         editData.hanmoney = this.state.Inputmoney1;
@@ -283,6 +285,7 @@ const FormField: IFormField = {
       editData.Numbervalue2 = this.state.Numbervalue2;
       editData.Numbervalue3 = this.state.Numbervalue3;
       editData.Numbervalue4 = this.state.Numbervalue4;
+      editData.Numbervalue5 = this.state.Numbervalue5;
       const { form } = this.props;
       form.setFieldValue('TestExpe', editData);
       form.setExtendFieldValue('TestExpe', {
@@ -361,7 +364,15 @@ const FormField: IFormField = {
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
 
-      const { detailedData = [] } = value;
+      const {
+        hanmoney = '',
+        detailedData = [],
+        petty_sele = '',
+        Numbervalue1 = '',
+        Numbervalue2 = '',
+        Numbervalue3 = '',
+        Numbervalue4 = '',
+      } = value;
       return (
         <div className="field-wrapper">
           <div className="tablefield-mobile">
@@ -395,6 +406,26 @@ const FormField: IFormField = {
                 );
               })}
             </div>
+          </div>
+          <div className="m-field-view">
+            <label className="m-field-view-label">备用金抵扣</label>
+            <div className="m-field-view-value"> {petty_sele}</div>
+          </div>{' '}
+          <div className="m-field-view">
+            <label className="m-field-view-label">备用金余额</label>
+            <div className="m-field-view-value"> {Numbervalue1}</div>
+          </div>{' '}
+          <div className="m-field-view">
+            <label className="m-field-view-label">本次抵扣金额</label>
+            <div className="m-field-view-value"> {Numbervalue2}</div>
+          </div>
+          <div className="m-field-view">
+            <label className="m-field-view-label">审批中的费用报销抵扣</label>
+            <div className="m-field-view-value"> {Numbervalue3}</div>
+          </div>{' '}
+          <div className="m-field-view">
+            <label className="m-field-view-label">审批中的归还</label>
+            <div className="m-field-view-value"> {Numbervalue4}</div>
           </div>
         </div>
       );
@@ -690,7 +721,7 @@ const FormField: IFormField = {
                         <div className="m-field m-field-mobile m-select-field">
                           <div className="m-field-head">
                             <div className="m-field-label">
-                              <span>折扣后合计</span>
+                              <span>本次抵扣金额</span>
                             </div>
                           </div>
                           <div className="m-field-box">
@@ -704,18 +735,50 @@ const FormField: IFormField = {
                                   placeholder="请输入"
                                   onChange={e => {
                                     if (e.target.value > this.state.maxnum) {
+                                      const aa = this.state.Numbervalue1;
+                                      const bb = aa - this.state.maxnum;
                                       Toast.info('超出', 1);
                                       this.setState({
                                         Numbervalue2: this.state.maxnum,
+                                        Numbervalue5: bb,
                                       });
                                     } else {
+                                      const aa = this.state.Numbervalue1;
+                                      const bb = aa - this.state.maxnum;
                                       this.setState({
                                         Numbervalue2: e.target.value,
+                                        Numbervalue5: bb,
                                       });
                                     }
 
                                     console.log(e.target.value);
                                   }}
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div className="field-wrapper">
+                    <div className="m-group m-group-mobile">
+                      <div className="m-field-wrapper">
+                        <div className="m-field m-field-mobile m-select-field">
+                          <div className="m-field-head">
+                            <div className="m-field-label">
+                              <span>财务应支付金额</span>
+                            </div>
+                          </div>
+                          <div className="m-field-box">
+                            <div className="m-field-content left">
+                              <div className="input-wrapper">
+                                <input
+                                  readOnly
+                                  type="number"
+                                  className="ant-input m-mobile-inner-input"
+                                  value={this.state.Numbervalue5}
+                                  placeholder="请输入"
                                 />
                               </div>
                             </div>
