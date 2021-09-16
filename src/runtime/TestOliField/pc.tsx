@@ -279,22 +279,7 @@ const FormField: ISwapFormField = {
       listData: [],
 
       treeData: [
-        {
-          title: 'parent 0',
-          key: '0-0',
-          children: [
-            { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-            { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
-          ],
-        },
-        {
-          title: 'parent 1',
-          key: '0-1',
-          children: [
-            { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
-            { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
-          ],
-        },
+       
       ],
       pagination: {
         current: 1,
@@ -660,54 +645,114 @@ const FormField: ISwapFormField = {
       {
         title: '设备名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '耗油量',
         dataIndex: 'oil_consump',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.oil_consump}>
+            <span>{record.oil_consump}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '油价',
         dataIndex: 'price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.price}>
+            <span>{record.price}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '油费',
         dataIndex: 'total_price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.total_price}>
+            <span>{record.total_price}</span>
+          </Tooltip>
+        ),
       },
     ];
     const etColumns = [
       {
         title: '设备名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '耗油量',
         dataIndex: 'oil_consump',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.oil_consump}>
+            <span>{record.oil_consump}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '油价',
         dataIndex: 'price',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.price}>
+            <span>{record.price}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '油费',
         dataIndex: 'total_price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.total_price}>
+            <span>{record.total_price}</span>
+          </Tooltip>
+        ),
       },
 
       {

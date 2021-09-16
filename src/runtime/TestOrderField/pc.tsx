@@ -303,22 +303,7 @@ const FormField: ISwapFormField = {
       listData: [],
 
       treeData: [
-        {
-          title: 'parent 0',
-          key: '0-0',
-          children: [
-            { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-            { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
-          ],
-        },
-        {
-          title: 'parent 1',
-          key: '0-1',
-          children: [
-            { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
-            { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
-          ],
-        },
+       
       ],
       pagination: {
         current: 1,
@@ -820,84 +805,174 @@ const FormField: ISwapFormField = {
       {
         title: '物资名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格型号',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '数量',
         dataIndex: 'rk_number',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.rk_number}>
+            <span>{record.rk_number}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '含税单价',
         dataIndex: 'tax_price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_price}>
+            <span>{record.tax_price}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '税率(%)',
         dataIndex: 'tax_rate',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_rate}>
+            <span>{record.tax_rate}</span>
+          </Tooltip>
+        ),
       },
 
       {
         title: '税额',
         dataIndex: 'notax_price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.notax_price}>
+            <span>{record.notax_price}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '含税金额',
         dataIndex: 'tax_money',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_money}>
+            <span>{record.tax_money}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '不含税金额',
         dataIndex: 'notax_money',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.notax_money}>
+            <span>{record.notax_money}</span>
+          </Tooltip>
+        ),
       },
     ];
     const etColumns = [
       {
         title: '物资名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格型号',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '数量',
         dataIndex: 'rk_number',
 
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.rk_number}>
+            <span>{record.rk_number}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '含税单价',
         dataIndex: 'tax_price',
 
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_price}>
+            <span>{record.tax_price}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '税率(%)',
         dataIndex: 'tax_rate',
 
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_rate}>
+            <span>{record.tax_rate}</span>
+          </Tooltip>
+        ),
       },
 
       {
         title: '税额',
         dataIndex: 'notax_price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.notax_price}>
+            <span>{record.notax_price}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '含税金额 （元）',
         dataIndex: 'tax_money',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_money}>
+            <span>{record.tax_money}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '不含税金额 （元）',
         dataIndex: 'notax_money',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.notax_money}>
+            <span>{record.notax_money}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '操作',

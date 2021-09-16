@@ -299,24 +299,7 @@ const FormField: ISwapFormField = {
       isModalVisible: false,
       listData: [],
 
-      treeData: [
-        {
-          title: 'parent 0',
-          key: '0-0',
-          children: [
-            { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-            { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
-          ],
-        },
-        {
-          title: 'parent 1',
-          key: '0-1',
-          children: [
-            { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
-            { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
-          ],
-        },
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -619,59 +602,124 @@ const FormField: ISwapFormField = {
       {
         title: '物资名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格型号',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '估算数量',
         dataIndex: 'number',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.number}>
+            <span>{record.number}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '物资采购单位',
         dataIndex: 'purchase_unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.purchase_unit}>
+            <span>{record.purchase_unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '采购日期',
         dataIndex: 'purchase_riqi',
         width: 200,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.purchase_riqi}>
+            <span>{record.purchase_riqi}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '采购地点',
         dataIndex: 'purchase_address',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.purchase_address}>
+            <span>{record.purchase_address}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '候选供应商名单',
         dataIndex: 'candidate_list',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.candidate_list}>
+            <span>{record.candidate_list}</span>
+          </Tooltip>
+        ),
       },
     ];
     const etColumns = [
       {
         title: '物资名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格型号',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '估算数量',
         dataIndex: 'number',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.number}>
+            <span>{record.number}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '物资采购单位',
         dataIndex: 'purchase_unit',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.purchase_unit}>
+            <span>{record.purchase_unit}</span>
+          </Tooltip>
+        ),
       },
       //   {
       //     title: '采购日期',
@@ -702,11 +750,21 @@ const FormField: ISwapFormField = {
         title: '采购地点',
         dataIndex: 'purchase_address',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.purchase_address}>
+            <span>{record.purchase_address}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '候选供应商名单',
         dataIndex: 'candidate_list',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.candidate_list}>
+            <span>{record.candidate_list}</span>
+          </Tooltip>
+        ),
       },
 
       {

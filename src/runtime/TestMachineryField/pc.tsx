@@ -282,22 +282,7 @@ const FormField: ISwapFormField = {
       listData: [],
 
       treeData: [
-        {
-          title: 'parent 0',
-          key: '0-0',
-          children: [
-            { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-            { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
-          ],
-        },
-        {
-          title: 'parent 1',
-          key: '0-1',
-          children: [
-            { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
-            { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
-          ],
-        },
+       
       ],
       pagination: {
         current: 1,
@@ -668,54 +653,114 @@ const FormField: ISwapFormField = {
       {
         title: '机械名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
 
       {
         title: '工作日期',
         dataIndex: 'riqi',
         width: 200,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.riqi}>
+            <span>{record.riqi}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '施工内容',
         dataIndex: 'content',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '工时',
         dataIndex: 'work_hours',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.work_hours}>
+            <span>{record.work_hours}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单价',
         dataIndex: 'price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.price}>
+            <span>{record.price}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '小计',
         dataIndex: 'subtotal',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.subtotal}>
+            <span>{record.subtotal}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '备注',
         dataIndex: 'remarks',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.remarks}>
+            <span>{record.remarks}</span>
+          </Tooltip>
+        ),
       },
     ];
     const etColumns = [
       {
         title: '机械名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
 
       {
@@ -737,27 +782,52 @@ const FormField: ISwapFormField = {
         title: '施工内容',
         dataIndex: 'content',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.content}>
+            <span>{record.content}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '工时',
         dataIndex: 'work_hours',
         editable: true,
-        width: 100,
+
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.work_hours}>
+            <span>{record.work_hours}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单价',
         dataIndex: 'price',
         editable: true,
-        width: 100,
+
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.price}>
+            <span>{record.price}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '小计',
         dataIndex: 'subtotal',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.subtotal}>
+            <span>{record.subtotal}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '备注',
         dataIndex: 'remarks',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.remarks}>
+            <span>{record.remarks}</span>
+          </Tooltip>
+        ),
       },
 
       {

@@ -279,22 +279,7 @@ const FormField: ISwapFormField = {
       listData: [],
 
       treeData: [
-        {
-          title: 'parent 0',
-          key: '0-0',
-          children: [
-            { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-            { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
-          ],
-        },
-        {
-          title: 'parent 1',
-          key: '0-1',
-          children: [
-            { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
-            { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
-          ],
-        },
+        
       ],
       pagination: {
         current: 1,
@@ -679,46 +664,96 @@ const FormField: ISwapFormField = {
       {
         title: '物资名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '库存数量',
         dataIndex: 'wz_number',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.wz_number}>
+            <span>{record.wz_number}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '备注',
         dataIndex: 'remarks',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.remarks}>
+            <span>{record.remarks}</span>
+          </Tooltip>
+        ),
       },
     ];
     const etColumns = [
       {
         title: '物资名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '库存数量',
         dataIndex: 'wz_number',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.wz_number}>
+            <span>{record.wz_number}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '备注',
         dataIndex: 'remarks',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.remarks}>
+            <span>{record.remarks}</span>
+          </Tooltip>
+        ),
       },
 
       {

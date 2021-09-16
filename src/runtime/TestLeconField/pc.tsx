@@ -283,22 +283,7 @@ const FormField: ISwapFormField = {
       listData: [],
 
       treeData: [
-        {
-          title: 'parent 0',
-          key: '0-0',
-          children: [
-            { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-            { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
-          ],
-        },
-        {
-          title: 'parent 1',
-          key: '0-1',
-          children: [
-            { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
-            { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
-          ],
-        },
+       
       ],
       pagination: {
         current: 1,
@@ -703,51 +688,106 @@ const FormField: ISwapFormField = {
       {
         title: '物资名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格型号',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '计划进场日期',
         dataIndex: 'plan_in_riqi',
         width: 200,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.plan_in_riqi}>
+            <span>{record.plan_in_riqi}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '计划退场日期',
         dataIndex: 'plan_out_riqi',
         width: 200,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.plan_out_riqi}>
+            <span>{record.plan_out_riqi}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '数量',
         dataIndex: 'zl_number',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.zl_number}>
+            <span>{record.zl_number}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单价',
         dataIndex: 'price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.price}>
+            <span>{record.price}</span>
+          </Tooltip>
+        ),
       },
 
       {
         title: '小计',
         dataIndex: 'subtotal',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.subtotal}>
+            <span>{record.subtotal}</span>
+          </Tooltip>
+        ),
       },
     ];
     const etColumns = [
       {
         title: '物资名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格型号',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '计划进场日期',
@@ -793,16 +833,31 @@ const FormField: ISwapFormField = {
         title: '数量',
         dataIndex: 'zl_number',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.zl_number}>
+            <span>{record.zl_number}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单价',
         dataIndex: 'price',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.price}>
+            <span>{record.price}</span>
+          </Tooltip>
+        ),
       },
 
       {
         title: '小计',
         dataIndex: 'subtotal',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.subtotal}>
+            <span>{record.subtotal}</span>
+          </Tooltip>
+        ),
       },
 
       {

@@ -279,22 +279,7 @@ const FormField: ISwapFormField = {
       listData: [],
 
       treeData: [
-        {
-          title: 'parent 0',
-          key: '0-0',
-          children: [
-            { title: 'leaf 0-0', key: '0-0-0', isLeaf: true },
-            { title: 'leaf 0-1', key: '0-0-1', isLeaf: true },
-          ],
-        },
-        {
-          title: 'parent 1',
-          key: '0-1',
-          children: [
-            { title: 'leaf 1-0', key: '0-1-0', isLeaf: true },
-            { title: 'leaf 1-1', key: '0-1-1', isLeaf: true },
-          ],
-        },
+       
       ],
       pagination: {
         current: 1,
@@ -666,49 +651,103 @@ const FormField: ISwapFormField = {
       {
         title: '设备名称',
         dataIndex: 'name',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格型号',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '维保内容',
         dataIndex: 'content',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.content}>
+            <span>{record.content}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '工时数',
         dataIndex: 'hours',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.hours}>
+            <span>{record.hours}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '人工合价',
         dataIndex: 'person_total',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.person_total}>
+            <span>{record.person_total}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '材料合价',
         dataIndex: 'material_total',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.material_total}>
+            <span>{record.material_total}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '小计',
         dataIndex: 'total_price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.total_price}>
+            <span>{record.total_price}</span>
+          </Tooltip>
+        ),
       },
     ];
     const etColumns = [
       {
         title: '设备名称',
         dataIndex: 'name',
-        
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.name}>
+            <span>{record.name}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '单位',
         dataIndex: 'unit',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit}>
+            <span>{record.unit}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '规格型号',
         dataIndex: 'size',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '维保内容',
@@ -721,20 +760,40 @@ const FormField: ISwapFormField = {
         title: '工时数',
         dataIndex: 'hours',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.hours}>
+            <span>{record.hours}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '人工合价',
         dataIndex: 'person_total',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.person_total}>
+            <span>{record.person_total}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '材料合价',
         dataIndex: 'material_total',
         editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.material_total}>
+            <span>{record.material_total}</span>
+          </Tooltip>
+        ),
       },
       {
         title: '小计',
         dataIndex: 'total_price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.total_price}>
+            <span>{record.total_price}</span>
+          </Tooltip>
+        ),
       },
 
       {
