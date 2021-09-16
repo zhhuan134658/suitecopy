@@ -700,7 +700,7 @@ const FormField: ISwapFormField = {
       {
         title: '设备名称',
         dataIndex: 'name',
-        width: '30%',
+        
       },
       {
         title: '单位',
@@ -852,7 +852,7 @@ const FormField: ISwapFormField = {
           </div> */}
           <div>
             <Table
-              scroll={{ x: '50vw' }}
+              scroll={{ x: '1500px' }}
               components={components}
               rowClassName={() => 'editable-row'}
               bordered
@@ -892,7 +892,7 @@ const FormField: ISwapFormField = {
         )} */}
         <div>
           <Table
-            scroll={{ x: '50vw' }}
+            scroll={{ x: '1500px' }}
             components={components}
             rowClassName={() => 'editable-row'}
             bordered
@@ -961,7 +961,7 @@ const FormField: ISwapFormField = {
                 </Button>
               </div>
               <Table
-                scroll={{ x: '50vw' }}
+                scroll={{ x: '1500px' }}
                 rowSelection={{
                   type: 'checkbox',
                   ...rowSelection,

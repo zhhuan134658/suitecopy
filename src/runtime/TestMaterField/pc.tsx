@@ -938,7 +938,6 @@ const FormField: ISwapFormField = {
           <div className="label">{label}</div>
           {/* {field.getValue()} */}
           <div style={{ marginTop: '10px' }}> {value}</div>
-        
         </div>
       );
     }
@@ -996,7 +995,7 @@ const FormField: ISwapFormField = {
             onSearch={this.onSearch}
           />
           <Table
-            scroll={{ x: '50vw' }}
+            scroll={{ x: '1500px' }}
             rowSelection={{
               type: 'radio',
               ...rowSelection,

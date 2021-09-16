@@ -31,7 +31,6 @@ const FormField: IFormField = {
         {
           title: '物资名称',
           dataIndex: 'name',
-          width: '30%',
         },
         {
           title: '规格型号',

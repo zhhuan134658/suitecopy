@@ -490,7 +490,6 @@ const FormField: ISwapFormField = {
       {
         title: '名称',
         dataIndex: 'name',
-        width: '30%',
       },
       {
         title: '类型',

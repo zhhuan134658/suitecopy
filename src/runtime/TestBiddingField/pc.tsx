@@ -619,7 +619,6 @@ const FormField: ISwapFormField = {
       {
         title: '物资名称',
         dataIndex: 'name',
-        width: '30%',
       },
       {
         title: '规格型号',
@@ -640,6 +639,7 @@ const FormField: ISwapFormField = {
       {
         title: '采购日期',
         dataIndex: 'purchase_riqi',
+        width: 200,
       },
       {
         title: '采购地点',
@@ -654,7 +654,6 @@ const FormField: ISwapFormField = {
       {
         title: '物资名称',
         dataIndex: 'name',
-        width: '30%',
       },
       {
         title: '规格型号',
@@ -683,7 +682,7 @@ const FormField: ISwapFormField = {
         title: '采购日期',
         dataIndex: 'purchase_riqi',
         key: 'purchase_riqi',
-        width: 300,
+        width: 200,
         render: (text, record, index) => {
           return (
             <DatePicker
@@ -822,7 +821,7 @@ const FormField: ISwapFormField = {
           <div>
             {/* ----本地数据----
             <Table
-              scroll={{ x: '50vw' }}
+              scroll={{ x: '1500px' }}
               components={components}
               bordered
               dataSource={this.state.tabledata}
@@ -831,7 +830,7 @@ const FormField: ISwapFormField = {
             />
             -----接口数据---- ----{JSON.stringify(value)} */}
             <Table
-              scroll={{ x: '50vw' }}
+              scroll={{ x: '1500px' }}
               components={components}
               bordered
               dataSource={value instanceof Array ? value : detailedData}
@@ -867,7 +866,7 @@ const FormField: ISwapFormField = {
         )} */}
         <div>
           <Table
-            scroll={{ x: '50vw' }}
+            scroll={{ x: '1500px' }}
             components={components}
             rowClassName={() => 'editable-row'}
             bordered
@@ -927,7 +926,7 @@ const FormField: ISwapFormField = {
                 </Button>
               </div>
               <Table
-                scroll={{ x: '50vw' }}
+                scroll={{ x: '1300px' }}
                 rowSelection={{
                   type: 'checkbox',
                   ...rowSelection,

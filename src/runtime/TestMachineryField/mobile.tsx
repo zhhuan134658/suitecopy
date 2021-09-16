@@ -32,7 +32,6 @@ const FormField: IFormField = {
         {
           title: '机械名称',
           dataIndex: 'name',
-          width: '30%',
         },
         {
           title: '单位',

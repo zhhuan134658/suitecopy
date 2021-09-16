@@ -664,7 +664,6 @@ const FormField: ISwapFormField = {
       {
         title: '物资名称',
         dataIndex: 'name',
-        width: '30%',
       },
       {
         title: '规格型号',
@@ -829,7 +828,7 @@ const FormField: ISwapFormField = {
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}
         {/* <div>
-          <Table scroll={{ x: '50vw' }}
+          <Table scroll={{ x: '1500px' }}
             components={components}
             rowClassName={() => 'editable-row'}
             bordered
@@ -903,7 +902,7 @@ const FormField: ISwapFormField = {
                 onSearch={this.onSearch}
               />
               <Table
-                scroll={{ x: '50vw' }}
+                scroll={{ x: '1500px' }}
                 rowSelection={{
                   type: 'radio',
                   ...rowSelection,

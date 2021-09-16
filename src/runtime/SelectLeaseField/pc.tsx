@@ -485,7 +485,6 @@ const FormField: ISwapFormField = {
       {
         title: '名称',
         dataIndex: 'name',
-        width: '30%',
       },
       {
         title: '类型',
@@ -649,7 +648,7 @@ const FormField: ISwapFormField = {
             onSearch={this.onSearch}
           />
           <Table
-            scroll={{ x: '50vw' }}
+            scroll={{ x: '1500px' }}
             onRow={record => {
               return {
                 onClick: this.rowClick.bind(this, record),

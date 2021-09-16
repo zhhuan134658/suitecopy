@@ -826,7 +826,7 @@ const FormField: ISwapFormField = {
           </div> */}
           <div>
             <Table
-              scroll={{ x: '50vw' }}
+              scroll={{ x: '1000px' }}
               components={components}
               rowClassName={() => 'editable-row'}
               bordered
@@ -838,19 +838,19 @@ const FormField: ISwapFormField = {
           <div style={{ marginTop: '10px' }} className="label">
             备用金抵扣
           </div>
-          <div style={{ marginTop: '10px' }}>{petty_sele}</div>{' '}
+          <div style={{ marginTop: '10px' }}>{petty_sele}</div>
           <div style={{ marginTop: '10px' }} className="label">
             备用金余额
           </div>
-          <div style={{ marginTop: '10px' }}>{Numbervalue1}</div>{' '}
+          <div style={{ marginTop: '10px' }}>{Numbervalue1}</div>
           <div style={{ marginTop: '10px' }} className="label">
             本次抵扣金额
           </div>
-          <div style={{ marginTop: '10px' }}>{Numbervalue2}</div>{' '}
+          <div style={{ marginTop: '10px' }}>{Numbervalue2}</div>
           <div style={{ marginTop: '10px' }} className="label">
             审批中的费用报销抵扣
           </div>
-          <div style={{ marginTop: '10px' }}>{Numbervalue3}</div>{' '}
+          <div style={{ marginTop: '10px' }}>{Numbervalue3}</div>
           <div style={{ marginTop: '10px' }} className="label">
             审批中的归还
           </div>
@@ -875,7 +875,7 @@ const FormField: ISwapFormField = {
 
         <div>
           <Table
-            scroll={{ x: '50vw' }}
+            scroll={{ x: '1000px' }}
             components={components}
             rowClassName={() => 'editable-row'}
             bordered

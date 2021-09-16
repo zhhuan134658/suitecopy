@@ -706,23 +706,14 @@ const FormField: ISwapFormField = {
       {
         title: '物资名称',
         dataIndex: 'name',
-        width: 100,
-        key: 'name',
-        fixed: 'left',
       },
       {
         title: '单位',
         dataIndex: 'unit',
-        width: 100,
-        key: 'unit',
-        fixed: 'left',
       },
       {
         title: '规格型号',
         dataIndex: 'size',
-        width: 100,
-        key: 'size',
-        fixed: 'left',
       },
 
       {
@@ -744,9 +735,7 @@ const FormField: ISwapFormField = {
       {
         title: '操作',
         dataIndex: 'operation',
-        key: 'operation',
-        fixed: 'right',
-        width: 100,
+
         render: (_, record: any) =>
           this.state.dataSource.length >= 1 ? (
             <Popconfirm
@@ -857,7 +846,7 @@ const FormField: ISwapFormField = {
           </div> */}
           <div>
             <Table
-              scroll={{ x: '50vw' }}
+              scroll={{ x: '1500px' }}
               components={components}
               rowClassName={() => 'editable-row'}
               bordered
@@ -897,7 +886,7 @@ const FormField: ISwapFormField = {
         )} */}
         <div>
           <Table
-            scroll={{ x: '50vw' }}
+            scroll={{ x: '1500px' }}
             components={components}
             rowClassName={() => 'editable-row'}
             bordered
@@ -956,7 +945,7 @@ const FormField: ISwapFormField = {
                 </Button>
               </div>
               <Table
-                scroll={{ x: '50vw' }}
+                scroll={{ x: '1500px' }}
                 rowSelection={{
                   type: 'checkbox',
                   ...rowSelection,

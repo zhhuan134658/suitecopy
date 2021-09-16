@@ -712,11 +712,13 @@ const FormField: ISwapFormField = {
         title: '计划进场日期',
         dataIndex: 'plan_in_riqi',
         key: 'plan_in_riqi',
+        width: 200,
       },
       {
         title: '计划退场日期',
         dataIndex: 'plan_out_riqi',
         key: 'plan_out_riqi',
+        width: 200,
       },
       {
         title: '数量',
@@ -740,6 +742,7 @@ const FormField: ISwapFormField = {
         title: '计划进场日期',
         dataIndex: 'plan_in_riqi',
         key: 'plan_in_riqi',
+        width: 200,
         render: (text, record, index) => {
           return (
             <DatePicker
@@ -759,6 +762,7 @@ const FormField: ISwapFormField = {
         title: '计划退场日期',
         dataIndex: 'plan_out_riqi',
         key: 'plan_out_riqi',
+        width: 200,
         render: (text, record, index) => {
           return (
             <DatePicker
@@ -894,7 +898,7 @@ const FormField: ISwapFormField = {
           </div> */}
           <div>
             <Table
-              scroll={{ x: '50vw' }}
+              scroll={{ x: '1500px' }}
               components={components}
               rowClassName={() => 'editable-row'}
               bordered
@@ -934,7 +938,7 @@ const FormField: ISwapFormField = {
         )} */}
         <div>
           <Table
-            scroll={{ x: '50vw' }}
+            scroll={{ x: '1500px' }}
             components={components}
             rowClassName={() => 'editable-row'}
             bordered
@@ -994,7 +998,7 @@ const FormField: ISwapFormField = {
                 </Button>
               </div>
               <Table
-                scroll={{ x: '50vw' }}
+                scroll={{ x: '1500px' }}
                 rowSelection={{
                   type: 'checkbox',
                   ...rowSelection,
