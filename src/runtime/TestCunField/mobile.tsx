@@ -53,9 +53,7 @@ const FormField: IFormField = {
           dataIndex: 'ku_cun',
         },
       ],
-      treeData: [
-       
-      ],
+      treeData: [],
       date: now,
       checkindex: '',
       SearchBarvalue: '',
@@ -358,11 +356,11 @@ const FormField: IFormField = {
       return (
         <div className="field-wrapper">
           <div className="m-field-view">
-            <label className="m-field-view-label">仓库名称</label>
+            <label className="m-field-view-label">调入仓库</label>
             <div className="m-field-view-value"> {warehousein}</div>
           </div>
           <div className="m-field-view">
-            <label className="m-field-view-label">仓库名称</label>
+            <label className="m-field-view-label">调出仓库</label>
             <div className="m-field-view-value"> {warehouse}</div>
           </div>
           <div className="tablefield-mobile">

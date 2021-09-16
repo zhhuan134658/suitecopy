@@ -313,9 +313,7 @@ const FormField: ISwapFormField = {
       ischModalVisible: false,
       listData: [],
       listchData: [],
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -979,19 +977,23 @@ const FormField: ISwapFormField = {
       const { warehouse = '', warehousein = '', detailedData = [] } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">仓库名称</div>
-          <div>{warehousein}</div>
-          <div className="label">仓库名称</div>
-          <div>{warehouse}</div>
+          <div className="label">调入仓库</div>
+          <div style={{ marginTop: '10px' }}>{warehousein}</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            调出仓库
+          </div>
+          <div style={{ marginTop: '10px' }}>{warehouse}</div>
 
-          <div className="label">物资明细</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            物资明细
+          </div>
 
           {/* <div>
             {detailedData.map(item => {
               return <div>{item.toString()}</div>;
             })}
           </div> */}
-          <div>
+          <div style={{ marginTop: '10px' }}>
             <Table
               scroll={{ x: '1500px' }}
               components={components}

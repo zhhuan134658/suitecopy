@@ -1104,7 +1104,7 @@ const FormField: ISwapFormField = {
       } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">名称</div>
+          <div className="label">{label}</div>
           <div>{detailname}</div>
           <div className="label">含税金额 (元)</div>
           <div>{hanmoney}</div>

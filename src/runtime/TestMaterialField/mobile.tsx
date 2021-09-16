@@ -52,9 +52,7 @@ const FormField: IFormField = {
           dataIndex: 'pd_number',
         },
       ],
-      treeData: [
-        
-      ],
+      treeData: [],
       date: now,
       checkindex: '',
       SearchBarvalue: '',
@@ -121,11 +119,15 @@ const FormField: IFormField = {
         // this.setState({
         //   treeData: [...newtarr1],
         // });
-        if (typename == 'CorpHouse') {
+        if (typename === 'CorpHouse') {
           this.setState({
             checkData: [...newarr],
           });
-        } else if (typename == 'TestMaterial') {
+        } else if (typename === 'TestMaterial') {
+          this.setState({
+            listData: [...newarr],
+          });
+        } else if (typename === 'alllist') {
           this.setState({
             materialList: [...newarr],
           });
@@ -140,9 +142,16 @@ const FormField: IFormField = {
   onOpenChange(index: any, ...args: any[]) {
     console.log('sss');
     console.log(args);
-    const newdate = this.state.allData;
+    const newdate = {
+      ck_name: '',
+      isHouse: '2',
+      name: '',
+      number: '9999',
+      page: 1,
+      type: 0,
+    };
 
-    this.asyncSetFieldProps(newdate);
+    this.asyncSetFieldProps(newdate, 'TestMaterial');
     this.setState({ showElem: 'inherit', checkindex: index });
   },
   onOpenChange2(index: any, ...args: any[]) {
@@ -155,10 +164,8 @@ const FormField: IFormField = {
   },
   habdlClick(item: { name: any; size: any; unit: any; wz_number: any }) {
     const { form } = this.props;
-    console.log(item);
-    let arr = this.state.materialList;
     let arrindex = this.state.checkindex;
-
+    let arr = this.state.materialList;
     arr[arrindex].name = item.name;
     arr[arrindex].size = item.size;
     arr[arrindex].unit = item.unit;
@@ -175,9 +182,21 @@ const FormField: IFormField = {
   },
   checkClick(item) {
     const cDataid = [item.id];
+    console.log(item);
+    // let arr = this.state.materialList;
+    // let arrindex = this.state.checkindex;
+
+    // arr[arrindex].name = item.name;
+    // arr[arrindex].size = item.size;
+    // arr[arrindex].unit = item.unit;
+    // arr[arrindex].wz_number = item.wz_number;
+
     const newdate = this.state.allData;
+    newdate.ck_name = item.name;
+    newdate.type = 0;
+    newdate.page = 1;
     newdate.isHouse = '2';
-    this.asyncSetFieldProps(newdate, 'TestMaterial');
+    this.asyncSetFieldProps(newdate, 'alllist');
     this.setState({
       Inputvalue: item.name,
       showElem3: 'none',
@@ -316,7 +335,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}/{item.unit}/{item.size}
+                {item.name}
               </List.Item>
             );
           })}
@@ -621,14 +640,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           clear
                                           value={item.wz_number}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'wz_number',
-                                              index,
-                                              e,
-                                            )
-                                          }
+                                          placeholder="自动获取"
                                         ></InputItem>
                                       </div>
                                     </div>

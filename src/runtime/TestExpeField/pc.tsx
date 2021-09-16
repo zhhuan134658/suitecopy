@@ -243,9 +243,7 @@ const FormField: ISwapFormField = {
       isModalVisible: false,
       listData: [],
 
-      treeData: [
-        
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -508,15 +506,32 @@ const FormField: ISwapFormField = {
   },
   onNumbervalue2Change(val) {
     console.log(val);
-
-    if (val > this.state.maxnum) {
-      const aa = this.state.Inputmoney1;
-      const bb = aa - this.state.maxnum;
-      this.setState({ Numbervalue2: this.state.maxnum, Numbervalue5: bb });
+    const number1 = this.state.maxnum;
+    const number2 = this.state.Inputmoney1;
+    if (number1 > number2) {
+      if (val > this.state.Inputmoney1) {
+        const aa = this.state.Inputmoney1;
+        const bb = aa - this.state.maxnum;
+        this.setState({
+          Numbervalue2: this.state.Inputmoney1,
+          Numbervalue5: bb,
+        });
+      } else {
+        const aa = this.state.Inputmoney1;
+        const bb = aa - val;
+        this.setState({ Numbervalue2: val, Numbervalue5: bb });
+      }
     } else {
-      const aa = this.state.Inputmoney1;
-      const bb = aa - val;
-      this.setState({ Numbervalue2: val, Numbervalue5: bb });
+      if (val > this.state.maxnum) {
+        const aa = this.state.Inputmoney1;
+        const bb = aa - this.state.maxnum;
+        this.setState({ Numbervalue2: this.state.maxnum, Numbervalue5: bb });
+      } else {
+        const aa = this.state.Inputmoney1;
+        const bb = aa - val;
+        th;
+      }
+      is.setState({ Numbervalue2: val, Numbervalue5: bb });
     }
   },
   rowClick(this, record, rowkey) {

@@ -302,9 +302,7 @@ const FormField: ISwapFormField = {
       isModalVisibletree: false,
       listData: [],
 
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -434,11 +432,11 @@ const FormField: ISwapFormField = {
   newhandleAdd() {
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-    // if (!Pro_name) {
-    //   return notification.open({
-    //     message: '请先选择项目',
-    //   });
-    // }
+    if (!Pro_name) {
+      return notification.open({
+        message: '请先选择项目',
+      });
+    }
     this.setState({ dstatus: '1' });
     const newaa = this.state.defaultActiveKey;
     console.log('sdadasdadasdasdfgfhg', newaa);
@@ -459,11 +457,11 @@ const FormField: ISwapFormField = {
   handleAdd() {
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-    // if (!Pro_name) {
-    //   return notification.open({
-    //     message: '请先选择项目',
-    //   });
-    // }
+    if (!Pro_name) {
+      return notification.open({
+        message: '请先选择项目',
+      });
+    }
     this.setState({ dstatus: '2' });
     console.log(this.state.allData);
     let newpage = {

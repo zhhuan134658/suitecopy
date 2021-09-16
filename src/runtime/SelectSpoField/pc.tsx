@@ -610,8 +610,8 @@ const FormField: ISwapFormField = {
         console.log('======' + JSON.stringify(newData));
         this.setState({ currentSelectData: newData, detailname: dtar });
         //   Jiesmoney;
-        form.setFieldValue('Jiesmoney', newData[0].reply_money);
-        form.setExtendFieldValue('Jiesmoney', newData[0].reply_money);
+        form.setFieldValue('Jiesmoney', newData[0].detailed_money);
+        form.setExtendFieldValue('Jiesmoney', newData[0].detailed_money);
         this.setState({ selectedRowKeys });
       },
     };

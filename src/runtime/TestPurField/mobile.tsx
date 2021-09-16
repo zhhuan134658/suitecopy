@@ -71,9 +71,7 @@ const FormField: IFormField = {
       checkData: [],
       chenkdata: '',
       treevalue: undefined,
-      treeData: [
-      
-      ],
+      treeData: [],
       detdate: '',
       date: now,
       checkindex: '',
@@ -289,14 +287,16 @@ const FormField: IFormField = {
           arr[newindex].tax_rate) /
         100;
     }
+
     if (arr[newindex].need_quantity && arr[newindex].refer_price) {
       arr[newindex].tax_money =
         arr[newindex].need_quantity * arr[newindex].refer_price;
     }
-    if (arr[newindex].notax_price && arr[newindex].tax_money) {
-      arr[newindex].notax_money =
-        arr[newindex].tax_money - arr[newindex].notax_price;
-    }
+    arr[newindex].notax_money =
+      arr[newindex].tax_money - arr[newindex].notax_price;
+    // if (arr[newindex].notax_price && arr[newindex].tax_money) {
+
+    // }
     //   含税金额
     let newarr2 = [];
 
@@ -400,7 +400,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}
+                {item.name}/{item.unit}/{item.size}
               </List.Item>
             );
           })}
@@ -451,7 +451,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}/{item.unit}/{item.size}
+                {item.name}
               </List.Item>
             );
           })}

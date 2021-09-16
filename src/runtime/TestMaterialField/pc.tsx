@@ -310,9 +310,7 @@ const FormField: ISwapFormField = {
       ischModalVisible: false,
       listData: [],
       listchData: [],
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -952,7 +950,7 @@ const FormField: ISwapFormField = {
       {
         title: '账存数量',
         dataIndex: 'wz_number',
-        editable: true,
+
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.wz_number}>
             <span>{record.wz_number}</span>
@@ -1178,7 +1176,7 @@ const FormField: ISwapFormField = {
             scroll={{ x: '1500px' }}
             components={components}
             rowClassName={() => 'editable-row'}
-            borderedƒ
+            bordered
             dataSource={dataSource}
             columns={columns as ColumnTypes}
             pagination={false}

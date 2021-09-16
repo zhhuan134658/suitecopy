@@ -8,6 +8,7 @@ import {
   Drawer,
   Tabs,
   List,
+  Toast,
   NavBar,
   Icon,
   SearchBar,
@@ -175,7 +176,9 @@ const FormField: IFormField = {
   getcheckdata() {
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-
+    if (!Pro_name) {
+      return Toast.info('请先选择项目', 1);
+    }
     this.setState({ dstatus: '1' });
     let newpage = {
       rk_id: ['a'],
@@ -191,6 +194,11 @@ const FormField: IFormField = {
     this.setState({ showElem3: 'inherit' });
   },
   onOpenChange(index: any, ...args: any[]) {
+    const { form } = this.props;
+    const Pro_name = form.getFieldValue('Autopro');
+    if (!Pro_name) {
+      return Toast.info('请先选择项目', 1);
+    }
     console.log('sss');
     console.log(args);
     const newdate = this.state.allData;
@@ -227,13 +235,13 @@ const FormField: IFormField = {
     const newdate = this.state.allData;
     let dtar = '';
     if (this.state.detdate === 'a1') {
-      dtar = '采购合同-' + item.name;
-    } else if (this.state.detdate === 'b1') {
-      dtar = '采购订单-' + item.name;
-    } else if (this.state.detdate === 'c1') {
       dtar = '材料总计划-' + item.name;
-    } else if (this.state.detdate === 'd1') {
+    } else if (this.state.detdate === 'b1') {
       dtar = '采购申请-' + item.name;
+    } else if (this.state.detdate === 'c1') {
+      dtar = '采购合同-' + item.name;
+    } else if (this.state.detdate === 'd1') {
+      dtar = '采购订单-' + item.name;
     }
     newdate.rk_id = [this.state.detdate, ...cDataid];
     this.asyncSetFieldProps(newdate, 1);
@@ -356,11 +364,10 @@ const FormField: IFormField = {
     const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestCin', 'label');
     const tabs = [
+      { title: '材料总计划' },
+      { title: '采购申请' },
       { title: '采购合同' },
       { title: '采购订单' },
-      { title: '材料总计划' },
-
-      { title: '采购申请' },
     ];
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
@@ -397,7 +404,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}
+                {item.name}/{item.unit}/{item.size}
               </List.Item>
             );
           })}
@@ -443,7 +450,7 @@ const FormField: IFormField = {
             this.setState({
               allData: newpage,
             });
-            this.asyncSetFieldProps(newpage);
+            this.asyncSetFieldProps(newpage, 2);
           }}
         ></Tabs>
         <List>
@@ -454,7 +461,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}/{item.unit}/{item.size}
+                {item.name}
               </List.Item>
             );
           })}
@@ -522,7 +529,7 @@ const FormField: IFormField = {
           <div>
             <div className="field-wrapper">
               <div className="m-field-view">
-                <label className="m-field-view-label">含税金额合计</label>
+                <label className="m-field-view-label">含税金额</label>
                 <div className="m-field-view-value">
                   <span>{hanmoney}</span>
                 </div>
@@ -530,7 +537,7 @@ const FormField: IFormField = {
             </div>
             <div className="field-wrapper">
               <div className="m-field-view">
-                <label className="m-field-view-label">不含税金额合计</label>
+                <label className="m-field-view-label">不含税金额</label>
                 <div className="m-field-view-value">
                   <span>{nomoney}</span>
                 </div>

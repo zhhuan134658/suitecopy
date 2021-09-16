@@ -336,11 +336,11 @@ const FormField: ISwapFormField = {
   handleAdd() {
     const { form } = this.props;
     const value = form.getFieldValue('Autopro');
-    // if (!value) {
-    //   return notification.open({
-    //     message: '请先选择项目',
-    //   });
-    // }
+    if (!value) {
+      return notification.open({
+        message: '请先选择项目',
+      });
+    }
     const newvalue = this.state.allData;
     newvalue.name = '';
     newvalue.type = 0;

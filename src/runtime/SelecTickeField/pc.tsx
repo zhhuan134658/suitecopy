@@ -872,7 +872,7 @@ const FormField: ISwapFormField = {
       const { detailname = '' } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">名称</div>
+          <div className="label">{label}</div>
           <div style={{ marginTop: '10px' }}> {value}</div>
           {/* <div>{detailname}</div> */}
         </div>

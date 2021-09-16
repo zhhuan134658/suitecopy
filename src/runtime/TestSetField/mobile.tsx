@@ -8,6 +8,7 @@ import {
   Drawer,
   Tabs,
   List,
+  Toast,
   NavBar,
   Icon,
   SearchBar,
@@ -71,9 +72,7 @@ const FormField: IFormField = {
       checkData: [],
       chenkdata: '',
       treevalue: undefined,
-      treeData: [
-       
-      ],
+      treeData: [],
       detdate: '',
       date: now,
       checkindex: '',
@@ -163,6 +162,9 @@ const FormField: IFormField = {
   getcheckdata() {
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
+    if (!Pro_name) {
+      return Toast.info('请先选择项目', 1);
+    }
 
     this.setState({ dstatus: '1' });
     let newpage = {
@@ -179,6 +181,11 @@ const FormField: IFormField = {
     this.setState({ showElem3: 'inherit' });
   },
   onOpenChange(index: any, ...args: any[]) {
+    const { form } = this.props;
+    const Pro_name = form.getFieldValue('Autopro');
+    if (!Pro_name) {
+      return Toast.info('请先选择项目', 1);
+    }
     console.log('sss');
     console.log(args);
     const newdate = this.state.allData;
@@ -397,7 +404,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}
+                {item.name}/{item.unit}/{item.size}
               </List.Item>
             );
           })}
@@ -451,7 +458,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}/{item.unit}/{item.size}
+                {item.name}
               </List.Item>
             );
           })}
@@ -519,7 +526,7 @@ const FormField: IFormField = {
           <div>
             <div className="field-wrapper">
               <div className="m-field-view">
-                <label className="m-field-view-label">含税金额(元)</label>
+                <label className="m-field-view-label">含税金额合计(元)</label>
                 <div className="m-field-view-value">
                   <span>{hanmoney}</span>
                 </div>
@@ -527,7 +534,7 @@ const FormField: IFormField = {
             </div>
             <div className="field-wrapper">
               <div className="m-field-view">
-                <label className="m-field-view-label">不含税(元)</label>
+                <label className="m-field-view-label">不含税金额合计(元)</label>
                 <div className="m-field-view-value">
                   <span>{nomoney}</span>
                 </div>
@@ -860,7 +867,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>含税金额(元)</span>
+                                      <span>含税金额合计(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -887,7 +894,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>不含税金额(元)</span>
+                                      <span>不含税金额合计(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">

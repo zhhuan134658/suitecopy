@@ -6,6 +6,7 @@ import {
   DatePicker,
   InputItem,
   Drawer,
+  Toast,
   List,
   NavBar,
   Icon,
@@ -70,9 +71,7 @@ const FormField: IFormField = {
       checkData: [],
       chenkdata: '',
       treevalue: undefined,
-      treeData: [
-        
-      ],
+      treeData: [],
       date: now,
       checkindex: '',
       SearchBarvalue: '',
@@ -163,7 +162,9 @@ const FormField: IFormField = {
   getcheckdata() {
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-
+    if (!Pro_name) {
+      return Toast.info('请先选择项目', 1);
+    }
     this.setState({ dstatus: '1' });
     let newpage = {
       rk_id: ['a'],
@@ -181,6 +182,11 @@ const FormField: IFormField = {
   onOpenChange(index: any, ...args: any[]) {
     console.log('sss');
     console.log(args);
+    const { form } = this.props;
+    const Pro_name = form.getFieldValue('Autopro');
+    if (!Pro_name) {
+      return Toast.info('请先选择项目', 1);
+    }
     const newdate = this.state.allData;
     newdate.rk_id = ['-1'];
     this.asyncSetFieldProps(newdate);

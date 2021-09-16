@@ -669,7 +669,7 @@ const FormField: IFormField = {
                                           editable={false}
                                           clear
                                           value={item.ku_cun}
-                                          placeholder="请输入"
+                                          placeholder="自动获取"
                                         ></InputItem>
                                       </div>
                                     </div>
