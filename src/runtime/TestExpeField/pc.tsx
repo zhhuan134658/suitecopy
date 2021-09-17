@@ -529,9 +529,8 @@ const FormField: ISwapFormField = {
       } else {
         const aa = this.state.Inputmoney1;
         const bb = aa - val;
-        th;
+        this.setState({ Numbervalue2: val, Numbervalue5: bb });
       }
-      is.setState({ Numbervalue2: val, Numbervalue5: bb });
     }
   },
   rowClick(this, record, rowkey) {

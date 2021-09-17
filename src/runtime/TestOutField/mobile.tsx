@@ -175,7 +175,7 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem2: 'inherit', checkindex: index });
   },
-  habdlClick(item: { name: any; size: any; unit: any }) {
+    habdlClick(item: { name: any; size: any; unit: any;ku_cun: any  }) {
     const { form } = this.props;
     console.log(item);
     let arr = this.state.materialList;
