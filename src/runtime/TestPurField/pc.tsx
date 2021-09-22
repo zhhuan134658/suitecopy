@@ -101,7 +101,7 @@ const mycolumnstree = [
     dataIndex: 'unit',
   },
   {
-    title: '含税单价（元）',
+    title: '不含税单价(元)',
     dataIndex: 'refer_price',
   },
   {
@@ -303,9 +303,7 @@ const FormField: ISwapFormField = {
       isModalVisibletree: false,
       listData: [],
 
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -486,22 +484,30 @@ const FormField: ISwapFormField = {
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
-    if (row.need_quantity) {
-      newData[index].tax_money = row.need_quantity * row.refer_price;
-    }
-    if (row.tax_rate) {
+    //计算
+    //税额
+    if (row.refer_price && row.need_quantity && row.tax_rate) {
       newData[index].notax_price = (
-        row.tax_money *
+        row.refer_price *
+        row.need_quantity *
         row.tax_rate *
         0.01
       ).toFixed(2);
+    }
+    //   不含税
+    if (row.refer_price && row.need_quantity) {
       newData[index].notax_money = (
-        row.tax_money *
-        (100 - row.tax_rate) *
-        0.01
+        row.refer_price * row.need_quantity
       ).toFixed(2);
     }
-
+    //含税
+    if (row.refer_price && row.need_quantity && row.tax_rate) {
+      newData[index].tax_money = (
+        row.refer_price *
+        row.need_quantity *
+        (1 + row.tax_rate * 0.01)
+      ).toFixed(2);
+    }
     this.setState({
       dataSource: newData,
     });
@@ -827,7 +833,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '含税单价',
+        title: '不含税单价(元)',
         dataIndex: 'refer_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.refer_price}>
@@ -855,20 +861,20 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '含税金额(元)',
-        dataIndex: 'tax_money',
-        render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.tax_money}>
-            <span>{record.tax_money}</span>
-          </Tooltip>
-        ),
-      },
-      {
         title: '不含税金额(元)',
         dataIndex: 'notax_money',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.notax_money}>
             <span>{record.notax_money}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '含税金额(元)',
+        dataIndex: 'tax_money',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_money}>
+            <span>{record.tax_money}</span>
           </Tooltip>
         ),
       },
@@ -912,7 +918,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '含税单价',
+        title: '不含税单价(元)',
         dataIndex: 'refer_price',
         editable: true,
         render: (_, record: any) => (
@@ -933,20 +939,11 @@ const FormField: ISwapFormField = {
       },
 
       {
-        title: '税额',
+        title: '税额(元)',
         dataIndex: 'notax_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.notax_price}>
             <span>{record.notax_price}</span>
-          </Tooltip>
-        ),
-      },
-      {
-        title: '含税金额(元)',
-        dataIndex: 'tax_money',
-        render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.tax_money}>
-            <span>{record.tax_money}</span>
           </Tooltip>
         ),
       },
@@ -959,6 +956,16 @@ const FormField: ISwapFormField = {
           </Tooltip>
         ),
       },
+      {
+        title: '含税金额(元)',
+        dataIndex: 'tax_money',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_money}>
+            <span>{record.tax_money}</span>
+          </Tooltip>
+        ),
+      },
+
       {
         title: '操作',
         dataIndex: 'operation',
@@ -1106,10 +1113,6 @@ const FormField: ISwapFormField = {
         <div className="field-wrapper">
           <div className="label">{label}</div>
           <div>{detailname}</div>
-          <div className="label">含税金额 (元)</div>
-          <div>{hanmoney}</div>
-          <div className="label">不含税金额(元)</div>
-          <div>{nomoney}</div>
 
           <div className="label">物资明细</div>
 
@@ -1129,6 +1132,10 @@ const FormField: ISwapFormField = {
               pagination={false}
             />
           </div>
+          <div className="label">不含税金额合计(元)</div>
+          <div>{nomoney}</div>
+          <div className="label">含税金额合计(元)</div>
+          <div>{hanmoney}</div>
         </div>
       );
     }
@@ -1184,15 +1191,6 @@ const FormField: ISwapFormField = {
           >
             添加明细
           </Button>
-
-          <div className="label">含税金额合计(元)</div>
-          <div>
-            <Input
-              readOnly
-              value={this.state.Inputmoney1}
-              placeholder="自动计算"
-            />
-          </div>
           <div className="label" style={{ marginTop: '10px' }}>
             不含税金额合计(元)
           </div>
@@ -1200,6 +1198,16 @@ const FormField: ISwapFormField = {
             <Input
               readOnly
               value={this.state.Inputmoney2}
+              placeholder="自动计算"
+            />
+          </div>
+          <div className="label" style={{ marginTop: '10px' }}>
+            含税金额合计(元)
+          </div>
+          <div>
+            <Input
+              readOnly
+              value={this.state.Inputmoney1}
               placeholder="自动计算"
             />
           </div>

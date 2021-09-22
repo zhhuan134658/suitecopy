@@ -636,7 +636,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>人工合价</span>
+                                      <span>人工合价(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -670,7 +670,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>材料合价</span>
+                                      <span>材料合价(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -704,7 +704,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>小计</span>
+                                      <span>小计(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -751,7 +751,7 @@ const FormField: IFormField = {
                 <div className="m-field m-field-mobile m-select-field">
                   <div className="m-field-head">
                     <div className="m-field-label">
-                      <span>合计</span>
+                      <span>合计(元)</span>
                     </div>
                   </div>
                   <div className="m-field-box">

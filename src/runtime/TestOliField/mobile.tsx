@@ -54,9 +54,7 @@ const FormField: IFormField = {
         },
       ],
       treevalue: undefined,
-      treeData: [
-        
-      ],
+      treeData: [],
       date: now,
       checkindex: '',
       SearchBarvalue: '',
@@ -542,7 +540,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>耗油量</span>
+                                      <span>耗油量(升)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -609,7 +607,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>油费</span>
+                                      <span>油费(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -657,7 +655,7 @@ const FormField: IFormField = {
                 <div className="m-field m-field-mobile m-select-field">
                   <div className="m-field-head">
                     <div className="m-field-label">
-                      <span>合计</span>
+                      <span>合计(元)</span>
                     </div>
                   </div>
                   <div className="m-field-box">

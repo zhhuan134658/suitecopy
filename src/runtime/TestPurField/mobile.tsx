@@ -46,7 +46,7 @@ const FormField: IFormField = {
           dataIndex: 'need_quantity',
         },
         {
-          title: '含税单价',
+          title: '不含税单价(元)',
           dataIndex: 'refer_price',
         },
         {
@@ -55,15 +55,15 @@ const FormField: IFormField = {
         },
 
         {
-          title: '税额',
+          title: '税额(元)',
           dataIndex: 'notax_price',
         },
         {
-          title: '含税金额',
+          title: '含税金额(元)',
           dataIndex: 'tax_money',
         },
         {
-          title: '不含税金额',
+          title: '不含税金额(元)',
           dataIndex: 'notax_money',
         },
       ],
@@ -259,8 +259,22 @@ const FormField: IFormField = {
     });
   },
   //删除明细
-  deleteItem(index) {
+  deleteItem(index, item) {
     let list = this.state.materialList;
+    if (item.tax_money) {
+      const newvalue = this.state.Inputmoney1;
+      this.setState({
+        Inputmoney1: (newvalue - item.tax_money).toFixed(2),
+      });
+      console.log('ssks');
+    }
+    if (item.notax_money) {
+      const newvalue2 = this.state.Inputmoney2;
+      this.setState({
+        Inputmoney2: (newvalue2 - item.notax_money).toFixed(2),
+      });
+      console.log('ssks');
+    }
     list.splice(index, 1);
     this.setState({
       materialList: list,
@@ -276,27 +290,38 @@ const FormField: IFormField = {
     let newindex = index;
     let newtype = types;
     arr[newindex][newtype] = arrindex;
+    //计算
+    //税额
     if (
-      arr[newindex].need_quantity &&
       arr[newindex].refer_price &&
+      arr[newindex].need_quantity &&
       arr[newindex].tax_rate
     ) {
-      arr[newindex].notax_price =
-        (arr[newindex].need_quantity *
-          arr[newindex].refer_price *
-          arr[newindex].tax_rate) /
-        100;
+      arr[index].notax_price = (
+        arr[newindex].refer_price *
+        arr[newindex].need_quantity *
+        arr[newindex].tax_rate *
+        0.01
+      ).toFixed(2);
     }
-
-    if (arr[newindex].need_quantity && arr[newindex].refer_price) {
-      arr[newindex].tax_money =
-        arr[newindex].need_quantity * arr[newindex].refer_price;
+    //   不含税
+    if (arr[newindex].refer_price && arr[newindex].need_quantity) {
+      arr[index].notax_money = (
+        arr[newindex].refer_price * arr[newindex].need_quantity
+      ).toFixed(2);
     }
-    arr[newindex].notax_money =
-      arr[newindex].tax_money - arr[newindex].notax_price;
-    // if (arr[newindex].notax_price && arr[newindex].tax_money) {
-
-    // }
+    //含税
+    if (
+      arr[newindex].refer_price &&
+      arr[newindex].need_quantity &&
+      arr[newindex].tax_rate
+    ) {
+      arr[index].tax_money = (
+        arr[newindex].refer_price *
+        arr[newindex].need_quantity *
+        (1 + arr[newindex].tax_rate * 0.01)
+      ).toFixed(2);
+    }
     //   含税金额
     let newarr2 = [];
 
@@ -519,7 +544,7 @@ const FormField: IFormField = {
           <div>
             <div className="field-wrapper">
               <div className="m-field-view">
-                <label className="m-field-view-label">含税金额</label>
+                <label className="m-field-view-label">含税金额合计(元)</label>
                 <div className="m-field-view-value">
                   <span>{hanmoney}</span>
                 </div>
@@ -527,7 +552,7 @@ const FormField: IFormField = {
             </div>
             <div className="field-wrapper">
               <div className="m-field-view">
-                <label className="m-field-view-label">不含税金额</label>
+                <label className="m-field-view-label">不含税金额合计(元)</label>
                 <div className="m-field-view-value">
                   <span>{nomoney}</span>
                 </div>
@@ -587,7 +612,7 @@ const FormField: IFormField = {
                         {this.state.materialList.length > 1 ? (
                           <div
                             className="dele_item"
-                            onClick={this.deleteItem.bind(this, index)}
+                            onClick={this.deleteItem.bind(this, index, item)}
                           >
                             删除
                           </div>
@@ -767,7 +792,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>含税单价</span>
+                                      <span>不含税单价(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -833,7 +858,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>税额</span>
+                                      <span>税额(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -860,7 +885,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>含税金额</span>
+                                      <span>不含税金额(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -869,7 +894,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           editable={false}
                                           clear
-                                          value={item.tax_money}
+                                          value={item.notax_money}
                                           placeholder="自动计算"
                                         ></InputItem>
                                       </div>
@@ -887,7 +912,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>不含税金额</span>
+                                      <span>含税金额(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -896,7 +921,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           editable={false}
                                           clear
-                                          value={item.notax_money}
+                                          value={item.tax_money}
                                           placeholder="自动计算"
                                         ></InputItem>
                                       </div>
@@ -935,32 +960,7 @@ const FormField: IFormField = {
               <div className="m-field m-field-mobile m-select-field">
                 <div className="m-field-head">
                   <div className="m-field-label">
-                    <span>含税金额</span>
-                  </div>
-                </div>
-                <div className="m-field-box">
-                  <div className="m-field-content left">
-                    <div className="input-wrapper">
-                      <InputItem
-                        editable={false}
-                        value={this.state.Inputmoney1}
-                        placeholder="自动计算"
-                        readOnly
-                      ></InputItem>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div className="field-wrapper">
-          <div className="m-group m-group-mobile">
-            <div className="m-field-wrapper">
-              <div className="m-field m-field-mobile m-select-field">
-                <div className="m-field-head">
-                  <div className="m-field-label">
-                    <span>不含税金额合计</span>
+                    <span>不含税金额合计(元)</span>
                   </div>
                 </div>
                 <div className="m-field-box">
@@ -979,6 +979,32 @@ const FormField: IFormField = {
             </div>
           </div>
         </div>
+        <div className="field-wrapper">
+          <div className="m-group m-group-mobile">
+            <div className="m-field-wrapper">
+              <div className="m-field m-field-mobile m-select-field">
+                <div className="m-field-head">
+                  <div className="m-field-label">
+                    <span>含税金额合计(元)</span>
+                  </div>
+                </div>
+                <div className="m-field-box">
+                  <div className="m-field-content left">
+                    <div className="input-wrapper">
+                      <InputItem
+                        editable={false}
+                        value={this.state.Inputmoney1}
+                        placeholder="自动计算"
+                        readOnly
+                      ></InputItem>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* 物资明细 */}
         {createPortal(
           <Drawer

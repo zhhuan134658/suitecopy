@@ -694,7 +694,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '人工合价',
+        title: '人工合价(元)',
         dataIndex: 'person_total',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.person_total}>
@@ -703,7 +703,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '材料合价',
+        title: '材料合价(元)',
         dataIndex: 'material_total',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.material_total}>
@@ -712,7 +712,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '小计',
+        title: '小计(元)',
         dataIndex: 'total_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.total_price}>
@@ -767,7 +767,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '人工合价',
+        title: '人工合价(元)',
         dataIndex: 'person_total',
         editable: true,
         render: (_, record: any) => (
@@ -777,7 +777,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '材料合价',
+        title: '材料合价(元)',
         dataIndex: 'material_total',
         editable: true,
         render: (_, record: any) => (
@@ -787,7 +787,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '小计',
+        title: '小计(元)',
         dataIndex: 'total_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.total_price}>
@@ -900,7 +900,7 @@ const FormField: ISwapFormField = {
       const { hanmoney = '', detailedData = [] } = value;
       return (
         <div>
-          <div className="label">含税金额</div>
+          <div className="label">合计</div>
           <div>{hanmoney}</div>
           <div className="label">物资明细</div>
 
@@ -967,7 +967,7 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
 
-          <div className="label">合计</div>
+          <div className="label">合计(元)</div>
           <div>
             <Input
               readOnly

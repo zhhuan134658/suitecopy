@@ -480,20 +480,8 @@ const FormField: ISwapFormField = {
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
-    if (row.need_quantity) {
+    if (row.need_quantity && row.refer_price) {
       newData[index].subtotal = row.need_quantity * row.refer_price;
-    }
-    if (row.tax_rate) {
-      newData[index].norefer_price = (
-        row.subtotal *
-        row.tax_rate *
-        0.01
-      ).toFixed(2);
-      newData[index].nosubtotal = (
-        row.subtotal *
-        (100 - row.tax_rate) *
-        0.01
-      ).toFixed(2);
     }
 
     this.setState({

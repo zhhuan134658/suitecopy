@@ -86,7 +86,7 @@ const mycolumns = [
     dataIndex: 'unit',
   },
   {
-    title: '含税单价（元）',
+    title: '单价（元）',
     dataIndex: 'tax_price',
   },
   {
@@ -742,7 +742,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '单价',
+        title: '单价(元)',
         dataIndex: 'price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.price}>
@@ -752,7 +752,7 @@ const FormField: ISwapFormField = {
       },
 
       {
-        title: '小计',
+        title: '小计(元)',
         dataIndex: 'subtotal',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.subtotal}>
@@ -840,7 +840,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '单价',
+        title: '单价(元)',
         dataIndex: 'price',
         editable: true,
         render: (_, record: any) => (
@@ -851,7 +851,7 @@ const FormField: ISwapFormField = {
       },
 
       {
-        title: '小计',
+        title: '小计(元)',
         dataIndex: 'subtotal',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.subtotal}>
@@ -1033,7 +1033,7 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
 
-          <div className="label">合计</div>
+          <div className="label">合计(元)</div>
           <div>
             <Input
               readOnly

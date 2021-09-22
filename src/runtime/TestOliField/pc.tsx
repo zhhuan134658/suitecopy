@@ -670,7 +670,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '耗油量',
+        title: '耗油量(升)',
         dataIndex: 'oil_consump',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.oil_consump}>
@@ -679,7 +679,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '油价',
+        title: '油价(元)',
         dataIndex: 'price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.price}>
@@ -726,7 +726,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '耗油量',
+        title: '耗油量(升)',
         dataIndex: 'oil_consump',
         editable: true,
         render: (_, record: any) => (
@@ -746,7 +746,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '油费',
+        title: '油费(元)',
         dataIndex: 'total_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.total_price}>
@@ -859,7 +859,7 @@ const FormField: ISwapFormField = {
       const { hanmoney = '', detailedData = [] } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">含税金额</div>
+          <div className="label">合计</div>
           <div>{hanmoney}</div>
           <div className="label">物资明细</div>
 
@@ -926,7 +926,7 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
 
-          <div className="label">合计</div>
+          <div className="label">合计(元)</div>
           <div>
             <Input
               readOnly

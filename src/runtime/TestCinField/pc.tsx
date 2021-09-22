@@ -104,7 +104,7 @@ const mycolumnstree = [
     dataIndex: 'unit',
   },
   {
-    title: '含税单价（元）',
+    title: '不含税单价(元)',
     dataIndex: 'tax_price',
   },
   {
@@ -487,19 +487,26 @@ const FormField: ISwapFormField = {
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
-    if (row.rk_number) {
-      newData[index].tax_money = row.rk_number * row.tax_price;
-    }
-    if (row.tax_rate) {
+    //计算
+    //税额
+    if (row.tax_price && row.rk_number && row.tax_rate) {
       newData[index].notax_price = (
-        row.tax_money *
+        row.tax_price *
+        row.rk_number *
         row.tax_rate *
         0.01
       ).toFixed(2);
-      newData[index].notax_money = (
-        row.tax_money *
-        (100 - row.tax_rate) *
-        0.01
+    }
+    //   不含税
+    if (row.tax_price && row.rk_number) {
+      newData[index].notax_money = (row.tax_price * row.rk_number).toFixed(2);
+    }
+    //含税
+    if (row.tax_price && row.rk_number && row.tax_rate) {
+      newData[index].tax_money = (
+        row.tax_price *
+        row.rk_number *
+        (1 + row.tax_rate * 0.01)
       ).toFixed(2);
     }
 
@@ -837,7 +844,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '含税单价',
+        title: '不含税单价(元)',
         dataIndex: 'tax_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.tax_price}>
@@ -856,7 +863,7 @@ const FormField: ISwapFormField = {
       },
 
       {
-        title: '税额',
+        title: '税额(元)',
         dataIndex: 'notax_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.notax_price}>
@@ -865,20 +872,20 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '含税金额',
-        dataIndex: 'tax_money',
-        render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.tax_money}>
-            <span>{record.tax_money}</span>
-          </Tooltip>
-        ),
-      },
-      {
-        title: '不含税金额',
+        title: '不含税金额(元)',
         dataIndex: 'notax_money',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.notax_money}>
             <span>{record.notax_money}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '含税金额(元)',
+        dataIndex: 'tax_money',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_money}>
+            <span>{record.tax_money}</span>
           </Tooltip>
         ),
       },
@@ -922,7 +929,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '含税单价',
+        title: '不含税单价(元)',
         dataIndex: 'tax_price',
         editable: true,
         render: (_, record: any) => (
@@ -943,7 +950,7 @@ const FormField: ISwapFormField = {
       },
 
       {
-        title: '税额',
+        title: '税额(元)',
         dataIndex: 'notax_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.notax_price}>
@@ -952,16 +959,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '含税金额',
-        dataIndex: 'tax_money',
-        render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.tax_money}>
-            <span>{record.tax_money}</span>
-          </Tooltip>
-        ),
-      },
-      {
-        title: '不含税金额',
+        title: '不含税金额(元)',
         dataIndex: 'notax_money',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.notax_money}>
@@ -969,6 +967,16 @@ const FormField: ISwapFormField = {
           </Tooltip>
         ),
       },
+      {
+        title: '含税金额(元)',
+        dataIndex: 'tax_money',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_money}>
+            <span>{record.tax_money}</span>
+          </Tooltip>
+        ),
+      },
+
       {
         title: '操作',
         dataIndex: 'operation',
@@ -1160,14 +1168,6 @@ const FormField: ISwapFormField = {
         <div className="field-wrapper">
           <div className="label">{label}</div>
           <div style={{ margin: '10px' }}>{detailname}</div>
-          <div style={{ margin: '10px' }} className="label">
-            含税金额(元)
-          </div>
-          <div style={{ margin: '10px' }}>{hanmoney}</div>
-          <div style={{ margin: '10px' }} className="label">
-            不含税金额(元)
-          </div>
-          <div style={{ margin: '10px' }}>{nomoney}</div>
 
           <div className="label">物资明细</div>
 
@@ -1187,6 +1187,14 @@ const FormField: ISwapFormField = {
               pagination={false}
             />
           </div>
+          <div style={{ margin: '10px' }} className="label">
+            不含税金额合计(元)
+          </div>
+          <div style={{ margin: '10px' }}>{nomoney}</div>
+          <div style={{ margin: '10px' }} className="label">
+            含税金额合计(元)
+          </div>
+          <div style={{ margin: '10px' }}>{hanmoney}</div>
         </div>
       );
     }
@@ -1242,15 +1250,6 @@ const FormField: ISwapFormField = {
           >
             添加明细
           </Button>
-
-          <div className="label">含税金额合计(元)</div>
-          <div>
-            <Input
-              readOnly
-              value={this.state.Inputmoney1}
-              placeholder="自动计算"
-            />
-          </div>
           <div className="label" style={{ marginTop: '10px' }}>
             不含税金额合计(元)
           </div>
@@ -1258,6 +1257,16 @@ const FormField: ISwapFormField = {
             <Input
               readOnly
               value={this.state.Inputmoney2}
+              placeholder="自动计算"
+            />
+          </div>
+          <div className="label" style={{ marginTop: '10px' }}>
+            含税金额合计(元)
+          </div>
+          <div>
+            <Input
+              readOnly
+              value={this.state.Inputmoney1}
               placeholder="自动计算"
             />
           </div>

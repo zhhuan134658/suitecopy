@@ -281,9 +281,7 @@ const FormField: ISwapFormField = {
       isModalVisible: false,
       listData: [],
 
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -800,7 +798,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '单价',
+        title: '单价(元)',
         dataIndex: 'price',
         editable: true,
 
@@ -811,7 +809,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '小计',
+        title: '小计(元)',
         dataIndex: 'subtotal',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.subtotal}>
@@ -933,7 +931,7 @@ const FormField: ISwapFormField = {
       const { hanmoney = '', detailedData = [] } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">合计</div>
+          <div className="label">合计(元)</div>
           <div>{hanmoney}</div>
 
           <div className="label">物资明细</div>
@@ -1001,7 +999,7 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
 
-          <div className="label">合计</div>
+          <div className="label">合计(元)</div>
           <div>
             <Input
               readOnly

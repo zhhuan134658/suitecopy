@@ -507,8 +507,6 @@ const FormField: ISwapFormField = {
     if (
       row.rk_number &&
       row.tax_rate &&
-      row.rk_number &&
-      row.tax_rate &&
       row.tax_price
     ) {
       newData[index].tax_money = (
@@ -877,7 +875,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '不含税单价',
+        title: '不含税单价(元)',
         dataIndex: 'tax_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.tax_price}>
@@ -896,7 +894,7 @@ const FormField: ISwapFormField = {
       },
 
       {
-        title: '税额',
+        title: '税额(元)',
         dataIndex: 'notax_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.notax_price}>
@@ -905,7 +903,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '不含税金额',
+        title: '不含税金额(元)',
         dataIndex: 'notax_money',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.notax_money}>
@@ -914,7 +912,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '含税金额',
+        title: '含税金额(元)',
         dataIndex: 'tax_money',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.tax_money}>
@@ -963,7 +961,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '不含税单价',
+        title: '不含税单价(元)',
         dataIndex: 'tax_price',
 
         editable: true,
@@ -986,7 +984,7 @@ const FormField: ISwapFormField = {
       },
 
       {
-        title: '税额',
+        title: '税额(元)',
         dataIndex: 'notax_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.notax_price}>
@@ -995,7 +993,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '不含税金额 （元）',
+        title: '不含税金额(元)',
         dataIndex: 'notax_money',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.notax_money}>
@@ -1004,7 +1002,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '含税金额 （元）',
+        title: '含税金额(元)',
         dataIndex: 'tax_money',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.tax_money}>
@@ -1207,11 +1205,11 @@ const FormField: ISwapFormField = {
             />
           </div>
           <div style={{ marginTop: '10px' }} className="label">
-            不含税金额 （元）
+            不含税金额(元)
           </div>
           <div style={{ marginTop: '10px' }}>{nomoney}</div>
           <div className="label" style={{ marginTop: '10px' }}>
-            含税金额 （元）
+            含税金额(元)
           </div>
           <div style={{ marginTop: '10px' }}>{hanmoney}</div>
         </div>
@@ -1270,7 +1268,7 @@ const FormField: ISwapFormField = {
             添加明细
           </Button>
           <div className="label" style={{ marginTop: '10px' }}>
-            不含税金额合计 （元）
+            不含税金额合计(元)
           </div>
           <div>
             <Input
@@ -1280,7 +1278,7 @@ const FormField: ISwapFormField = {
             />
           </div>
           <div className="label" style={{ marginTop: '10px' }}>
-            含税金额合计（元）
+            含税金额合计(元)
           </div>
           <div>
             <Input
