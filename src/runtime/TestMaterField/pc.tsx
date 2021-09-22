@@ -83,7 +83,7 @@ const mycolumns = [
   },
   {
     title: '金额',
-    dataIndex: 'project_name',
+    dataIndex: 'money',
   },
 ];
 

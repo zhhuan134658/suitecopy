@@ -46,7 +46,7 @@ const FormField: IFormField = {
           dataIndex: 'rk_number',
         },
         {
-          title: '含税单价',
+          title: '不含税单价',
           dataIndex: 'tax_price',
         },
         {
@@ -742,7 +742,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>含税单价</span>
+                                      <span>不含税单价</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
