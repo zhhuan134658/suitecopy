@@ -68,7 +68,7 @@ const { TabPane } = Tabs;
 import './pc.less';
 const mycolumns = [
   {
-    title: '名称',
+    title: '合同名称',
     dataIndex: 'name',
     render: (_, record: any) => (
       <Tooltip placement="topLeft" title={record.name}>
@@ -77,8 +77,12 @@ const mycolumns = [
     ),
   },
   {
-    title: '项目名称',
-    dataIndex: 'project_name',
+    title: '供应商',
+    dataIndex: 'supplier',
+  },
+  {
+    title: '合同金额',
+    dataIndex: 'contract_money',
   },
 ];
 const mycolumnstree = [
@@ -504,11 +508,7 @@ const FormField: ISwapFormField = {
       newData[index].notax_money = 0;
     }
     //   含税金额
-    if (
-      row.rk_number &&
-      row.tax_rate &&
-      row.tax_price
-    ) {
+    if (row.rk_number && row.tax_rate && row.tax_price) {
       newData[index].tax_money = (
         row.rk_number *
         row.tax_price *
@@ -1374,7 +1374,7 @@ const FormField: ISwapFormField = {
             <Content>
               <div className="header_tab">
                 <Search
-                  placeholder="请输入名称"
+                  placeholder="请输入"
                   allowClear
                   enterButton="搜索"
                   size="large"

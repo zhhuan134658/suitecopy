@@ -368,9 +368,9 @@ const FormField: ISwapFormField = {
     newvalue.type = 0;
     newvalue.page = 1;
     newvalue.isHouse = '1';
-    this.setState({
-      allchData: newvalue,
-    });
+    // this.setState({
+    //   allchData: newvalue,
+    // });
     this.asyncSetFieldProps(newvalue, '1');
   },
   onSearch(value) {
@@ -379,10 +379,10 @@ const FormField: ISwapFormField = {
     newvalue.name = value;
     newvalue.type = 0;
     newvalue.page = 1;
-    newvalue.isHouse = 1;
-    this.setState({
-      allData: newvalue,
-    });
+    newvalue.isHouse = 2;
+    // this.setState({
+    //   allData: newvalue,
+    // });
     this.asyncSetFieldProps(newvalue, '2');
   },
   onChangepage(page) {
@@ -470,7 +470,7 @@ const FormField: ISwapFormField = {
       this.asyncSetFieldProps(newdate, '2');
       this.setState({
         isModalVisible: true,
-        allData: newdate,
+        // allData: newdate,
       });
     } else {
       notification.open({
@@ -977,12 +977,14 @@ const FormField: ISwapFormField = {
       const { warehouse = '', warehousein = '', detailedData = [] } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">调入仓库</div>
-          <div style={{ marginTop: '10px' }}>{warehousein}</div>
           <div style={{ marginTop: '10px' }} className="label">
             调出仓库
           </div>
           <div style={{ marginTop: '10px' }}>{warehouse}</div>
+          <div style={{ marginTop: '10px' }} className="label">
+            调入仓库
+          </div>
+          <div style={{ marginTop: '10px' }}>{warehousein}</div>
 
           <div style={{ marginTop: '10px' }} className="label">
             物资明细
@@ -1056,7 +1058,7 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancelch}
         >
           <Search
-            placeholder="请输入名称"
+            placeholder="请输入"
             allowClear
             enterButton="搜索"
             size="large"
@@ -1138,7 +1140,7 @@ const FormField: ISwapFormField = {
             <Content>
               <div className="header_tab">
                 <Search
-                  placeholder="请输入名称"
+                  placeholder="请输入"
                   allowClear
                   enterButton="搜索"
                   size="large"

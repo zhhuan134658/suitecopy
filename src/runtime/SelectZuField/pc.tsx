@@ -73,7 +73,7 @@ const mycolumns = [
     ),
   },
   {
-    title: '乙方（租赁单位）',
+    title: '租赁单位',
     dataIndex: 'supplier',
   },
   {
@@ -661,7 +661,7 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancel}
         >
           <Search
-            placeholder="请输入合同名称"
+            placeholder="请输入"
             allowClear
             enterButton="搜索"
             size="large"

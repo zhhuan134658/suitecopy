@@ -77,7 +77,7 @@ const mycolumns = [
     dataIndex: 'sub_unit',
   },
   {
-    title: '金额',
+    title: '合同金额',
     dataIndex: 'contract_money',
   },
 ];

@@ -647,7 +647,7 @@ const FormField: ISwapFormField = {
           <Tabs defaultActiveKey="1" centered>
             <TabPane tab="Tab 1" key="1">
               <Search
-                placeholder="请输入合同名称"
+                placeholder="请输入"
                 allowClear
                 enterButton="搜索"
                 size="large"
@@ -676,7 +676,7 @@ const FormField: ISwapFormField = {
             </TabPane>
             <TabPane tab="Tab 2" key="2">
               <Search
-                placeholder="请输入合同名称"
+                placeholder="请输入"
                 allowClear
                 enterButton="搜索"
                 size="large"

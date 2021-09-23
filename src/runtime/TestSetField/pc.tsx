@@ -358,7 +358,7 @@ const FormField: ISwapFormField = {
     newvalue.name = value;
 
     newvalue.page = 1;
-    newvalue.rk_id = [];
+    newvalue.rk_id = ['-1'];
     this.setState({
       allData: newvalue,
     });
@@ -1354,7 +1354,7 @@ const FormField: ISwapFormField = {
             <Content>
               <div className="header_tab">
                 <Search
-                  placeholder="请输入名称"
+                  placeholder="请输入"
                   allowClear
                   enterButton="搜索"
                   size="large"

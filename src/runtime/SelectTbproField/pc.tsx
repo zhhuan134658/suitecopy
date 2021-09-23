@@ -667,7 +667,7 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancel}
         >
           <Search
-            placeholder="请输入项目名称"
+            placeholder="请输入"
             allowClear
             enterButton="搜索"
             size="large"

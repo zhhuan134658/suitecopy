@@ -740,7 +740,7 @@ const FormField: ISwapFormField = {
             <TabPane tab="机械费结算 " key="c"></TabPane>
           </Tabs>
           <Search
-            placeholder="请输入合同名称"
+            placeholder="请输入"
             allowClear
             enterButton="搜索"
             size="large"

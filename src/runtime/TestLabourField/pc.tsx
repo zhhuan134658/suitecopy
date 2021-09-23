@@ -65,7 +65,7 @@ const { TabPane } = Tabs;
 import './pc.less';
 const mycolumns = [
   {
-    title: '名称',
+    title: '结算名称',
     dataIndex: 'name',
     render: (_, record: any) => (
       <Tooltip placement="topLeft" title={record.name}>
@@ -74,8 +74,8 @@ const mycolumns = [
     ),
   },
   {
-    title: '项目名称',
-    dataIndex: 'project_name',
+    title: '劳务单位/班组',
+    dataIndex: 'extend_first',
   },
   {
     title: '结算金额',

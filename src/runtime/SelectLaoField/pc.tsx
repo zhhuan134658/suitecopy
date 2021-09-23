@@ -73,11 +73,11 @@ const mycolumns = [
     ),
   },
   {
-    title: '乙方（劳务班组单位）',
+    title: '劳务单位/班组',
     dataIndex: 'team',
   },
   {
-    title: '金额',
+    title: '合同金额',
     dataIndex: 'contract_money',
   },
 ];
@@ -627,7 +627,7 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancel}
         >
           <Search
-            placeholder="请输入合同名称"
+            placeholder="请输入"
             allowClear
             enterButton="搜索"
             size="large"

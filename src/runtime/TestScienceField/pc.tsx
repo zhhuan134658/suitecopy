@@ -951,7 +951,7 @@ const FormField: ISwapFormField = {
             <Content>
               <div className="header_tab">
                 <Search
-                  placeholder="请输入名称"
+                  placeholder="请输入"
                   allowClear
                   enterButton="搜索"
                   size="large"

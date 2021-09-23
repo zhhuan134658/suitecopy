@@ -77,7 +77,7 @@ const mycolumns = [
     dataIndex: 'party_a',
   },
   {
-    title: '金额',
+    title: '合同金额',
     dataIndex: 'money',
   },
 ];
@@ -652,7 +652,7 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancel}
         >
           <Search
-            placeholder="请输入合同名称"
+            placeholder="请输入"
             allowClear
             enterButton="搜索"
             size="large"

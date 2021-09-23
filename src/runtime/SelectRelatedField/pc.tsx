@@ -64,17 +64,21 @@ import { FormInstance } from 'antd/lib/form';
 import './pc.less';
 const mycolumns = [
   {
-    title: '合同名称',
-    dataIndex: 'name',
+    title: '主题',
+    dataIndex: 'extend_five',
     render: (_, record: any) => (
-      <Tooltip placement="topLeft" title={record.name}>
-        <span>{record.name}</span>
+      <Tooltip placement="topLeft" title={record.extend_five}>
+        <span>{record.extend_five}</span>
       </Tooltip>
     ),
   },
   {
-    title: '金额',
-    dataIndex: 'money',
+    title: '收取单位',
+    dataIndex: 't1',
+  },
+  {
+    title: '保证金金额',
+    dataIndex: 'bond_money',
   },
 ];
 interface ISwapFormField extends IFormField {
@@ -648,7 +652,7 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancel}
         >
           <Search
-            placeholder="请输入合同名称"
+            placeholder="请输入"
             allowClear
             enterButton="搜索"
             size="large"

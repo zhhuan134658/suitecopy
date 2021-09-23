@@ -109,7 +109,7 @@ const FormField: IFormField = {
       <div>
         <SearchBar
           value={this.state.SearchBarvalue}
-          placeholder="请输入名称"
+          placeholder="请输入"
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
           onCancel={this.onCancel}
