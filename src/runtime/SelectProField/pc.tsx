@@ -609,7 +609,7 @@ const FormField: ISwapFormField = {
           ) : (
             <span style={{ color: '#fff' }}>*</span>
           )}
-          97{label}
+          {label}
         </div>
         {/* {field.getProp('viewMode') ? (
           field.getValue()

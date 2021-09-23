@@ -1116,7 +1116,7 @@ const FormField: ISwapFormField = {
         <div className="field-wrapper">
           <div className="label"> {label}</div>
           <div style={{ marginTop: '10px' }}>{detailname}</div>
-          <div className="label">物资明细</div>
+          <div className="label">{label}</div>
 
           <div style={{ marginTop: '10px' }}>
             <Table

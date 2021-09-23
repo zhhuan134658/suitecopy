@@ -278,9 +278,7 @@ const FormField: ISwapFormField = {
       isModalVisible: false,
       listData: [],
 
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -380,7 +378,7 @@ const FormField: ISwapFormField = {
     if (row.num5) {
       const newvalue2 = this.state.Inputmoney2;
       this.setState({
-        Inputmoney2: (newvalue - row.num5).toFixed(2),
+        Inputmoney2: (newvalue2 - row.num5).toFixed(2),
       });
       console.log('ssks');
     }
@@ -464,7 +462,7 @@ const FormField: ISwapFormField = {
     //   });
     // });
 
-    console.log('sss', eval(newarr3.join('+')));
+    // console.log('sss', eval(newarr3.join('+')));
   },
 
   //   handleSave(row: DataType) {
@@ -853,7 +851,7 @@ const FormField: ISwapFormField = {
       const { detailedData = [] } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">物资明细</div>
+          <div className="label">{label} </div>
 
           {/* <div>
             {detailedData.map(item => {

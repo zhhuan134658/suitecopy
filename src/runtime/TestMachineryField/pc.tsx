@@ -934,7 +934,7 @@ const FormField: ISwapFormField = {
           <div className="label">合计(元)</div>
           <div>{hanmoney}</div>
 
-          <div className="label">物资明细</div>
+          <div className="label">{label}</div>
 
           {/* <div>
             {detailedData.map(item => {

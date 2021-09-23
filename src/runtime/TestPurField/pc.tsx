@@ -1129,7 +1129,7 @@ const FormField: ISwapFormField = {
           <div className="label">{label}</div>
           <div>{detailname}</div>
 
-          <div className="label">物资明细</div>
+          <div className="label">{label}</div>
 
           {/* <div>
             {detailedData.map(item => {

@@ -328,6 +328,7 @@ const FormField: ISwapFormField = {
     console.log(`selected ${value}`);
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
+
     if (value === '1') {
       this.setState({
         isShow: true,
@@ -631,6 +632,8 @@ const FormField: ISwapFormField = {
   },
   fieldRender() {
     const { form } = this.props;
+    // const { form } = this.props;
+    const Pro_name = form.getFieldValue('Autopro');
     const field = form.getFieldInstance('TestExpe');
     const label = form.getFieldProp('TestExpe', 'label');
     const placeholder = form.getFieldProp('TestExpe', 'placeholder');
@@ -924,17 +927,21 @@ const FormField: ISwapFormField = {
             />
           </div>
           <div>
-            <div className="label" style={{ marginTop: '10px' }}>
-              备用金抵扣
-            </div>
-            <Select
-              defaultValue="2"
-              style={{ width: 200 }}
-              onChange={this.handleChange}
-            >
-              <Option value="1">是</Option>
-              <Option value="2">否</Option>
-            </Select>
+            {Pro_name ? (
+              <div>
+                <div className="label" style={{ marginTop: '10px' }}>
+                  备用金抵扣
+                </div>
+                <Select
+                  defaultValue="2"
+                  style={{ width: 200 }}
+                  onChange={this.handleChange}
+                >
+                  <Option value="1">是</Option>
+                  <Option value="2">否</Option>
+                </Select>
+              </div>
+            ) : null}
           </div>
           <div>
             {this.state.isShow ? (

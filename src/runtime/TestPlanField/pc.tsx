@@ -882,7 +882,7 @@ const FormField: ISwapFormField = {
       const { detailedData = [] } = value;
       return (
         <div className="field-wrapper">
-          <div className="label">物资明细</div>
+          <div className="label">{label}</div>
 
           {/* <div>
             {detailedData.map(item => {

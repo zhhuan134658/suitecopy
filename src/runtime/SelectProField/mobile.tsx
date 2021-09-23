@@ -157,7 +157,7 @@ const FormField: IFormField = {
                     ) : (
                       <span style={{ color: '#fff' }}>*</span>
                     )}
-                    97 {label}
+                     {label}
                   </span>
                 </label>
               </div>

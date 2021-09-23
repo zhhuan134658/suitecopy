@@ -537,6 +537,24 @@
       }
     },
     {
+      "componentName": "MoneyField",
+      "bizAlias": "MoneyFeidk",
+      "props": {
+        "placeholder": "请输入",
+        "label": "审批中的费用报销抵扣",
+        "notUpper": "0"
+      }
+    },
+    {
+      "componentName": "MoneyField",
+      "bizAlias": "MoneyFeigh",
+      "props": {
+        "placeholder": "请输入",
+        "label": "审批中的归还",
+        "notUpper": "0"
+      }
+    },
+    {
       "componentName": "InnerContactField",
       "bizAlias": "outPeople",
       "props": {
@@ -590,6 +608,15 @@
       "props": {
         "placeholder": "请输入",
         "label": "采购订单添加物资材料"
+      },
+      "type": "custom"
+    },
+    {
+      "componentName": "TestOrdernewField",
+      "bizAlias": "TestOrdernew",
+      "props": {
+        "placeholder": "请输入",
+        "label": "采购订单"
       },
       "type": "custom"
     },
@@ -1228,7 +1255,7 @@
       "bizAlias": "XJTextField",
       "props": {
         "placeholder": "请输入",
-        "label": "协同单行输入框"
+        "label": "协同单行输入框1"
       }
     },
     {
@@ -1242,7 +1269,7 @@
           { "key": "option_2", "value": "选项2" }
         ],
 
-        "label": "协同建设单选框"
+        "label": "协同建设单选框2"
       }
     }
   ]
