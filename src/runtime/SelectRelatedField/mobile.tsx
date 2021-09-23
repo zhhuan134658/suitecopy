@@ -125,15 +125,88 @@ const FormField: IFormField = {
 
         <List>
           {this.state.listData.map((item, index) => {
-            return (
-              <List.Item
-                onClick={this.habdlClick.bind(this, item)}
-                key={index}
-                multipleLine
-              >
-                {item.extend_five}/ {item.t1}/ {item.bond_money}
-              </List.Item>
-            );
+            const typename = form.getFieldValue('RadioField');
+            if (typename === '投标保证金支出') {
+              return (
+                <List.Item
+                  onClick={this.habdlClick.bind(this, item)}
+                  key={index}
+                  multipleLine
+                >
+                  {item.extend_five}/ {item.t1}/ {item.bond_money}
+                </List.Item>
+              );
+            } else if (typename === '履约保证金支出') {
+              return (
+                <List.Item
+                  onClick={this.habdlClick.bind(this, item)}
+                  key={index}
+                  multipleLine
+                >
+                  {item.extend_two}/ {item.party_a}/ {item.bond_money}
+                </List.Item>
+              );
+            } else if (typename === '劳务分包保证金退回') {
+              return (
+                <List.Item
+                  onClick={this.habdlClick.bind(this, item)}
+                  key={index}
+                  multipleLine
+                >
+                  {item.extend_five}/ {item.t1}/ {item.return_money}
+                </List.Item>
+              );
+            } else if (typename === '专业分包保证金退回') {
+              return (
+                <List.Item
+                  onClick={this.habdlClick.bind(this, item)}
+                  key={index}
+                  multipleLine
+                >
+                  {item.extend_five}/ {item.t1}/ {item.return_money}
+                </List.Item>
+              );
+            } else if (typename === '投标保证金退回') {
+              return (
+                <List.Item
+                  onClick={this.habdlClick.bind(this, item)}
+                  key={index}
+                  multipleLine
+                >
+                  {item.extend_five}/ {item.bond_money}
+                </List.Item>
+              );
+            } else if (typename === '履约保证金退回') {
+              return (
+                <List.Item
+                  onClick={this.habdlClick.bind(this, item)}
+                  key={index}
+                  multipleLine
+                >
+                  {item.extend_two}/ {item.party_a}/ {item.return_money}
+                </List.Item>
+              );
+            } else if (typename === '劳务分包保证金收入') {
+              return (
+                <List.Item
+                  onClick={this.habdlClick.bind(this, item)}
+                  key={index}
+                  multipleLine
+                >
+                  {item.extend_five}/ {item.unit}/ {item.bond_money}
+                </List.Item>
+              );
+            } else if (typename === '专业分包保证金收入') {
+              return (
+                <List.Item
+                  onClick={this.habdlClick.bind(this, item)}
+                  key={index}
+                  multipleLine
+                >
+                  {item.extend_five}/ {item.t1}/ {item.bond_money}
+                </List.Item>
+              );
+            }
           })}
         </List>
       </div>

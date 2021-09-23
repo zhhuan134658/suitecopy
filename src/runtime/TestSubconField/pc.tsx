@@ -74,16 +74,16 @@ const mycolumns = [
     ),
   },
   {
-    title: '项目名称',
-    dataIndex: 'project_name',
+    title: '分包单位',
+    dataIndex: 'extend_first',
     render: (_, record: any) => (
-      <Tooltip placement="topLeft" title={record.name}>
-        <span>{record.name}</span>
+      <Tooltip placement="topLeft" title={record.extend_first}>
+        <span>{record.extend_first}</span>
       </Tooltip>
     ),
   },
   {
-    title: '金额',
+    title: '结算金额',
     dataIndex: 'reply_money',
   },
 ];

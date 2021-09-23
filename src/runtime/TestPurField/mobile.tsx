@@ -467,8 +467,40 @@ const FormField: IFormField = {
             });
             this.asyncSetFieldProps(newpage, 2);
           }}
-        ></Tabs>
-        <List>
+        >
+          <div>
+            <List>
+              {this.state.checkData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.checkClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/ {item.detailed_money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+          <div>
+            <List>
+              {this.state.checkData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.checkClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/ {item.project_name}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+        </Tabs>
+
+        {/* <List>
           {this.state.checkData.map((item, index) => {
             return (
               <List.Item
@@ -480,7 +512,7 @@ const FormField: IFormField = {
               </List.Item>
             );
           })}
-        </List>
+        </List> */}
       </div>
     );
     const treesidebar = (

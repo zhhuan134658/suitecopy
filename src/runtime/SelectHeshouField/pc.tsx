@@ -67,9 +67,9 @@ const handleDview = key => {
   console.log(key);
   window.open(key.url);
 };
-const mycolumns1 = [
+const mycolumnsa = [
   {
-    title: '名称',
+    title: '合同名称',
     dataIndex: 'name',
     render: (_, record: any) => (
       <Tooltip placement="topLeft" title={record.name}>
@@ -78,17 +78,17 @@ const mycolumns1 = [
     ),
   },
   {
-    title: '项目名称',
-    dataIndex: 'project_name',
+    title: '甲方',
+    dataIndex: 'party_a',
   },
   {
-    title: '金额',
-    dataIndex: 'reply_money',
+    title: '合同金额',
+    dataIndex: 'money',
   },
 ];
-const mycolumns2 = [
+const mycolumnsb = [
   {
-    title: '名称',
+    title: '结算名称',
     dataIndex: 'name',
     render: (_, record: any) => (
       <Tooltip placement="topLeft" title={record.name}>
@@ -97,12 +97,12 @@ const mycolumns2 = [
     ),
   },
   {
-    title: '项目名称',
-    dataIndex: 'project_name',
+    title: '甲方',
+    dataIndex: 'extend_first',
   },
   {
-    title: '金额',
-    dataIndex: 'money',
+    title: '结算金额',
+    dataIndex: 'reply_money',
   },
 ];
 
@@ -936,42 +936,121 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancel}
         >
           <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
-            <TabPane tab="收入合同" key="a"></TabPane>
-            <TabPane tab="收入进度款结算" key="b"></TabPane>
-            <TabPane tab="收入完工结算 " key="c"></TabPane>
-            <TabPane tab="收入质保金结算" key="d"></TabPane>
+            <TabPane tab="收入合同" key="a">
+              <Search
+                placeholder="请输入"
+                allowClear
+                enterButton="搜索"
+                size="large"
+                onSearch={this.onSearch}
+              />
+              <Table
+                scroll={{ x: '1500px' }}
+                rowSelection={{
+                  type: 'radio',
+                  ...rowSelection,
+                }}
+                rowKey={record => record.id}
+                columns={mycolumnsa}
+                dataSource={this.state.listData}
+                loading={this.state.loading}
+                pagination={false}
+              ></Table>
+              <Pagination
+                defaultCurrent={1}
+                total={this.state.total2}
+                hideOnSinglePage={true}
+                className="pagination"
+                onChange={this.onChangepage}
+              />
+            </TabPane>
+            <TabPane tab="收入进度款结算" key="b">
+              <Search
+                placeholder="请输入"
+                allowClear
+                enterButton="搜索"
+                size="large"
+                onSearch={this.onSearch}
+              />
+              <Table
+                scroll={{ x: '1500px' }}
+                rowSelection={{
+                  type: 'radio',
+                  ...rowSelection,
+                }}
+                rowKey={record => record.id}
+                columns={mycolumnsb}
+                dataSource={this.state.listData}
+                loading={this.state.loading}
+                pagination={false}
+              ></Table>
+              <Pagination
+                defaultCurrent={1}
+                total={this.state.total2}
+                hideOnSinglePage={true}
+                className="pagination"
+                onChange={this.onChangepage}
+              />
+            </TabPane>
+            <TabPane tab="收入完工结算 " key="c">
+              {' '}
+              <Search
+                placeholder="请输入"
+                allowClear
+                enterButton="搜索"
+                size="large"
+                onSearch={this.onSearch}
+              />
+              <Table
+                scroll={{ x: '1500px' }}
+                rowSelection={{
+                  type: 'radio',
+                  ...rowSelection,
+                }}
+                rowKey={record => record.id}
+                columns={mycolumnsb}
+                dataSource={this.state.listData}
+                loading={this.state.loading}
+                pagination={false}
+              ></Table>
+              <Pagination
+                defaultCurrent={1}
+                total={this.state.total2}
+                hideOnSinglePage={true}
+                className="pagination"
+                onChange={this.onChangepage}
+              />
+            </TabPane>
+            <TabPane tab="收入质保金结算" key="d">
+              {' '}
+              <Search
+                placeholder="请输入"
+                allowClear
+                enterButton="搜索"
+                size="large"
+                onSearch={this.onSearch}
+              />
+              <Table
+                scroll={{ x: '1500px' }}
+                rowSelection={{
+                  type: 'radio',
+                  ...rowSelection,
+                }}
+                rowKey={record => record.id}
+                columns={mycolumnsb}
+                dataSource={this.state.listData}
+                loading={this.state.loading}
+                pagination={false}
+              ></Table>
+              <Pagination
+                defaultCurrent={1}
+                total={this.state.total2}
+                hideOnSinglePage={true}
+                className="pagination"
+                onChange={this.onChangepage}
+              />
+            </TabPane>
           </Tabs>
-
-          <Search
-            placeholder="请输入"
-            allowClear
-            enterButton="搜索"
-            size="large"
-            onSearch={this.onSearch}
-          />
-          <Table
-            scroll={{ x: '1500px' }}
-            rowSelection={{
-              type: 'radio',
-              ...rowSelection,
-            }}
-            rowKey={record => record.id}
-            columns={
-              this.state.detailname == 'a' || this.state.detailname == 'd'
-                ? mycolumns1
-                : mycolumns2
-            }
-            dataSource={this.state.listData}
-            loading={this.state.loading}
-            pagination={false}
-          ></Table>
-          <Pagination
-            defaultCurrent={1}
-            total={this.state.total2}
-            hideOnSinglePage={true}
-            className="pagination"
-            onChange={this.onChangepage}
-          />
         </Modal>
         {/* 树形 */}
       </div>

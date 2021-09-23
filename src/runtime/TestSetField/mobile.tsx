@@ -497,20 +497,56 @@ const FormField: IFormField = {
             });
             this.asyncSetFieldProps(newpage, 2);
           }}
-        ></Tabs>
-        <List>
-          {this.state.checkData.map((item, index) => {
-            return (
-              <List.Item
-                onClick={this.checkClick.bind(this, item)}
-                key={index}
-                multipleLine
-              >
-                {item.name}
-              </List.Item>
-            );
-          })}
-        </List>
+        >
+          <div>
+            {' '}
+            <List>
+              {this.state.checkData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.checkClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/ {item.supplier}/ {item.contract_money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+          <div>
+            {' '}
+            <List>
+              {this.state.checkData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.checkClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/ {item.supplier}/ {item.tax_total_money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+          <div>
+            {' '}
+            <List>
+              {this.state.checkData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.checkClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/ {item.supplier}/ {item.extend_four}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+        </Tabs>
       </div>
     );
     const treesidebar = (

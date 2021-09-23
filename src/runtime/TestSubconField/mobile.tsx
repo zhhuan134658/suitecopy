@@ -182,7 +182,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}
+                {item.name}/{item.extend_first}/{item.reply_money}
               </List.Item>
             );
           })}

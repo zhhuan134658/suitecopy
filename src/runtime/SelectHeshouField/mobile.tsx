@@ -173,20 +173,72 @@ const FormField: IFormField = {
             });
             this.asyncSetFieldProps(newpage);
           }}
-        ></Tabs>
-        <List>
-          {this.state.listData.map((item, index) => {
-            return (
-              <List.Item
-                onClick={this.habdlClick.bind(this, item)}
-                key={index}
-                multipleLine
-              >
-                {item.name}
-              </List.Item>
-            );
-          })}
-        </List>
+        >
+          <div>
+            {' '}
+            <List>
+              {this.state.listData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.habdlClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/{item.party_a}/{item.money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+          <div>
+            {' '}
+            <List>
+              {this.state.listData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.habdlClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/{item.extend_first}/{item.reply_money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+          <div>
+            {' '}
+            <List>
+              {this.state.listData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.habdlClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/{item.extend_first}/{item.reply_money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+          <div>
+            {' '}
+            <List>
+              {this.state.listData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.habdlClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/{item.extend_first}/{item.reply_money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+        </Tabs>
       </div>
     );
     //详情

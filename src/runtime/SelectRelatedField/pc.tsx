@@ -62,25 +62,21 @@ const { Column } = Table;
 import { FormInstance } from 'antd/lib/form';
 
 import './pc.less';
-const mycolumns = [
-  {
-    title: '主题',
-    dataIndex: 'extend_five',
-    render: (_, record: any) => (
-      <Tooltip placement="topLeft" title={record.extend_five}>
-        <span>{record.extend_five}</span>
-      </Tooltip>
-    ),
-  },
-  {
-    title: '收取单位',
-    dataIndex: 't1',
-  },
-  {
-    title: '保证金金额',
-    dataIndex: 'bond_money',
-  },
-];
+// const mycolumns = [
+//   {
+//     title: '合同名称',
+//     dataIndex: 'name',
+//     render: (_, record: any) => (
+//       <Tooltip placement="topLeft" title={record.name}>
+//         <span>{record.name}</span>
+//       </Tooltip>
+//     ),
+//   },
+//   {
+//     title: '金额',
+//     dataIndex: 'money',
+//   },
+// ];
 interface ISwapFormField extends IFormField {
   //   handleChange: () => void;
   handleOk: () => void;
@@ -255,6 +251,7 @@ const FormField: ISwapFormField = {
     return {
       Inputvalue: form.getFieldInstance('SelectRelated').getValue() || '',
       //   Inputvalue: '123',
+      mycolumns: [],
       current_page: '', //当前页
       total2: '',
       allData: {
@@ -338,22 +335,208 @@ const FormField: ISwapFormField = {
     const { form } = this.props;
     console.log('9999999999', form.getFieldValue('Selectbaopro'));
     const value = form.getFieldValue('SelectHe');
-    if (value && value != '暂无合同') {
-      const newvalue = this.state.allData;
-      newvalue.name = '';
-      newvalue.type = 0;
-      newvalue.page = 1;
-
+    const typename = form.getFieldValue('RadioField');
+    if (typename === '投标保证金支出') {
+      const mycolumns = [
+        {
+          title: '主题',
+          dataIndex: 'extend_five',
+          render: (_, record: any) => (
+            <Tooltip placement="topLeft" title={record.extend_five}>
+              <span>{record.extend_five}</span>
+            </Tooltip>
+          ),
+        },
+        {
+          title: '收取单位',
+          dataIndex: 't1',
+        },
+        {
+          title: '保证金金额',
+          dataIndex: 'bond_money',
+        },
+      ];
       this.setState({
-        allData: newvalue,
-        isModalVisible: true,
+        mycolumns,
       });
-      this.asyncSetFieldProps(newvalue);
-    } else {
-      notification.open({
-        message: '请先选择合同',
+    } else if (typename === '履约保证金支出') {
+      const mycolumns = [
+        {
+          title: '主题',
+          dataIndex: 'extend_two',
+          render: (_, record: any) => (
+            <Tooltip placement="topLeft" title={record.extend_two}>
+              <span>{record.extend_two}</span>
+            </Tooltip>
+          ),
+        },
+        {
+          title: '甲方单位',
+          dataIndex: 'party_a',
+        },
+        {
+          title: '保证金金额',
+          dataIndex: 'bond_money',
+        },
+      ];
+      this.setState({
+        mycolumns,
+      });
+    } else if (typename === '劳务分包保证金退回') {
+      const mycolumns = [
+        {
+          title: '主题',
+          dataIndex: 'extend_five',
+          render: (_, record: any) => (
+            <Tooltip placement="topLeft" title={record.extend_five}>
+              <span>{record.extend_five}</span>
+            </Tooltip>
+          ),
+        },
+        {
+          title: '劳务分包单位',
+          dataIndex: 't1',
+        },
+        {
+          title: '退回金额',
+          dataIndex: 'return_money',
+        },
+      ];
+      this.setState({
+        mycolumns,
+      });
+    } else if (typename === '专业分包保证金退回') {
+      const mycolumns = [
+        {
+          title: '主题',
+          dataIndex: 'extend_five',
+          render: (_, record: any) => (
+            <Tooltip placement="topLeft" title={record.extend_five}>
+              <span>{record.extend_five}</span>
+            </Tooltip>
+          ),
+        },
+        {
+          title: '分包单位',
+          dataIndex: 't1',
+        },
+        {
+          title: '退回金额',
+          dataIndex: 'return_money',
+        },
+      ];
+      this.setState({
+        mycolumns,
+      });
+    } else if (typename === '投标保证金退回') {
+      const mycolumns = [
+        {
+          title: '主题',
+          dataIndex: 'extend_five',
+          render: (_, record: any) => (
+            <Tooltip placement="topLeft" title={record.extend_five}>
+              <span>{record.extend_five}</span>
+            </Tooltip>
+          ),
+        },
+
+        {
+          title: '保证金金额',
+          dataIndex: 'bond_money',
+        },
+      ];
+      this.setState({
+        mycolumns,
+      });
+    } else if (typename === '履约保证金退回') {
+      const mycolumns = [
+        {
+          title: '主题',
+          dataIndex: 'extend_two',
+          render: (_, record: any) => (
+            <Tooltip placement="topLeft" title={record.extend_two}>
+              <span>{record.extend_two}</span>
+            </Tooltip>
+          ),
+        },
+
+        {
+          title: '甲方单位',
+          dataIndex: 'party_a',
+        },
+        {
+          title: '退回金额',
+          dataIndex: 'return_money',
+        },
+      ];
+      this.setState({
+        mycolumns,
+      });
+    } else if (typename === '劳务分包保证金收入') {
+      const mycolumns = [
+        {
+          title: '主题',
+          dataIndex: 'extend_five',
+          render: (_, record: any) => (
+            <Tooltip placement="topLeft" title={record.extend_five}>
+              <span>{record.extend_five}</span>
+            </Tooltip>
+          ),
+        },
+
+        {
+          title: '劳务分包单位',
+          dataIndex: 'unit',
+        },
+        {
+          title: '保证金金额',
+          dataIndex: 'bond_money',
+        },
+      ];
+      this.setState({
+        mycolumns,
+      });
+    } else if (typename === '专业分包保证金收入') {
+      const mycolumns = [
+        {
+          title: '主题',
+          dataIndex: 'extend_five',
+          render: (_, record: any) => (
+            <Tooltip placement="topLeft" title={record.extend_five}>
+              <span>{record.extend_five}</span>
+            </Tooltip>
+          ),
+        },
+
+        {
+          title: '分包单位t',
+          dataIndex: 't1',
+        },
+        {
+          title: '保证金金额',
+          dataIndex: 'bond_money',
+        },
+      ];
+      this.setState({
+        mycolumns,
       });
     }
+    // if (value && value != '暂无合同') {
+    const newvalue = this.state.allData;
+    newvalue.name = '';
+    newvalue.type = 0;
+    newvalue.page = 1;
+
+    this.setState({
+      allData: newvalue,
+      isModalVisible: true,
+    });
+    this.asyncSetFieldProps(newvalue);
+    // } else {
+    //   notification.open({
+    //     message: '请先选择合同',
+    //   });
+    // }
   },
 
   handleSave(row: DataType) {
@@ -666,7 +849,7 @@ const FormField: ISwapFormField = {
               };
             }}
             rowKey={record => record.id}
-            columns={mycolumns}
+            columns={this.state.mycolumns}
             dataSource={this.state.listData}
             loading={this.state.loading}
             pagination={false}

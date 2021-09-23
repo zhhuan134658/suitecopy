@@ -94,8 +94,6 @@ const FormField: IFormField = {
       dtar = '租赁合同-' + item.name;
     } else if (this.state.detdate === 'c1') {
       dtar = '机械费结算-' + item.name;
-    } else if (this.state.detdate === 'd1') {
-      dtar = '材料入库-' + item.name;
     }
     console.log(dtar);
     form.setFieldValue('Conname', item.contract_name);
@@ -165,29 +163,62 @@ const FormField: IFormField = {
             } else if (index === 2) {
               this.setState({ detdate: 'c1' });
               newpage.rk_id = ['c'];
-            } else if (index === 3) {
-              this.setState({ detdate: 'd1' });
-              newpage.rk_id = ['d'];
             }
             this.setState({
               allData: newpage,
             });
             this.asyncSetFieldProps(newpage);
           }}
-        ></Tabs>
-        <List>
-          {this.state.listData.map((item, index) => {
-            return (
-              <List.Item
-                onClick={this.habdlClick.bind(this, item)}
-                key={index}
-                multipleLine
-              >
-                {item.name}
-              </List.Item>
-            );
-          })}
-        </List>
+        >
+          <div>
+            {' '}
+            <List>
+              {this.state.listData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.habdlClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/ {item.supplier}/ {item.reply_money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+          <div>
+            {' '}
+            <List>
+              {this.state.listData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.habdlClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/ {item.supplier}/ {item.contract_money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+          <div>
+            {' '}
+            <List>
+              {this.state.listData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.habdlClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/ {item.extend_first}/ {item.detailed_money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+        </Tabs>
       </div>
     );
     //详情

@@ -42,18 +42,21 @@ const SwapDemoSuite: ISwapDemoSuite = {
       }
     });
     //监听项目类型
+    const SelectHeField = form.getFieldInstance('SelectHe');
 
     form.onFieldExtendValueChange('RadioField', extendValue => {
       console.log('sdasdasdsads11111111', extendValue);
-
+      console.log(SelectHeField);
       if (
         extendValue.label == '投标保证金支出' ||
         extendValue.label == '投标保证金退回'
       ) {
+        SelectHeField.hide();
         const newdate = { isProject: '' };
         newdate.isProject = '2';
         this.asyncSetFieldProps(newdate, 'Selectbaopro');
       } else {
+        SelectHeField.show();
         const newdate = { isProject: '' };
         newdate.isProject = '1';
         this.asyncSetFieldProps(newdate, 'Selectbaopro');

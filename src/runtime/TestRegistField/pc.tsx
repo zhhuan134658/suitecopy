@@ -64,9 +64,9 @@ const { Column } = Table;
 import { FormInstance } from 'antd/lib/form';
 
 import './pc.less';
-const mycolumns = [
+const mycolumnsa = [
   {
-    title: '名称',
+    title: '结算名称',
     dataIndex: 'name',
     render: (_, record: any) => (
       <Tooltip placement="topLeft" title={record.name}>
@@ -75,20 +75,78 @@ const mycolumns = [
     ),
   },
   {
-    title: '项目名称',
-    dataIndex: 'project_name',
+    title: '租赁单位',
+    dataIndex: 'supplier',
     render: (_, record: any) => (
-      <Tooltip placement="topLeft" title={record.project_name}>
-        <span>{record.project_name}</span>
+      <Tooltip placement="topLeft" title={record.supplier}>
+        <span>{record.supplier}</span>
       </Tooltip>
     ),
   },
   {
-    title: '金额',
+    title: '结算金额（取结算中的批复金额）',
     dataIndex: 'reply_money',
     render: (_, record: any) => (
       <Tooltip placement="topLeft" title={record.reply_money}>
         <span>{record.reply_money}</span>
+      </Tooltip>
+    ),
+  },
+];
+const mycolumnsb = [
+  {
+    title: '合同名称',
+    dataIndex: 'name',
+    render: (_, record: any) => (
+      <Tooltip placement="topLeft" title={record.name}>
+        <span>{record.name}</span>
+      </Tooltip>
+    ),
+  },
+  {
+    title: '租赁单位',
+    dataIndex: 'supplier',
+    render: (_, record: any) => (
+      <Tooltip placement="topLeft" title={record.supplier}>
+        <span>{record.supplier}</span>
+      </Tooltip>
+    ),
+  },
+  {
+    title: '合同金额',
+    dataIndex: 'contract_money',
+    render: (_, record: any) => (
+      <Tooltip placement="topLeft" title={record.contract_money}>
+        <span>{record.contract_money}</span>
+      </Tooltip>
+    ),
+  },
+];
+const mycolumnsc = [
+  {
+    title: '结算名称',
+    dataIndex: 'name',
+    render: (_, record: any) => (
+      <Tooltip placement="topLeft" title={record.name}>
+        <span>{record.name}</span>
+      </Tooltip>
+    ),
+  },
+  {
+    title: '租赁单位',
+    dataIndex: 'extend_first',
+    render: (_, record: any) => (
+      <Tooltip placement="topLeft" title={record.extend_first}>
+        <span>{record.extend_first}</span>
+      </Tooltip>
+    ),
+  },
+  {
+    title: '结算金额',
+    dataIndex: 'detailed_money',
+    render: (_, record: any) => (
+      <Tooltip placement="topLeft" title={record.detailed_money}>
+        <span>{record.detailed_money}</span>
       </Tooltip>
     ),
   },
@@ -282,9 +340,7 @@ const FormField: ISwapFormField = {
       isModalVisible: false,
       listData: [],
 
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -710,12 +766,12 @@ const FormField: ISwapFormField = {
             readOnly
             value={this.state.detailname}
             onClick={this.handleAdd}
-            placeholder="请选择合同"
+            placeholder="请选择"
           />
         </div>
 
         <Modal
-          title="选择合同"
+          title="选择"
           width={1000}
           visible={this.state.isModalVisible}
           footer={[
@@ -734,37 +790,91 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancel}
         >
           <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
-            <TabPane tab="租赁合同" key="b"></TabPane>
-            <TabPane tab="租赁结算" key="a"></TabPane>
-
-            <TabPane tab="机械费结算 " key="c"></TabPane>
+            <TabPane tab="租赁合同" key="b">
+              <Search
+                placeholder="请输入"
+                allowClear
+                enterButton="搜索"
+                size="large"
+                onSearch={this.onSearch}
+              />
+              <Table
+                scroll={{ x: '1500px' }}
+                rowSelection={{
+                  type: 'radio',
+                  ...rowSelection,
+                }}
+                rowKey={record => record.id}
+                columns={mycolumnsb}
+                dataSource={this.state.listData}
+                loading={this.state.loading}
+                pagination={false}
+              ></Table>
+              <Pagination
+                defaultCurrent={1}
+                total={this.state.total2}
+                hideOnSinglePage={true}
+                className="pagination"
+                onChange={this.onChangepage}
+              />
+            </TabPane>
+            <TabPane tab="租赁结算" key="a">
+              <Search
+                placeholder="请输入"
+                allowClear
+                enterButton="搜索"
+                size="large"
+                onSearch={this.onSearch}
+              />
+              <Table
+                scroll={{ x: '1500px' }}
+                rowSelection={{
+                  type: 'radio',
+                  ...rowSelection,
+                }}
+                rowKey={record => record.id}
+                columns={mycolumnsa}
+                dataSource={this.state.listData}
+                loading={this.state.loading}
+                pagination={false}
+              ></Table>
+              <Pagination
+                defaultCurrent={1}
+                total={this.state.total2}
+                hideOnSinglePage={true}
+                className="pagination"
+                onChange={this.onChangepage}
+              />
+            </TabPane>
+            <TabPane tab="机械费结算" key="c">
+              <Search
+                placeholder="请输入"
+                allowClear
+                enterButton="搜索"
+                size="large"
+                onSearch={this.onSearch}
+              />
+              <Table
+                scroll={{ x: '1500px' }}
+                rowSelection={{
+                  type: 'radio',
+                  ...rowSelection,
+                }}
+                rowKey={record => record.id}
+                columns={mycolumnsc}
+                dataSource={this.state.listData}
+                loading={this.state.loading}
+                pagination={false}
+              ></Table>
+              <Pagination
+                defaultCurrent={1}
+                total={this.state.total2}
+                hideOnSinglePage={true}
+                className="pagination"
+                onChange={this.onChangepage}
+              />
+            </TabPane>
           </Tabs>
-          <Search
-            placeholder="请输入"
-            allowClear
-            enterButton="搜索"
-            size="large"
-            onSearch={this.onSearch}
-          />
-          <Table
-            scroll={{ x: '1500px' }}
-            rowSelection={{
-              type: 'radio',
-              ...rowSelection,
-            }}
-            rowKey={record => record.id}
-            columns={mycolumns}
-            dataSource={this.state.listData}
-            loading={this.state.loading}
-            pagination={false}
-          ></Table>
-          <Pagination
-            defaultCurrent={1}
-            total={this.state.total2}
-            hideOnSinglePage={true}
-            className="pagination"
-            onChange={this.onChangepage}
-          />
         </Modal>
       </div>
     );
