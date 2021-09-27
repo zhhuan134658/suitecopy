@@ -358,6 +358,18 @@ const FormField: ISwapFormField = {
   onGenderChange1(value, key) {
     console.log(key);
   },
+  onSearchcd(value) {
+    console.log(value);
+    const newvalue = this.state.allData;
+    newvalue.name = value;
+
+    newvalue.page = 1;
+
+    this.setState({
+      allData: newvalue,
+    });
+    this.asyncSetFieldProps(newvalue);
+  },
   onSearch(value) {
     console.log(value);
     const newvalue = this.state.allData;
@@ -486,7 +498,7 @@ const FormField: ISwapFormField = {
   handleSave(row: DataType, values) {
     const { form } = this.props;
     const newData = [...this.state.dataSource];
-   const reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
+    const reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
@@ -1489,7 +1501,7 @@ const FormField: ISwapFormField = {
                   allowClear
                   enterButton="搜索"
                   size="large"
-                  onSearch={this.onSearch}
+                  onSearch={this.onSearchcd}
                 />
                 <Button onClick={this.newAdd} size="large" type="primary">
                   新增

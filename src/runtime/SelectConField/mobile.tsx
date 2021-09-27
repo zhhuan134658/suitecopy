@@ -85,8 +85,10 @@ const FormField: IFormField = {
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('Conmoney', item.money);
       form.setExtendFieldValue('Conmoney', item.money);
-      form.setFieldProp('Selectjia', 'value', item.party_a);
+
       form.setFieldValue('Selectjia', item.party_a);
+      //   form.setFieldValue('Selectjia', item.party_a);
+
       form.setExtendFieldValue('Selectjia', item.party_a);
       form.setFieldValue('SelectCon', item.name);
       form.setExtendFieldValue('SelectCon', {
