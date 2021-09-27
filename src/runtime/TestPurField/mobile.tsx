@@ -289,42 +289,130 @@ const FormField: IFormField = {
     console.log(types, index, e, this);
     let arr = this.state.materialList;
     console.log('120', this.state.materialList);
-
+    const reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
     let arrindex = e;
     let newindex = index;
     let newtype = types;
     arr[newindex][newtype] = arrindex;
-    //计算
+
+    switch (newtype) {
+      case 'extend_first':
+        if (
+          arr[newindex].extend_first != '' &&
+          reg.test(arr[newindex].tax_rate)
+        ) {
+          //   含税单价
+          arr[newindex].refer_price = (
+            arr[newindex].extend_first *
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        }
+        break;
+      case 'refer_price':
+        if (arr[newindex].refer_price && reg.test(arr[newindex].tax_rate)) {
+          //   bu含税单价
+
+          arr[newindex].extend_first = (
+            arr[newindex].refer_price /
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        }
+        if (arr[newindex].refer_price && arr[newindex].need_quantity) {
+          (arr[newindex].tax_money =
+            arr[newindex].refer_price * arr[newindex].need_quantity).toFixed(2);
+        }
+
+        //不含税金额
+        if (
+          arr[newindex].refer_price &&
+          arr[newindex].need_quantity &&
+          reg.test(arr[newindex].tax_rate)
+        ) {
+          arr[newindex].notax_money = (
+            (arr[newindex].refer_price * arr[newindex].need_quantity) /
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+          arr[newindex].notax_price = (
+            ((arr[newindex].refer_price * arr[newindex].need_quantity) /
+              (1 + arr[newindex].tax_rate * 0.01)) *
+            arr[newindex].tax_rate *
+            0.01
+          ).toFixed(2);
+        }
+
+        break;
+      case 'tax_rate':
+        if (arr[newindex].extend_first && !arr[newindex].refer_price) {
+          arr[newindex].refer_price = (
+            arr[newindex].extend_first *
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (!arr[newindex].extend_first && arr[newindex].refer_price) {
+          arr[newindex].extend_first = (
+            arr[newindex].refer_price /
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (arr[newindex].extend_first && arr[newindex].refer_price) {
+          arr[newindex].refer_price = (
+            arr[newindex].extend_first *
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        }
+        if (
+          arr[newindex].extend_first &&
+          arr[newindex].need_quantity &&
+          reg.test(arr[newindex].tax_rate)
+        ) {
+          arr[newindex].notax_price = (
+            arr[newindex].extend_first *
+            arr[newindex].need_quantity *
+            arr[newindex].tax_rate *
+            0.01
+          ).toFixed(2);
+          arr[newindex].tax_money = (
+            arr[newindex].extend_first *
+            arr[newindex].need_quantity *
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        }
+
+        break;
+      default:
+        break;
+    }
+
     //税额
-    if (
-      arr[newindex].extend_first &&
-      arr[newindex].need_quantity &&
-      arr[newindex].tax_rate
-    ) {
-      arr[index].notax_price = (
-        arr[newindex].extend_first *
-        arr[newindex].need_quantity *
-        arr[newindex].tax_rate *
-        0.01
-      ).toFixed(2);
-    }
-    //   不含税
-    if (arr[newindex].extend_first && arr[newindex].need_quantity) {
-      arr[index].notax_money = (
-        arr[newindex].extend_first * arr[newindex].need_quantity
-      ).toFixed(2);
-    }
-    //含税
-    if (
-      arr[newindex].extend_first &&
-      arr[newindex].need_quantity &&
-      arr[newindex].tax_rate
-    ) {
-      arr[index].tax_money = (
-        arr[newindex].extend_first *
-        arr[newindex].need_quantity *
-        (1 + arr[newindex].tax_rate * 0.01)
-      ).toFixed(2);
+    if (newtype != 'refer_price') {
+      if (
+        arr[newindex].extend_first &&
+        arr[newindex].need_quantity &&
+        reg.test(arr[newindex].tax_rate)
+      ) {
+        arr[newindex].notax_price = (
+          arr[newindex].extend_first *
+          arr[newindex].need_quantity *
+          arr[newindex].tax_rate *
+          0.01
+        ).toFixed(2);
+      }
+      //   不含税
+      if (arr[newindex].extend_first && arr[newindex].need_quantity) {
+        arr[newindex].notax_money = (
+          arr[newindex].extend_first * arr[newindex].need_quantity
+        ).toFixed(2);
+      }
+      //含税
+      if (
+        arr[newindex].extend_first &&
+        arr[newindex].need_quantity &&
+        reg.test(arr[newindex].tax_rate)
+      ) {
+        arr[newindex].tax_money = (
+          arr[newindex].extend_first *
+          arr[newindex].need_quantity *
+          (1 + arr[newindex].tax_rate * 0.01)
+        ).toFixed(2);
+      }
     }
     //   含税金额
     let newarr2 = [];
@@ -868,17 +956,16 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
-                                          editable={false}
                                           clear
                                           value={item.refer_price}
-                                          placeholder="自动计算"
-                                          //   onChange={e =>
-                                          //     this.onInputchange(
-                                          //       'extend_first',
-                                          //       index,
-                                          //       e,
-                                          //     )
-                                          //   }
+                                          placeholder="请输入"
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'refer_price',
+                                              index,
+                                              e,
+                                            )
+                                          }
                                         ></InputItem>
                                       </div>
                                     </div>
