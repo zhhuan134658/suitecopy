@@ -119,7 +119,7 @@ const mycolumnsc = [
     dataIndex: 'supplier',
   },
   {
-    title: '订单金额（取含税金额合计）',
+    title: '订单金额',
     dataIndex: 'tax_total_money',
   },
 ];

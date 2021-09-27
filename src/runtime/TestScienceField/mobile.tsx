@@ -54,9 +54,7 @@ const FormField: IFormField = {
         },
       ],
       treevalue: undefined,
-      treeData: [
-       
-      ],
+      treeData: [],
       date: now,
       checkindex: '',
       SearchBarvalue: '',

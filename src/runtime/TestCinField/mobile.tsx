@@ -48,6 +48,10 @@ const FormField: IFormField = {
         },
         {
           title: '不含税单价(元)',
+          dataIndex: 'extend_first',
+        },
+        {
+          title: '含税单价(元)',
           dataIndex: 'tax_price',
         },
         {
@@ -90,7 +94,7 @@ const FormField: IFormField = {
           size: '',
           unit: '',
           rk_number: '',
-          tax_price: '',
+          extend_first: '',
           tax_rate: '',
           notax_price: '',
           tax_money: '',
@@ -103,7 +107,7 @@ const FormField: IFormField = {
         size: '',
         unit: '',
         rk_number: '',
-        tax_price: '',
+        extend_first: '',
         tax_rate: '',
         notax_price: '',
         tax_money: '',
@@ -305,33 +309,41 @@ const FormField: IFormField = {
     arr[newindex][newtype] = arrindex;
 
     //计算
+      if (types == '') { }
+      if (arr[newindex].extend_first && arr[newindex].tax_rate) {
+        //   含税单价
+        arr[newindex].tax_price = (
+          arr[newindex].extend_first *
+          (1 + arr[newindex].tax_rate * 0.01)
+        ).toFixed(2);
+      }
     //税额
     if (
-      arr[newindex].tax_price &&
+      arr[newindex].extend_first &&
       arr[newindex].rk_number &&
       arr[newindex].tax_rate
     ) {
       arr[index].notax_price = (
-        arr[newindex].tax_price *
+        arr[newindex].extend_first *
         arr[newindex].rk_number *
         arr[newindex].tax_rate *
         0.01
       ).toFixed(2);
     }
     //   不含税
-    if (arr[newindex].tax_price && arr[newindex].rk_number) {
+    if (arr[newindex].extend_first && arr[newindex].rk_number) {
       arr[index].notax_money = (
-        arr[newindex].tax_price * arr[newindex].rk_number
+        arr[newindex].extend_first * arr[newindex].rk_number
       ).toFixed(2);
     }
     //含税
     if (
-      arr[newindex].tax_price &&
+      arr[newindex].extend_first &&
       arr[newindex].rk_number &&
       arr[newindex].tax_rate
     ) {
       arr[index].tax_money = (
-        arr[newindex].tax_price *
+        arr[newindex].extend_first *
         arr[newindex].rk_number *
         (1 + arr[newindex].tax_rate * 0.01)
       ).toFixed(2);
@@ -645,7 +657,7 @@ const FormField: IFormField = {
               <div className="m-field m-field-mobile m-select-field">
                 <div className="m-field-head">
                   <div className="m-field-label">
-                    <span>{label}</span>
+                    <span style={{ color: 'red' }}>{label}</span>
                   </div>
                 </div>
                 <div className="m-field-box">
@@ -875,15 +887,49 @@ const FormField: IFormField = {
                                       <div className="input-wrapper">
                                         <InputItem
                                           clear
-                                          value={item.tax_price}
+                                          value={item.extend_first}
                                           placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
-                                              'tax_price',
+                                              'extend_first',
                                               index,
                                               e,
                                             )
                                           }
+                                        ></InputItem>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>含税单价(元)</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          clear
+                                          editable={false}
+                                          value={item.tax_price}
+                                          placeholder="自动计算"
+                                          //   onChange={e =>
+                                          //     this.onInputchange(
+                                          //       'extend_first',
+                                          //       index,
+                                          //       e,
+                                          //     )
+                                          //   }
                                         ></InputItem>
                                       </div>
                                     </div>
@@ -907,7 +953,6 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
-                                          clear
                                           value={item.tax_rate}
                                           placeholder="请输入"
                                           onChange={e =>

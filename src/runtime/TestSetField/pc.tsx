@@ -41,7 +41,7 @@ import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
 import { Layout } from 'antd';
-
+import { QuestionCircleOutlined } from '@ant-design/icons';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
@@ -100,7 +100,7 @@ const mycolumnsb = [
     dataIndex: 'supplier',
   },
   {
-    title: '订单金额（取含税金额合计',
+    title: '订单金额',
     dataIndex: 'tax_total_money',
   },
 ];
@@ -142,10 +142,10 @@ const mycolumnstree = [
     title: '单位',
     dataIndex: 'unit',
   },
-  {
-    title: '不含税单价(元)',
-    dataIndex: 'refer_price',
-  },
+  //   {
+  //     title: '不含税单价(元)',
+  //     dataIndex: 'extend_first',
+  //   },
   {
     title: '规格型号',
     dataIndex: 'size',
@@ -226,7 +226,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
     try {
       const values = await form.validateFields();
       toggleEdit(); //onchange事件 输入一次失去焦点
-      handleSave({ ...record, ...values });
+      handleSave({ ...record, ...values }, values);
     } catch (errInfo) {
       console.log('11Save failed:', errInfo);
     }
@@ -299,9 +299,10 @@ const EditableCell: React.FC<EditableCellProps> = ({
 type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
+  [x: string]: number;
   id: any;
   need_quantity: any;
-  refer_price: any;
+  extend_first: any;
   tax_rate: any;
   tax_money: any;
   key: React.Key;
@@ -519,52 +520,115 @@ const FormField: ISwapFormField = {
       isModalVisibletree: true,
     });
   },
-  handleSave(row: DataType) {
+  handleSave(row: DataType, values) {
     const { form } = this.props;
     const newData = [...this.state.dataSource];
-
+    const reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
     //计算
+    switch (Object.keys(values)[0]) {
+      case 'extend_first':
+        if (row.extend_first != '' && reg.test(row.tax_rate)) {
+          //   含税单价
+          newData[index].refer_price = (
+            row.extend_first *
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
+        }
+        break;
+      case 'refer_price':
+        console.log('4567');
+        if (row.refer_price && reg.test(row.tax_rate)) {
+          //   bu含税单价
+
+          newData[index].extend_first = (
+            row.refer_price /
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
+        }
+        if (row.refer_price && row.need_quantity) {
+          (newData[index].tax_money =
+            row.refer_price * row.need_quantity).toFixed(2);
+        }
+
+        //不含税金额
+        if (row.refer_price && row.need_quantity && reg.test(row.tax_rate)) {
+          newData[index].notax_money = (
+            (row.refer_price * row.need_quantity) /
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
+          newData[index].notax_price = (
+            ((row.refer_price * row.need_quantity) /
+              (1 + row.tax_rate * 0.01)) *
+            row.tax_rate *
+            0.01
+          ).toFixed(2);
+        }
+
+        break;
+      case 'tax_rate':
+        if (row.extend_first && !row.refer_price) {
+          newData[index].refer_price = (
+            row.extend_first *
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (!row.extend_first && row.refer_price) {
+          newData[index].extend_first = (
+            row.refer_price /
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (row.extend_first && row.refer_price) {
+          newData[index].refer_price = (
+            row.extend_first *
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
+        }
+        if (row.extend_first && row.need_quantity && reg.test(row.tax_rate)) {
+          newData[index].notax_price = (
+            row.extend_first *
+            row.need_quantity *
+            row.tax_rate *
+            0.01
+          ).toFixed(2);
+          newData[index].tax_money = (
+            row.extend_first *
+            row.need_quantity *
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
+        }
+
+        break;
+      default:
+        break;
+    }
+
     //税额
-    if (row.refer_price && row.need_quantity && row.tax_rate) {
-      newData[index].notax_price = (
-        row.refer_price *
-        row.need_quantity *
-        row.tax_rate *
-        0.01
-      ).toFixed(2);
+    if (Object.keys(values)[0] != 'refer_price') {
+      if (row.extend_first && row.need_quantity && reg.test(row.tax_rate)) {
+        newData[index].notax_price = (
+          row.extend_first *
+          row.need_quantity *
+          row.tax_rate *
+          0.01
+        ).toFixed(2);
+      }
+      //   不含税
+      if (row.extend_first && row.need_quantity) {
+        newData[index].notax_money = (
+          row.extend_first * row.need_quantity
+        ).toFixed(2);
+      }
+      //含税
+      if (row.extend_first && row.need_quantity && reg.test(row.tax_rate)) {
+        newData[index].tax_money = (
+          row.extend_first *
+          row.need_quantity *
+          (1 + row.tax_rate * 0.01)
+        ).toFixed(2);
+      }
     }
-    //   不含税
-    if (row.refer_price && row.need_quantity) {
-      newData[index].notax_money = (
-        row.refer_price * row.need_quantity
-      ).toFixed(2);
-    }
-    //含税
-    if (row.refer_price && row.need_quantity && row.tax_rate) {
-      newData[index].tax_money = (
-        row.refer_price *
-        row.need_quantity *
-        (1 + row.tax_rate * 0.01)
-      ).toFixed(2);
-    }
-    // if (row.need_quantity) {
-    //   newData[index].tax_money = row.need_quantity * row.refer_price;
-    // }
-    // if (row.tax_rate) {
-    //   newData[index].notax_price = (
-    //     row.tax_money *
-    //     row.tax_rate *
-    //     0.01
-    //   ).toFixed(2);
-    //   newData[index].notax_money = (
-    //     row.tax_money *
-    //     (100 - row.tax_rate) *
-    //     0.01
-    //   ).toFixed(2);
-    // }
 
     this.setState({
       dataSource: newData,
@@ -892,6 +956,15 @@ const FormField: ISwapFormField = {
       },
       {
         title: '不含税单价(元)',
+        dataIndex: 'extend_first',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.extend_first}>
+            <span>{record.extend_first}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '含税单价(元)',
         dataIndex: 'refer_price',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.refer_price}>
@@ -977,6 +1050,32 @@ const FormField: ISwapFormField = {
       },
       {
         title: '不含税单价(元)',
+        dataIndex: 'extend_first',
+        editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.extend_first}>
+            <span>{record.extend_first}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        // title: '含税单价(元)',
+        title: (
+          <div>
+            含税单价(元)
+            <Tooltip
+              placement="top"
+              title={
+                <div>
+                  <span>含税单价=不含税单价*（1+税率）</span>
+                </div>
+              }
+            >
+              　<QuestionCircleOutlined />　
+              {/* <a-icon type="info-circle" /> */}
+            </Tooltip>
+          </div>
+        ),
         dataIndex: 'refer_price',
         editable: true,
         render: (_, record: any) => (

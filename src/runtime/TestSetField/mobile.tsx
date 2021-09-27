@@ -48,6 +48,10 @@ const FormField: IFormField = {
         },
         {
           title: '不含税单价(元)',
+          dataIndex: 'extend_first',
+        },
+        {
+          title: '含税单价(元)',
           dataIndex: 'refer_price',
         },
         {
@@ -90,7 +94,7 @@ const FormField: IFormField = {
           size: '',
           unit: '',
           need_quantity: '',
-          refer_price: '',
+          extend_first: '',
           tax_rate: '',
           notax_price: '',
           tax_money: '',
@@ -259,7 +263,7 @@ const FormField: IFormField = {
       size: '',
       unit: '',
       need_quantity: '',
-      refer_price: '',
+      extend_first: '',
       tax_rate: '',
       notax_price: '',
       tax_money: '',
@@ -305,31 +309,31 @@ const FormField: IFormField = {
     //计算
     //税额
     if (
-      arr[newindex].refer_price &&
+      arr[newindex].extend_first &&
       arr[newindex].need_quantity &&
       arr[newindex].tax_rate
     ) {
       arr[index].notax_price = (
-        arr[newindex].refer_price *
+        arr[newindex].extend_first *
         arr[newindex].need_quantity *
         arr[newindex].tax_rate *
         0.01
       ).toFixed(2);
     }
     //   不含税
-    if (arr[newindex].refer_price && arr[newindex].need_quantity) {
+    if (arr[newindex].extend_first && arr[newindex].need_quantity) {
       arr[index].notax_money = (
-        arr[newindex].refer_price * arr[newindex].need_quantity
+        arr[newindex].extend_first * arr[newindex].need_quantity
       ).toFixed(2);
     }
     //含税
     if (
-      arr[newindex].refer_price &&
+      arr[newindex].extend_first &&
       arr[newindex].need_quantity &&
       arr[newindex].tax_rate
     ) {
       arr[index].tax_money = (
-        arr[newindex].refer_price *
+        arr[newindex].extend_first *
         arr[newindex].need_quantity *
         (1 + arr[newindex].tax_rate * 0.01)
       ).toFixed(2);
@@ -866,15 +870,49 @@ const FormField: IFormField = {
                                       <div className="input-wrapper">
                                         <InputItem
                                           clear
-                                          value={item.refer_price}
+                                          value={item.extend_first}
                                           placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
-                                              'refer_price',
+                                              'extend_first',
                                               index,
                                               e,
                                             )
                                           }
+                                        ></InputItem>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>含税单价(元)</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          editable={false}
+                                          clear
+                                          value={item.refer_price}
+                                          placeholder="自动计算"
+                                          //   onChange={e =>
+                                          //     this.onInputchange(
+                                          //       'extend_first',
+                                          //       index,
+                                          //       e,
+                                          //     )
+                                          //   }
                                         ></InputItem>
                                       </div>
                                     </div>
