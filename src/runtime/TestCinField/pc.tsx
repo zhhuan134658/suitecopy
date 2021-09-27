@@ -537,6 +537,11 @@ const FormField: ISwapFormField = {
     newData.splice(index, 1, { ...item, ...row });
     console.log('123', row, Object.keys(values));
     //计算
+    if (row.tax_rate == '') {
+      return this.setState({
+        dataSource: newData,
+      });
+    }
     switch (Object.keys(values)[0]) {
       case 'extend_first':
         if (row.extend_first != '' && reg.test(row.tax_rate)) {

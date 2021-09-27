@@ -268,10 +268,10 @@ interface DataType {
   extend_first: any;
   tax_rate: any;
   tax_money: any;
-  key: React.Key;
-  name: string;
-  size: string;
-  type: string;
+  //   key: React.Key;
+  //   name: string;
+  //   size: string;
+  //   type: string;
 }
 
 interface EditableTableState {
@@ -360,7 +360,12 @@ const FormField: ISwapFormField = {
   },
   onSearchcd(value) {
     console.log(value);
-    const newvalue = this.state.allData;
+    const newvalue = {
+      rk_id: ['-1'],
+      number: '10',
+      page: 1,
+      name: value,
+    };
     newvalue.name = value;
 
     newvalue.page = 1;
@@ -503,6 +508,11 @@ const FormField: ISwapFormField = {
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
     //计算
+    if (row.tax_rate == '') {
+      return this.setState({
+        dataSource: newData,
+      });
+    }
     switch (Object.keys(values)[0]) {
       case 'extend_first':
         if (row.extend_first != '' && reg.test(row.tax_rate)) {

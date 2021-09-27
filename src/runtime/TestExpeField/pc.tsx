@@ -218,6 +218,7 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const FormField: ISwapFormField = {
   getInitialState() {
     return {
+      newopin: [],
       maxnum: 0,
       Optionlist: [],
       petty_sele: '否',
@@ -323,6 +324,24 @@ const FormField: ISwapFormField = {
     // this.setState({
     //   loading: true,
     // });
+  },
+  onMouseEnter() {
+    console.log('1234567890987654321234567');
+    const { form } = this.props;
+    const Pro_name = form.getFieldValue('Autopro');
+    if (!Pro_name) {
+      return notification.open({
+        duration: 2,
+        message: '请先选择项目',
+      });
+    }
+    const newopin = [
+      { name: '是', id: '1' },
+      { name: '否', id: '2' },
+    ];
+    this.setState({
+      newopin: newopin,
+    });
   },
   handleChange(value) {
     console.log(`selected ${value}`);
@@ -927,21 +946,27 @@ const FormField: ISwapFormField = {
             />
           </div>
           <div>
-            {Pro_name ? (
-              <div>
-                <div className="label" style={{ marginTop: '10px' }}>
-                  备用金抵扣
-                </div>
-                <Select
-                  defaultValue="2"
-                  style={{ width: 200 }}
-                  onChange={this.handleChange}
-                >
-                  <Option value="1">是</Option>
-                  <Option value="2">否</Option>
-                </Select>
+            {/* {Pro_name ? ( */}
+            <div>
+              <div className="label" style={{ marginTop: '10px' }}>
+                备用金抵扣
               </div>
-            ) : null}
+              <Select
+                defaultValue="否"
+                style={{ width: 200 }}
+                onFocus={this.onMouseEnter}
+                onChange={this.handleChange}
+              >
+                {this.state.newopin.map(item => (
+                  <Select.Option key={item.id} value={item.id}>
+                    {item.name}
+                  </Select.Option>
+                ))}
+                {/* <Option value="1">是</Option>
+                <Option value="2">否</Option> */}
+              </Select>
+            </div>
+            {/* ) : null} */}
           </div>
           <div>
             {this.state.isShow ? (

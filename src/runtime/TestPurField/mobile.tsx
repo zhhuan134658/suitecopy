@@ -294,7 +294,11 @@ const FormField: IFormField = {
     let newindex = index;
     let newtype = types;
     arr[newindex][newtype] = arrindex;
-
+    if (arr[newindex].tax_rate == '') {
+      return this.setState({
+        materialList: [...arr],
+      });
+    }
     switch (newtype) {
       case 'extend_first':
         if (
