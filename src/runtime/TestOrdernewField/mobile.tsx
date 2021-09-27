@@ -30,7 +30,7 @@ const FormField: IFormField = {
     return {
       deColumns: [
         {
-          title: '产品名称',
+          title: '物资名称',
           dataIndex: 'name',
         },
         {
@@ -42,11 +42,15 @@ const FormField: IFormField = {
           dataIndex: 'size',
         },
         {
-          title: '发货数量',
+          title: '数量',
           dataIndex: 'rk_number',
         },
         {
           title: '不含税单价(元)',
+          dataIndex: 'extend_first',
+        },
+        {
+          title: '含税单价(元)',
           dataIndex: 'tax_price',
         },
         {
@@ -88,7 +92,7 @@ const FormField: IFormField = {
           size: '',
           unit: '',
           rk_number: '',
-          tax_price: '',
+          extend_first: '',
           tax_rate: '',
           notax_price: '',
           tax_money: '',
@@ -251,7 +255,7 @@ const FormField: IFormField = {
       size: '',
       unit: '',
       rk_number: '',
-      tax_price: '',
+      extend_first: '',
       tax_rate: '',
       notax_price: '',
       tax_money: '',
@@ -274,69 +278,136 @@ const FormField: IFormField = {
     console.log(types, index, e, this);
     let arr = this.state.materialList;
     console.log('120', this.state.materialList);
-
+    const reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
     let arrindex = e;
     let newindex = index;
     let newtype = types;
 
     arr[newindex][newtype] = arrindex;
-    //   计算
-    //   税额
-    if (
-      arr[newindex].rk_number &&
-      arr[newindex].tax_rate &&
-      arr[newindex].tax_price
-    ) {
-      arr[index].notax_price = (
-        arr[newindex].rk_number *
-        arr[newindex].tax_rate *
-        arr[newindex].tax_price *
-        0.01
-      ).toFixed(2);
-    } else {
-      arr[index].notax_price = 0;
+    if (arr[newindex].tax_rate == '') {
+      return this.setState({
+        materialList: [...arr],
+      });
     }
-    //不含税金额
-    if (arr[newindex].rk_number && arr[newindex].tax_rate) {
-      arr[index].notax_money = (
-        arr[newindex].rk_number * arr[newindex].tax_price
-      ).toFixed(2);
-    } else {
-      arr[index].notax_money = 0;
-    }
-    //   含税金额
-    if (
-      arr[newindex].rk_number &&
-      arr[newindex].tax_rate &&
-      arr[newindex].rk_number &&
-      arr[newindex].tax_rate &&
-      arr[newindex].tax_price
-    ) {
-      arr[index].tax_money = (
-        arr[newindex].rk_number *
-        arr[newindex].tax_price *
-        (1 + arr[newindex].tax_rate * 0.01)
-      ).toFixed(2);
+    switch (newtype) {
+      case 'extend_first':
+        if (
+          arr[newindex].extend_first != '' &&
+          reg.test(arr[newindex].tax_rate)
+        ) {
+          //   含税单价
+          arr[newindex].tax_price = (
+            arr[newindex].extend_first *
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        }
+        break;
+      case 'tax_price':
+        if (arr[newindex].tax_price && reg.test(arr[newindex].tax_rate)) {
+          //   bu含税单价
+
+          arr[newindex].extend_first = (
+            arr[newindex].tax_price /
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        }
+        if (arr[newindex].tax_price && arr[newindex].rk_number) {
+          (arr[newindex].tax_money =
+            arr[newindex].tax_price * arr[newindex].rk_number).toFixed(2);
+        }
+
+        //不含税金额
+        if (
+          arr[newindex].tax_price &&
+          arr[newindex].rk_number &&
+          reg.test(arr[newindex].tax_rate)
+        ) {
+          arr[newindex].notax_money = (
+            (arr[newindex].tax_price * arr[newindex].rk_number) /
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+          arr[newindex].notax_price = (
+            ((arr[newindex].tax_price * arr[newindex].rk_number) /
+              (1 + arr[newindex].tax_rate * 0.01)) *
+            arr[newindex].tax_rate *
+            0.01
+          ).toFixed(2);
+        }
+
+        break;
+      case 'tax_rate':
+        if (arr[newindex].extend_first && !arr[newindex].tax_price) {
+          arr[newindex].tax_price = (
+            arr[newindex].extend_first *
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (!arr[newindex].extend_first && arr[newindex].tax_price) {
+          arr[newindex].extend_first = (
+            arr[newindex].tax_price /
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (arr[newindex].extend_first && arr[newindex].tax_price) {
+          arr[newindex].tax_price = (
+            arr[newindex].extend_first *
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        }
+        if (
+          arr[newindex].extend_first &&
+          arr[newindex].rk_number &&
+          reg.test(arr[newindex].tax_rate)
+        ) {
+          arr[newindex].notax_price = (
+            arr[newindex].extend_first *
+            arr[newindex].rk_number *
+            arr[newindex].tax_rate *
+            0.01
+          ).toFixed(2);
+          arr[newindex].tax_money = (
+            arr[newindex].extend_first *
+            arr[newindex].rk_number *
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        }
+
+        break;
+      default:
+        break;
     }
 
-    if (
-      arr[newindex].rk_number &&
-      arr[newindex].tax_price &&
-      arr[newindex].tax_rate
-    ) {
-      arr[newindex].notax_price =
-        (arr[newindex].rk_number *
-          arr[newindex].tax_price *
-          arr[newindex].tax_rate) /
-        100;
+    //税额
+    if (newtype != 'tax_price') {
+      if (
+        arr[newindex].extend_first &&
+        arr[newindex].rk_number &&
+        reg.test(arr[newindex].tax_rate)
+      ) {
+        arr[newindex].notax_price = (
+          arr[newindex].extend_first *
+          arr[newindex].rk_number *
+          arr[newindex].tax_rate *
+          0.01
+        ).toFixed(2);
+      }
+      //   不含税
+      if (arr[newindex].extend_first && arr[newindex].rk_number) {
+        arr[newindex].notax_money = (
+          arr[newindex].extend_first * arr[newindex].rk_number
+        ).toFixed(2);
+      }
+      //含税
+      if (
+        arr[newindex].extend_first &&
+        arr[newindex].rk_number &&
+        reg.test(arr[newindex].tax_rate)
+      ) {
+        arr[newindex].tax_money = (
+          arr[newindex].extend_first *
+          arr[newindex].rk_number *
+          (1 + arr[newindex].tax_rate * 0.01)
+        ).toFixed(2);
+      }
     }
-    if (arr[newindex].rk_number && arr[newindex].tax_price) {
-      arr[newindex].tax_money =
-        arr[newindex].rk_number * arr[newindex].tax_price;
-    }
-    arr[newindex].notax_money =
-      arr[newindex].tax_money - arr[newindex].notax_price;
-
     //   含税金额
     let newarr2 = [];
 
@@ -553,7 +624,7 @@ const FormField: IFormField = {
     }
     return (
       <div className="field-wrapper">
-        {/* <div className="field-wrapper">
+        <div className="field-wrapper">
           <div className="m-group m-group-mobile">
             <div className="m-field-wrapper">
               <div className="m-field m-field-mobile m-select-field">
@@ -578,7 +649,7 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
-        </div> */}
+        </div>
         <div className="tablefield-mobile">
           <div className="table-body  tbody  ">
             {this.state.materialList.map((item, index) => {
@@ -655,7 +726,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>产品名称</span>
+                                      <span>物资名称</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -749,7 +820,7 @@ const FormField: IFormField = {
                                 <div className="m-field m-field-mobile m-select-field">
                                   <div className="m-field-head">
                                     <div className="m-field-label">
-                                      <span>发货数量</span>
+                                      <span>数量</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">
@@ -782,6 +853,39 @@ const FormField: IFormField = {
                                   <div className="m-field-head">
                                     <div className="m-field-label">
                                       <span>不含税单价(元)</span>
+                                    </div>
+                                  </div>
+                                  <div className="m-field-box">
+                                    <div className="m-field-content left">
+                                      <div className="input-wrapper">
+                                        <InputItem
+                                          clear
+                                          value={item.extend_first}
+                                          placeholder="请输入"
+                                          onChange={e =>
+                                            this.onInputchange(
+                                              'extend_first',
+                                              index,
+                                              e,
+                                            )
+                                          }
+                                        ></InputItem>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          <div className="field-wrapper">
+                            <div className="m-group m-group-mobile">
+                              <div className="m-field-wrapper">
+                                <div className="m-field m-field-mobile m-select-field">
+                                  <div className="m-field-head">
+                                    <div className="m-field-label">
+                                      <span>含税单价(元)</span>
                                     </div>
                                   </div>
                                   <div className="m-field-box">

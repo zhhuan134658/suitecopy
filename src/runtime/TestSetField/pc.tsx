@@ -305,10 +305,10 @@ interface DataType {
   extend_first: any;
   tax_rate: any;
   tax_money: any;
-  key: React.Key;
-  name: string;
-  size: string;
-  type: string;
+//   key: React.Key;
+//   name: string;
+//   size: string;
+//   type: string;
 }
 
 interface EditableTableState {
