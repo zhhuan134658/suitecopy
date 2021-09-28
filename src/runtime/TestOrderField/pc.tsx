@@ -1239,7 +1239,7 @@ const FormField: ISwapFormField = {
 
         this.setState({
           currentSelectData: newData,
-          currentSelectDataid: newDataid,
+          //   currentSelectDataid: newDataid,
         });
         this.setState({ selectedRowKeys });
       },
@@ -1265,13 +1265,14 @@ const FormField: ISwapFormField = {
             return item.id;
           });
         }
-        console.log('======' + JSON.stringify(newDataid));
+        console.log('====111==' + JSON.stringify(newDataid));
         if (this.state.detdate === 'a1') {
           dtar = newData[0].name;
         }
 
         this.setState({
           detailname: dtar,
+          currentSelectDataid: newDataid,
         });
         this.setState({ selectedRowKeys });
       },
