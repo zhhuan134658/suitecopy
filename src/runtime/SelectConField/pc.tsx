@@ -438,11 +438,10 @@ const FormField: ISwapFormField = {
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('Conmoney', record.money);
       form.setExtendFieldValue('Conmoney', record.money);
-    //   form.setFieldProp('Selectjia', 'value', record.party_a);
+      //   form.setFieldProp('Selectjia', 'value', record.party_a);
       form.setFieldValue('Selectjia', record.party_a);
-        form.setExtendFieldValue('Selectjia', record.party_a);
-        
-        
+      form.setExtendFieldValue('Selectjia', record.party_a);
+
       form.setFieldValue('SelectCon', record.name);
       form.setExtendFieldValue('SelectCon', {
         data: record.name,
@@ -606,7 +605,7 @@ const FormField: ISwapFormField = {
 
     return (
       <div className="pc-custom-field-wrap">
-        <div className="label" style={{ color: 'red' }}>
+        <div className="label">
           {required ? (
             <span style={{ color: '#ea6d5c' }}>*</span>
           ) : (

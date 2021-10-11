@@ -770,7 +770,7 @@ const FormField: ISwapFormField = {
           return (
             <DatePicker
               format="YYYY-MM-DD"
-              value={text !== '' ? moment(text) : ''}
+              placeholder="请选择日期"
               onChange={this.timeChange.bind(this, record, index, 'riqi')}
             />
           );

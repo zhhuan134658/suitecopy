@@ -264,7 +264,7 @@ const FormField: IFormField = {
         editData.nomoney = this.state.Inputmoney2;
       }
 
-      editData.detailedData = this.state.dataSource;
+      editData.detailedData = this.state.materialList;
       editData.petty_sele = this.state.petty_sele;
       editData.Numbervalue1 = this.state.Numbervalue1;
       editData.Numbervalue2 = this.state.Numbervalue2;

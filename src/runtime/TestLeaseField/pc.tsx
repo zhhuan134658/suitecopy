@@ -698,7 +698,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.size}>
@@ -758,7 +758,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '规格',
+        title: '规格型号',
         dataIndex: 'size',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.size}>
@@ -766,6 +766,7 @@ const FormField: ISwapFormField = {
           </Tooltip>
         ),
       },
+      //     value={text !== '' ? moment(text) : ''}
       {
         title: '计划进场日期',
         dataIndex: 'plan_in_riqi',
@@ -775,7 +776,7 @@ const FormField: ISwapFormField = {
           return (
             <DatePicker
               format="YYYY-MM-DD"
-              value={text !== '' ? moment(text) : ''}
+              placeholder="请选择日期"
               onChange={this.timeChange.bind(
                 this,
                 record,
@@ -795,7 +796,7 @@ const FormField: ISwapFormField = {
           return (
             <DatePicker
               format="YYYY-MM-DD"
-              value={text !== '' ? moment(text) : ''}
+              placeholder="请选择日期"
               onChange={this.timeChange.bind(
                 this,
                 record,

@@ -810,7 +810,7 @@ const FormField: ISwapFormField = {
           });
 
           this.setState({
-            Inputmoney1: eval(newarr2.join('+')),
+            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
           });
           // 不含税金额合计;
 
@@ -826,7 +826,7 @@ const FormField: ISwapFormField = {
           });
 
           this.setState({
-            Inputmoney2: eval(newarr4.join('+')),
+            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
           });
         } else if (dstatus === '1') {
           this.setState({

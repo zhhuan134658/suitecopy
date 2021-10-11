@@ -278,9 +278,7 @@ const FormField: ISwapFormField = {
       isModalVisible: false,
       listData: [],
 
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -411,16 +409,22 @@ const FormField: ISwapFormField = {
   handleSave(row: DataType) {
     const { form } = this.props;
     const newData = [...this.state.dataSource];
-
+    const reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
-    if (row.price && row.oil_consump) {
-      newData[index].total_price = row.price * row.oil_consump;
-    } else {
-      newData[index].total_price = '请输入';
-    }
+    // if (row.price && .oil_consump) {
+    // newData[index].total_price = Number(row.price) * Number(row.oil_consump);
 
+    // }
+    // else {
+    //   newData[index].total_price = '自动计算';
+    // }
+    if (reg.test(row.price) && reg.test(row.oil_consump)) {
+      newData[index].total_price = Number(row.price) * Number(row.oil_consump);
+    } else {
+      newData[index].total_price = '自动计算';
+    }
     this.setState({
       dataSource: newData,
     });

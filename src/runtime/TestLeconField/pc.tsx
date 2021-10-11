@@ -282,9 +282,7 @@ const FormField: ISwapFormField = {
       isModalVisible: false,
       listData: [],
 
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -798,7 +796,7 @@ const FormField: ISwapFormField = {
           return (
             <DatePicker
               format="YYYY-MM-DD"
-              value={text !== '' ? moment(text) : ''}
+              placeholder="请选择日期"
               onChange={this.timeChange.bind(
                 this,
                 record,
@@ -818,7 +816,7 @@ const FormField: ISwapFormField = {
           return (
             <DatePicker
               format="YYYY-MM-DD"
-              value={text !== '' ? moment(text) : ''}
+              placeholder="请选择日期"
               onChange={this.timeChange.bind(
                 this,
                 record,
