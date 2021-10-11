@@ -663,6 +663,20 @@ const FormField: ISwapFormField = {
     });
     this.setState({ selectedRowKeys: [] });
   },
+  dupRemoval(arr) {
+    //arr是传入的数组
+    var nn = [...arr];
+    let obj = {};
+    let peon = nn.reduce((cur, next) => {
+      //根据 属性scac + 属性disPlayName 判断去重
+      obj[next.name + next.unit + next.size]
+        ? ''
+        : (obj[next.name + next.unit + next.size] = true && cur.push(next));
+      return cur;
+    }, []); //设置cur默认类型为数组，并且初始值为空的数组
+    console.log(peon);
+    return peon;
+  },
   unique(arr) {
     const res = new Map();
     return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
@@ -670,20 +684,20 @@ const FormField: ISwapFormField = {
   fieldDidUpdate() {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
-    //   let editData = {
-    //     hanmoney: '',
-    //     nomoney: '',
-    //     detailname: '',
-    //     detailedData: [], //物资明细
-    //   };
-    //   if (this.state.Inputmoney1) {
-    //     editData.hanmoney = this.state.Inputmoney1;
-    //   }
-    //   if (this.state.Inputmoney2) {
-    //     editData.nomoney = this.state.Inputmoney2;
-    //   }
-    //   editData.detailname = this.state.detailname;
-    //   editData.detailedData = this.state.dataSource;
+      //   let editData = {
+      //     hanmoney: '',
+      //     nomoney: '',
+      //     detailname: '',
+      //     detailedData: [], //物资明细
+      //   };
+      //   if (this.state.Inputmoney1) {
+      //     editData.hanmoney = this.state.Inputmoney1;
+      //   }
+      //   if (this.state.Inputmoney2) {
+      //     editData.nomoney = this.state.Inputmoney2;
+      //   }
+      //   editData.detailname = this.state.detailname;
+      //   editData.detailedData = this.state.dataSource;
       const { form } = this.props;
       form.setFieldValue('SelecTicke', this.state.detailname);
       form.setExtendFieldValue('SelecTicke', {

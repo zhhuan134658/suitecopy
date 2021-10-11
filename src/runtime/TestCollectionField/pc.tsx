@@ -264,9 +264,7 @@ const FormField: ISwapFormField = {
       isModalVisible: false,
       listData: [],
 
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -454,6 +452,20 @@ const FormField: ISwapFormField = {
     this.setState({ dataSource: lData });
     this.setState({ isModalVisible: false });
     this.setState({ selectedRowKeys: [] });
+  },
+  dupRemoval(arr) {
+    //arr是传入的数组
+    var nn = [...arr];
+    let obj = {};
+    let peon = nn.reduce((cur, next) => {
+      //根据 属性scac + 属性disPlayName 判断去重
+      obj[next.name + next.unit + next.size]
+        ? ''
+        : (obj[next.name + next.unit + next.size] = true && cur.push(next));
+      return cur;
+    }, []); //设置cur默认类型为数组，并且初始值为空的数组
+    console.log(peon);
+    return peon;
   },
   unique(arr) {
     const res = new Map();
