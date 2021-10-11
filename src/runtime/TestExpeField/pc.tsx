@@ -531,10 +531,10 @@ const FormField: ISwapFormField = {
     if (number1 > number2) {
       if (val > this.state.Inputmoney1) {
         const aa = this.state.Inputmoney1;
-        const bb = aa - this.state.maxnum;
+        const bb = Number(aa) - Number(this.state.maxnum);
         this.setState({
           Numbervalue2: this.state.Inputmoney1,
-          Numbervalue5: bb,
+          Numbervalue5: bb.toFixed(2),
         });
       } else {
         const aa = this.state.Inputmoney1;
@@ -863,7 +863,7 @@ const FormField: ISwapFormField = {
           <div className="label">报销合计</div>
           <div style={{ marginTop: '10px' }}>{hanmoney}</div>
           <div style={{ marginTop: '10px' }} className="label">
-            物资明细
+            报销明细
           </div>
           {/* <div>
             {detailedData.map(item => {
@@ -1015,7 +1015,6 @@ const FormField: ISwapFormField = {
                   style={{ width: 200 }}
                   value={this.state.Numbervalue5}
                 />
-                ·
               </div>
             ) : null}
           </div>

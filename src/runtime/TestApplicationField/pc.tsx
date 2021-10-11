@@ -895,8 +895,8 @@ const FormField: ISwapFormField = {
         title: '规格型号',
         dataIndex: 'size',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.name}>
-            <span>{record.name}</span>
+          <Tooltip placement="topLeft" title={record.size}>
+            <span>{record.size}</span>
           </Tooltip>
         ),
       },

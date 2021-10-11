@@ -1115,6 +1115,30 @@
     },
     {
       "componentName": "TextField",
+      "bizAlias": "LabourField",
+      "props": {
+        "placeholder": "请输入",
+        "label": "合同名称1"
+      }
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "SubconField",
+      "props": {
+        "placeholder": "请输入",
+        "label": "合同名称2"
+      }
+    },
+    {
+      "componentName": "TextField",
+      "bizAlias": "RegistField",
+      "props": {
+        "placeholder": "请输入",
+        "label": "合同名称3"
+      }
+    },
+    {
+      "componentName": "TextField",
       "bizAlias": "TextFieldone",
       "props": {
         "placeholder": "请输入",

@@ -904,10 +904,12 @@ const FormField: ISwapFormField = {
           dtar = '分包完工结算-' + newData[0].name;
         } else if (this.state.detdate === 'c1') {
           dtar = '分包质保金结算-' + newData[0].name;
+        } else if (this.state.detdate === 'd1') {
+          dtar = '分包合同-' + newData[0].name;
         }
         //Selectjia;
         const { form } = this.props;
-
+        form.setFieldValue('SubconField', newData[0].contract_name);
         if (newData[0].supplier) {
           form.setFieldValue('Selectjia', newData[0].sub_unit);
         }
@@ -972,6 +974,7 @@ const FormField: ISwapFormField = {
             <TabPane tab="分包进度款结算" key="a"></TabPane>
             <TabPane tab="分包完工结算" key="b"></TabPane>
             <TabPane tab="分包质保金结算 " key="c"></TabPane>
+            <TabPane tab="分包合同 " key="d"></TabPane>
           </Tabs>
 
           <Search

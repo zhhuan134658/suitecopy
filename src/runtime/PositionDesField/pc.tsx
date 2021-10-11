@@ -191,7 +191,7 @@ const FormField: ISwapFormField = {
           ) : (
             <span style={{ color: '#fff' }}>*</span>
           )}{' '}
-          位置
+          {label}
         </div>
 
         <div>

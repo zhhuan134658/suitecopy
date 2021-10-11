@@ -95,10 +95,10 @@ const FormField: IFormField = {
     } else if (this.state.detdate === 'c1') {
       dtar = '分包质保金结算-' + item.name;
     } else if (this.state.detdate === 'd1') {
-      dtar = '材料入库-' + item.name;
+      dtar = '分包合同-' + item.name;
     }
     console.log(dtar);
-    form.setFieldValue('Conname', item.contract_name);
+    form.setFieldValue('SubconField', item.contract_name);
     this.setState({ inputvalue: dtar, showElem: 'none' });
     form.setFieldValue('TestSubcon', dtar);
     form.setExtendFieldValue('TestSubcon', {
@@ -130,6 +130,7 @@ const FormField: IFormField = {
       { title: '分包进度款结算' },
       { title: '分包完工结算' },
       { title: '分包质保金结算' },
+      { title: '分包合同' },
     ];
 
     const sidebar = (

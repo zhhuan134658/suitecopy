@@ -96,9 +96,13 @@ const FormField: IFormField = {
       dtar = '劳务完工结算-' + item.name;
     } else if (this.state.detdate === 'c1') {
       dtar = '劳务质保金结算-' + item.name;
+    } else if (this.state.detdate === 'd1') {
+      dtar = '零星劳务结算-' + item.name;
+    } else if (this.state.detdate === 'e1') {
+      dtar = '劳务合同-' + item.name;
     }
-    console.log(dtar);
-    form.setFieldValue('Conname', item.contract_name);
+    console.log(dtar);  
+    form.setFieldValue('LabourField', item.contract_name);
     this.setState({ inputvalue: dtar, showElem: 'none' });
     form.setFieldValue('TestLabour', dtar);
     form.setExtendFieldValue('TestLabour', {
@@ -130,6 +134,8 @@ const FormField: IFormField = {
       { title: '劳务进度款结算' },
       { title: '劳务完工结算' },
       { title: '劳务质保金结算' },
+      { title: '零星劳务结算' },
+      { title: '劳务合同' },
     ];
 
     const sidebar = (

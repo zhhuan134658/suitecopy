@@ -63,10 +63,21 @@ const SwapDemoSuite: ISwapDemoSuite = {
       }
     });
     form.onFieldExtendValueChange('Autoprobei', extendValue => {
-      console.log('sdasdasdsads11111111', extendValue);
+      console.log('sdasdasdsads111112222111', extendValue);
       const newdate = { project_name: '' };
-      newdate.project_name = extendValue.label;
-      this.asyncSetFieldProps(newdate, 'Autoprobei');
+      try {
+        newdate.project_name = extendValue.label;
+        this.asyncSetFieldProps(newdate, 'Autoprobei');
+        console.log('sdasdasdsads11111244442111', extendValue);
+      } catch (e) {
+        form.setFieldValue('Ljjiemoney', '');
+        form.setFieldValue('Ljhuanmoney', '');
+        form.setFieldValue('Beimoneyyu', '');
+        console.log('343');
+      }
+
+      //   newdate.project_name = extendValue.label;
+      //   this.asyncSetFieldProps(newdate, 'Autoprobei');
     });
   },
   // 关联选项

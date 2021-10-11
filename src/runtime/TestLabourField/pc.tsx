@@ -273,9 +273,7 @@ const FormField: ISwapFormField = {
       isModalVisibletree: false,
       listData: [],
 
-      treeData: [
-       
-      ],
+      treeData: [],
       pagination: {
         current: 1,
         pageSize: 10,
@@ -826,12 +824,16 @@ const FormField: ISwapFormField = {
           dtar = '劳务完工结算-' + newData[0].name;
         } else if (this.state.detdate === 'c1') {
           dtar = '劳务质保金结算-' + newData[0].name;
+        } else if (this.state.detdate === 'd1') {
+          dtar = '零星劳务结算 -' + newData[0].name;
+        } else if (this.state.detdate === 'e1') {
+          dtar = '劳务合同-' + newData[0].name;
         }
 
         const { form } = this.props;
 
         form.setFieldValue('Selectjia', newData[0].team);
-
+        form.setFieldValue('LabourField', newData[0].contract_name);
         this.setState({
           currentSelectData: newData,
           currentSelectDataid: newDataid,
@@ -892,7 +894,9 @@ const FormField: ISwapFormField = {
           <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
             <TabPane tab="劳务进度款结算" key="a"></TabPane>
             <TabPane tab="劳务完工结算" key="b"></TabPane>
-            <TabPane tab="劳务质保金结算 " key="c"></TabPane>
+            <TabPane tab="劳务质保金结算" key="c"></TabPane>
+            <TabPane tab="零星劳务结算" key="d"></TabPane>
+            <TabPane tab="劳务合同" key="e"></TabPane>
           </Tabs>
 
           <Search

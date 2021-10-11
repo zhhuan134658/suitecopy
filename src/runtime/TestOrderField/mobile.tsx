@@ -510,7 +510,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}/ {item.supplier}/ {item.contract_money}
+                {item.name}/{item.unit}/{item.size}
               </List.Item>
             );
           })}
@@ -536,7 +536,8 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}/{item.unit}/{item.size}
+                {' '}
+                {item.name}/ {item.supplier}/ {item.contract_money}
               </List.Item>
             );
           })}

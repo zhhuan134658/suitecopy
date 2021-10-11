@@ -55,9 +55,7 @@ const FormField: IFormField = {
       checkData: [],
       chenkdata: '',
       treevalue: undefined,
-      treeData: [
-        
-      ],
+      treeData: [],
       date: now,
       checkindex: '',
       SearchBarvalue: '',
@@ -175,7 +173,7 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem2: 'inherit', checkindex: index });
   },
-    habdlClick(item: { name: any; size: any; unit: any;ku_cun: any  }) {
+  habdlClick(item: { name: any; size: any; unit: any; ku_cun: any }) {
     const { form } = this.props;
     console.log(item);
     let arr = this.state.materialList;
@@ -333,7 +331,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}
+                {item.name}/{item.unit}/{item.size}
               </List.Item>
             );
           })}
@@ -359,7 +357,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}/{item.unit}/{item.size}
+                {item.name}
               </List.Item>
             );
           })}

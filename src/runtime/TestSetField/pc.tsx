@@ -305,10 +305,10 @@ interface DataType {
   extend_first: any;
   tax_rate: any;
   tax_money: any;
-//   key: React.Key;
-//   name: string;
-//   size: string;
-//   type: string;
+  //   key: React.Key;
+  //   name: string;
+  //   size: string;
+  //   type: string;
 }
 
 interface EditableTableState {
@@ -490,6 +490,7 @@ const FormField: ISwapFormField = {
       page: 1,
       name: '',
     };
+
     this.setState({
       allData: newpage,
     });
@@ -1228,7 +1229,7 @@ const FormField: ISwapFormField = {
         } else if (this.state.detdate === 'c1') {
           dtar = '材料入库-' + newData[0].name;
         }
-
+        form.setFieldValue('Conname', newData[0].contract_name);
         this.setState({
           currentSelectData: newData,
           currentSelectDataid: newDataid,

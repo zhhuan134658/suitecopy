@@ -222,6 +222,7 @@ const FormField: IFormField = {
     });
   },
   checkClick(item) {
+    const { form } = this.props;
     const cDataid = [item.id];
     const newdate = this.state.allData;
     let dtar = '';
@@ -234,6 +235,7 @@ const FormField: IFormField = {
     } else if (this.state.detdate === 'd1') {
       dtar = '质保金结算-' + item.name;
     }
+    form.setFieldValue('Conname', item.contract_name);
     newdate.rk_id = [this.state.detdate, ...cDataid];
     this.asyncSetFieldProps(newdate, 1);
     this.setState({

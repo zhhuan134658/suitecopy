@@ -722,6 +722,7 @@ const FormField: ISwapFormField = {
         } else if (this.state.detdate === 'c1') {
           dtar = '机械费结算-' + newData[0].name;
         }
+        form.setFieldValue('RegistField', newData[0].contract_name);
         console.log('======' + JSON.stringify(newData));
         this.setState({ currentSelectData: newData, detailname: dtar });
 

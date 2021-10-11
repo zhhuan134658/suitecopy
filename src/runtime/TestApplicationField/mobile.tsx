@@ -361,7 +361,7 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}
+                {item.name}/{item.unit}/{item.size}
               </List.Item>
             );
           })}

@@ -96,7 +96,7 @@ const FormField: IFormField = {
       dtar = '机械费结算-' + item.name;
     }
     console.log(dtar);
-    form.setFieldValue('Conname', item.contract_name);
+    form.setFieldValue('RegistField', item.contract_name);
     this.setState({ inputvalue: dtar, showElem: 'none' });
     form.setFieldValue('TestRegist', dtar);
     form.setExtendFieldValue('TestRegist', {
