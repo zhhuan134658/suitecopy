@@ -542,9 +542,7 @@ const FormField: ISwapFormField = {
           ).toFixed(2);
         }
         if (row.unit_price && row.det_quantity) {
-          newData[index].amount_tax = (
-            row.unit_price * row.det_quantity
-          ).toFixed(2);
+          newData[index].amount_tax = (row.unit_price * row.det_quantity).toFixed(2);
         }
 
         //不含税金额
@@ -633,9 +631,9 @@ const FormField: ISwapFormField = {
       }
       //   不含税
       if (row.no_unit_price && row.det_quantity) {
-        newData[index].no_amount_tax = (
-          row.no_unit_price * row.det_quantity
-        ).toFixed(2);
+        newData[index].no_amount_tax = (row.no_unit_price * row.det_quantity).toFixed(
+          2,
+        );
       }
       //含税
       if (row.no_unit_price && row.det_quantity && reg.test(row.tax_rate)) {
