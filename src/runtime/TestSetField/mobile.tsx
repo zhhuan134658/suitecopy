@@ -44,15 +44,15 @@ const FormField: IFormField = {
         },
         {
           title: '数量',
-          dataIndex: 'need_quantity',
+          dataIndex: 'det_quantity',
         },
         {
           title: '不含税单价(元)',
-          dataIndex: 'extend_first',
+          dataIndex: 'no_unit_price',
         },
         {
           title: '含税单价(元)',
-          dataIndex: 'refer_price',
+          dataIndex: 'unit_price',
         },
         {
           title: '税率(%)',
@@ -61,15 +61,15 @@ const FormField: IFormField = {
 
         {
           title: '税额(元)',
-          dataIndex: 'notax_price',
+          dataIndex: 'tax_amount',
         },
         {
           title: '含税金额(元)',
-          dataIndex: 'tax_money',
+          dataIndex: 'amount_tax',
         },
         {
           title: '不含税金额(元)',
-          dataIndex: 'notax_money',
+          dataIndex: 'no_amount_tax',
         },
       ],
       Inputmoney1: '',
@@ -93,12 +93,12 @@ const FormField: IFormField = {
           name: '',
           size: '',
           unit: '',
-          need_quantity: '',
-          extend_first: '',
+          det_quantity: '',
+          no_unit_price: '',
           tax_rate: '',
-          notax_price: '',
-          tax_money: '',
-          notax_money: '',
+          tax_amount: '',
+          amount_tax: '',
+          no_amount_tax: '',
         },
       ],
     };
@@ -264,12 +264,12 @@ const FormField: IFormField = {
       name: '',
       size: '',
       unit: '',
-      need_quantity: '',
-      extend_first: '',
+      det_quantity: '',
+      no_unit_price: '',
       tax_rate: '',
-      notax_price: '',
-      tax_money: '',
-      notax_money: '',
+      tax_amount: '',
+      amount_tax: '',
+      no_amount_tax: '',
     };
     this.setState({
       materialList: [...this.state.materialList, sonData],
@@ -278,17 +278,17 @@ const FormField: IFormField = {
   //删除明细
   deleteItem(index, item) {
     let list = this.state.materialList;
-    if (item.tax_money) {
+    if (item.amount_tax) {
       const newvalue = this.state.Inputmoney1;
       this.setState({
-        Inputmoney1: (newvalue - item.tax_money).toFixed(2),
+        Inputmoney1: (newvalue - item.amount_tax).toFixed(2),
       });
       console.log('ssks');
     }
-    if (item.notax_money) {
+    if (item.no_amount_tax) {
       const newvalue2 = this.state.Inputmoney2;
       this.setState({
-        Inputmoney2: (newvalue2 - item.notax_money).toFixed(2),
+        Inputmoney2: (newvalue2 - item.no_amount_tax).toFixed(2),
       });
       console.log('ssks');
     }
@@ -314,62 +314,62 @@ const FormField: IFormField = {
       });
     }
     switch (newtype) {
-      case 'extend_first':
+      case 'no_unit_price':
         if (
-          arr[newindex].extend_first != '' &&
+          arr[newindex].no_unit_price != '' &&
           reg.test(arr[newindex].tax_rate)
         ) {
           //   含税单价
-          arr[newindex].refer_price = (
-            arr[newindex].extend_first *
+          arr[newindex].unit_price = (
+            arr[newindex].no_unit_price *
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
         } else if (
-          arr[newindex].extend_first == null &&
+          arr[newindex].no_unit_price == null &&
           reg.test(arr[newindex].tax_rate) &&
-          arr[newindex].refer_price
+          arr[newindex].unit_price
         ) {
-          arr[newindex].extend_first = (
-            arr[newindex].refer_price /
+          arr[newindex].no_unit_price = (
+            arr[newindex].unit_price /
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
         }
         break;
-      case 'refer_price':
-        if (arr[newindex].refer_price && reg.test(arr[newindex].tax_rate)) {
+      case 'unit_price':
+        if (arr[newindex].unit_price && reg.test(arr[newindex].tax_rate)) {
           //   bu含税单价
 
-          arr[newindex].extend_first = (
-            arr[newindex].refer_price /
+          arr[newindex].no_unit_price = (
+            arr[newindex].unit_price /
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
         } else if (
-          arr[newindex].refer_price == null &&
-          reg.test(arr[newindex].extend_first) &&
+          arr[newindex].unit_price == null &&
+          reg.test(arr[newindex].no_unit_price) &&
           arr[newindex].tax_rate
         ) {
-          arr[newindex].refer_price = (
-            arr[newindex].extend_first *
+          arr[newindex].unit_price = (
+            arr[newindex].no_unit_price *
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
         }
-        if (arr[newindex].refer_price && arr[newindex].need_quantity) {
-          (arr[newindex].tax_money =
-            arr[newindex].refer_price * arr[newindex].need_quantity).toFixed(2);
+        if (arr[newindex].unit_price && arr[newindex].det_quantity) {
+          (arr[newindex].amount_tax =
+            arr[newindex].unit_price * arr[newindex].det_quantity).toFixed(2);
         }
 
         //不含税金额
         if (
-          arr[newindex].refer_price &&
-          arr[newindex].need_quantity &&
+          arr[newindex].unit_price &&
+          arr[newindex].det_quantity &&
           reg.test(arr[newindex].tax_rate)
         ) {
-          arr[newindex].notax_money = (
-            (arr[newindex].refer_price * arr[newindex].need_quantity) /
+          arr[newindex].no_amount_tax = (
+            (arr[newindex].unit_price * arr[newindex].det_quantity) /
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
-          arr[newindex].notax_price = (
-            ((arr[newindex].refer_price * arr[newindex].need_quantity) /
+          arr[newindex].tax_amount = (
+            ((arr[newindex].unit_price * arr[newindex].det_quantity) /
               (1 + arr[newindex].tax_rate * 0.01)) *
             arr[newindex].tax_rate *
             0.01
@@ -378,36 +378,36 @@ const FormField: IFormField = {
 
         break;
       case 'tax_rate':
-        if (arr[newindex].extend_first && !arr[newindex].refer_price) {
-          arr[newindex].refer_price = (
-            arr[newindex].extend_first *
+        if (arr[newindex].no_unit_price && !arr[newindex].unit_price) {
+          arr[newindex].unit_price = (
+            arr[newindex].no_unit_price *
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
-        } else if (!arr[newindex].extend_first && arr[newindex].refer_price) {
-          arr[newindex].extend_first = (
-            arr[newindex].refer_price /
+        } else if (!arr[newindex].no_unit_price && arr[newindex].unit_price) {
+          arr[newindex].no_unit_price = (
+            arr[newindex].unit_price /
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
-        } else if (arr[newindex].extend_first && arr[newindex].refer_price) {
-          arr[newindex].refer_price = (
-            arr[newindex].extend_first *
+        } else if (arr[newindex].no_unit_price && arr[newindex].unit_price) {
+          arr[newindex].unit_price = (
+            arr[newindex].no_unit_price *
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
         }
         if (
-          arr[newindex].extend_first &&
-          arr[newindex].need_quantity &&
+          arr[newindex].no_unit_price &&
+          arr[newindex].det_quantity &&
           reg.test(arr[newindex].tax_rate)
         ) {
-          arr[newindex].notax_price = (
-            arr[newindex].extend_first *
-            arr[newindex].need_quantity *
+          arr[newindex].tax_amount = (
+            arr[newindex].no_unit_price *
+            arr[newindex].det_quantity *
             arr[newindex].tax_rate *
             0.01
           ).toFixed(2);
-          arr[newindex].tax_money = (
-            arr[newindex].extend_first *
-            arr[newindex].need_quantity *
+          arr[newindex].amount_tax = (
+            arr[newindex].no_unit_price *
+            arr[newindex].det_quantity *
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
         }
@@ -418,34 +418,34 @@ const FormField: IFormField = {
     }
 
     //税额
-    if (newtype != 'refer_price') {
+    if (newtype != 'unit_price') {
       if (
-        arr[newindex].extend_first &&
-        arr[newindex].need_quantity &&
+        arr[newindex].no_unit_price &&
+        arr[newindex].det_quantity &&
         reg.test(arr[newindex].tax_rate)
       ) {
-        arr[newindex].notax_price = (
-          arr[newindex].extend_first *
-          arr[newindex].need_quantity *
+        arr[newindex].tax_amount = (
+          arr[newindex].no_unit_price *
+          arr[newindex].det_quantity *
           arr[newindex].tax_rate *
           0.01
         ).toFixed(2);
       }
       //   不含税
-      if (arr[newindex].extend_first && arr[newindex].need_quantity) {
-        arr[newindex].notax_money = (
-          arr[newindex].extend_first * arr[newindex].need_quantity
+      if (arr[newindex].no_unit_price && arr[newindex].det_quantity) {
+        arr[newindex].no_amount_tax = (
+          arr[newindex].no_unit_price * arr[newindex].det_quantity
         ).toFixed(2);
       }
       //含税
       if (
-        arr[newindex].extend_first &&
-        arr[newindex].need_quantity &&
+        arr[newindex].no_unit_price &&
+        arr[newindex].det_quantity &&
         reg.test(arr[newindex].tax_rate)
       ) {
-        arr[newindex].tax_money = (
-          arr[newindex].extend_first *
-          arr[newindex].need_quantity *
+        arr[newindex].amount_tax = (
+          arr[newindex].no_unit_price *
+          arr[newindex].det_quantity *
           (1 + arr[newindex].tax_rate * 0.01)
         ).toFixed(2);
       }
@@ -454,23 +454,23 @@ const FormField: IFormField = {
     let newarr2 = [];
 
     newarr2 = arr.filter(item => {
-      if (item.tax_money) {
+      if (item.amount_tax) {
         return item;
       }
     });
     newarr2 = newarr2.map(item => {
-      return item.tax_money;
+      return item.amount_tax;
     });
     //不含税金额
     let newarr4 = [];
 
     newarr4 = arr.filter(item => {
-      if (item.notax_money) {
+      if (item.no_amount_tax) {
         return item;
       }
     });
     newarr4 = newarr4.map(item => {
-      return item.notax_money;
+      return item.no_amount_tax;
     });
     this.setState({
       materialList: [...arr],
@@ -938,11 +938,11 @@ const FormField: IFormField = {
                                     <div className="m-field-content left">
                                       <div className="input-wrapper">
                                         <InputItem
-                                          value={item.need_quantity}
+                                          value={item.det_quantity}
                                           placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
-                                              'need_quantity',
+                                              'det_quantity',
                                               index,
                                               e,
                                             )
@@ -971,11 +971,11 @@ const FormField: IFormField = {
                                       <div className="input-wrapper">
                                         <InputItem
                                           clear
-                                          value={item.extend_first}
+                                          value={item.no_unit_price}
                                           placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
-                                              'extend_first',
+                                              'no_unit_price',
                                               index,
                                               e,
                                             )
@@ -1004,11 +1004,11 @@ const FormField: IFormField = {
                                       <div className="input-wrapper">
                                         <InputItem
                                           clear
-                                          value={item.refer_price}
+                                          value={item.unit_price}
                                           placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
-                                              'refer_price',
+                                              'unit_price',
                                               index,
                                               e,
                                             )
@@ -1071,7 +1071,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           editable={false}
                                           clear
-                                          value={item.notax_price}
+                                          value={item.tax_amount}
                                           placeholder="自动计算"
                                         ></InputItem>
                                       </div>
@@ -1098,7 +1098,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           editable={false}
                                           clear
-                                          value={item.notax_money}
+                                          value={item.no_amount_tax}
                                           placeholder="自动计算"
                                         ></InputItem>
                                       </div>
@@ -1125,7 +1125,7 @@ const FormField: IFormField = {
                                         <InputItem
                                           editable={false}
                                           clear
-                                          value={item.tax_money}
+                                          value={item.amount_tax}
                                           placeholder="自动计算"
                                         ></InputItem>
                                       </div>
