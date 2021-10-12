@@ -1116,7 +1116,7 @@ const FormField: ISwapFormField = {
     //详情
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
-      const { detailname = '', detailedData = [] } = value;
+      const { detailname = '', detailedData = [], hanmoney = '' } = value;
       return (
         <div className="field-wrapper">
           <div className="label"> {label}</div>
@@ -1134,6 +1134,8 @@ const FormField: ISwapFormField = {
               pagination={false}
             />
           </div>
+          <div className="合计"> {label}</div>
+          <div style={{ marginTop: '10px' }}>{hanmoney}</div>
         </div>
       );
     }

@@ -541,8 +541,8 @@ const FormField: ISwapFormField = {
           ).toFixed(2);
         }
         if (row.refer_price && row.need_quantity) {
-          (newData[index].tax_money =
-            row.refer_price * row.need_quantity).toFixed(2);
+         newData[index].tax_money =
+             (row.refer_price * row.need_quantity).toFixed(2);
         }
 
         //不含税金额

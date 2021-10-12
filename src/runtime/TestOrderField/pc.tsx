@@ -542,7 +542,7 @@ const FormField: ISwapFormField = {
           ).toFixed(2);
         }
         if (row.tax_price && row.rk_number) {
-          (newData[index].tax_money = row.tax_price * row.rk_number).toFixed(2);
+          newData[index].tax_money = (row.tax_price * row.rk_number).toFixed(2);
         }
 
         //不含税金额
