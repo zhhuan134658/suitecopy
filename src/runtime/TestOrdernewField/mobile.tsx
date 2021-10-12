@@ -300,6 +300,15 @@ const FormField: IFormField = {
             arr[newindex].extend_first *
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
+        } else if (
+          arr[newindex].extend_first == null &&
+          reg.test(arr[newindex].tax_rate) &&
+          arr[newindex].tax_price
+        ) {
+          arr[newindex].extend_first = (
+            arr[newindex].tax_price /
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
         }
         break;
       case 'tax_price':
@@ -308,6 +317,15 @@ const FormField: IFormField = {
 
           arr[newindex].extend_first = (
             arr[newindex].tax_price /
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (
+          arr[newindex].tax_price == null &&
+          reg.test(arr[newindex].extend_first) &&
+          arr[newindex].tax_rate
+        ) {
+          arr[newindex].tax_price = (
+            arr[newindex].extend_first *
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
         }

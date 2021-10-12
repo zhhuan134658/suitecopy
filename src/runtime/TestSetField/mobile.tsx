@@ -324,6 +324,15 @@ const FormField: IFormField = {
             arr[newindex].extend_first *
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
+        } else if (
+          arr[newindex].extend_first == null &&
+          reg.test(arr[newindex].tax_rate) &&
+          arr[newindex].refer_price
+        ) {
+          arr[newindex].extend_first = (
+            arr[newindex].refer_price /
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
         }
         break;
       case 'refer_price':
@@ -332,6 +341,15 @@ const FormField: IFormField = {
 
           arr[newindex].extend_first = (
             arr[newindex].refer_price /
+            (1 + arr[newindex].tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (
+          arr[newindex].refer_price == null &&
+          reg.test(arr[newindex].extend_first) &&
+          arr[newindex].tax_rate
+        ) {
+          arr[newindex].refer_price = (
+            arr[newindex].extend_first *
             (1 + arr[newindex].tax_rate * 0.01)
           ).toFixed(2);
         }

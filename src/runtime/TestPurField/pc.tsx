@@ -500,21 +500,43 @@ const FormField: ISwapFormField = {
     }
     switch (Object.keys(values)[0]) {
       case 'extend_first':
-        if (row.extend_first != '' && reg.test(row.tax_rate)) {
+        console.log('213145622421', row.extend_first);
+        if (reg.test(row.extend_first) && reg.test(row.tax_rate)) {
           //   含税单价
           newData[index].refer_price = (
             row.extend_first *
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
+        } else if (
+          row.extend_first == null &&
+          reg.test(row.tax_rate) &&
+          row.refer_price
+        ) {
+          newData[index].extend_first = (
+            row.refer_price /
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
         }
+        console.log('21314562242', newData[index].extend_first);
         break;
       case 'refer_price':
         console.log('4567');
-        if (row.refer_price && reg.test(row.tax_rate)) {
+        if (reg.test(row.refer_price) && reg.test(row.tax_rate)) {
           //   bu含税单价
 
           newData[index].extend_first = (
             row.refer_price /
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (
+          row.refer_price == null &&
+          reg.test(row.extend_first) &&
+          row.tax_rate
+        ) {
+          //   bu含税单价
+
+          newData[index].refer_price = (
+            row.extend_first *
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
         }

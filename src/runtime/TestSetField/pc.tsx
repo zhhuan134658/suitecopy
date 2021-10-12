@@ -527,10 +527,19 @@ const FormField: ISwapFormField = {
     }
     switch (Object.keys(values)[0]) {
       case 'extend_first':
-        if (row.extend_first != '' && reg.test(row.tax_rate)) {
+        if (reg.test(row.extend_first) && reg.test(row.tax_rate)) {
           //   含税单价
           newData[index].refer_price = (
             row.extend_first *
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (
+          row.extend_first == null &&
+          reg.test(row.tax_rate) &&
+          row.refer_price
+        ) {
+          newData[index].extend_first = (
+            row.refer_price /
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
         }
@@ -542,6 +551,15 @@ const FormField: ISwapFormField = {
 
           newData[index].extend_first = (
             row.refer_price /
+            (1 + row.tax_rate * 0.01)
+          ).toFixed(2);
+        } else if (
+          row.refer_price == null &&
+          reg.test(row.extend_first) &&
+          row.tax_rate
+        ) {
+          newData[index].refer_price = (
+            row.extend_first *
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
         }
