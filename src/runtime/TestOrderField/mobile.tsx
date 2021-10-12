@@ -432,8 +432,8 @@ const FormField: IFormField = {
     });
     this.setState({
       materialList: [...arr],
-      Inputmoney1: eval(newarr2.join('+')),
-      Inputmoney2: eval(newarr4.join('+')),
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
     console.log('12', arr);
   },

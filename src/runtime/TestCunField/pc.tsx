@@ -207,12 +207,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
       <Form.Item
         style={{ margin: 0 }}
         name={dataIndex}
-        rules={[
-          {
-            required: false,
-            message: `${title} 不能为空`,
-          },
-        ]}
+        
       >
         {/*    */}
         {/*   */}
@@ -506,7 +501,7 @@ const FormField: ISwapFormField = {
     });
 
     this.setState({
-      Inputmoney1: eval(newarr2.join('+')),
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
     // 不含税金额合计;
     const newarr3 = [...this.state.dataSource];
@@ -522,7 +517,7 @@ const FormField: ISwapFormField = {
     });
 
     this.setState({
-      Inputmoney2: eval(newarr4.join('+')),
+      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
 
     // if (this.state.Inputmoney2) {
@@ -540,7 +535,7 @@ const FormField: ISwapFormField = {
     //   });
     // });
 
-    console.log('sss', eval(newarr3.join('+')));
+    console.log('sss', eval(newarr3.join('+')).toFixed(2));
   },
 
   //   handleSave(row: DataType) {

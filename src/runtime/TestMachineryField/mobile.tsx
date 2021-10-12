@@ -268,7 +268,7 @@ const FormField: IFormField = {
     });
 
     this.setState({
-      Inputmoney1: eval(newarr2.join('+')),
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
     console.log(arr);
   },

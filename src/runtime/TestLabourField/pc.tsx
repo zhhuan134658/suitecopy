@@ -174,12 +174,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
       <Form.Item
         style={{ margin: 0 }}
         name={dataIndex}
-        rules={[
-          {
-            required: false,
-            message: `${title} 不能为空`,
-          },
-        ]}
+        
       >
         {/*    */}
         {/*   */}
@@ -460,7 +455,7 @@ const FormField: ISwapFormField = {
     });
 
     this.setState({
-      Inputmoney1: eval(newarr2.join('+')),
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
     // 不含税金额合计;
     const newarr3 = [...this.state.dataSource];
@@ -476,10 +471,10 @@ const FormField: ISwapFormField = {
     });
 
     this.setState({
-      Inputmoney2: eval(newarr4.join('+')),
+      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
 
-    console.log('sss', eval(newarr3.join('+')));
+    console.log('sss', eval(newarr3.join('+')).toFixed(2));
   },
 
   asyncSetFieldProps(vlauedata) {
@@ -552,7 +547,7 @@ const FormField: ISwapFormField = {
           });
 
           this.setState({
-            Inputmoney1: eval(newarr2.join('+')),
+            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
           });
           // 不含税金额合计;
 
@@ -568,7 +563,7 @@ const FormField: ISwapFormField = {
           });
 
           this.setState({
-            Inputmoney2: eval(newarr4.join('+')),
+            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
           });
         } else if (dstatus === '1') {
           this.setState({
@@ -843,11 +838,11 @@ const FormField: ISwapFormField = {
         } else if (this.state.detdate === 'e1') {
           dtar = '劳务合同-' + newData[0].name;
         }
-
+        console.log('111111111' + newData);
         const { form } = this.props;
-
-        form.setFieldValue('Selectjia', newData[0].team);
         form.setFieldValue('LabourField', newData[0].contract_name);
+        form.setFieldValue('Selectjia', newData[0].team);
+
         this.setState({
           currentSelectData: newData,
           currentSelectDataid: newDataid,
@@ -870,13 +865,13 @@ const FormField: ISwapFormField = {
     return (
       <div className="pc-custom-field-wrap">
         <div>
-          <div className="label">
+          <div className="label" style={{ marginTop: '10px' }}>
             {required ? (
               <span style={{ color: '#ea6d5c' }}>*</span>
             ) : (
               <span style={{ color: '#fff' }}>*</span>
             )}
-            <div style={{ margin: '10px' }}>{label}</div>
+            <div>{label}</div>
           </div>
           <Input
             onClick={this.newhandleAdd}

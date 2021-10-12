@@ -172,12 +172,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
       <Form.Item
         style={{ margin: 0 }}
         name={dataIndex}
-        rules={[
-          {
-            required: true,
-            message: `${title} 不能为空`,
-          },
-        ]}
+        
       >
         {/*    */}
         {/*   */}
