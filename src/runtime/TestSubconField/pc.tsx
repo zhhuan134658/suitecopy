@@ -187,7 +187,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
           onPressEnter={save}
           onBlur={save}
           min={0}
-          step="0.001"
+          step="0.01"
           placeholder="请输入"
         />
       </Form.Item>

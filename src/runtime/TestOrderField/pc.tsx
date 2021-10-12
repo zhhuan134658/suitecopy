@@ -200,11 +200,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
   if (editable) {
     childNode = editing ? (
-      <Form.Item
-        style={{ margin: 0 }}
-        name={dataIndex}
-       
-      >
+      <Form.Item style={{ margin: 0 }} name={dataIndex}>
         {/*    */}
         {/*   */}
         {/* <Input ref={inputRef} /> */}
@@ -215,7 +211,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
           onPressEnter={save}
           onBlur={save}
           min={0}
-          step="0.001"
+          step="0.01"
           placeholder="请输入"
         />
       </Form.Item>
