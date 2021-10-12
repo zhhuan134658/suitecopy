@@ -43,7 +43,7 @@ const FormField: IFormField = {
 
         {
           title: '总计划量',
-          dataIndex: 'zh_plan_quantity',
+          dataIndex: 'det_quantity',
         },
         {
           title: '使用部位',
@@ -72,7 +72,7 @@ const FormField: IFormField = {
           name: '',
           size: '',
           unit: '',
-          zh_plan_quantity: '',
+          det_quantity: '',
           position: '',
           purchase_riqi: '',
           remarks: '',
@@ -84,7 +84,7 @@ const FormField: IFormField = {
       //     name: '',
       //     size: '',
       //     unit: '',
-      //     zh_plan_quantity: '',
+      //     det_quantity: '',
       //     position: '',
       //     purchase_riqi: '',
       //     remarks: '',
@@ -197,7 +197,7 @@ const FormField: IFormField = {
       name: '',
       size: '',
       unit: '',
-      zh_plan_quantity: '',
+      det_quantity: '',
       position: '',
       purchase_riqi: '',
       remarks: '',
@@ -536,11 +536,11 @@ const FormField: IFormField = {
                                       <div className="input-wrapper">
                                         <InputItem
                                           clear
-                                          value={item.zh_plan_quantity}
+                                          value={item.det_quantity}
                                           placeholder="请输入"
                                           onChange={e =>
                                             this.onInputchange(
-                                              'zh_plan_quantity',
+                                              'det_quantity',
                                               index,
                                               e,
                                             )

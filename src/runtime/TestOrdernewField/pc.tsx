@@ -105,7 +105,7 @@ const mycolumnstree = [
   },
   //   {
   //     title: '不含税单价（元）',
-  //     dataIndex: 'extend_first',
+  //     dataIndex: 'no_unit_price',
   //   },
   {
     title: '规格型号',
@@ -252,13 +252,13 @@ type EditableTableProps = Parameters<typeof Table>[0];
 
 interface DataType {
   [x: string]: number;
-  notax_money: any;
-  notax_price: any;
+  no_amount_tax: any;
+  tax_amount: any;
   id: any;
-  rk_number: any;
-  extend_first: any;
+  det_quantity: any;
+  no_unit_price: any;
   tax_rate: any;
-  tax_money: any;
+  amount_tax: any;
   //   key: React.Key;
   //   name: string;
   //   size: string;
@@ -426,17 +426,17 @@ const FormField: ISwapFormField = {
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
     console.log(row);
-    if (row.tax_money) {
+    if (row.amount_tax) {
       const newvalue = this.state.Inputmoney1;
       this.setState({
-        Inputmoney1: (newvalue - row.tax_money).toFixed(2),
+        Inputmoney1: (newvalue - row.amount_tax).toFixed(2),
       });
       console.log('ssks');
     }
-    if (row.notax_money) {
+    if (row.no_amount_tax) {
       const newvalue2 = this.state.Inputmoney2;
       this.setState({
-        Inputmoney2: (newvalue2 - row.notax_money).toFixed(2),
+        Inputmoney2: (newvalue2 - row.no_amount_tax).toFixed(2),
       });
       console.log('ssks');
     }
@@ -505,54 +505,56 @@ const FormField: ISwapFormField = {
       });
     }
     switch (Object.keys(values)[0]) {
-      case 'extend_first':
-        if (reg.test(row.extend_first) && reg.test(row.tax_rate)) {
+      case 'no_unit_price':
+        if (reg.test(row.no_unit_price) && reg.test(row.tax_rate)) {
           //   含税单价
-          newData[index].tax_price = (
-            row.extend_first *
+          newData[index].unit_price = (
+            row.no_unit_price *
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
         } else if (
-          row.extend_first == null &&
+          row.no_unit_price == null &&
           reg.test(row.tax_rate) &&
-          row.tax_price
+          row.unit_price
         ) {
-          newData[index].extend_first = (
-            row.tax_price /
+          newData[index].no_unit_price = (
+            row.unit_price /
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
         }
         break;
-      case 'tax_price':
-        if (row.tax_price && reg.test(row.tax_rate)) {
+      case 'unit_price':
+        if (row.unit_price && reg.test(row.tax_rate)) {
           //   bu含税单价
 
-          newData[index].extend_first = (
-            row.tax_price /
+          newData[index].no_unit_price = (
+            row.unit_price /
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
         } else if (
-          row.tax_price == null &&
-          reg.test(row.extend_first) &&
+          row.unit_price == null &&
+          reg.test(row.no_unit_price) &&
           row.tax_rate
         ) {
-          newData[index].tax_price = (
-            row.extend_first *
+          newData[index].unit_price = (
+            row.no_unit_price *
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
         }
-        if (row.tax_price && row.rk_number) {
-          newData[index].tax_money = (row.tax_price * row.rk_number).toFixed(2);
+        if (row.unit_price && row.det_quantity) {
+          newData[index].amount_tax = (
+            row.unit_price * row.det_quantity
+          ).toFixed(2);
         }
 
         //不含税金额
-        if (row.tax_price && row.rk_number && reg.test(row.tax_rate)) {
-          newData[index].notax_money = (
-            (row.tax_price * row.rk_number) /
+        if (row.unit_price && row.det_quantity && reg.test(row.tax_rate)) {
+          newData[index].no_amount_tax = (
+            (row.unit_price * row.det_quantity) /
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
-          newData[index].notax_price = (
-            ((row.tax_price * row.rk_number) / (1 + row.tax_rate * 0.01)) *
+          newData[index].tax_amount = (
+            ((row.unit_price * row.det_quantity) / (1 + row.tax_rate * 0.01)) *
             row.tax_rate *
             0.01
           ).toFixed(2);
@@ -560,32 +562,32 @@ const FormField: ISwapFormField = {
 
         break;
       case 'tax_rate':
-        if (row.extend_first && !row.tax_price) {
-          newData[index].tax_price = (
-            row.extend_first *
+        if (row.no_unit_price && !row.unit_price) {
+          newData[index].unit_price = (
+            row.no_unit_price *
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
-        } else if (!row.extend_first && row.tax_price) {
-          newData[index].extend_first = (
-            row.tax_price /
+        } else if (!row.no_unit_price && row.unit_price) {
+          newData[index].no_unit_price = (
+            row.unit_price /
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
-        } else if (row.extend_first && row.tax_price) {
-          newData[index].tax_price = (
-            row.extend_first *
+        } else if (row.no_unit_price && row.unit_price) {
+          newData[index].unit_price = (
+            row.no_unit_price *
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
         }
-        if (row.extend_first && row.rk_number && reg.test(row.tax_rate)) {
-          newData[index].notax_price = (
-            row.extend_first *
-            row.rk_number *
+        if (row.no_unit_price && row.det_quantity && reg.test(row.tax_rate)) {
+          newData[index].tax_amount = (
+            row.no_unit_price *
+            row.det_quantity *
             row.tax_rate *
             0.01
           ).toFixed(2);
-          newData[index].tax_money = (
-            row.extend_first *
-            row.rk_number *
+          newData[index].amount_tax = (
+            row.no_unit_price *
+            row.det_quantity *
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
         }
@@ -595,51 +597,51 @@ const FormField: ISwapFormField = {
         break;
     }
 
-    // if (row.extend_first != '' && row.tax_rate != '') {
+    // if (row.no_unit_price != '' && row.tax_rate != '') {
     //   //   含税单价
-    //   newData[index].tax_price = (
-    //     row.extend_first *
+    //   newData[index].unit_price = (
+    //     row.no_unit_price *
     //     (1 + row.tax_rate * 0.01)
     //   ).toFixed(2);
     // }
 
-    // if (row.tax_price != '' && row.tax_rate != '') {
+    // if (row.unit_price != '' && row.tax_rate != '') {
     //   //   bu含税单价
     //   console.log('11111111');
-    //   newData[index].extend_first = (
-    //     row.tax_price /
+    //   newData[index].no_unit_price = (
+    //     row.unit_price /
     //     (1 + row.tax_rate * 0.01)
     //   ).toFixed(2);
     // }
-    // else if (row.tax_price && row.tax_rate == 0) {
+    // else if (row.unit_price && row.tax_rate == 0) {
     //   console.log('11111111');
-    //   newData[index].extend_first = (
-    //     row.tax_price /
+    //   newData[index].no_unit_price = (
+    //     row.unit_price /
     //     (1 + row.tax_rate * 0.01)
     //   ).toFixed(2);
     // }
 
     //税额
-    if (Object.keys(values)[0] != 'tax_price') {
-      if (row.extend_first && row.rk_number && reg.test(row.tax_rate)) {
-        newData[index].notax_price = (
-          row.extend_first *
-          row.rk_number *
+    if (Object.keys(values)[0] != 'unit_price') {
+      if (row.no_unit_price && row.det_quantity && reg.test(row.tax_rate)) {
+        newData[index].tax_amount = (
+          row.no_unit_price *
+          row.det_quantity *
           row.tax_rate *
           0.01
         ).toFixed(2);
       }
       //   不含税
-      if (row.extend_first && row.rk_number) {
-        newData[index].notax_money = (row.extend_first * row.rk_number).toFixed(
-          2,
-        );
+      if (row.no_unit_price && row.det_quantity) {
+        newData[index].no_amount_tax = (
+          row.no_unit_price * row.det_quantity
+        ).toFixed(2);
       }
       //含税
-      if (row.extend_first && row.rk_number && reg.test(row.tax_rate)) {
-        newData[index].tax_money = (
-          row.extend_first *
-          row.rk_number *
+      if (row.no_unit_price && row.det_quantity && reg.test(row.tax_rate)) {
+        newData[index].amount_tax = (
+          row.no_unit_price *
+          row.det_quantity *
           (1 + row.tax_rate * 0.01)
         ).toFixed(2);
       }
@@ -656,12 +658,12 @@ const FormField: ISwapFormField = {
     let newarr2 = [];
 
     newarr2 = newarr1.filter(item => {
-      if (item.tax_money) {
+      if (item.amount_tax) {
         return item;
       }
     });
     newarr2 = newarr2.map(item => {
-      return item.tax_money;
+      return item.amount_tax;
     });
 
     this.setState({
@@ -672,12 +674,12 @@ const FormField: ISwapFormField = {
     let newarr4 = [];
 
     newarr4 = newarr3.filter(item => {
-      if (item.notax_money) {
+      if (item.no_amount_tax) {
         return item;
       }
     });
     newarr4 = newarr4.map(item => {
-      return item.notax_money;
+      return item.no_amount_tax;
     });
 
     this.setState({
@@ -794,12 +796,12 @@ const FormField: ISwapFormField = {
           let newarr2 = [];
 
           newarr2 = newssarr.filter(item => {
-            if (item.tax_money) {
+            if (item.amount_tax) {
               return item;
             }
           });
           newarr2 = newarr2.map(item => {
-            return item.tax_money;
+            return item.amount_tax;
           });
 
           this.setState({
@@ -810,12 +812,12 @@ const FormField: ISwapFormField = {
           let newarr4 = [];
 
           newarr4 = newssarr.filter(item => {
-            if (item.notax_money) {
+            if (item.no_amount_tax) {
               return item;
             }
           });
           newarr4 = newarr4.map(item => {
-            return item.notax_money;
+            return item.no_amount_tax;
           });
 
           this.setState({
@@ -867,6 +869,7 @@ const FormField: ISwapFormField = {
         newData.push(element);
       });
     }
+    // lData = this.unique(newData);
     lData = this.dupRemoval(newData);
     console.log('pp+' + JSON.stringify(lData));
     this.setState({ dataSource: lData });
@@ -902,6 +905,7 @@ const FormField: ISwapFormField = {
     console.log(peon);
     return peon;
   },
+
   unique(arr) {
     const res = new Map();
     return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
@@ -989,28 +993,28 @@ const FormField: ISwapFormField = {
       },
       {
         title: '数量',
-        dataIndex: 'rk_number',
+        dataIndex: 'det_quantity',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.rk_number}>
-            <span>{record.rk_number}</span>
+          <Tooltip placement="topLeft" title={record.det_quantity}>
+            <span>{record.det_quantity}</span>
           </Tooltip>
         ),
       },
       {
         title: '不含税单价(元)',
-        dataIndex: 'extend_first',
+        dataIndex: 'no_unit_price',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.extend_first}>
-            <span>{record.extend_first}</span>
+          <Tooltip placement="topLeft" title={record.no_unit_price}>
+            <span>{record.no_unit_price}</span>
           </Tooltip>
         ),
       },
       {
         title: '含税单价(元)',
-        dataIndex: 'tax_price',
+        dataIndex: 'unit_price',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.tax_price}>
-            <span>{record.tax_price}</span>
+          <Tooltip placement="topLeft" title={record.unit_price}>
+            <span>{record.unit_price}</span>
           </Tooltip>
         ),
       },
@@ -1026,28 +1030,28 @@ const FormField: ISwapFormField = {
 
       {
         title: '税额(元)',
-        dataIndex: 'notax_price',
+        dataIndex: 'tax_amount',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.notax_price}>
-            <span>{record.notax_price}</span>
+          <Tooltip placement="topLeft" title={record.tax_amount}>
+            <span>{record.tax_amount}</span>
           </Tooltip>
         ),
       },
       {
         title: '不含税金额(元)',
-        dataIndex: 'notax_money',
+        dataIndex: 'no_amount_tax',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.notax_money}>
-            <span>{record.notax_money}</span>
+          <Tooltip placement="topLeft" title={record.no_amount_tax}>
+            <span>{record.no_amount_tax}</span>
           </Tooltip>
         ),
       },
       {
         title: '含税金额(元)',
-        dataIndex: 'tax_money',
+        dataIndex: 'amount_tax',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.tax_money}>
-            <span>{record.tax_money}</span>
+          <Tooltip placement="topLeft" title={record.amount_tax}>
+            <span>{record.amount_tax}</span>
           </Tooltip>
         ),
       },
@@ -1082,22 +1086,22 @@ const FormField: ISwapFormField = {
       },
       {
         title: '数量',
-        dataIndex: 'rk_number',
+        dataIndex: 'det_quantity',
 
         editable: true,
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.rk_number}>
-            <span>{record.rk_number}</span>
+          <Tooltip placement="topLeft" title={record.det_quantity}>
+            <span>{record.det_quantity}</span>
           </Tooltip>
         ),
       },
       {
         title: '不含税单价(元)',
-        dataIndex: 'extend_first',
+        dataIndex: 'no_unit_price',
         editable: true,
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.extend_first}>
-            <span>{record.extend_first}</span>
+          <Tooltip placement="topLeft" title={record.no_unit_price}>
+            <span>{record.no_unit_price}</span>
           </Tooltip>
         ),
       },
@@ -1119,11 +1123,11 @@ const FormField: ISwapFormField = {
             </Tooltip>
           </div>
         ),
-        dataIndex: 'tax_price',
+        dataIndex: 'unit_price',
         editable: true,
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.tax_price}>
-            <span>{record.tax_price}</span>
+          <Tooltip placement="topLeft" title={record.unit_price}>
+            <span>{record.unit_price}</span>
           </Tooltip>
         ),
       },
@@ -1141,28 +1145,28 @@ const FormField: ISwapFormField = {
 
       {
         title: '税额(元)',
-        dataIndex: 'notax_price',
+        dataIndex: 'tax_amount',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.notax_price}>
-            <span>{record.notax_price}</span>
+          <Tooltip placement="topLeft" title={record.tax_amount}>
+            <span>{record.tax_amount}</span>
           </Tooltip>
         ),
       },
       {
         title: '不含税金额(元)',
-        dataIndex: 'notax_money',
+        dataIndex: 'no_amount_tax',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.notax_money}>
-            <span>{record.notax_money}</span>
+          <Tooltip placement="topLeft" title={record.no_amount_tax}>
+            <span>{record.no_amount_tax}</span>
           </Tooltip>
         ),
       },
       {
         title: '含税金额(元)',
-        dataIndex: 'tax_money',
+        dataIndex: 'amount_tax',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.tax_money}>
-            <span>{record.tax_money}</span>
+          <Tooltip placement="topLeft" title={record.amount_tax}>
+            <span>{record.amount_tax}</span>
           </Tooltip>
         ),
       },
@@ -1262,7 +1266,7 @@ const FormField: ISwapFormField = {
 
         this.setState({
           currentSelectData: newData,
-          currentSelectDataid: newDataid,
+          //   currentSelectDataid: newDataid,
         });
         this.setState({ selectedRowKeys });
       },
@@ -1288,13 +1292,14 @@ const FormField: ISwapFormField = {
             return item.id;
           });
         }
-        console.log('======' + JSON.stringify(newDataid));
+        console.log('====111==' + JSON.stringify(newDataid));
         if (this.state.detdate === 'a1') {
           dtar = newData[0].name;
         }
 
         this.setState({
           detailname: dtar,
+          currentSelectDataid: newDataid,
         });
         this.setState({ selectedRowKeys });
       },

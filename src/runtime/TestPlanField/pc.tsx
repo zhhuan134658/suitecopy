@@ -698,10 +698,10 @@ const FormField: ISwapFormField = {
 
       {
         title: '总计划量',
-        dataIndex: 'zh_plan_quantity',
+        dataIndex: 'det_quantity',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.zh_plan_quantity}>
-            <span>{record.zh_plan_quantity}</span>
+          <Tooltip placement="topLeft" title={record.det_quantity}>
+            <span>{record.det_quantity}</span>
           </Tooltip>
         ),
       },
@@ -755,10 +755,10 @@ const FormField: ISwapFormField = {
 
       {
         title: '总计划量',
-        dataIndex: 'zh_plan_quantity',
+        dataIndex: 'det_quantity',
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.zh_plan_quantity}>
-            <span>{record.zh_plan_quantity}</span>
+          <Tooltip placement="topLeft" title={record.det_quantity}>
+            <span>{record.det_quantity}</span>
           </Tooltip>
         ),
         editable: true,
