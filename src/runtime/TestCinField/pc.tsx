@@ -1,42 +1,3 @@
-// import React from 'react';
-// import { Input } from 'antd';
-// import { IFormField } from '../../types';
-
-// import './pc.less';
-
-// interface ISwapFormField extends IFormField {
-//   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-// }
-
-// /**
-//  * 自定义控件运行态 PC 视图
-//  */
-// const FormField: ISwapFormField = {
-//   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-//     const { form } = this.props;
-//     form.setFieldValue('TestCin', e.target.value);
-//   },
-
-//   fieldRender() {
-//     const { form } = this.props;
-//     const field = form.getFieldInstance('TestCin');
-//     const label = form.getFieldProp('TestCin', 'label');
-//     const placeholder = form.getFieldProp('TestCin', 'placeholders');
-
-//     return (
-//       <div className="pc-custom-field-wrap">
-//         <div className="label">{label}</div>
-//         {field.getProp('viewMode') ? (
-//           field.getValue()
-//         ) : (
-//           <Input placeholder={placeholder} onChange={this.handleChange} />
-//         )}
-//       </div>
-//     );
-//   },
-// };
-
-// export default Fo,rmField;
 import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
@@ -829,6 +790,14 @@ const FormField: ISwapFormField = {
           this.setState({
             treelistData: newssarr,
           });
+        } else if (dstatus === '1') {
+          this.setState({
+            listData: [...newarr],
+            current_page: JSON.parse(res.dataList[0].value).page,
+            total2: JSON.parse(res.dataList[0].value).count,
+          });
+        } else if (dstatus === '3') {
+          const newssarr = [...newarr];
           // 含税金额合计;
 
           let newarr2 = [];
@@ -861,13 +830,6 @@ const FormField: ISwapFormField = {
           this.setState({
             Inputmoney2: eval(newarr4.join('+')).toFixed(2),
           });
-        } else if (dstatus === '1') {
-          this.setState({
-            listData: [...newarr],
-            current_page: JSON.parse(res.dataList[0].value).page,
-            total2: JSON.parse(res.dataList[0].value).count,
-          });
-        } else if (dstatus === '3') {
           this.setState({
             dataSource: [...newarr],
           });

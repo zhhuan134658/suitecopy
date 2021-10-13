@@ -167,6 +167,39 @@ const FormField: IFormField = {
         // });
         if (type === 1) {
           console.log('9887987', newarr);
+          const newssarr = [...newarr];
+          // 含税金额合计;
+
+          let newarr2 = [];
+
+          newarr2 = newssarr.filter(item => {
+            if (item.amount_tax) {
+              return item;
+            }
+          });
+          newarr2 = newarr2.map(item => {
+            return item.amount_tax;
+          });
+
+          this.setState({
+            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+          });
+          // 不含税金额合计;
+
+          let newarr4 = [];
+
+          newarr4 = newssarr.filter(item => {
+            if (item.no_amount_tax) {
+              return item;
+            }
+          });
+          newarr4 = newarr4.map(item => {
+            return item.no_amount_tax;
+          });
+
+          this.setState({
+            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+          });
           this.setState({
             materialList: newarr,
           });

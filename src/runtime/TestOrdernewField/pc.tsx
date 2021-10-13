@@ -423,6 +423,27 @@ const FormField: ISwapFormField = {
     this.setState({ isModalVisibletree: false });
     this.setState({ selectedRowKeys: [] });
   },
+  //   handleDelete(row) {
+  //     const dataSource = [...this.state.dataSource];
+  //     console.log(row);
+  //     if (row.amount_tax) {
+  //       const newvalue = this.state.Inputmoney1;
+  //       this.setState({
+  //         Inputmoney1: (newvalue - row.amount_tax).toFixed(2),
+  //       });
+  //       console.log('ssks');
+  //     }
+  //     if (row.no_amount_tax) {
+  //       const newvalue2 = this.state.Inputmoney2;
+  //       this.setState({
+  //         Inputmoney2: (newvalue2 - row.no_amount_tax).toFixed(2),
+  //       });
+  //       console.log('ssks');
+  //     }
+  //     this.setState({
+  //       dataSource: dataSource.filter(item => item.id !== row.id),
+  //     });
+  //   },
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
     const arr = dataSource.filter(item => item.id !== row.id);
@@ -841,6 +862,39 @@ const FormField: ISwapFormField = {
             total2: JSON.parse(res.dataList[0].value).count,
           });
         } else if (dstatus === '3') {
+          const newssarr = [...newarr];
+          // 含税金额合计;
+
+          let newarr2 = [];
+
+          newarr2 = newssarr.filter(item => {
+            if (item.amount_tax) {
+              return item;
+            }
+          });
+          newarr2 = newarr2.map(item => {
+            return item.amount_tax;
+          });
+
+          this.setState({
+            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+          });
+          // 不含税金额合计;
+
+          let newarr4 = [];
+
+          newarr4 = newssarr.filter(item => {
+            if (item.no_amount_tax) {
+              return item;
+            }
+          });
+          newarr4 = newarr4.map(item => {
+            return item.no_amount_tax;
+          });
+
+          this.setState({
+            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+          });
           this.setState({
             dataSource: [...newarr],
           });
