@@ -802,9 +802,6 @@ const FormField: ISwapFormField = {
             total2: JSON.parse(res.dataList[0].value).count,
           });
         } else if (dstatus === '3') {
-          this.setState({
-            dataSource: [...newarr],
-          });
           // 含税金额合计;
           const newssarr = [...newarr];
           let newarr2 = [];
@@ -836,6 +833,9 @@ const FormField: ISwapFormField = {
 
           this.setState({
             Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+          });
+          this.setState({
+            dataSource: [...newarr],
           });
         }
         if (this.state.msgdata == '1') {

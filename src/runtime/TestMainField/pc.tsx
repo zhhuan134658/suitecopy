@@ -436,7 +436,7 @@ const FormField: ISwapFormField = {
     // }
     if (reg.test(row.material_total) && reg.test(row.person_total)) {
       newData[index].total_price = (
-        Number(row.material_total) * Number(row.person_total)
+        Number(row.material_total) + Number(row.person_total)
       ).toFixed(2);
     } else {
       newData[index].total_price = '自动计算';

@@ -864,7 +864,7 @@ const FormField: ISwapFormField = {
         } else if (dstatus === '3') {
           const newssarr = [...newarr];
           // 含税金额合计;
-
+          console.log('66666666666666', newssarr);
           let newarr2 = [];
 
           newarr2 = newssarr.filter(item => {
@@ -876,12 +876,10 @@ const FormField: ISwapFormField = {
             return item.amount_tax;
           });
 
-          this.setState({
-            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
-          });
+        //   this.setState({});
           // 不含税金额合计;
 
-          let newarr4 = [];
+          let newarr4 = []; 
 
           newarr4 = newssarr.filter(item => {
             if (item.no_amount_tax) {
@@ -893,10 +891,9 @@ const FormField: ISwapFormField = {
           });
 
           this.setState({
-            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
-          });
-          this.setState({
             dataSource: [...newarr],
+            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
           });
         }
         if (this.state.msgdata == '1') {
