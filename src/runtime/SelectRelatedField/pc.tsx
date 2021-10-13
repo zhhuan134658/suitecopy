@@ -165,11 +165,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
   if (editable) {
     childNode = editing ? (
-      <Form.Item
-        style={{ margin: 0 }}
-        name={dataIndex}
-        
-      >
+      <Form.Item style={{ margin: 0 }} name={dataIndex}>
         {/*    */}
         {/*   */}
         {/* <Input ref={inputRef} /> */}
@@ -620,9 +616,9 @@ const FormField: ISwapFormField = {
 
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('Conmoney', record.money);
-      form.setFieldValue('SelectRelated', record.name);
+      form.setFieldValue('SelectRelated', record.title);
       form.setExtendFieldValue('SelectRelated', {
-        data: record,
+        data: record.title,
       });
     });
 

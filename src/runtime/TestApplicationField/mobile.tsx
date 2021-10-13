@@ -251,8 +251,19 @@ const FormField: IFormField = {
   deleteItem(index) {
     let list = this.state.materialList;
     list.splice(index, 1);
+    let newarr2 = [];
+
+    newarr2 = list.filter(item => {
+      if (item.subtotal) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.subtotal;
+    });
     this.setState({
       materialList: list,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
   },
   //更新数据

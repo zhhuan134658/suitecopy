@@ -276,25 +276,35 @@ const FormField: IFormField = {
     });
   },
   //删除明细
-  deleteItem(index, item) {
+  deleteItem(index) {
     let list = this.state.materialList;
-    if (item.amount_tax) {
-      const newvalue = this.state.Inputmoney1;
-      this.setState({
-        Inputmoney1: (newvalue - item.amount_tax).toFixed(2),
-      });
-      console.log('ssks');
-    }
-    if (item.no_amount_tax) {
-      const newvalue2 = this.state.Inputmoney2;
-      this.setState({
-        Inputmoney2: (newvalue2 - item.no_amount_tax).toFixed(2),
-      });
-      console.log('ssks');
-    }
     list.splice(index, 1);
+    //   含税金额
+    let newarr2 = [];
+
+    newarr2 = list.filter(item => {
+      if (item.amount_tax) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.amount_tax;
+    });
+    //不含税金额
+    let newarr4 = [];
+
+    newarr4 = list.filter(item => {
+      if (item.no_amount_tax) {
+        return item;
+      }
+    });
+    newarr4 = newarr4.map(item => {
+      return item.no_amount_tax;
+    });
     this.setState({
       materialList: list,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
   },
   //更新数据
@@ -308,7 +318,7 @@ const FormField: IFormField = {
     let newtype = types;
 
     arr[newindex][newtype] = arrindex;
-    if (arr[newindex].tax_rate == '') {
+    if (!reg.test(arr[newindex].tax_rate)) {
       return this.setState({
         materialList: [...arr],
       });

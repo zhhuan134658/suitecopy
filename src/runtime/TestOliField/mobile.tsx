@@ -191,16 +191,21 @@ const FormField: IFormField = {
   //删除明细
   deleteItem(item, index) {
     let list = this.state.materialList;
-    if (item.total_price) {
-      const newvalue = this.state.Inputmoney1;
-      this.setState({
-        Inputmoney1: (newvalue - item.total_price).toFixed(2),
-      });
-      console.log('ssks');
-    }
+
     list.splice(index, 1);
+    let newarr2 = [];
+
+    newarr2 = list.filter(item => {
+      if (item.total_price) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.total_price;
+    });
     this.setState({
       materialList: list,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
   },
   //更新数据

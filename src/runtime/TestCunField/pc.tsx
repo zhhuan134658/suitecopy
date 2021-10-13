@@ -408,25 +408,57 @@ const FormField: ISwapFormField = {
     this.setState({ ischModalVisible: false });
     this.setState({ selectedRowKeys: [] });
   },
+  //   handleDelete(row) {
+  //     const dataSource = [...this.state.dataSource];
+  //     console.log(row);
+  //     if (row.tax_money) {
+  //       const newvalue = this.state.Inputmoney1;
+  //       this.setState({
+  //         Inputmoney1: (newvalue - row.tax_money).toFixed(2),
+  //       });
+  //       console.log('ssks');
+  //     }
+  //     if (row.notax_money) {
+  //       const newvalue2 = this.state.Inputmoney2;
+  //       this.setState({
+  //         Inputmoney2: (newvalue2 - row.notax_money).toFixed(2),
+  //       });
+  //       console.log('ssks');
+  //     }
+  //     this.setState({
+  //       dataSource: dataSource.filter(item => item.id !== row.id),
+  //     });
+  //   },
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
-    console.log(row);
-    if (row.tax_money) {
-      const newvalue = this.state.Inputmoney1;
-      this.setState({
-        Inputmoney1: (newvalue - row.tax_money).toFixed(2),
-      });
-      console.log('ssks');
-    }
-    if (row.notax_money) {
-      const newvalue2 = this.state.Inputmoney2;
-      this.setState({
-        Inputmoney2: (newvalue2 - row.notax_money).toFixed(2),
-      });
-      console.log('ssks');
-    }
+    const arr = dataSource.filter(item => item.id !== row.id);
+    //   含税金额
+    let newarr2 = [];
+
+    newarr2 = arr.filter(item => {
+      if (item.tax_money) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.tax_money;
+    });
+    //不含税金额
+    let newarr4 = [];
+
+    newarr4 = arr.filter(item => {
+      if (item.notax_money) {
+        return item;
+      }
+    });
+    newarr4 = newarr4.map(item => {
+      return item.notax_money;
+    });
+
     this.setState({
-      dataSource: dataSource.filter(item => item.id !== row.id),
+      dataSource: arr,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
   },
   chhandleAdd(val) {

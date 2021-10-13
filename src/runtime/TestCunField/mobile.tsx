@@ -240,8 +240,32 @@ const FormField: IFormField = {
   deleteItem(index) {
     let list = this.state.materialList;
     list.splice(index, 1);
+    let newarr2 = [];
+
+    newarr2 = list.filter(item => {
+      if (item.tax_money) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.tax_money;
+    });
+    //不含税金额
+    let newarr4 = [];
+
+    newarr4 = list.filter(item => {
+      if (item.notax_money) {
+        return item;
+      }
+    });
+    newarr4 = newarr4.map(item => {
+      return item.notax_money;
+    });
+
     this.setState({
       materialList: list,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
   },
   //更新数据

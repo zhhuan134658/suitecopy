@@ -398,25 +398,45 @@ const FormField: ISwapFormField = {
     this.setState({ isModalVisibletree: false });
     this.setState({ selectedRowKeys: [] });
   },
+  //   handleDelete(row) {
+  //     const dataSource = [...this.state.dataSource];
+  //     console.log(row);
+  //     if (row.subtotal) {
+  //       const newvalue = this.state.Inputmoney1;
+  //       this.setState({
+  //         Inputmoney1: (newvalue - row.subtotal).toFixed(2),
+  //       });
+  //       console.log('ssks');
+  //     }
+  //     if (row.nosubtotal) {
+  //       const newvalue2 = this.state.Inputmoney2;
+  //       this.setState({
+  //         Inputmoney2: (newvalue2 - row.nosubtotal).toFixed(2),
+  //       });
+  //       console.log('ssks');
+  //     }
+  //     this.setState({
+  //       dataSource: dataSource.filter(item => item.id !== row.id),
+  //     });
+  //   },
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
-    console.log(row);
-    if (row.subtotal) {
-      const newvalue = this.state.Inputmoney1;
-      this.setState({
-        Inputmoney1: (newvalue - row.subtotal).toFixed(2),
-      });
-      console.log('ssks');
-    }
-    if (row.nosubtotal) {
-      const newvalue2 = this.state.Inputmoney2;
-      this.setState({
-        Inputmoney2: (newvalue2 - row.nosubtotal).toFixed(2),
-      });
-      console.log('ssks');
-    }
+    const arr = dataSource.filter(item => item.id !== row.id);
+    //   含税金额
+    let newarr2 = [];
+
+    newarr2 = arr.filter(item => {
+      if (item.subtotal) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.subtotal;
+    });
+
     this.setState({
-      dataSource: dataSource.filter(item => item.id !== row.id),
+      dataSource: arr,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
   },
   newhandleAdd() {
@@ -472,7 +492,9 @@ const FormField: ISwapFormField = {
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
     if (row.need_quantity && row.refer_price) {
-      newData[index].subtotal = row.need_quantity * row.refer_price;
+      newData[index].subtotal = (row.need_quantity * row.refer_price).toFixed(
+        2,
+      );
     }
 
     this.setState({

@@ -63,9 +63,7 @@ const FormField: IFormField = {
           dataIndex: 'total_price',
         },
       ],
-      treeData: [
-       
-      ],
+      treeData: [],
       date: now,
       checkindex: '',
       SearchBarvalue: '',
@@ -205,16 +203,21 @@ const FormField: IFormField = {
   //删除明细
   deleteItem(item, index) {
     let list = this.state.materialList;
-    if (item.total_price) {
-      const newvalue = this.state.Inputmoney1;
-      this.setState({
-        Inputmoney1: (newvalue - item.total_price).toFixed(2),
-      });
-      console.log('ssks');
-    }
+
     list.splice(index, 1);
+    let newarr2 = [];
+
+    newarr2 = list.filter(item => {
+      if (item.total_price) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.total_price;
+    });
     this.setState({
       materialList: list,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
   },
   //更新数据
@@ -229,9 +232,10 @@ const FormField: IFormField = {
     // arr[newindex] = {};
     arr[newindex][newtype] = arrindex;
     if (arr[newindex].material_total && arr[newindex].person_total) {
-      arr[newindex].total_price =
+      arr[newindex].total_price = (
         Number(arr[newindex].person_total) +
-        Number(arr[newindex].material_total);
+        Number(arr[newindex].material_total)
+      ).toFixed(2);
     } else {
       arr[index].total_price = '请输入';
     }

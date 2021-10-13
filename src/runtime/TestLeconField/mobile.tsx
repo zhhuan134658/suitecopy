@@ -236,17 +236,22 @@ const FormField: IFormField = {
   //删除明细
   deleteItem(item, index) {
     let list = this.state.materialList;
-    if (item.subtotal) {
-      const newvalue = this.state.Inputmoney1;
-      this.setState({
-        Inputmoney1: (newvalue - item.subtotal).toFixed(2),
-      });
-      console.log('ssks');
-    }
+
     list.splice(index, 1);
+    let newarr2 = [];
+
+    newarr2 = list.filter(item => {
+      if (item.subtotal) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.subtotal;
+    });
 
     this.setState({
       materialList: list,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
   },
   //更新数据
@@ -266,7 +271,9 @@ const FormField: IFormField = {
     }
 
     if (arr[newindex].zl_number && arr[newindex].price) {
-      arr[newindex].subtotal = arr[newindex].zl_number * arr[newindex].price;
+      arr[newindex].subtotal = (
+        arr[newindex].zl_number * arr[newindex].price
+      ).toFixed(2);
     } else {
       arr[newindex].subtotal = 0;
     }

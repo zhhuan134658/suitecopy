@@ -355,28 +355,47 @@ const FormField: ISwapFormField = {
     this.setState({ isModalVisible: false });
     this.setState({ selectedRowKeys: [] });
   },
+  //   handleDelete(row) {
+  //     const dataSource = [...this.state.dataSource];
+  //     console.log(row);
+  //     if (row.total_price) {
+  //       const newvalue = this.state.Inputmoney1;
+  //       this.setState({
+  //         Inputmoney1: (newvalue - row.total_price).toFixed(2),
+  //       });
+  //       console.log('ssks');
+  //     }
+  //     if (row.total_price) {
+  //       const newvalue2 = this.state.Inputmoney2;
+  //       this.setState({
+  //         Inputmoney2: (newvalue2 - row.total_price).toFixed(2),
+  //       });
+  //       console.log('ssks');
+  //     }
+  //     this.setState({
+  //       dataSource: dataSource.filter(item => item.id !== row.id),
+  //     });
+  //   },
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
-    console.log(row);
-    if (row.total_price) {
-      const newvalue = this.state.Inputmoney1;
-      this.setState({
-        Inputmoney1: (newvalue - row.total_price).toFixed(2),
-      });
-      console.log('ssks');
-    }
-    if (row.total_price) {
-      const newvalue2 = this.state.Inputmoney2;
-      this.setState({
-        Inputmoney2: (newvalue2 - row.total_price).toFixed(2),
-      });
-      console.log('ssks');
-    }
+    const arr = dataSource.filter(item => item.id !== row.id);
+    //   含税金额
+    let newarr2 = [];
+
+    newarr2 = arr.filter(item => {
+      if (item.total_price) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.total_price;
+    });
+
     this.setState({
-      dataSource: dataSource.filter(item => item.id !== row.id),
+      dataSource: arr,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
   },
-
   handleAdd() {
     // const { count, dataSource } = this.state;
     // const newData: DataType = {
@@ -416,8 +435,9 @@ const FormField: ISwapFormField = {
     //   newData[index].total_price = '请输入';
     // }
     if (reg.test(row.material_total) && reg.test(row.person_total)) {
-      newData[index].total_price =
-        Number(row.material_total) * Number(row.person_total);
+      newData[index].total_price = (
+        Number(row.material_total) * Number(row.person_total)
+      ).toFixed(2);
     } else {
       newData[index].total_price = '自动计算';
     }

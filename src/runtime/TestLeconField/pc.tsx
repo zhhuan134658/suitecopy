@@ -182,11 +182,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
   if (editable) {
     childNode = editing ? (
-      <Form.Item
-        style={{ margin: 0 }}
-        name={dataIndex}
-      
-      >
+      <Form.Item style={{ margin: 0 }} name={dataIndex}>
         {/*    */}
         {/*   */}
         {/* <Input ref={inputRef} /> */}
@@ -364,22 +360,41 @@ const FormField: ISwapFormField = {
     this.setState({ isModalVisible: false });
     this.setState({ selectedRowKeys: [] });
   },
+  //   handleDelete(row) {
+  //     const dataSource = [...this.state.dataSource];
+  //     console.log(row);
+  //     if (row.subtotal) {
+  //       const newvalue = this.state.Inputmoney1;
+  //       this.setState({
+  //         Inputmoney1: (newvalue - row.subtotal).toFixed(2),
+  //       });
+  //       console.log('ssks');
+  //     }
+
+  //     this.setState({
+  //       dataSource: dataSource.filter(item => item.id !== row.id),
+  //     });
+  //   },
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
-    console.log(row);
-    if (row.subtotal) {
-      const newvalue = this.state.Inputmoney1;
-      this.setState({
-        Inputmoney1: (newvalue - row.subtotal).toFixed(2),
-      });
-      console.log('ssks');
-    }
+    const arr = dataSource.filter(item => item.id !== row.id);
+    //   含税金额
+    let newarr2 = [];
+
+    newarr2 = arr.filter(item => {
+      if (item.subtotal) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.subtotal;
+    });
 
     this.setState({
-      dataSource: dataSource.filter(item => item.id !== row.id),
+      dataSource: arr,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
   },
-
   handleAdd() {
     // const { count, dataSource } = this.state;
     // const newData: DataType = {
@@ -433,7 +448,7 @@ const FormField: ISwapFormField = {
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
     if (row.price && row.zl_number) {
-      newData[index].subtotal = row.zl_number * row.price;
+      newData[index].subtotal = (row.zl_number * row.price).toFixed(2);
     }
 
     this.setState({

@@ -425,23 +425,34 @@ const FormField: ISwapFormField = {
   },
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
-    console.log(row);
-    if (row.amount_tax) {
-      const newvalue = this.state.Inputmoney1;
-      this.setState({
-        Inputmoney1: (newvalue - row.amount_tax).toFixed(2),
-      });
-      console.log('ssks');
-    }
-    if (row.no_amount_tax) {
-      const newvalue2 = this.state.Inputmoney2;
-      this.setState({
-        Inputmoney2: (newvalue2 - row.no_amount_tax).toFixed(2),
-      });
-      console.log('ssks');
-    }
+    const arr = dataSource.filter(item => item.id !== row.id);
+    //   含税金额
+    let newarr2 = [];
+
+    newarr2 = arr.filter(item => {
+      if (item.amount_tax) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.amount_tax;
+    });
+    //不含税金额
+    let newarr4 = [];
+
+    newarr4 = arr.filter(item => {
+      if (item.no_amount_tax) {
+        return item;
+      }
+    });
+    newarr4 = newarr4.map(item => {
+      return item.no_amount_tax;
+    });
+
     this.setState({
-      dataSource: dataSource.filter(item => item.id !== row.id),
+      dataSource: arr,
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
   },
   newhandleAdd() {
@@ -499,7 +510,7 @@ const FormField: ISwapFormField = {
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
     //计算
-    if (row.tax_rate == '') {
+    if (!reg.test(row.tax_rate)) {
       return this.setState({
         dataSource: newData,
       });
@@ -533,8 +544,8 @@ const FormField: ISwapFormField = {
           ).toFixed(2);
         } else if (
           row.unit_price == null &&
-          reg.test(row.no_unit_price) &&
-          row.tax_rate
+          reg.test(row.tax_rate) &&
+          row.no_unit_price
         ) {
           newData[index].unit_price = (
             row.no_unit_price *
@@ -542,7 +553,9 @@ const FormField: ISwapFormField = {
           ).toFixed(2);
         }
         if (row.unit_price && row.det_quantity) {
-          newData[index].amount_tax = (row.unit_price * row.det_quantity).toFixed(2);
+          newData[index].amount_tax = (
+            row.unit_price * row.det_quantity
+          ).toFixed(2);
         }
 
         //不含税金额
@@ -631,9 +644,9 @@ const FormField: ISwapFormField = {
       }
       //   不含税
       if (row.no_unit_price && row.det_quantity) {
-        newData[index].no_amount_tax = (row.no_unit_price * row.det_quantity).toFixed(
-          2,
-        );
+        newData[index].no_amount_tax = (
+          row.no_unit_price * row.det_quantity
+        ).toFixed(2);
       }
       //含税
       if (row.no_unit_price && row.det_quantity && reg.test(row.tax_rate)) {
