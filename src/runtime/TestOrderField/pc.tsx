@@ -876,10 +876,10 @@ const FormField: ISwapFormField = {
             return item.amount_tax;
           });
 
-        //   this.setState({});
+          //   this.setState({});
           // 不含税金额合计;
 
-          let newarr4 = []; 
+          let newarr4 = [];
 
           newarr4 = newssarr.filter(item => {
             if (item.no_amount_tax) {
@@ -1585,7 +1585,7 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCanceltree}
         >
           <Layout>
-            <Sider>
+            <Sider className="newside_new">
               <Tree
                 defaultExpandedKeys={['0']}
                 blockNode

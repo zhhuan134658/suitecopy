@@ -1085,7 +1085,7 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancel}
         >
           <Layout>
-            <Sider>
+            <Sider className="newside_new">
               <Tree
                 defaultExpandedKeys={['0']}
                 blockNode

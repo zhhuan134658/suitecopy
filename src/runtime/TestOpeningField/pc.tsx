@@ -179,11 +179,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
   if (editable) {
     childNode = editing ? (
-      <Form.Item
-        style={{ margin: 0 }}
-        name={dataIndex}
-      
-      >
+      <Form.Item style={{ margin: 0 }} name={dataIndex}>
         {/*    */}
         {/*   */}
         {/* <Input ref={inputRef} /> */}
@@ -953,7 +949,7 @@ const FormField: ISwapFormField = {
           onCancel={this.handleCancel}
         >
           <Layout>
-            <Sider>
+            <Sider className="newside_new">
               <Tree
                 defaultExpandedKeys={['0']}
                 blockNode
