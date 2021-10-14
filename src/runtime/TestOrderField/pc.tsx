@@ -523,6 +523,73 @@ const FormField: ISwapFormField = {
       isModalVisibletree: true,
     });
   },
+  // 两个浮点数相减
+  accSub(num1, num2) {
+    var r1, r2, m, n;
+    try {
+      r1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+      r1 = 0;
+    }
+    try {
+      r2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+      r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    n = r1 >= r2 ? r1 : r2;
+    return (Math.round(num1 * m - num2 * m) / m).toFixed(n);
+  },
+  // 两数相除
+  accDiv(num1, num2) {
+    var t1, t2, r1, r2;
+    try {
+      t1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+      t1 = 0;
+    }
+    try {
+      t2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+      t2 = 0;
+    }
+    r1 = Number(num1.toString().replace('.', ''));
+    r2 = Number(num2.toString().replace('.', ''));
+    return (r1 / r2) * Math.pow(10, t2 - t1);
+  },
+  // 两个浮点数相乘
+  accMul(num1, num2) {
+    var m = 0,
+      s1 = num1.toString(),
+      s2 = num2.toString();
+    try {
+      m += s1.split('.')[1].length;
+    } catch (e) {}
+    try {
+      m += s2.split('.')[1].length;
+    } catch (e) {}
+    return (
+      (Number(s1.replace('.', '')) * Number(s2.replace('.', ''))) /
+      Math.pow(10, m)
+    );
+  },
+  // 两个浮点数求和
+  accAdd(num1, num2) {
+    var r1, r2, m;
+    try {
+      r1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+      r1 = 0;
+    }
+    try {
+      r2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+      r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    // return (num1*m+num2*m)/m;
+    return Math.round(num1 * m + num2 * m) / m;
+  },
   handleSave(row: DataType, values) {
     const { form } = this.props;
     const newData = [...this.state.dataSource];
@@ -544,6 +611,10 @@ const FormField: ISwapFormField = {
             row.no_unit_price *
             (1 + row.tax_rate * 0.01)
           ).toFixed(2);
+          //   let a = 1 + row.tax_rate * 0.01;
+          //   newData[index].unit_price = this.accMul(row.no_unit_price, a).toFixed(
+          //     2,
+          //   );
         } else if (
           row.no_unit_price == null &&
           reg.test(row.tax_rate) &&
@@ -1439,25 +1510,26 @@ const FormField: ISwapFormField = {
       );
     }
     return (
-      <div className="pc-custom-field-wrap">
-        <div>
-          <div className="label">
-            {required ? (
-              <span style={{ color: '#ea6d5c' }}>*</span>
-            ) : (
-              <span style={{ color: '#fff' }}>*</span>
-            )}
-            {label}
+      <div className="TestOrderField_class">
+        <div className="pc-custom-field-wrap">
+          <div>
+            <div className="label">
+              {required ? (
+                <span style={{ color: '#ea6d5c' }}>*</span>
+              ) : (
+                <span style={{ color: '#fff' }}>*</span>
+              )}
+              {label}
+            </div>
+            <Input
+              onClick={this.newhandleAdd}
+              readOnly
+              value={this.state.detailname}
+              placeholder="请选择"
+            />
           </div>
-          <Input
-            onClick={this.newhandleAdd}
-            readOnly
-            value={this.state.detailname}
-            placeholder="请选择"
-          />
-        </div>
-        {/* <div className="label">{label}</div> */}
-        {/* {field.getProp('viewMode') ? (
+          {/* <div className="label">{label}</div> */}
+          {/* {field.getProp('viewMode') ? (
           field.getValue()
             ) :
                 (
@@ -1468,228 +1540,229 @@ const FormField: ISwapFormField = {
             value={this.state.leaveLongVal}
           />
         )} */}
-        {/* {field?.props?.viewMode ? (
+          {/* {field?.props?.viewMode ? (
           field.getValue()
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}
-        <div style={{ marginTop: '10px' }}>
-          <Table
-            scroll={{ x: '1500px' }}
-            components={components}
-            rowClassName={() => 'editable-row'}
-            bordered
-            dataSource={dataSource}
-            columns={columns as ColumnTypes}
-            pagination={false}
-          />
-          <Button
-            onClick={this.handleAdd}
-            type="primary"
-            style={{ marginBottom: 16, marginTop: 16 }}
-          >
-            添加明细
-          </Button>
-          <div className="label" style={{ marginTop: '10px' }}>
-            不含税金额合计(元)
-          </div>
-          <div>
-            <Input
-              readOnly
-              value={this.state.Inputmoney2}
-              placeholder="自动计算"
+          <div style={{ marginTop: '10px' }}>
+            <Table
+              scroll={{ x: '1500px' }}
+              components={components}
+              rowClassName={() => 'editable-row'}
+              bordered
+              dataSource={dataSource}
+              columns={columns as ColumnTypes}
+              pagination={false}
             />
-          </div>
-          <div className="label" style={{ marginTop: '10px' }}>
-            含税金额合计(元)
-          </div>
-          <div>
-            <Input
-              readOnly
-              value={this.state.Inputmoney1}
-              placeholder="自动计算"
-            />
-          </div>
-        </div>
-
-        <Modal
-          title="关联"
-          width={1000}
-          visible={this.state.isModalVisible}
-          footer={[
-            <Button key="back" onClick={this.handleCancel}>
-              返回
-            </Button>,
             <Button
-              key="submit"
+              onClick={this.handleAdd}
               type="primary"
-              loading={this.state.loading}
-              onClick={this.handleOk}
+              style={{ marginBottom: 16, marginTop: 16 }}
             >
-              确定
-            </Button>,
-          ]}
-          onCancel={this.handleCancel}
-        >
-          {/* <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
+              添加明细
+            </Button>
+            <div className="label" style={{ marginTop: '10px' }}>
+              不含税金额合计(元)
+            </div>
+            <div>
+              <Input
+                readOnly
+                value={this.state.Inputmoney2}
+                placeholder="自动计算"
+              />
+            </div>
+            <div className="label" style={{ marginTop: '10px' }}>
+              含税金额合计(元)
+            </div>
+            <div>
+              <Input
+                readOnly
+                value={this.state.Inputmoney1}
+                placeholder="自动计算"
+              />
+            </div>
+          </div>
+
+          <Modal
+            title="关联"
+            width={1000}
+            visible={this.state.isModalVisible}
+            footer={[
+              <Button key="back" onClick={this.handleCancel}>
+                返回
+              </Button>,
+              <Button
+                key="submit"
+                type="primary"
+                loading={this.state.loading}
+                onClick={this.handleOk}
+              >
+                确定
+              </Button>,
+            ]}
+            onCancel={this.handleCancel}
+          >
+            {/* <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
             <TabPane tab="采购合同" key="a"></TabPane>
             <TabPane tab="采购申请" key="b"></TabPane>
           </Tabs> */}
 
-          <Search
-            placeholder="请输入"
-            allowClear
-            enterButton="搜索"
-            size="large"
-            onSearch={this.onSearch}
-          />
-          <Table
-            scroll={{ x: '1500px' }}
-            rowSelection={{
-              type: 'radio',
-              ...rowSelection,
-            }}
-            rowKey={record => record.id}
-            columns={mycolumns}
-            dataSource={this.state.listData}
-            loading={this.state.loading}
-            pagination={false}
-          ></Table>
-          <Pagination
-            defaultCurrent={1}
-            total={this.state.total2}
-            hideOnSinglePage={true}
-            className="pagination"
-            onChange={this.onChangepage}
-          />
-        </Modal>
-        {/* 树形 */}
-
-        <Modal
-          title="选择物资"
-          width={1000}
-          visible={this.state.isModalVisibletree}
-          footer={[
-            <Button key="back" onClick={this.handleCanceltree}>
-              返回
-            </Button>,
-            <Button
-              key="submit"
-              type="primary"
+            <Search
+              placeholder="请输入"
+              allowClear
+              enterButton="搜索"
+              size="large"
+              onSearch={this.onSearch}
+            />
+            <Table
+              scroll={{ x: '1500px' }}
+              rowSelection={{
+                type: 'radio',
+                ...rowSelection,
+              }}
+              rowKey={record => record.id}
+              columns={mycolumns}
+              dataSource={this.state.listData}
               loading={this.state.loading}
-              onClick={this.handleOktree}
-            >
-              确定
-            </Button>,
-          ]}
-          onCancel={this.handleCanceltree}
-        >
-          <Layout>
-            <Sider className="newside_new">
-              <Tree
-                defaultExpandedKeys={['0']}
-                blockNode
-                onSelect={onSelect}
-                onExpand={onExpand}
-                treeData={this.state.treeData}
-              />
-            </Sider>
-            <Content>
-              <div className="header_tab">
-                <Search
-                  placeholder="请输入"
-                  allowClear
-                  enterButton="搜索"
-                  size="large"
-                  onSearch={this.onSearchcd}
-                />
-                <Button onClick={this.newAdd} size="large" type="primary">
-                  新增
-                </Button>
-              </div>
-              <Table
-                scroll={{ x: '1500px' }}
-                rowSelection={{
-                  type: 'checkbox',
-                  ...rowSelectiontree,
-                }}
-                rowKey={record => record.id}
-                columns={mycolumnstree}
-                dataSource={this.state.treelistData}
-                loading={this.state.loading}
-                pagination={false}
-              ></Table>
-              <Pagination
-                defaultCurrent={1}
-                total={this.state.total3}
-                hideOnSinglePage={true}
-                className="pagination"
-                onChange={this.onChangepagetree}
-              />
-            </Content>
-          </Layout>
-        </Modal>
-        {/* 新增个 */}
-        <Modal
-          className="newModal"
-          onCancel={this.handlenewCancel}
-          visible={this.state.visibleModal}
-          width={1000}
-          title="新增"
-        >
-          <Form
-            initialValues={{ remember: true }}
-            layout="vertical"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
-          >
-            <Form.Item
-              label="物品名称"
-              name="name"
-              rules={[{ required: true, message: '请填写单位名称' }]}
-            >
-              <Input placeholder="请填写单位名称" />
-            </Form.Item>
-            <Form.Item
-              label="单位"
-              name="unit"
-              rules={[{ required: true, message: '请填写单位名称' }]}
-            >
-              <Input placeholder="请填写单位名称" />
-            </Form.Item>
-            <Form.Item
-              label="规格型号"
-              name="size"
-              rules={[{ required: true, message: '请填写单位名称' }]}
-            >
-              <Input placeholder="请填写单位名称" />
-            </Form.Item>
-            <Form.Item
-              label="物品类型"
-              name="type"
-              rules={[{ required: true, message: '请填写单位名称' }]}
-            >
-              <TreeSelect
-                style={{ width: '100%' }}
-                value={this.state.value}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={this.state.treeData}
-                placeholder="请选择"
-                treeDefaultExpandAll
-                onChange={onChangetree}
-              />
-            </Form.Item>
+              pagination={false}
+            ></Table>
+            <Pagination
+              defaultCurrent={1}
+              total={this.state.total2}
+              hideOnSinglePage={true}
+              className="pagination"
+              onChange={this.onChangepage}
+            />
+          </Modal>
+          {/* 树形 */}
 
-            <Form.Item className="newForm">
-              <Button type="primary" htmlType="submit">
-                确认
-              </Button>
-              <Button type="primary" onClick={this.handlenewCancel}>
-                取消
-              </Button>
-            </Form.Item>
-          </Form>
-        </Modal>
+          <Modal
+            title="选择物资"
+            width={1000}
+            visible={this.state.isModalVisibletree}
+            footer={[
+              <Button key="back" onClick={this.handleCanceltree}>
+                返回
+              </Button>,
+              <Button
+                key="submit"
+                type="primary"
+                loading={this.state.loading}
+                onClick={this.handleOktree}
+              >
+                确定
+              </Button>,
+            ]}
+            onCancel={this.handleCanceltree}
+          >
+            <Layout>
+              <Sider className="newside_new">
+                <Tree
+                  defaultExpandedKeys={['0']}
+                  blockNode
+                  onSelect={onSelect}
+                  onExpand={onExpand}
+                  treeData={this.state.treeData}
+                />
+              </Sider>
+              <Content>
+                <div className="header_tab_class">
+                  <Search
+                    placeholder="请输入"
+                    allowClear
+                    enterButton="搜索"
+                    size="large"
+                    onSearch={this.onSearchcd}
+                  />
+                  <Button onClick={this.newAdd} size="large" type="primary">
+                    新增
+                  </Button>
+                </div>
+                <Table
+                  scroll={{ x: '1500px' }}
+                  rowSelection={{
+                    type: 'checkbox',
+                    ...rowSelectiontree,
+                  }}
+                  rowKey={record => record.id}
+                  columns={mycolumnstree}
+                  dataSource={this.state.treelistData}
+                  loading={this.state.loading}
+                  pagination={false}
+                ></Table>
+                <Pagination
+                  defaultCurrent={1}
+                  total={this.state.total3}
+                  hideOnSinglePage={true}
+                  className="pagination"
+                  onChange={this.onChangepagetree}
+                />
+              </Content>
+            </Layout>
+          </Modal>
+          {/* 新增个 */}
+          <Modal
+            className="newModal_class"
+            onCancel={this.handlenewCancel}
+            visible={this.state.visibleModal}
+            width={1000}
+            title="新增"
+          >
+            <Form
+              initialValues={{ remember: true }}
+              layout="vertical"
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
+            >
+              <Form.Item
+                label="物品名称"
+                name="name"
+                rules={[{ required: true, message: '请填写单位名称' }]}
+              >
+                <Input placeholder="请填写单位名称" />
+              </Form.Item>
+              <Form.Item
+                label="单位"
+                name="unit"
+                rules={[{ required: true, message: '请填写单位名称' }]}
+              >
+                <Input placeholder="请填写单位名称" />
+              </Form.Item>
+              <Form.Item
+                label="规格型号"
+                name="size"
+                rules={[{ required: true, message: '请填写单位名称' }]}
+              >
+                <Input placeholder="请填写单位名称" />
+              </Form.Item>
+              <Form.Item
+                label="物品类型"
+                name="type"
+                rules={[{ required: true, message: '请填写单位名称' }]}
+              >
+                <TreeSelect
+                  style={{ width: '100%' }}
+                  value={this.state.value}
+                  dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                  treeData={this.state.treeData}
+                  placeholder="请选择"
+                  treeDefaultExpandAll
+                  onChange={onChangetree}
+                />
+              </Form.Item>
+
+              <Form.Item className="newForm">
+                <Button type="primary" htmlType="submit">
+                  确认
+                </Button>
+                <Button type="primary" onClick={this.handlenewCancel}>
+                  取消
+                </Button>
+              </Form.Item>
+            </Form>
+          </Modal>
+        </div>
       </div>
     );
   },

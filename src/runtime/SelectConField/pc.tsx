@@ -169,11 +169,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
   if (editable) {
     childNode = editing ? (
-      <Form.Item
-        style={{ margin: 0 }}
-        name={dataIndex}
-        
-      >
+      <Form.Item style={{ margin: 0 }} name={dataIndex}>
         {/*    */}
         {/*   */}
         {/* <Input ref={inputRef} /> */}
@@ -613,16 +609,18 @@ const FormField: ISwapFormField = {
     }
 
     return (
-      <div className="pc-custom-field-wrap">
-        <div className="label">
-          {required ? (
-            <span style={{ color: '#ea6d5c' }}>*</span>
-          ) : (
-            <span style={{ color: '#fff' }}>*</span>
-          )}{' '}
-          {label}
-        </div>
-        {/* {field.getProp('viewMode') ? (
+      <div className="SelectConField_class">
+        {' '}
+        <div className="pc-custom-field-wrap">
+          <div className="label">
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}{' '}
+            {label}
+          </div>
+          {/* {field.getProp('viewMode') ? (
           field.getValue()
             ) :
                 (
@@ -633,62 +631,63 @@ const FormField: ISwapFormField = {
             value={this.state.leaveLongVal}
           />
         )} */}
-        <div>
-          <Input
-            readOnly
-            value={this.state.Inputvalue}
-            onClick={this.handleAdd}
-            placeholder="请选择合同"
-          />
-        </div>
+          <div>
+            <Input
+              readOnly
+              value={this.state.Inputvalue}
+              onClick={this.handleAdd}
+              placeholder="请选择合同"
+            />
+          </div>
 
-        <Modal
-          title="选择合同"
-          width={1000}
-          visible={this.state.isModalVisible}
-          footer={[
-            <Button key="back" onClick={this.handleCancel}>
-              返回
-            </Button>,
-            <Button
-              key="submit"
-              type="primary"
+          <Modal
+            title="选择合同"
+            width={1000}
+            visible={this.state.isModalVisible}
+            footer={[
+              <Button key="back" onClick={this.handleCancel}>
+                返回
+              </Button>,
+              <Button
+                key="submit"
+                type="primary"
+                loading={this.state.loading}
+                onClick={this.handleOk}
+              >
+                确定
+              </Button>,
+            ]}
+            onCancel={this.handleCancel}
+          >
+            <Search
+              placeholder="请输入"
+              allowClear
+              enterButton="搜索"
+              size="large"
+              onSearch={this.onSearch}
+            />
+            <Table
+              scroll={{ x: '1500px' }}
+              onRow={record => {
+                return {
+                  onClick: this.rowClick.bind(this, record),
+                };
+              }}
+              rowKey={record => record.id}
+              columns={mycolumns}
+              dataSource={this.state.listData}
               loading={this.state.loading}
-              onClick={this.handleOk}
-            >
-              确定
-            </Button>,
-          ]}
-          onCancel={this.handleCancel}
-        >
-          <Search
-            placeholder="请输入"
-            allowClear
-            enterButton="搜索"
-            size="large"
-            onSearch={this.onSearch}
-          />
-          <Table
-            scroll={{ x: '1500px' }}
-            onRow={record => {
-              return {
-                onClick: this.rowClick.bind(this, record),
-              };
-            }}
-            rowKey={record => record.id}
-            columns={mycolumns}
-            dataSource={this.state.listData}
-            loading={this.state.loading}
-            pagination={false}
-          ></Table>
-          <Pagination
-            defaultCurrent={1}
-            total={this.state.total2}
-            hideOnSinglePage={true}
-            className="pagination"
-            onChange={this.onChangepage}
-          />
-        </Modal>
+              pagination={false}
+            ></Table>
+            <Pagination
+              defaultCurrent={1}
+              total={this.state.total2}
+              hideOnSinglePage={true}
+              className="pagination"
+              onChange={this.onChangepage}
+            />
+          </Modal>
+        </div>
       </div>
     );
   },

@@ -886,79 +886,82 @@ const FormField: ISwapFormField = {
       );
     }
     return (
-      <div className="pc-custom-field-wrap">
-        <div>
-          <div className="label">
-            {required ? (
-              <span style={{ color: '#ea6d5c' }}>*</span>
-            ) : (
-              <span style={{ color: '#fff' }}>*</span>
-            )}
-            {label}
+      <div className="SelecTickefaField_class">
+        {' '}
+        <div className="pc-custom-field-wrap">
+          <div>
+            <div className="label">
+              {required ? (
+                <span style={{ color: '#ea6d5c' }}>*</span>
+              ) : (
+                <span style={{ color: '#fff' }}>*</span>
+              )}
+              {label}
+            </div>
+            <Input
+              onClick={this.newhandleAdd}
+              readOnly
+              value={this.state.detailname}
+              placeholder="请选择"
+            />
           </div>
-          <Input
-            onClick={this.newhandleAdd}
-            readOnly
-            value={this.state.detailname}
-            placeholder="请选择"
-          />
-        </div>
 
-        <Modal
-          title="关联"
-          width={1000}
-          visible={this.state.isModalVisible}
-          footer={[
-            <Button key="back" onClick={this.handleCancel}>
-              返回
-            </Button>,
-            <Button
-              key="submit"
-              type="primary"
+          <Modal
+            title="关联"
+            width={1000}
+            visible={this.state.isModalVisible}
+            footer={[
+              <Button key="back" onClick={this.handleCancel}>
+                返回
+              </Button>,
+              <Button
+                key="submit"
+                type="primary"
+                loading={this.state.loading}
+                onClick={this.handleOk}
+              >
+                确定
+              </Button>,
+            ]}
+            onCancel={this.handleCancel}
+          >
+            <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
+              <TabPane tab="材料合同" key="a"></TabPane>
+              <TabPane tab="劳务合同" key="b"></TabPane>
+              <TabPane tab="分包合同 " key="c"></TabPane>
+              <TabPane tab="租赁合同" key="d"></TabPane>
+              <TabPane tab="收入合同" key="e"></TabPane>
+            </Tabs>
+
+            <Search
+              placeholder="请输入"
+              allowClear
+              enterButton="搜索"
+              size="large"
+              onSearch={this.onSearch}
+            />
+            <Table
+              scroll={{ x: '1500px' }}
+              rowSelection={{
+                type: 'radio',
+                ...rowSelection,
+              }}
+              rowKey={record => record.id}
+              columns={mycolumns}
+              dataSource={this.state.listData}
               loading={this.state.loading}
-              onClick={this.handleOk}
-            >
-              确定
-            </Button>,
-          ]}
-          onCancel={this.handleCancel}
-        >
-          <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
-            <TabPane tab="材料合同" key="a"></TabPane>
-            <TabPane tab="劳务合同" key="b"></TabPane>
-            <TabPane tab="分包合同 " key="c"></TabPane>
-            <TabPane tab="租赁合同" key="d"></TabPane>
-            <TabPane tab="收入合同" key="e"></TabPane>
-          </Tabs>
-
-          <Search
-            placeholder="请输入"
-            allowClear
-            enterButton="搜索"
-            size="large"
-            onSearch={this.onSearch}
-          />
-          <Table
-            scroll={{ x: '1500px' }}
-            rowSelection={{
-              type: 'radio',
-              ...rowSelection,
-            }}
-            rowKey={record => record.id}
-            columns={mycolumns}
-            dataSource={this.state.listData}
-            loading={this.state.loading}
-            pagination={false}
-          ></Table>
-          <Pagination
-            defaultCurrent={1}
-            total={this.state.total2}
-            hideOnSinglePage={true}
-            className="pagination"
-            onChange={this.onChangepage}
-          />
-        </Modal>
-        {/* 树形 */}
+              pagination={false}
+            ></Table>
+            <Pagination
+              defaultCurrent={1}
+              total={this.state.total2}
+              hideOnSinglePage={true}
+              className="pagination"
+              onChange={this.onChangepage}
+            />
+          </Modal>
+          {/* 树形 */}
+        </div>
       </div>
     );
   },

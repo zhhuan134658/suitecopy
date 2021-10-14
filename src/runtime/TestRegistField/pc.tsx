@@ -239,11 +239,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
   if (editable) {
     childNode = editing ? (
-      <Form.Item
-        style={{ margin: 0 }}
-        name={dataIndex}
-       
-      >
+      <Form.Item style={{ margin: 0 }} name={dataIndex}>
         {/*    */}
         {/*   */}
         {/* <Input ref={inputRef} /> */}
@@ -751,16 +747,17 @@ const FormField: ISwapFormField = {
     }
 
     return (
-      <div className="pc-custom-field-wrap">
-        <div className="label">
-          {required ? (
-            <span style={{ color: '#ea6d5c' }}>*</span>
-          ) : (
-            <span style={{ color: '#fff' }}>*</span>
-          )}{' '}
-          {label}
-        </div>
-        {/* {field.getProp('viewMode') ? (
+      <div className="TestRegistField_class">
+        <div className="pc-custom-field-wrap">
+          <div className="label">
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}{' '}
+            {label}
+          </div>
+          {/* {field.getProp('viewMode') ? (
           field.getValue()
             ) :
                 (
@@ -771,121 +768,122 @@ const FormField: ISwapFormField = {
             value={this.state.leaveLongVal}
           />
         )} */}
-        <div>
-          <Input
-            readOnly
-            value={this.state.detailname}
-            onClick={this.handleAdd}
-            placeholder="请选择"
-          />
-        </div>
+          <div>
+            <Input
+              readOnly
+              value={this.state.detailname}
+              onClick={this.handleAdd}
+              placeholder="请选择"
+            />
+          </div>
 
-        <Modal
-          title="选择"
-          width={1000}
-          visible={this.state.isModalVisible}
-          footer={[
-            <Button key="back" onClick={this.handleCancel}>
-              返回
-            </Button>,
-            <Button
-              key="submit"
-              type="primary"
-              loading={this.state.loading}
-              onClick={this.handleOk}
-            >
-              确定
-            </Button>,
-          ]}
-          onCancel={this.handleCancel}
-        >
-          <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
-            <TabPane tab="租赁合同" key="b">
-              <Search
-                placeholder="请输入"
-                allowClear
-                enterButton="搜索"
-                size="large"
-                onSearch={this.onSearch}
-              />
-              <Table
-                scroll={{ x: '1500px' }}
-                rowSelection={{
-                  type: 'radio',
-                  ...rowSelection,
-                }}
-                rowKey={record => record.id}
-                columns={mycolumnsb}
-                dataSource={this.state.listData}
+          <Modal
+            title="选择"
+            width={1000}
+            visible={this.state.isModalVisible}
+            footer={[
+              <Button key="back" onClick={this.handleCancel}>
+                返回
+              </Button>,
+              <Button
+                key="submit"
+                type="primary"
                 loading={this.state.loading}
-                pagination={false}
-              ></Table>
-              <Pagination
-                defaultCurrent={1}
-                total={this.state.total2}
-                hideOnSinglePage={true}
-                className="pagination"
-                onChange={this.onChangepage}
-              />
-            </TabPane>
-            <TabPane tab="租赁结算" key="a">
-              <Search
-                placeholder="请输入"
-                allowClear
-                enterButton="搜索"
-                size="large"
-                onSearch={this.onSearch}
-              />
-              <Table
-                scroll={{ x: '1500px' }}
-                rowSelection={{
-                  type: 'radio',
-                  ...rowSelection,
-                }}
-                rowKey={record => record.id}
-                columns={mycolumnsa}
-                dataSource={this.state.listData}
-                loading={this.state.loading}
-                pagination={false}
-              ></Table>
-              <Pagination
-                defaultCurrent={1}
-                total={this.state.total2}
-                hideOnSinglePage={true}
-                className="pagination"
-                onChange={this.onChangepage}
-              />
-            </TabPane>
-            <TabPane tab="机械费结算" key="c">
-              <Search
-                placeholder="请输入"
-                allowClear
-                enterButton="搜索"
-                size="large"
-                onSearch={this.onSearch}
-              />
-              <Table
-                scroll={{ x: '1500px' }}
-                rowSelection={{
-                  type: 'radio',
-                  ...rowSelection,
-                }}
-                rowKey={record => record.id}
-                columns={mycolumnsc}
-                dataSource={this.state.listData}
-                loading={this.state.loading}
-                pagination={false}
-              ></Table>
-              <Pagination
-                defaultCurrent={1}
-                total={this.state.total2}
-                hideOnSinglePage={true}
-                className="pagination"
-                onChange={this.onChangepage}
-              />
-            </TabPane>
-          </Tabs>
-        </Modal>
+                onClick={this.handleOk}
+              >
+                确定
+              </Button>,
+            ]}
+            onCancel={this.handleCancel}
+          >
+            <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
+              <TabPane tab="租赁合同" key="b">
+                <Search
+                  placeholder="请输入"
+                  allowClear
+                  enterButton="搜索"
+                  size="large"
+                  onSearch={this.onSearch}
+                />
+                <Table
+                  scroll={{ x: '1500px' }}
+                  rowSelection={{
+                    type: 'radio',
+                    ...rowSelection,
+                  }}
+                  rowKey={record => record.id}
+                  columns={mycolumnsb}
+                  dataSource={this.state.listData}
+                  loading={this.state.loading}
+                  pagination={false}
+                ></Table>
+                <Pagination
+                  defaultCurrent={1}
+                  total={this.state.total2}
+                  hideOnSinglePage={true}
+                  className="pagination"
+                  onChange={this.onChangepage}
+                />
+              </TabPane>
+              <TabPane tab="租赁结算" key="a">
+                <Search
+                  placeholder="请输入"
+                  allowClear
+                  enterButton="搜索"
+                  size="large"
+                  onSearch={this.onSearch}
+                />
+                <Table
+                  scroll={{ x: '1500px' }}
+                  rowSelection={{
+                    type: 'radio',
+                    ...rowSelection,
+                  }}
+                  rowKey={record => record.id}
+                  columns={mycolumnsa}
+                  dataSource={this.state.listData}
+                  loading={this.state.loading}
+                  pagination={false}
+                ></Table>
+                <Pagination
+                  defaultCurrent={1}
+                  total={this.state.total2}
+                  hideOnSinglePage={true}
+                  className="pagination"
+                  onChange={this.onChangepage}
+                />
+              </TabPane>
+              <TabPane tab="机械费结算" key="c">
+                <Search
+                  placeholder="请输入"
+                  allowClear
+                  enterButton="搜索"
+                  size="large"
+                  onSearch={this.onSearch}
+                />
+                <Table
+                  scroll={{ x: '1500px' }}
+                  rowSelection={{
+                    type: 'radio',
+                    ...rowSelection,
+                  }}
+                  rowKey={record => record.id}
+                  columns={mycolumnsc}
+                  dataSource={this.state.listData}
+                  loading={this.state.loading}
+                  pagination={false}
+                ></Table>
+                <Pagination
+                  defaultCurrent={1}
+                  total={this.state.total2}
+                  hideOnSinglePage={true}
+                  className="pagination"
+                  onChange={this.onChangepage}
+                />
+              </TabPane>
+            </Tabs>
+          </Modal>
+        </div>
       </div>
     );
   },

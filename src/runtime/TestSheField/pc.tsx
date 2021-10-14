@@ -782,24 +782,25 @@ const FormField: ISwapFormField = {
       );
     }
     return (
-      <div className="pc-custom-field-wrap">
-        <div className="label">
-          {required ? (
-            <span style={{ color: '#ea6d5c' }}>*</span>
-          ) : (
-            <span style={{ color: '#fff' }}>*</span>
-          )}
-          {label}
-        </div>
-        <div>
-          <Input
-            onClick={this.handleAdd}
-            readOnly
-            value={this.state.Inputmoney1}
-            placeholder="请选择"
-          />
-        </div>
-        {/* {field.getProp('viewMode') ? (
+      <div className="TestSheField_class">
+        <div className="pc-custom-field-wrap">
+          <div className="label">
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}
+            {label}
+          </div>
+          <div>
+            <Input
+              onClick={this.handleAdd}
+              readOnly
+              value={this.state.Inputmoney1}
+              placeholder="请选择"
+            />
+          </div>
+          {/* {field.getProp('viewMode') ? (
           field.getValue()
             ) :
                 (
@@ -810,12 +811,12 @@ const FormField: ISwapFormField = {
             value={this.state.leaveLongVal}
           />
         )} */}
-        {/* {field?.props?.viewMode ? (
+          {/* {field?.props?.viewMode ? (
           field.getValue()
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}
-        {/* <div>
+          {/* <div>
           <Table scroll={{ x: '1500px' }}
             components={components}
             rowClassName={() => 'editable-row'}
@@ -852,65 +853,66 @@ const FormField: ISwapFormField = {
           </div>
         </div> */}
 
-        <Modal
-          title="选择物品"
-          width={1000}
-          visible={this.state.isModalVisible}
-          footer={[
-            <Button key="back" onClick={this.handleCancel}>
-              返回
-            </Button>,
-            <Button
-              key="submit"
-              type="primary"
-              loading={this.state.loading}
-              onClick={this.handleOk}
-            >
-              确定
-            </Button>,
-          ]}
-          onCancel={this.handleCancel}
-        >
-          <Layout>
-            <Sider className="newside_new">
-              <Tree
-                defaultExpandedKeys={['0']}
-                blockNode
-                onSelect={onSelect}
-                onExpand={onExpand}
-                treeData={this.state.treeData}
-              />
-            </Sider>
-            <Content>
-              <Search
-                placeholder="请输入"
-                allowClear
-                enterButton="搜索"
-                size="large"
-                onSearch={this.onSearch}
-              />
-              <Table
-                scroll={{ x: '1500px' }}
-                rowSelection={{
-                  type: 'radio',
-                  ...rowSelection,
-                }}
-                rowKey={record => record.id}
-                columns={mycolumns}
-                dataSource={this.state.listData}
+          <Modal
+            title="选择物品"
+            width={1000}
+            visible={this.state.isModalVisible}
+            footer={[
+              <Button key="back" onClick={this.handleCancel}>
+                返回
+              </Button>,
+              <Button
+                key="submit"
+                type="primary"
                 loading={this.state.loading}
-                pagination={false}
-              ></Table>
-              <Pagination
-                defaultCurrent={1}
-                total={this.state.total2}
-                hideOnSinglePage={true}
-                className="pagination"
-                onChange={this.onChangepage}
-              />
-            </Content>
-          </Layout>
-        </Modal>
+                onClick={this.handleOk}
+              >
+                确定
+              </Button>,
+            ]}
+            onCancel={this.handleCancel}
+          >
+            <Layout>
+              <Sider className="newside_new">
+                <Tree
+                  defaultExpandedKeys={['0']}
+                  blockNode
+                  onSelect={onSelect}
+                  onExpand={onExpand}
+                  treeData={this.state.treeData}
+                />
+              </Sider>
+              <Content>
+                <Search
+                  placeholder="请输入"
+                  allowClear
+                  enterButton="搜索"
+                  size="large"
+                  onSearch={this.onSearch}
+                />
+                <Table
+                  scroll={{ x: '1500px' }}
+                  rowSelection={{
+                    type: 'radio',
+                    ...rowSelection,
+                  }}
+                  rowKey={record => record.id}
+                  columns={mycolumns}
+                  dataSource={this.state.listData}
+                  loading={this.state.loading}
+                  pagination={false}
+                ></Table>
+                <Pagination
+                  defaultCurrent={1}
+                  total={this.state.total2}
+                  hideOnSinglePage={true}
+                  className="pagination"
+                  onChange={this.onChangepage}
+                />
+              </Content>
+            </Layout>
+          </Modal>
+        </div>
       </div>
     );
   },

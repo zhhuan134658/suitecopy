@@ -907,16 +907,18 @@ const FormField: ISwapFormField = {
       );
     }
     return (
-      <div className="pc-custom-field-wrap">
-        <div className="label">
-          {required ? (
-            <span style={{ color: '#ea6d5c' }}>*</span>
-          ) : (
-            <span style={{ color: '#fff' }}>*</span>
-          )}
-          {label}
-        </div>
-        {/* {field.getProp('viewMode') ? (
+      <div className="TestPlanField_class">
+        {' '}
+        <div className="pc-custom-field-wrap">
+          <div className="label">
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}
+            {label}
+          </div>
+          {/* {field.getProp('viewMode') ? (
           field.getValue()
             ) :
                 (
@@ -927,154 +929,155 @@ const FormField: ISwapFormField = {
             value={this.state.leaveLongVal}
           />
         )} */}
-        {/* {field?.props?.viewMode ? (
+          {/* {field?.props?.viewMode ? (
           field.getValue()
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}
-        <div>
-          <Table
-            scroll={{ x: '1500px' }}
-            components={components}
-            rowClassName={() => 'editable-row'}
-            bordered
-            dataSource={dataSource}
-            columns={columns as ColumnTypes}
-            pagination={false}
-          />
-          <Button
-            onClick={this.handleAdd}
-            type="primary"
-            style={{ marginBottom: 16, marginTop: 16 }}
-          >
-            添加明细
-          </Button>
-        </div>
-        <Modal
-          title="选择物品"
-          width={1000}
-          visible={this.state.isModalVisible}
-          footer={[
-            <Button key="back" onClick={this.handleCancel}>
-              返回
-            </Button>,
+          <div>
+            <Table
+              scroll={{ x: '1500px' }}
+              components={components}
+              rowClassName={() => 'editable-row'}
+              bordered
+              dataSource={dataSource}
+              columns={columns as ColumnTypes}
+              pagination={false}
+            />
             <Button
-              key="submit"
+              onClick={this.handleAdd}
               type="primary"
-              loading={this.state.loading}
-              onClick={this.handleOk}
+              style={{ marginBottom: 16, marginTop: 16 }}
             >
-              确定
-            </Button>,
-          ]}
-          onCancel={this.handleCancel}
-        >
-          <Layout>
-            <Sider className="newside_new">
-              <Tree
-                defaultExpandedKeys={['0']}
-                blockNode
-                onSelect={onSelect}
-                onExpand={onExpand}
-                treeData={this.state.treeData}
-              />
-            </Sider>
-            <Content>
-              <div className="header_tab">
-                <Search
-                  placeholder="请输入"
-                  allowClear
-                  enterButton="搜索"
-                  size="large"
-                  onSearch={this.onSearch}
-                />
-                <Button onClick={this.newAdd} size="large" type="primary">
-                  新增
-                </Button>
-              </div>
-              <Table
-                scroll={{ x: '1500px' }}
-                rowSelection={{
-                  type: 'checkbox',
-                  ...rowSelection,
-                }}
-                rowKey={record => record.id}
-                columns={mycolumns}
-                dataSource={this.state.listData}
+              添加明细
+            </Button>
+          </div>
+          <Modal
+            title="选择物品"
+            width={1000}
+            visible={this.state.isModalVisible}
+            footer={[
+              <Button key="back" onClick={this.handleCancel}>
+                返回
+              </Button>,
+              <Button
+                key="submit"
+                type="primary"
                 loading={this.state.loading}
-                pagination={false}
-              ></Table>
-              <Pagination
-                defaultCurrent={1}
-                total={this.state.total2}
-                hideOnSinglePage={true}
-                className="pagination"
-                onChange={this.onChangepage}
-              />
-            </Content>
-          </Layout>
-        </Modal>{' '}
-        {/* 新增个 */}
-        <Modal
-          className="newModal"
-          onCancel={this.handlenewCancel}
-          visible={this.state.visibleModal}
-          width={1000}
-          title="新增"
-        >
-          <Form
-            initialValues={{ remember: true }}
-            layout="vertical"
-            onFinish={onFinish}
-            onFinishFailed={onFinishFailed}
+                onClick={this.handleOk}
+              >
+                确定
+              </Button>,
+            ]}
+            onCancel={this.handleCancel}
           >
-            <Form.Item
-              label="物品名称"
-              name="name"
-              rules={[{ required: true, message: '请填写单位名称' }]}
+            <Layout>
+              <Sider className="newside_new">
+                <Tree
+                  defaultExpandedKeys={['0']}
+                  blockNode
+                  onSelect={onSelect}
+                  onExpand={onExpand}
+                  treeData={this.state.treeData}
+                />
+              </Sider>
+              <Content>
+                <div className="header_tab_class">
+                  <Search
+                    placeholder="请输入"
+                    allowClear
+                    enterButton="搜索"
+                    size="large"
+                    onSearch={this.onSearch}
+                  />
+                  <Button onClick={this.newAdd} size="large" type="primary">
+                    新增
+                  </Button>
+                </div>
+                <Table
+                  scroll={{ x: '1500px' }}
+                  rowSelection={{
+                    type: 'checkbox',
+                    ...rowSelection,
+                  }}
+                  rowKey={record => record.id}
+                  columns={mycolumns}
+                  dataSource={this.state.listData}
+                  loading={this.state.loading}
+                  pagination={false}
+                ></Table>
+                <Pagination
+                  defaultCurrent={1}
+                  total={this.state.total2}
+                  hideOnSinglePage={true}
+                  className="pagination"
+                  onChange={this.onChangepage}
+                />
+              </Content>
+            </Layout>
+          </Modal>{' '}
+          {/* 新增个 */}
+          <Modal
+            className="newModal_class"
+            onCancel={this.handlenewCancel}
+            visible={this.state.visibleModal}
+            width={1000}
+            title="新增"
+          >
+            <Form
+              initialValues={{ remember: true }}
+              layout="vertical"
+              onFinish={onFinish}
+              onFinishFailed={onFinishFailed}
             >
-              <Input placeholder="请填写单位名称" />
-            </Form.Item>
-            <Form.Item
-              label="单位"
-              name="unit"
-              rules={[{ required: true, message: '请填写单位名称' }]}
-            >
-              <Input placeholder="请填写单位名称" />
-            </Form.Item>
-            <Form.Item
-              label="规格型号"
-              name="size"
-              rules={[{ required: true, message: '请填写单位名称' }]}
-            >
-              <Input placeholder="请填写单位名称" />
-            </Form.Item>
-            <Form.Item
-              label="物品类型"
-              name="type"
-              rules={[{ required: true, message: '请填写单位名称' }]}
-            >
-              <TreeSelect
-                style={{ width: '100%' }}
-                value={this.state.value}
-                dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
-                treeData={this.state.treeData}
-                placeholder="请选择"
-                treeDefaultExpandAll
-                onChange={onChangetree}
-              />
-            </Form.Item>
+              <Form.Item
+                label="物品名称"
+                name="name"
+                rules={[{ required: true, message: '请填写单位名称' }]}
+              >
+                <Input placeholder="请填写单位名称" />
+              </Form.Item>
+              <Form.Item
+                label="单位"
+                name="unit"
+                rules={[{ required: true, message: '请填写单位名称' }]}
+              >
+                <Input placeholder="请填写单位名称" />
+              </Form.Item>
+              <Form.Item
+                label="规格型号"
+                name="size"
+                rules={[{ required: true, message: '请填写单位名称' }]}
+              >
+                <Input placeholder="请填写单位名称" />
+              </Form.Item>
+              <Form.Item
+                label="物品类型"
+                name="type"
+                rules={[{ required: true, message: '请填写单位名称' }]}
+              >
+                <TreeSelect
+                  style={{ width: '100%' }}
+                  value={this.state.value}
+                  dropdownStyle={{ maxHeight: 400, overflow: 'auto' }}
+                  treeData={this.state.treeData}
+                  placeholder="请选择"
+                  treeDefaultExpandAll
+                  onChange={onChangetree}
+                />
+              </Form.Item>
 
-            <Form.Item className="newForm">
-              <Button type="primary" htmlType="submit">
-                确认
-              </Button>
-              <Button type="primary" onClick={this.handlenewCancel}>
-                取消
-              </Button>
-            </Form.Item>
-          </Form>
-        </Modal>
+              <Form.Item className="newForm">
+                <Button type="primary" htmlType="submit">
+                  确认
+                </Button>
+                <Button type="primary" onClick={this.handlenewCancel}>
+                  取消
+                </Button>
+              </Form.Item>
+            </Form>
+          </Modal>
+        </div>
       </div>
     );
   },

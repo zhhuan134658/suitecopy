@@ -141,11 +141,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 
   if (editable) {
     childNode = editing ? (
-      <Form.Item
-        style={{ margin: 0 }}
-        name={dataIndex}
-       
-      >
+      <Form.Item style={{ margin: 0 }} name={dataIndex}>
         {/*    */}
         {/*   */}
         {/* <Input ref={inputRef} /> */}
@@ -918,114 +914,117 @@ const FormField: ISwapFormField = {
       );
     }
     return (
-      <div className="pc-custom-field-wrap">
-        <div className="label">
-          {required ? (
-            <span style={{ color: '#ea6d5c' }}>*</span>
-          ) : (
-            <span style={{ color: '#fff' }}>*</span>
-          )}
-          {label}
-        </div>
+      <div className="TestExpeField_class">
+        {' '}
+        <div className="pc-custom-field-wrap">
+          <div className="label">
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}
+            {label}
+          </div>
 
-        <div>
-          <Table
-            scroll={{ x: '1000px' }}
-            components={components}
-            rowClassName={() => 'editable-row'}
-            bordered
-            dataSource={dataSource}
-            columns={columns as ColumnTypes}
-            pagination={false}
-          />
-          <Button
-            onClick={this.handleAdd}
-            type="primary"
-            style={{ marginBottom: 16, marginTop: 16 }}
-          >
-            添加明细
-          </Button>
-
-          <div className="label">报销合计</div>
           <div>
-            <InputNumber
-              readOnly
-              value={this.state.Inputmoney1}
-              placeholder="报销合计"
+            <Table
+              scroll={{ x: '1000px' }}
+              components={components}
+              rowClassName={() => 'editable-row'}
+              bordered
+              dataSource={dataSource}
+              columns={columns as ColumnTypes}
+              pagination={false}
             />
-          </div>
-          <div>
-            {/* {Pro_name ? ( */}
+            <Button
+              onClick={this.handleAdd}
+              type="primary"
+              style={{ marginBottom: 16, marginTop: 16 }}
+            >
+              添加明细
+            </Button>
+
+            <div className="label">报销合计</div>
             <div>
-              <div className="label" style={{ marginTop: '10px' }}>
-                备用金抵扣
-              </div>
-              <Select
-                defaultValue="否"
-                style={{ width: 200 }}
-                onFocus={this.onMouseEnter}
-                onChange={this.handleChange}
-              >
-                {this.state.newopin.map(item => (
-                  <Select.Option key={item.id} value={item.id}>
-                    {item.name}
-                  </Select.Option>
-                ))}
-                {/* <Option value="1">是</Option>
-                <Option value="2">否</Option> */}
-              </Select>
+              <InputNumber
+                readOnly
+                value={this.state.Inputmoney1}
+                placeholder="报销合计"
+              />
             </div>
-            {/* ) : null} */}
-          </div>
-          <div>
-            {this.state.isShow ? (
+            <div>
+              {/* {Pro_name ? ( */}
               <div>
-                <div style={{ marginTop: '10px' }} className="label">
-                  备用金余额
+                <div className="label" style={{ marginTop: '10px' }}>
+                  备用金抵扣
                 </div>
-                <InputNumber
-                  readOnly
+                <Select
+                  defaultValue="否"
                   style={{ width: 200 }}
-                  min={0}
-                  value={this.state.Numbervalue1}
-                />
-                <div style={{ marginTop: '10px' }} className="label">
-                  审批中的费用报销抵扣
-                </div>
-                <InputNumber
-                  readOnly
-                  style={{ width: 200 }}
-                  min={0}
-                  value={this.state.Numbervalue3}
-                />
-                <div style={{ marginTop: '10px' }} className="label">
-                  审批中的归还
-                </div>
-                <InputNumber
-                  readOnly
-                  style={{ width: 200 }}
-                  min={0}
-                  value={this.state.Numbervalue4}
-                />
-                <div style={{ marginTop: '10px' }} className="label">
-                  本次抵扣金额
-                </div>
-                <InputNumber
-                  //   max={this.state.maxnum}
-                  style={{ width: 200 }}
-                  value={this.state.Numbervalue2}
-                  onChange={this.onNumbervalue2Change}
-                />
-                <div style={{ marginTop: '10px' }} className="label">
-                  财务应支付金额
-                </div>
-                <InputNumber
-                  readOnly
-                  style={{ width: 200 }}
-                  value={this.state.Numbervalue5}
-                />
+                  onFocus={this.onMouseEnter}
+                  onChange={this.handleChange}
+                >
+                  {this.state.newopin.map(item => (
+                    <Select.Option key={item.id} value={item.id}>
+                      {item.name}
+                    </Select.Option>
+                  ))}
+                  {/* <Option value="1">是</Option>
+                <Option value="2">否</Option> */}
+                </Select>
               </div>
-            ) : null}
+              {/* ) : null} */}
+            </div>
+            <div>
+              {this.state.isShow ? (
+                <div>
+                  <div style={{ marginTop: '10px' }} className="label">
+                    备用金余额
+                  </div>
+                  <InputNumber
+                    readOnly
+                    style={{ width: 200 }}
+                    min={0}
+                    value={this.state.Numbervalue1}
+                  />
+                  <div style={{ marginTop: '10px' }} className="label">
+                    审批中的费用报销抵扣
+                  </div>
+                  <InputNumber
+                    readOnly
+                    style={{ width: 200 }}
+                    min={0}
+                    value={this.state.Numbervalue3}
+                  />
+                  <div style={{ marginTop: '10px' }} className="label">
+                    审批中的归还
+                  </div>
+                  <InputNumber
+                    readOnly
+                    style={{ width: 200 }}
+                    min={0}
+                    value={this.state.Numbervalue4}
+                  />
+                  <div style={{ marginTop: '10px' }} className="label">
+                    本次抵扣金额
+                  </div>
+                  <InputNumber
+                    //   max={this.state.maxnum}
+                    style={{ width: 200 }}
+                    value={this.state.Numbervalue2}
+                    onChange={this.onNumbervalue2Change}
+                  />
+                  <div style={{ marginTop: '10px' }} className="label">
+                    财务应支付金额
+                  </div>
+                  <InputNumber
+                    readOnly
+                    style={{ width: 200 }}
+                    value={this.state.Numbervalue5}
+                  />
+                </div>
+              ) : null}
+            </div>
           </div>
         </div>
       </div>
