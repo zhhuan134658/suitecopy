@@ -206,6 +206,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
         {/* <Input ref={inputRef} /> */}
 
         <InputNumber
+          precision={2}
           className="editable-cell-value-inputNumber"
           ref={inputRef}
           onPressEnter={save}
@@ -257,6 +258,7 @@ interface DataType {
   id: any;
   det_quantity: any;
   no_unit_price: any;
+  unit_price: any;
   tax_rate: any;
   amount_tax: any;
   //   key: React.Key;
@@ -590,6 +592,9 @@ const FormField: ISwapFormField = {
     // return (num1*m+num2*m)/m;
     return Math.round(num1 * m + num2 * m) / m;
   },
+  toFixed(dight, bits) {
+    return Math.round(dight * Math.pow(10, bits)) / Math.pow(10, bits);
+  },
   handleSave(row: DataType, values) {
     const { form } = this.props;
     const newData = [...this.state.dataSource];
@@ -607,92 +612,163 @@ const FormField: ISwapFormField = {
       case 'no_unit_price':
         if (reg.test(row.no_unit_price) && reg.test(row.tax_rate)) {
           //   含税单价
-          newData[index].unit_price = (
-            row.no_unit_price *
-            (1 + row.tax_rate * 0.01)
-          ).toFixed(2);
-          //   let a = 1 + row.tax_rate * 0.01;
-          //   newData[index].unit_price = this.accMul(row.no_unit_price, a).toFixed(
-          //     2,
-          //   );
+          //   newData[index].unit_price = (
+          //     row.no_unit_price *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+          let a = 1 + row.tax_rate * 0.01;
+          newData[index].unit_price = this.toFixed(
+            this.accMul(row.no_unit_price, a),
+            2,
+          );
         } else if (
           row.no_unit_price == null &&
           reg.test(row.tax_rate) &&
           row.unit_price
         ) {
-          newData[index].no_unit_price = (
-            row.unit_price /
-            (1 + row.tax_rate * 0.01)
-          ).toFixed(2);
+          //   newData[index].no_unit_price = (
+          //     row.unit_price /
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+          let a = 1 + row.tax_rate * 0.01;
+
+          newData[index].no_unit_price = this.toFixed(
+            this.accDiv(row.unit_price, a),
+            2,
+          );
         }
         break;
       case 'unit_price':
         if (row.unit_price && reg.test(row.tax_rate)) {
           //   bu含税单价
+          let a = 1 + row.tax_rate * 0.01;
 
-          newData[index].no_unit_price = (
-            row.unit_price /
-            (1 + row.tax_rate * 0.01)
-          ).toFixed(2);
+          newData[index].no_unit_price = this.toFixed(
+            this.accDiv(row.unit_price, a),
+            2,
+          );
+          //   newData[index].no_unit_price = (
+          //     row.unit_price /
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
         } else if (
           row.unit_price == null &&
           reg.test(row.tax_rate) &&
           row.no_unit_price
         ) {
-          newData[index].unit_price = (
-            row.no_unit_price *
-            (1 + row.tax_rate * 0.01)
-          ).toFixed(2);
+          let a = 1 + row.tax_rate * 0.01;
+          newData[index].unit_price = this.toFixed(
+            this.accMul(row.no_unit_price, a),
+            2,
+          );
+          //   newData[index].unit_price = (
+          //     row.no_unit_price *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
         }
         if (row.unit_price && row.det_quantity) {
-          newData[index].amount_tax = (
-            row.unit_price * row.det_quantity
-          ).toFixed(2);
+          //   newData[index].amount_tax = (
+          //     row.unit_price * row.det_quantity
+          //   ).toFixed(2);
+          newData[index].amount_tax = this.toFixed(
+            this.accMul(row.unit_price, row.det_quantity),
+            2,
+          );
         }
 
         //不含税金额
         if (row.unit_price && row.det_quantity && reg.test(row.tax_rate)) {
-          newData[index].no_amount_tax = (
-            (row.unit_price * row.det_quantity) /
-            (1 + row.tax_rate * 0.01)
-          ).toFixed(2);
-          newData[index].tax_amount = (
-            ((row.unit_price * row.det_quantity) / (1 + row.tax_rate * 0.01)) *
-            row.tax_rate *
-            0.01
-          ).toFixed(2);
+          let a = 1 + row.tax_rate * 0.01;
+          let b = this.accMul(row.unit_price, row.det_quantity);
+
+          newData[index].no_amount_tax = this.toFixed(this.accDiv(b, a), 2);
+
+          //   newData[index].no_amount_tax = (
+          //     (row.unit_price * row.det_quantity) /
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+          let c = row.unit_price * row.det_quantity;
+          let d = 1 + row.tax_rate * 0.01;
+          let e = this.accDiv(c, d);
+          let f = row.tax_rate * 0.01;
+          newData[index].tax_amount = this.toFixed(this.accMul(e, f), 2);
+
+          //   newData[index].tax_amount = (
+          //     ((row.unit_price * row.det_quantity) / (1 + row.tax_rate * 0.01)) *
+          //     row.tax_rate *
+          //     0.01
+          //   ).toFixed(2);
         }
 
         break;
       case 'tax_rate':
-        if (row.no_unit_price && !row.unit_price) {
-          newData[index].unit_price = (
-            row.no_unit_price *
-            (1 + row.tax_rate * 0.01)
-          ).toFixed(2);
-        } else if (!row.no_unit_price && row.unit_price) {
-          newData[index].no_unit_price = (
-            row.unit_price /
-            (1 + row.tax_rate * 0.01)
-          ).toFixed(2);
+        if (row.no_unit_price && !reg.test(row.unit_price)) {
+          //   let a = 1 + row.tax_rate * 0.01;
+          //   newData[index].unit_price = this.toFixed(
+          //     this.accMul(row.no_unit_price, a, 2),
+          //   );
+
+          newData[index].unit_price = this.toFixed(
+            row.no_unit_price * (1 + row.tax_rate * 0.01),
+            2,
+          );
+        } else if (!reg.test(row.no_unit_price) && row.unit_price) {
+          //   let a = 1 + row.tax_rate * 0.01;
+          //   newData[index].no_unit_price = this.toFixed(
+          //     this.accDiv(row.unit_price, a),
+          //     2,
+          //   );
+
+          newData[index].no_unit_price = this.toFixed(
+            row.unit_price / (1 + row.tax_rate * 0.01),
+            2,
+          );
+
+          newData[index].amount_tax = this.toFixed(
+            row.unit_price * row.det_quantity,
+            2,
+          );
+          newData[index].no_amount_tax = this.toFixed(
+            (row.unit_price * row.det_quantity) / (1 + row.tax_rate * 0.01),
+            2,
+          );
+          newData[index].tax_amount = this.toFixed(
+            newData[index].amount_tax - newData[index].no_amount_tax,
+            2,
+          );
         } else if (row.no_unit_price && row.unit_price) {
-          newData[index].unit_price = (
-            row.no_unit_price *
-            (1 + row.tax_rate * 0.01)
-          ).toFixed(2);
+          let a = 1 + row.tax_rate * 0.01;
+          newData[index].unit_price = this.toFixed(
+            this.accMul(row.no_unit_price, a),
+            2,
+          );
+          //   newData[index].unit_price = (
+          //     row.no_unit_price *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
         }
-        if (row.no_unit_price && row.det_quantity && reg.test(row.tax_rate)) {
-          newData[index].tax_amount = (
-            row.no_unit_price *
-            row.det_quantity *
-            row.tax_rate *
-            0.01
-          ).toFixed(2);
-          newData[index].amount_tax = (
-            row.no_unit_price *
-            row.det_quantity *
-            (1 + row.tax_rate * 0.01)
-          ).toFixed(2);
+        if (
+          reg.test(row.no_unit_price) &&
+          reg.test(row.det_quantity) &&
+          reg.test(row.tax_rate)
+        ) {
+          let a = this.accMul(row.no_unit_price, row.det_quantity);
+          let b = this.accMul(row.tax_rate, 0.01);
+          newData[index].tax_amount = this.toFixed(this.accMul(a, b), 2);
+          //   newData[index].tax_amount = (
+          //     row.no_unit_price *
+          //     row.det_quantity *
+          //     row.tax_rate *
+          //     0.01
+          //   ).toFixed(2);
+          let c = this.accMul(row.no_unit_price, row.det_quantity);
+          let d = 1 + row.tax_rate * 0.01;
+          newData[index].amount_tax = this.toFixed(this.accMul(c, d), 2);
+          //   newData[index].amount_tax = (
+          //     row.no_unit_price *
+          //     row.det_quantity *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
         }
 
         break;
@@ -727,26 +803,37 @@ const FormField: ISwapFormField = {
     //税额
     if (Object.keys(values)[0] != 'unit_price') {
       if (row.no_unit_price && row.det_quantity && reg.test(row.tax_rate)) {
-        newData[index].tax_amount = (
-          row.no_unit_price *
-          row.det_quantity *
-          row.tax_rate *
-          0.01
-        ).toFixed(2);
+        let a = this.accMul(row.no_unit_price, row.det_quantity);
+        let b = this.accMul(row.tax_rate, 0.01);
+        newData[index].tax_amount = this.toFixed(this.accMul(a, b), 2);
+        // newData[index].tax_amount = (
+        //   row.no_unit_price *
+        //   row.det_quantity *
+        //   row.tax_rate *
+        //   0.01
+        // ).toFixed(2);
       }
       //   不含税
       if (row.no_unit_price && row.det_quantity) {
-        newData[index].no_amount_tax = (
-          row.no_unit_price * row.det_quantity
-        ).toFixed(2);
+        newData[index].no_amount_tax = this.toFixed(
+          this.accMul(row.no_unit_price, row.det_quantity),
+          2,
+        );
+        // newData[index].no_amount_tax = (
+        //   row.no_unit_price * row.det_quantity
+        // ).toFixed(2);
       }
       //含税
       if (row.no_unit_price && row.det_quantity && reg.test(row.tax_rate)) {
-        newData[index].amount_tax = (
-          row.no_unit_price *
-          row.det_quantity *
-          (1 + row.tax_rate * 0.01)
-        ).toFixed(2);
+        let a = this.accMul(row.no_unit_price, row.det_quantity);
+        let b = 1 + row.tax_rate * 0.01;
+
+        newData[index].amount_tax = this.toFixed(this.accMul(a, b), 2);
+        // newData[index].amount_tax = (
+        //   row.no_unit_price *
+        //   row.det_quantity *
+        //   (1 + row.tax_rate * 0.01)
+        // ).toFixed(2);
       }
     }
 
