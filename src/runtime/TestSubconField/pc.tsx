@@ -977,7 +977,12 @@ const FormField: ISwapFormField = {
             ]}
             onCancel={this.handleCancel}
           >
-            <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
+            <Tabs
+              className="Tabs_class"
+              defaultActiveKey="a"
+              centered
+              onChange={Tabschange}
+            >
               <TabPane tab="分包进度款结算" key="a"></TabPane>
               <TabPane tab="分包完工结算" key="b"></TabPane>
               <TabPane tab="分包质保金结算 " key="c"></TabPane>

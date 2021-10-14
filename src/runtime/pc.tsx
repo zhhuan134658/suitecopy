@@ -73,6 +73,8 @@ const SwapDemoSuite: ISwapDemoSuite = {
         form.setFieldValue('Ljjiemoney', '');
         form.setFieldValue('Ljhuanmoney', '');
         form.setFieldValue('Beimoneyyu', '');
+        form.setFieldValue('MoneyFeidk', '');
+        form.setFieldValue('MoneyFeigh', '');
         console.log('343');
       }
 
@@ -114,6 +116,8 @@ const SwapDemoSuite: ISwapDemoSuite = {
           form.setFieldValue('Ljjiemoney', newarr.lj_jie);
           form.setFieldValue('Ljhuanmoney', newarr.lj_huan);
           form.setFieldValue('Beimoneyyu', newarr.bei_yu);
+          form.setFieldValue('MoneyFeidk', newarr.fybx_dk_spz);
+          form.setFieldValue('MoneyFeigh', newarr.re_money_spz);
         }
       });
   },

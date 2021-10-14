@@ -1659,7 +1659,12 @@ const FormField: ISwapFormField = {
             ]}
             onCancel={this.handleCancel}
           >
-            <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
+            <Tabs
+              className="Tabs_class"
+              defaultActiveKey="a"
+              centered
+              onChange={Tabschange}
+            >
               <TabPane tab="采购合同" key="a">
                 <Search
                   placeholder="请输入"

@@ -530,17 +530,26 @@ const FormField: ISwapFormField = {
       } else {
         const aa = this.state.Inputmoney1;
         const bb = aa - val;
-        this.setState({ Numbervalue2: val, Numbervalue5: bb });
+        this.setState({
+          Numbervalue2: val.toFixed(2),
+          Numbervalue5: bb.toFixed(2),
+        });
       }
     } else {
       if (val > this.state.maxnum) {
         const aa = this.state.Inputmoney1;
         const bb = aa - this.state.maxnum;
-        this.setState({ Numbervalue2: this.state.maxnum, Numbervalue5: bb });
+        this.setState({
+          Numbervalue2: this.state.maxnum.toFixed(2),
+          Numbervalue5: bb.toFixed(2),
+        });
       } else {
         const aa = this.state.Inputmoney1;
         const bb = aa - val;
-        this.setState({ Numbervalue2: val, Numbervalue5: bb });
+        this.setState({
+          Numbervalue2: val.toFixed(2),
+          Numbervalue5: bb.toFixed(2),
+        });
       }
     }
   },
@@ -611,7 +620,7 @@ const FormField: ISwapFormField = {
     const aaadata = this.state.Inputmoney1;
     this.setState({
       Numbervalue1: value,
-      Numbervalue2: aaadata - value,
+      Numbervalue2: (aaadata - value).toFixed(2),
     });
   },
   fieldDidUpdate() {
@@ -915,7 +924,6 @@ const FormField: ISwapFormField = {
     }
     return (
       <div className="TestExpeField_class">
-        {' '}
         <div className="pc-custom-field-wrap">
           <div className="label">
             {required ? (

@@ -29,6 +29,7 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
+      Inputmoney1: '',
       checked: false,
       treevalue: undefined,
       deColumns: [
@@ -45,9 +46,7 @@ const FormField: IFormField = {
           dataIndex: 'remarks',
         },
       ],
-      treeData: [
-       
-      ],
+      treeData: [],
       maxnum: '',
       date: now,
       checkindex: '',
@@ -234,7 +233,21 @@ const FormField: IFormField = {
     let newtype = types;
     // arr[newindex] = {};
     arr[newindex][newtype] = arrindex;
-    this.setState({ materialList: [...arr] });
+
+    let newarr2 = [];
+
+    newarr2 = arr.filter(item => {
+      if (item.money) {
+        return item;
+      }
+    });
+    newarr2 = newarr2.map(item => {
+      return item.money;
+    });
+    this.setState({
+      materialList: [...arr],
+      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+    });
     console.log(arr);
   },
   onDatechange(types, index, dateString) {
@@ -570,7 +583,34 @@ const FormField: IFormField = {
                   alt=""
                 />
                 &nbsp;
-                <span className="add-button-text">增加明细</span>
+                <span className="add-button-text">增加1明细</span>
+              </div>
+            </div>
+            <div className="field-wrapper">
+              <div className="m-group m-group-mobile">
+                <div className="m-field-wrapper">
+                  <div className="m-field m-field-mobile m-select-field">
+                    <div className="m-field-head">
+                      <div className="m-field-label">
+                        <span>报销合计</span>
+                      </div>
+                    </div>
+                    <div className="m-field-box">
+                      <div className="m-field-content left">
+                        <div className="input-wrapper">
+                          <InputItem
+                            type="text"
+                            className="ant-input m-mobile-inner-input"
+                            value={this.state.Inputmoney1}
+                            placeholder="自动获取"
+                            readOnly
+                            editable={false}
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
             <div>
@@ -719,21 +759,45 @@ const FormField: IFormField = {
                                   value={this.state.Numbervalue2}
                                   placeholder="请输入"
                                   onChange={e => {
-                                    if (e.target.value > this.state.maxnum) {
-                                      const aa = this.state.Numbervalue1;
-                                      const bb = aa - this.state.maxnum;
-                                      Toast.info('超出', 1);
-                                      this.setState({
-                                        Numbervalue2: this.state.maxnum,
-                                        Numbervalue5: bb,
-                                      });
+                                    //   e.target.value
+                                    const number1 = this.state.maxnum;
+                                    const number2 = this.state.Inputmoney1;
+                                    let val = Number(e.target.value);
+                                    if (number1 > number2) {
+                                      if (val > this.state.Inputmoney1) {
+                                        const aa = this.state.Inputmoney1;
+                                        const bb =
+                                          Number(aa) -
+                                          Number(this.state.maxnum);
+                                        this.setState({
+                                          Numbervalue2: this.state.Inputmoney1,
+                                          Numbervalue5: bb.toFixed(2),
+                                        });
+                                      } else {
+                                        const aa = this.state.Inputmoney1;
+                                        const bb = aa - val;
+                                        this.setState({
+                                          Numbervalue2: val.toFixed(2),
+                                          Numbervalue5: bb.toFixed(2),
+                                        });
+                                      }
                                     } else {
-                                      const aa = this.state.Numbervalue1;
-                                      const bb = aa - this.state.maxnum;
-                                      this.setState({
-                                        Numbervalue2: e.target.value,
-                                        Numbervalue5: bb,
-                                      });
+                                      if (val > this.state.maxnum) {
+                                        const aa = this.state.Inputmoney1;
+                                        const bb = aa - this.state.maxnum;
+                                        this.setState({
+                                          Numbervalue2:
+                                            this.state.maxnum.toFixed(2),
+                                          Numbervalue5: bb.toFixed(2),
+                                        });
+                                      } else {
+                                        const aa = this.state.Inputmoney1;
+                                        const bb = aa - val;
+                                        this.setState({
+                                          Numbervalue2: val.toFixed(2),
+                                          Numbervalue5: bb.toFixed(2),
+                                        });
+                                      }
                                     }
 
                                     console.log(e.target.value);

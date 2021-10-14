@@ -649,7 +649,7 @@ const FormField: ISwapFormField = {
             ]}
             onCancel={this.handleCancel}
           >
-            <Tabs defaultActiveKey="1" centered>
+            <Tabs className="Tabs_class" defaultActiveKey="1" centered>
               <TabPane tab="Tab 1" key="1">
                 <Search
                   placeholder="请输入"

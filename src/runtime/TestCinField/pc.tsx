@@ -1588,7 +1588,7 @@ const FormField: ISwapFormField = {
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}
-          <div style={{ margin: '10px' }}>
+          <div style={{ marginTop: '10px' }}>
             <Table
               scroll={{ x: '1500px' }}
               components={components}
@@ -1646,7 +1646,12 @@ const FormField: ISwapFormField = {
             ]}
             onCancel={this.handleCancel}
           >
-            <Tabs defaultActiveKey="a" centered onChange={Tabschange}>
+            <Tabs
+              className="Tabs_class"
+              defaultActiveKey="a"
+              centered
+              onChange={Tabschange}
+            >
               <TabPane tab="材料总计划" key="c">
                 <Search
                   placeholder="请输入"

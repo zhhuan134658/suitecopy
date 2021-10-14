@@ -514,6 +514,7 @@
       "bizAlias": "Ljjiemoney",
       "props": {
         "placeholder": "请输入",
+        "disabled": true,
         "label": "累计借款金额",
         "notUpper": "0"
       }
@@ -523,6 +524,7 @@
       "bizAlias": "Ljhuanmoney",
       "props": {
         "placeholder": "请输入",
+        "disabled": true,
         "label": "累计还款金额",
         "notUpper": "0"
       }
@@ -532,6 +534,7 @@
       "bizAlias": "Beimoneyyu",
       "props": {
         "placeholder": "请输入",
+        "disabled": true,
         "label": "备用金余额",
         "notUpper": "0"
       }
@@ -541,6 +544,7 @@
       "bizAlias": "MoneyFeidk",
       "props": {
         "placeholder": "请输入",
+        "disabled": true,
         "label": "审批中的费用报销抵扣",
         "notUpper": "0"
       }
@@ -550,6 +554,7 @@
       "bizAlias": "MoneyFeigh",
       "props": {
         "placeholder": "请输入",
+        "disabled": true,
         "label": "审批中的归还",
         "notUpper": "0"
       }
