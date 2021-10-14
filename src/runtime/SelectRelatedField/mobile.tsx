@@ -33,7 +33,7 @@ const FormField: IFormField = {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const SelectHeField = form.getFieldInstance('SelectHe');
+    const SelectRelatedField = form.getFieldInstance('SelectRelated');
     const proname = form.getFieldValue('SelectDeposit');
     const bontype = form.getFieldValue('RadioField');
     const contractname = form.getFieldValue('SelectHe');
@@ -41,12 +41,12 @@ const FormField: IFormField = {
     vlauedata.project_name = proname;
     vlauedata.bond_type = bontype;
     // vlauedata.bond_type = '履约保证金支出';
-    const key = SelectHeField.getProp('id');
+    const key = SelectRelatedField.getProp('id');
     const value = '1';
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'SelectHe',
+        bizAlias: 'SelectRelated',
         extendValue: vlauedata,
         value,
       },
@@ -56,7 +56,7 @@ const FormField: IFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['SelectHe'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['SelectRelated'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -84,8 +84,8 @@ const FormField: IFormField = {
     console.log(item);
 
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
-      form.setFieldValue('SelectHe', item.name);
-      form.setExtendFieldValue('SelectHe', {
+      form.setFieldValue('SelectRelated', item.name);
+      form.setExtendFieldValue('SelectRelated', {
         data: item.name,
       });
     });
@@ -107,10 +107,10 @@ const FormField: IFormField = {
     // fix in codepen
     const { form, runtimeProps } = this.props;
     const { viewMode } = runtimeProps;
-    const field = form.getFieldInstance('SelectHe');
-    const label = form.getFieldProp('SelectHe', 'label');
-    const required = form.getFieldProp('SelectHe', 'required');
-    const placeholder = form.getFieldProp('SelectHe', 'placeholder');
+    const field = form.getFieldInstance('SelectRelated');
+    const label = form.getFieldProp('SelectRelated', 'label');
+    const required = form.getFieldProp('SelectRelated', 'required');
+    const placeholder = form.getFieldProp('SelectRelated', 'placeholder');
 
     const sidebar = (
       <div>

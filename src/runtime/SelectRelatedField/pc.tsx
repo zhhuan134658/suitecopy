@@ -613,8 +613,14 @@ const FormField: ISwapFormField = {
   rowClick(this, record, rowkey) {
     const { form } = this.props;
     console.log(record);
-
-    this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
+    if (record.extend_two) {
+      this.setState({ Inputvalue: record.extend_two });
+    } else if (record.extend_five) {
+      this.setState({ Inputvalue: record.extend_five });
+    } else if (record.extend_five) {
+      this.setState({ Inputvalue: record.extend_five });
+    }
+    this.setState({ isModalVisible: false }, () => {
       form.setFieldValue('Conmoney', record.money);
       form.setFieldValue('SelectRelated', record.title);
       form.setExtendFieldValue('SelectRelated', {
