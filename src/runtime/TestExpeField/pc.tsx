@@ -701,7 +701,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '金额',
+        title: '金额',  
         dataIndex: 'money',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.money}>
