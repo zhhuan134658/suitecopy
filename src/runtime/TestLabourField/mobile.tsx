@@ -101,7 +101,7 @@ const FormField: IFormField = {
     } else if (this.state.detdate === 'e1') {
       dtar = '劳务合同-' + item.name;
     }
-    console.log(dtar);  
+    console.log(dtar);
     form.setFieldValue('LabourField', item.contract_name);
     this.setState({ inputvalue: dtar, showElem: 'none' });
     form.setFieldValue('TestLabour', dtar);
@@ -208,61 +208,64 @@ const FormField: IFormField = {
       );
     }
     return (
-      <div className="field-wrapper">
-        <div className="m-group m-group-mobile">
-          <div className="m-field-wrapper">
-            <div className="m-field m-field-mobile m-mobile-input vertical">
-              <div className="m-field-head" style={{ marginLeft: '-5px' }}>
-                <label className="m-field-label">
-                  <span>
-                    {required ? (
-                      <span style={{ color: '#ea6d5c' }}>*</span>
-                    ) : (
-                      <span style={{ color: '#fff' }}>*</span>
-                    )}
-                    {label}
-                  </span>
-                </label>
-              </div>
-              <div className="m-field-box">
-                <div className="m-field-content left">
-                  <div className="input-wrapper">
-                    <input
-                      readOnly
-                      className="ant-input m-mobile-inner-input"
-                      type="text"
-                      placeholder="请选择"
-                      value={this.state.inputvalue}
-                      onClick={this.onOpenChange}
-                    />
+      <div className="CorpHouse_class_m">
+        {' '}
+        <div className="field-wrapper">
+          <div className="m-group m-group-mobile">
+            <div className="m-field-wrapper">
+              <div className="m-field m-field-mobile m-mobile-input vertical">
+                <div className="m-field-head" style={{ marginLeft: '-5px' }}>
+                  <label className="m-field-label">
+                    <span>
+                      {required ? (
+                        <span style={{ color: '#ea6d5c' }}>*</span>
+                      ) : (
+                        <span style={{ color: '#fff' }}>*</span>
+                      )}
+                      {label}
+                    </span>
+                  </label>
+                </div>
+                <div className="m-field-box">
+                  <div className="m-field-content left">
+                    <div className="input-wrapper">
+                      <input
+                        readOnly
+                        className="ant-input m-mobile-inner-input"
+                        type="text"
+                        placeholder="请选择"
+                        value={this.state.inputvalue}
+                        onClick={this.onOpenChange}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+
+            {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
+
+            {createPortal(
+              <Drawer
+                className="my-drawer"
+                open={true}
+                style={{
+                  minHeight: document.documentElement.clientHeight,
+
+                  display: this.state.showElem,
+                }}
+                enableDragHandle
+                contentStyle={{
+                  color: '#A6A6A6',
+                  textAlign: 'center',
+                  paddingTop: 42,
+                }}
+                sidebar={sidebar}
+                onOpenChange={this.onOpenChange}
+              ></Drawer>,
+              document.getElementById('MF_APP'),
+            )}
           </div>
-
-          {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
-
-          {createPortal(
-            <Drawer
-              className="my-drawer"
-              open={true}
-              style={{
-                minHeight: document.documentElement.clientHeight,
-
-                display: this.state.showElem,
-              }}
-              enableDragHandle
-              contentStyle={{
-                color: '#A6A6A6',
-                textAlign: 'center',
-                paddingTop: 42,
-              }}
-              sidebar={sidebar}
-              onOpenChange={this.onOpenChange}
-            ></Drawer>,
-            document.getElementById('MF_APP'),
-          )}
         </div>
       </div>
     );

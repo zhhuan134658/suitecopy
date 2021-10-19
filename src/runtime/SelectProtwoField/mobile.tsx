@@ -132,43 +132,46 @@ const FormField: IFormField = {
       </div>
     );
     return (
-      <div className="field-wrapper">
-        <div className="label" onClick={this.onOpenChange}>
-          {required ? (
-            <span style={{ color: '#ea6d5c' }}>*</span>
-          ) : (
-            <span style={{ color: '#fff' }}>*</span>
-          )}
-          {label}
-        </div>
-        <div>
-          <InputItem
-            clear
-            value={this.state.inputvalue}
-            placeholder="请选择"
-            onClick={this.onOpenChange}
-          ></InputItem>
-          {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
-          {createPortal(
-            <Drawer
-              className="my-drawer"
-              open={true}
-              style={{
-                minHeight: document.documentElement.clientHeight,
+      <div className="CorpHouse_class_m">
+        {' '}
+        <div className="field-wrapper">
+          <div className="label" onClick={this.onOpenChange}>
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}
+            {label}
+          </div>
+          <div>
+            <InputItem
+              clear
+              value={this.state.inputvalue}
+              placeholder="请选择"
+              onClick={this.onOpenChange}
+            ></InputItem>
+            {/* 使用这种方式，将组件挂在到根元素下，防止样式污染 */}
+            {createPortal(
+              <Drawer
+                className="my-drawer"
+                open={true}
+                style={{
+                  minHeight: document.documentElement.clientHeight,
 
-                display: this.state.showElem,
-              }}
-              enableDragHandle
-              contentStyle={{
-                color: '#A6A6A6',
-                textAlign: 'center',
-                paddingTop: 42,
-              }}
-              sidebar={sidebar}
-              onOpenChange={this.onOpenChange}
-            ></Drawer>,
-            document.getElementById('MF_APP'),
-          )}
+                  display: this.state.showElem,
+                }}
+                enableDragHandle
+                contentStyle={{
+                  color: '#A6A6A6',
+                  textAlign: 'center',
+                  paddingTop: 42,
+                }}
+                sidebar={sidebar}
+                onOpenChange={this.onOpenChange}
+              ></Drawer>,
+              document.getElementById('MF_APP'),
+            )}
+          </div>
         </div>
       </div>
     );

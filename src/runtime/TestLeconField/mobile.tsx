@@ -434,39 +434,41 @@ const FormField: IFormField = {
       );
     }
     return (
-      <div className="field-wrapper">
-        <div className="tablefield-mobile">
-          <div className="table-body  tbody  ">
-            {this.state.materialList.map((item, index) => {
-              return (
-                <div>
-                  <div className="tbody-row-wrap">
-                    <div className="tbody-row-pannel">
-                      <div
-                        className="custom-list-title"
-                        style={{
-                          width: '100%',
-                          paddingLeft: '15px',
-                          display: 'flex',
-                          justifyContent: 'space-between',
-                        }}
-                      >
-                        <div>
-                          {label}-明细({index + 1})
-                        </div>
-                        {this.state.materialList.length > 1 ? (
-                          <div
-                            className="dele_item"
-                            onClick={this.deleteItem.bind(this, item, index)}
-                          >
-                            删除
+      <div className="CorpHouse_class_m">
+        {' '}
+        <div className="field-wrapper">
+          <div className="tablefield-mobile">
+            <div className="table-body  tbody  ">
+              {this.state.materialList.map((item, index) => {
+                return (
+                  <div>
+                    <div className="tbody-row-wrap">
+                      <div className="tbody-row-pannel">
+                        <div
+                          className="custom-list-title"
+                          style={{
+                            width: '100%',
+                            paddingLeft: '15px',
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                          }}
+                        >
+                          <div>
+                            {label}-明细({index + 1})
                           </div>
-                        ) : (
-                          <div></div>
-                        )}
-                      </div>
-                      <div className="row">
-                        {/* <div>
+                          {this.state.materialList.length > 1 ? (
+                            <div
+                              className="dele_item"
+                              onClick={this.deleteItem.bind(this, item, index)}
+                            >
+                              删除
+                            </div>
+                          ) : (
+                            <div></div>
+                          )}
+                        </div>
+                        <div className="row">
+                          {/* <div>
                           <div className="field-wrapper">
                             <div className="m-group m-group-mobile">
                               <div className="m-field-wrapper">
@@ -504,126 +506,37 @@ const FormField: IFormField = {
                             </div>
                           </div>
                         </div> */}
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>物资名称</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          editable={false}
-                                          type="text"
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.name}
-                                          placeholder="请选择"
-                                          onClick={this.onOpenChange.bind(
-                                            this,
-                                            index,
-                                          )}
-                                          onChange={e =>
-                                            this.onInputchange('name', index, e)
-                                          }
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>单位</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          editable={false}
-                                          type="text"
-                                          readOnly
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.unit}
-                                          placeholder="自动获取"
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>规格型号</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          editable={false}
-                                          type="text"
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.size}
-                                          placeholder="自动获取"
-                                          readOnly
-                                        />
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                        <div>
-                          <DatePicker
-                            mode="date"
-                            title="Select Date"
-                            extra="Optional"
-                            value={this.state.datadate1}
-                            onChange={date => this.onChangedata1(date, index)}
-                          >
+                          <div>
                             <div className="field-wrapper">
                               <div className="m-group m-group-mobile">
                                 <div className="m-field-wrapper">
                                   <div className="m-field m-field-mobile m-select-field">
                                     <div className="m-field-head">
                                       <div className="m-field-label">
-                                        <span>计划进场日期</span>
+                                        <span>物资名称</span>
                                       </div>
                                     </div>
-
                                     <div className="m-field-box">
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
                                             editable={false}
-                                            clear
-                                            value={item.plan_in_riqi}
+                                            type="text"
+                                            className="ant-input m-mobile-inner-input"
+                                            value={item.name}
                                             placeholder="请选择"
-                                          ></InputItem>
+                                            onClick={this.onOpenChange.bind(
+                                              this,
+                                              index,
+                                            )}
+                                            onChange={e =>
+                                              this.onInputchange(
+                                                'name',
+                                                index,
+                                                e,
+                                              )
+                                            }
+                                          />
                                         </div>
                                       </div>
                                     </div>
@@ -631,36 +544,28 @@ const FormField: IFormField = {
                                 </div>
                               </div>
                             </div>
-                          </DatePicker>
-                        </div>
-
-                        <div>
-                          <DatePicker
-                            mode="date"
-                            title="Select Date"
-                            extra="Optional"
-                            value={this.state.datadate2}
-                            onChange={date => this.onChangedata2(date, index)}
-                          >
+                          </div>
+                          <div>
                             <div className="field-wrapper">
                               <div className="m-group m-group-mobile">
                                 <div className="m-field-wrapper">
                                   <div className="m-field m-field-mobile m-select-field">
                                     <div className="m-field-head">
                                       <div className="m-field-label">
-                                        <span>计划退场日期</span>
+                                        <span>单位</span>
                                       </div>
                                     </div>
-
                                     <div className="m-field-box">
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
                                             editable={false}
-                                            clear
-                                            value={item.plan_out_riqi}
-                                            placeholder="请选择"
-                                          ></InputItem>
+                                            type="text"
+                                            readOnly
+                                            className="ant-input m-mobile-inner-input"
+                                            value={item.unit}
+                                            placeholder="自动获取"
+                                          />
                                         </div>
                                       </div>
                                     </div>
@@ -668,33 +573,29 @@ const FormField: IFormField = {
                                 </div>
                               </div>
                             </div>
-                          </DatePicker>
-                        </div>
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>数量</span>
+                          </div>
+                          <div>
+                            <div className="field-wrapper">
+                              <div className="m-group m-group-mobile">
+                                <div className="m-field-wrapper">
+                                  <div className="m-field m-field-mobile m-select-field">
+                                    <div className="m-field-head">
+                                      <div className="m-field-label">
+                                        <span>规格型号</span>
+                                      </div>
                                     </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.zl_number}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'zl_number',
-                                              index,
-                                              e,
-                                            )
-                                          }
-                                        />
+                                    <div className="m-field-box">
+                                      <div className="m-field-content left">
+                                        <div className="input-wrapper">
+                                          <InputItem
+                                            editable={false}
+                                            type="text"
+                                            className="ant-input m-mobile-inner-input"
+                                            value={item.size}
+                                            placeholder="自动获取"
+                                            readOnly
+                                          />
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -702,61 +603,167 @@ const FormField: IFormField = {
                               </div>
                             </div>
                           </div>
-                        </div>
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>单价(元)</span>
-                                    </div>
-                                  </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.price}
-                                          placeholder="请输入"
-                                          onChange={e =>
-                                            this.onInputchange(
-                                              'price',
-                                              index,
-                                              e,
-                                            )
-                                          }
-                                        />
+                          <div>
+                            <DatePicker
+                              mode="date"
+                              title="Select Date"
+                              extra="Optional"
+                              value={this.state.datadate1}
+                              onChange={date => this.onChangedata1(date, index)}
+                            >
+                              <div className="field-wrapper">
+                                <div className="m-group m-group-mobile">
+                                  <div className="m-field-wrapper">
+                                    <div className="m-field m-field-mobile m-select-field">
+                                      <div className="m-field-head">
+                                        <div className="m-field-label">
+                                          <span>计划进场日期</span>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
 
-                        <div>
-                          <div className="field-wrapper">
-                            <div className="m-group m-group-mobile">
-                              <div className="m-field-wrapper">
-                                <div className="m-field m-field-mobile m-select-field">
-                                  <div className="m-field-head">
-                                    <div className="m-field-label">
-                                      <span>小计(元)</span>
+                                      <div className="m-field-box">
+                                        <div className="m-field-content left">
+                                          <div className="input-wrapper">
+                                            <InputItem
+                                              editable={false}
+                                              clear
+                                              value={item.plan_in_riqi}
+                                              placeholder="请选择"
+                                            ></InputItem>
+                                          </div>
+                                        </div>
+                                      </div>
                                     </div>
                                   </div>
-                                  <div className="m-field-box">
-                                    <div className="m-field-content left">
-                                      <div className="input-wrapper">
-                                        <InputItem
-                                          editable={false}
-                                          type="text"
-                                          className="ant-input m-mobile-inner-input"
-                                          value={item.subtotal}
-                                          placeholder="自动计算"
-                                        />
+                                </div>
+                              </div>
+                            </DatePicker>
+                          </div>
+
+                          <div>
+                            <DatePicker
+                              mode="date"
+                              title="Select Date"
+                              extra="Optional"
+                              value={this.state.datadate2}
+                              onChange={date => this.onChangedata2(date, index)}
+                            >
+                              <div className="field-wrapper">
+                                <div className="m-group m-group-mobile">
+                                  <div className="m-field-wrapper">
+                                    <div className="m-field m-field-mobile m-select-field">
+                                      <div className="m-field-head">
+                                        <div className="m-field-label">
+                                          <span>计划退场日期</span>
+                                        </div>
+                                      </div>
+
+                                      <div className="m-field-box">
+                                        <div className="m-field-content left">
+                                          <div className="input-wrapper">
+                                            <InputItem
+                                              editable={false}
+                                              clear
+                                              value={item.plan_out_riqi}
+                                              placeholder="请选择"
+                                            ></InputItem>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </DatePicker>
+                          </div>
+                          <div>
+                            <div className="field-wrapper">
+                              <div className="m-group m-group-mobile">
+                                <div className="m-field-wrapper">
+                                  <div className="m-field m-field-mobile m-select-field">
+                                    <div className="m-field-head">
+                                      <div className="m-field-label">
+                                        <span>数量</span>
+                                      </div>
+                                    </div>
+                                    <div className="m-field-box">
+                                      <div className="m-field-content left">
+                                        <div className="input-wrapper">
+                                          <InputItem
+                                            className="ant-input m-mobile-inner-input"
+                                            value={item.zl_number}
+                                            placeholder="请输入"
+                                            onChange={e =>
+                                              this.onInputchange(
+                                                'zl_number',
+                                                index,
+                                                e,
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="field-wrapper">
+                              <div className="m-group m-group-mobile">
+                                <div className="m-field-wrapper">
+                                  <div className="m-field m-field-mobile m-select-field">
+                                    <div className="m-field-head">
+                                      <div className="m-field-label">
+                                        <span>单价(元)</span>
+                                      </div>
+                                    </div>
+                                    <div className="m-field-box">
+                                      <div className="m-field-content left">
+                                        <div className="input-wrapper">
+                                          <InputItem
+                                            className="ant-input m-mobile-inner-input"
+                                            value={item.price}
+                                            placeholder="请输入"
+                                            onChange={e =>
+                                              this.onInputchange(
+                                                'price',
+                                                index,
+                                                e,
+                                              )
+                                            }
+                                          />
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div>
+                            <div className="field-wrapper">
+                              <div className="m-group m-group-mobile">
+                                <div className="m-field-wrapper">
+                                  <div className="m-field m-field-mobile m-select-field">
+                                    <div className="m-field-head">
+                                      <div className="m-field-label">
+                                        <span>小计(元)</span>
+                                      </div>
+                                    </div>
+                                    <div className="m-field-box">
+                                      <div className="m-field-content left">
+                                        <div className="input-wrapper">
+                                          <InputItem
+                                            editable={false}
+                                            type="text"
+                                            className="ant-input m-mobile-inner-input"
+                                            value={item.subtotal}
+                                            placeholder="自动计算"
+                                          />
+                                        </div>
                                       </div>
                                     </div>
                                   </div>
@@ -768,45 +775,45 @@ const FormField: IFormField = {
                       </div>
                     </div>
                   </div>
+                );
+              })}
+              <div className="table-actions">
+                <div className="tbody-add-button tTap" onClick={this.addSon}>
+                  <img
+                    style={{ width: '20px' }}
+                    src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
+                    alt=""
+                  />
+                  &nbsp;
+                  <span className="add-button-text">增加明细</span>
                 </div>
-              );
-            })}
-            <div className="table-actions">
-              <div className="tbody-add-button tTap" onClick={this.addSon}>
-                <img
-                  style={{ width: '20px' }}
-                  src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
-                  alt=""
-                />
-                &nbsp;
-                <span className="add-button-text">增加明细</span>
               </div>
             </div>
           </div>
-        </div>
-        {/*  */}
+          {/*  */}
 
-        {/* 合计 */}
-        <div>
-          <div className="field-wrapper">
-            <div className="m-group m-group-mobile">
-              <div className="m-field-wrapper">
-                <div className="m-field m-field-mobile m-select-field">
-                  <div className="m-field-head">
-                    <div className="m-field-label">
-                      <span>合计(元)</span>
+          {/* 合计 */}
+          <div>
+            <div className="field-wrapper">
+              <div className="m-group m-group-mobile">
+                <div className="m-field-wrapper">
+                  <div className="m-field m-field-mobile m-select-field">
+                    <div className="m-field-head">
+                      <div className="m-field-label">
+                        <span>合计(元)</span>
+                      </div>
                     </div>
-                  </div>
-                  <div className="m-field-box">
-                    <div className="m-field-content left">
-                      <div className="input-wrapper">
-                        <InputItem
-                          type="text"
-                          className="ant-input m-mobile-inner-input"
-                          value={this.state.Inputmoney1}
-                          placeholder="自动计算"
-                          editable={false}
-                        />
+                    <div className="m-field-box">
+                      <div className="m-field-content left">
+                        <div className="input-wrapper">
+                          <InputItem
+                            type="text"
+                            className="ant-input m-mobile-inner-input"
+                            value={this.state.Inputmoney1}
+                            placeholder="自动计算"
+                            editable={false}
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -814,48 +821,48 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
+
+          {/* 物资明细 */}
+          {createPortal(
+            <Drawer
+              className="my-drawer"
+              open={true}
+              style={{
+                minHeight: document.documentElement.clientHeight,
+
+                display: this.state.showElem,
+              }}
+              enableDragHandle
+              contentStyle={{
+                color: '#A6A6A6',
+                textAlign: 'center',
+                paddingTop: 42,
+              }}
+              sidebar={sidebar}
+              onOpenChange={this.onOpenChange}
+            ></Drawer>,
+            document.getElementById('MF_APP'),
+          )}
+          {createPortal(
+            <Drawer
+              className="my-drawer"
+              open={true}
+              style={{
+                minHeight: document.documentElement.clientHeight,
+                display: this.state.showElem2,
+              }}
+              enableDragHandle
+              contentStyle={{
+                color: '#A6A6A6',
+                textAlign: 'center',
+                paddingTop: 42,
+              }}
+              sidebar={treesidebar}
+              onOpenChange={this.onOpenChange2}
+            ></Drawer>,
+            document.getElementById('MF_APP'),
+          )}
         </div>
-
-        {/* 物资明细 */}
-        {createPortal(
-          <Drawer
-            className="my-drawer"
-            open={true}
-            style={{
-              minHeight: document.documentElement.clientHeight,
-
-              display: this.state.showElem,
-            }}
-            enableDragHandle
-            contentStyle={{
-              color: '#A6A6A6',
-              textAlign: 'center',
-              paddingTop: 42,
-            }}
-            sidebar={sidebar}
-            onOpenChange={this.onOpenChange}
-          ></Drawer>,
-          document.getElementById('MF_APP'),
-        )}
-        {createPortal(
-          <Drawer
-            className="my-drawer"
-            open={true}
-            style={{
-              minHeight: document.documentElement.clientHeight,
-              display: this.state.showElem2,
-            }}
-            enableDragHandle
-            contentStyle={{
-              color: '#A6A6A6',
-              textAlign: 'center',
-              paddingTop: 42,
-            }}
-            sidebar={treesidebar}
-            onOpenChange={this.onOpenChange2}
-          ></Drawer>,
-          document.getElementById('MF_APP'),
-        )}
       </div>
     );
   },

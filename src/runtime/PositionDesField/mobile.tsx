@@ -132,7 +132,7 @@ const FormField: IFormField = {
       );
     }
     return (
-      <div>
+      <div className="CorpHouse_class_m">
         <Picker
           visible={this.state.visible}
           data={this.state.province}
