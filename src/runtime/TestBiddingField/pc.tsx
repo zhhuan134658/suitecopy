@@ -787,6 +787,8 @@ const FormField: ISwapFormField = {
         render: (_, record: any) =>
           this.state.dataSource.length >= 1 ? (
             <Popconfirm
+              cancelText="取消"
+              okText="确定"
               title="确定删除?"
               onConfirm={() => this.handleDelete(record)}
             >

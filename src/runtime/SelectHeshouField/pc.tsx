@@ -778,6 +778,8 @@ const FormField: ISwapFormField = {
         render: (_, record: any) =>
           this.state.dataSource.length >= 1 ? (
             <Popconfirm
+              cancelText="取消"
+              okText="确定"
               title="确定删除?"
               onConfirm={() => this.handleDelete(record)}
             >
@@ -942,7 +944,12 @@ const FormField: ISwapFormField = {
             ]}
             onCancel={this.handleCancel}
           >
-            <Tabs className='Tabs_class' defaultActiveKey="a" centered onChange={Tabschange}>
+            <Tabs
+              className="Tabs_class"
+              defaultActiveKey="a"
+              centered
+              onChange={Tabschange}
+            >
               <TabPane tab="收入合同" key="a">
                 <Search
                   placeholder="请输入"
