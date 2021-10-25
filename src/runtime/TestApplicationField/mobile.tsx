@@ -251,6 +251,9 @@ const FormField: IFormField = {
   deleteItem(index) {
     let list = this.state.materialList;
     list.splice(index, 1);
+    this.setState({
+      materialList: list,
+    });
     let newarr2 = [];
 
     newarr2 = list.filter(item => {
@@ -262,7 +265,6 @@ const FormField: IFormField = {
       return item.subtotal;
     });
     this.setState({
-      materialList: list,
       Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
   },
@@ -361,7 +363,9 @@ const FormField: IFormField = {
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
           showCancelButton
-          onCancel={() => this.setState({ showElem: 'none' })}
+          onCancel={() =>
+            this.setState({ showElem: 'none', SearchBarvalue: '' })
+          }
         />
 
         <List>
@@ -387,7 +391,9 @@ const FormField: IFormField = {
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
           showCancelButton
-          onCancel={() => this.setState({ showElem3: 'none' })}
+          onCancel={() =>
+            this.setState({ showElem3: 'none', SearchBarvalue: '' })
+          }
         />
 
         <List>
@@ -412,7 +418,9 @@ const FormField: IFormField = {
           placeholder="请输入"
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
-          onCancel={() => this.setState({ showElem2: 'none' })}
+          onCancel={() =>
+            this.setState({ showElem2: 'none', SearchBarvalue: '' })
+          }
           showCancelButton
         />
 
@@ -525,7 +533,7 @@ const FormField: IFormField = {
                           <div>
                             {label}-明细({index + 1})
                           </div>
-                          {this.state.materialList.length > 1 ? (
+                          {this.state.materialList.length > 0 ? (
                             <div
                               className="dele_item"
                               onClick={this.deleteItem.bind(this, index)}

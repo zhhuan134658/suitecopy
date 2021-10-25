@@ -153,10 +153,12 @@ const FormField: IFormField = {
         //   checkData: [...newarr],
         // });
         if (type === 1) {
-          console.log('9887987', newarr);
+          console.log('988798711', newarr);
           const newssarr = [...newarr];
           // 含税金额合计;
-
+          this.setState({
+            materialList: newarr,
+          });
           let newarr2 = [];
 
           newarr2 = newssarr.filter(item => {
@@ -167,10 +169,18 @@ const FormField: IFormField = {
           newarr2 = newarr2.map(item => {
             return item.amount_tax;
           });
+          let newdata1 = eval(newarr2.join('+'));
 
-          this.setState({
-            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
-          });
+          if (isNaN(newdata1)) {
+            this.setState({
+              Inputmoney1: 0,
+            });
+          } else {
+            this.setState({
+              Inputmoney1: newdata1,
+            });
+          }
+
           // 不含税金额合计;
 
           let newarr4 = [];
@@ -184,12 +194,17 @@ const FormField: IFormField = {
             return item.no_amount_tax;
           });
 
-          this.setState({
-            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
-          });
-          this.setState({
-            materialList: newarr,
-          });
+          let newdata2 = eval(newarr4.join('+'));
+
+          if (isNaN(newdata2)) {
+            this.setState({
+              Inputmoney2: 0,
+            });
+          } else {
+            this.setState({
+              Inputmoney2: newdata2,
+            });
+          }
         } else if (type === 2) {
           this.setState({
             checkData: newarr,
@@ -299,6 +314,9 @@ const FormField: IFormField = {
   deleteItem(index) {
     let list = this.state.materialList;
     list.splice(index, 1);
+    this.setState({
+      materialList: list,
+    });
     //   含税金额
     let newarr2 = [];
 
@@ -321,11 +339,28 @@ const FormField: IFormField = {
     newarr4 = newarr4.map(item => {
       return item.no_amount_tax;
     });
-    this.setState({
-      materialList: list,
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
-      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
-    });
+    let newdata1 = this.toFixed(eval(newarr2.join('+')), 2);
+
+    if (isNaN(newdata1)) {
+      this.setState({
+        Inputmoney1: 0,
+      });
+    } else {
+      this.setState({
+        Inputmoney1: newdata1,
+      });
+    }
+    let newdata2 = this.toFixed(eval(newarr4.join('+')), 2);
+
+    if (isNaN(newdata2)) {
+      this.setState({
+        Inputmoney2: 0,
+      });
+    } else {
+      this.setState({
+        Inputmoney2: newdata2,
+      });
+    }
   },
   // 两个浮点数相减
   accSub(num1, num2) {
@@ -745,7 +780,9 @@ const FormField: IFormField = {
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
           showCancelButton
-          onCancel={() => this.setState({ showElem: 'none' })}
+          onCancel={() =>
+            this.setState({ showElem: 'none', SearchBarvalue: '' })
+          }
         />
 
         <List>
@@ -771,7 +808,9 @@ const FormField: IFormField = {
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
           showCancelButton
-          onCancel={() => this.setState({ showElem3: 'none' })}
+          onCancel={() =>
+            this.setState({ showElem3: 'none', SearchBarvalue: '' })
+          }
         />
         <Tabs
           tabs={tabs}
@@ -853,7 +892,9 @@ const FormField: IFormField = {
           placeholder="请输入"
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
-          onCancel={() => this.setState({ showElem2: 'none' })}
+          onCancel={() =>
+            this.setState({ showElem2: 'none', SearchBarvalue: '' })
+          }
           showCancelButton
         />
 
@@ -973,7 +1014,7 @@ const FormField: IFormField = {
                           <div>
                             {label}-明细({index + 1})
                           </div>
-                          {this.state.materialList.length > 1 ? (
+                          {this.state.materialList.length > 0 ? (
                             <div
                               className="dele_item"
                               onClick={this.deleteItem.bind(this, index, item)}

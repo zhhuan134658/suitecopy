@@ -302,6 +302,9 @@ const FormField: IFormField = {
   deleteItem(index) {
     let list = this.state.materialList;
     list.splice(index, 1);
+    this.setState({
+      materialList: list,
+    });
     //   含税金额
     let newarr2 = [];
 
@@ -325,7 +328,6 @@ const FormField: IFormField = {
       return item.no_amount_tax;
     });
     this.setState({
-      materialList: list,
       Inputmoney1: eval(newarr2.join('+')).toFixed(2),
       Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
@@ -746,7 +748,7 @@ const FormField: IFormField = {
                           <div>
                             {label}-明细({index + 1})
                           </div>
-                          {this.state.materialList.length > 1 ? (
+                          {this.state.materialList.length > 0 ? (
                             <div
                               className="dele_item"
                               onClick={this.deleteItem.bind(this, index)}

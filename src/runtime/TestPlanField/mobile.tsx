@@ -280,7 +280,9 @@ const FormField: IFormField = {
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
           showCancelButton
-          onCancel={() => this.setState({ showElem: 'none' })}
+          onCancel={() =>
+            this.setState({ showElem: 'none', SearchBarvalue: '' })
+          }
         />
 
         <List>
@@ -305,7 +307,9 @@ const FormField: IFormField = {
           placeholder="请输入"
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
-          onCancel={() => this.setState({ showElem2: 'none' })}
+          onCancel={() =>
+            this.setState({ showElem2: 'none', SearchBarvalue: '' })
+          }
           showCancelButton
         />
 
@@ -376,7 +380,7 @@ const FormField: IFormField = {
                           <div>
                             {label}-明细({index + 1})
                           </div>
-                          {this.state.materialList.length > 1 ? (
+                          {this.state.materialList.length > 0 ? (
                             <div
                               className="dele_item"
                               onClick={this.deleteItem.bind(this, index)}

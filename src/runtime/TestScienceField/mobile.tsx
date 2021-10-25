@@ -363,7 +363,7 @@ const FormField: IFormField = {
                           <div>
                             {label}-明细({index + 1})
                           </div>
-                          {this.state.materialList.length > 1 ? (
+                          {this.state.materialList.length > 0 ? (
                             <div
                               className="dele_item"
                               onClick={this.deleteItem.bind(this, index)}

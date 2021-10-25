@@ -154,6 +154,9 @@ const FormField: IFormField = {
         if (type === 1) {
           console.log('9887987', newarr);
           const newssarr = [...newarr];
+          this.setState({
+            materialList: [...newarr],
+          });
           // 含税金额合计;
 
           let newarr2 = [];
@@ -168,7 +171,7 @@ const FormField: IFormField = {
           });
 
           this.setState({
-            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+            Inputmoney1: eval(newarr2.join('+')),
           });
           // 不含税金额合计;
 
@@ -184,10 +187,7 @@ const FormField: IFormField = {
           });
 
           this.setState({
-            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
-          });
-          this.setState({
-            materialList: [...newarr],
+            Inputmoney2: eval(newarr4.join('+')),
           });
         } else if (type === 2) {
           this.setState({
@@ -302,6 +302,9 @@ const FormField: IFormField = {
   deleteItem(index) {
     let list = this.state.materialList;
     list.splice(index, 1);
+    this.setState({
+      materialList: list,
+    });
     //   含税金额
     let newarr2 = [];
 
@@ -325,7 +328,6 @@ const FormField: IFormField = {
       return item.no_amount_tax;
     });
     this.setState({
-      materialList: list,
       Inputmoney1: eval(newarr2.join('+')).toFixed(2),
       Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
@@ -921,7 +923,7 @@ const FormField: IFormField = {
                           <div>
                             {label}-明细({index + 1})
                           </div>
-                          {this.state.materialList.length > 1 ? (
+                          {this.state.materialList.length > 0 ? (
                             <div
                               className="dele_item"
                               onClick={this.deleteItem.bind(this, index)}

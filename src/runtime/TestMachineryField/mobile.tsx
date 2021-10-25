@@ -446,16 +446,14 @@ const FormField: IFormField = {
                           <div>
                             {label}-明细({index + 1})
                           </div>
-                          {this.state.materialList.length > 1 ? (
+                        
                             <div
                               className="dele_item"
                               onClick={this.deleteItem.bind(this, item, index)}
                             >
                               删除
                             </div>
-                          ) : (
-                            <div></div>
-                          )}
+                      
                         </div>
                         <div className="row">
                           {/* <div>

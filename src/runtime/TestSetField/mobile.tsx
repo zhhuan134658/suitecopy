@@ -129,7 +129,7 @@ const FormField: IFormField = {
       .then(res => {
         console.log(JSON.parse(res.dataList[0].value));
         //   表格数据
-        let newarr;
+        let newarr = [];
         //   表格数据
         try {
           newarr = JSON.parse(res.dataList[0].value).data;
@@ -147,13 +147,16 @@ const FormField: IFormField = {
             children: newtarr,
           },
         ];
-        this.setState({
-          treeData: [...newtarr1],
-        });
+        // this.setState({
+        //   treeData: [...newtarr1],
+        // });
 
         if (type === 1) {
-          console.log('9887987', newarr);
+          console.log('98879871111', newarr);
           const newssarr = [...newarr];
+          this.setState({
+            materialList: newssarr,
+          });
           // 含税金额合计;
 
           let newarr2 = [];
@@ -168,7 +171,7 @@ const FormField: IFormField = {
           });
 
           this.setState({
-            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+            Inputmoney1: eval(newarr2.join('+')),
           });
           // 不含税金额合计;
 
@@ -184,10 +187,7 @@ const FormField: IFormField = {
           });
 
           this.setState({
-            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
-          });
-          this.setState({
-            materialList: newarr,
+            Inputmoney2: eval(newarr4.join('+')),
           });
         } else if (type === 2) {
           this.setState({
@@ -312,6 +312,9 @@ const FormField: IFormField = {
   deleteItem(index) {
     let list = this.state.materialList;
     list.splice(index, 1);
+    this.setState({
+      materialList: list,
+    });
     //   含税金额
     let newarr2 = [];
 
@@ -334,11 +337,32 @@ const FormField: IFormField = {
     newarr4 = newarr4.map(item => {
       return item.no_amount_tax;
     });
-    this.setState({
-      materialList: list,
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
-      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
-    });
+    let newdata1 = this.toFixed(eval(newarr2.join('+')), 2);
+
+    if (isNaN(newdata1)) {
+      this.setState({
+        Inputmoney1: 0,
+      });
+    } else {
+      this.setState({
+        Inputmoney1: newdata1,
+      });
+    }
+    let newdata2 = this.toFixed(eval(newarr4.join('+')), 2);
+
+    if (isNaN(newdata2)) {
+      this.setState({
+        Inputmoney2: 0,
+      });
+    } else {
+      this.setState({
+        Inputmoney2: newdata2,
+      });
+    }
+    // this.setState({
+    //   Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+    //   Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+    // });
   },
   // 两个浮点数相减
   accSub(num1, num2) {
@@ -999,7 +1023,7 @@ const FormField: IFormField = {
                           <div>
                             {label}-明细({index + 1})
                           </div>
-                          {this.state.materialList.length > 1 ? (
+                          {this.state.materialList.length > 0 ? (
                             <div
                               className="dele_item"
                               onClick={this.deleteItem.bind(this, index, item)}
