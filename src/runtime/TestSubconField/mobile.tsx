@@ -127,9 +127,9 @@ const FormField: IFormField = {
     const required = form.getFieldProp('TestSubcon', 'required');
     const placeholder = form.getFieldProp('TestSubcon', 'placeholder');
     const tabs = [
-      { title: '分包进度款结算' },
-      { title: '分包完工结算' },
-      { title: '分包质保金结算' },
+      { title: '分包进度款' },
+      { title: '分包完工' },
+      { title: '分包质保金' },
       { title: '分包合同' },
     ];
 

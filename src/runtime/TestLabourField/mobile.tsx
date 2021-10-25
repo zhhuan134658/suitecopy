@@ -131,10 +131,10 @@ const FormField: IFormField = {
     const required = form.getFieldProp('TestLabour', 'required');
     const placeholder = form.getFieldProp('TestLabour', 'placeholder');
     const tabs = [
-      { title: '劳务进度款结算' },
-      { title: '劳务完工结算' },
-      { title: '劳务质保金结算' },
-      { title: '零星劳务结算' },
+      { title: '劳务进度款' },
+      { title: '劳务完工' },
+      { title: '劳务质保金' },
+      { title: '零星劳务' },
       { title: '劳务合同' },
     ];
 
