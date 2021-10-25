@@ -447,6 +447,9 @@ const FormField: ISwapFormField = {
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
     const arr = dataSource.filter(item => item.id !== row.id);
+    this.setState({
+      dataSource: arr,
+    });
     //   含税金额
     let newarr2 = [];
 
@@ -470,11 +473,28 @@ const FormField: ISwapFormField = {
       return item.no_amount_tax;
     });
 
-    this.setState({
-      dataSource: arr,
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
-      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
-    });
+    let newdata1 = this.toFixed(eval(newarr2.join('+')), 2);
+
+    if (isNaN(newdata1)) {
+      this.setState({
+        Inputmoney1: 0,
+      });
+    } else {
+      this.setState({
+        Inputmoney1: newdata1,
+      });
+    }
+    let newdata2 = this.toFixed(eval(newarr4.join('+')), 2);
+
+    if (isNaN(newdata2)) {
+      this.setState({
+        Inputmoney2: 0,
+      });
+    } else {
+      this.setState({
+        Inputmoney2: newdata2,
+      });
+    }
   },
   newhandleAdd() {
     const { form } = this.props;

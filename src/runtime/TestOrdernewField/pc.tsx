@@ -447,6 +447,9 @@ const FormField: ISwapFormField = {
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
     const arr = dataSource.filter(item => item.id !== row.id);
+    this.setState({
+      dataSource: arr,
+    });
     //   含税金额
     let newarr2 = [];
 
@@ -471,7 +474,6 @@ const FormField: ISwapFormField = {
     });
 
     this.setState({
-      dataSource: arr,
       Inputmoney1: eval(newarr2.join('+')).toFixed(2),
       Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
