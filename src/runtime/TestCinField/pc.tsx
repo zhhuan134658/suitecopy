@@ -1295,7 +1295,9 @@ const FormField: ISwapFormField = {
               placement="top"
               title={
                 <div>
-                  <span>含税单价=不含税单价*（1+税率）</span>
+                  <span>
+                    含税单价=不含税单价*（1+税率）,含税单价/不含税单价二选一填入
+                  </span>
                 </div>
               }
             >
@@ -1567,11 +1569,15 @@ const FormField: ISwapFormField = {
           <div style={{ margin: '10px' }} className="label">
             不含税金额合计(元)
           </div>
-          <div style={{ margin: '10px' }}>{nomoney}</div>
+          <div style={{ margin: '10px' }}>
+            {nomoney ? nomoney.toFixed(2) : ''}
+          </div>
           <div style={{ margin: '10px' }} className="label">
             含税金额合计(元)
           </div>
-          <div style={{ margin: '10px' }}>{hanmoney}</div>
+          <div style={{ margin: '10px' }}>
+            {hanmoney ? hanmoney.toFixed(2) : ''}
+          </div>
         </div>
       );
     }

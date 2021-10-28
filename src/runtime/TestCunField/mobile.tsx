@@ -216,7 +216,13 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-  onSearchBarChange(value) {
+    onSearchBarChange(value) {
+          if (!value) {
+            const newData = this.state.allData;
+            newData.name = value;
+            this.asyncSetFieldProps(newData);
+          }
+
     this.setState({ SearchBarvalue: value });
   },
   //增加明细
@@ -353,7 +359,9 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}/{item.unit}/{item.size}
+                {item.name +
+                  `${item.unit ? '/' + item.unit : ''}` +
+                  `${item.size ? '/' + item.size : ''}`}
               </List.Item>
             );
           })}

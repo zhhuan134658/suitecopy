@@ -193,7 +193,13 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-  onSearchBarChange(value) {
+    onSearchBarChange(value) {
+          if (!value) {
+            const newData = this.state.allData;
+            newData.name = value;
+            this.asyncSetFieldProps(newData);
+          }
+
     this.setState({ SearchBarvalue: value });
   },
   //增加明细

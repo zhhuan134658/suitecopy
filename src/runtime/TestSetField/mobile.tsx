@@ -19,7 +19,8 @@ import {
 import { Tree } from 'antd';
 import './mobile.less';
 const Item = List.Item;
-
+import { searchBarChange, searchBarSubmit } from '../../utils/searchUtils';
+import { fpAdd, fpDivide, fpMul, toFixed } from '../../utils/fpOperations';
 /**
  * 自定义控件运行态 Mobile 视图
  */
@@ -103,7 +104,7 @@ const FormField: IFormField = {
       ],
     };
   },
-  asyncSetFieldProps(vlauedata, type) {
+  asyncSetFieldProps(vlauedata, type = 0) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
@@ -288,6 +289,12 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
   },
   onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
+
     this.setState({ SearchBarvalue: value });
   },
   //增加明细
@@ -463,7 +470,7 @@ const FormField: IFormField = {
           //   ).toFixed(2);
           let a = 1 + arr[newindex].tax_rate * 0.01;
           arr[newindex].unit_price = this.toFixed(
-            this.accMul(arr[newindex].no_unit_price, a),
+            fpMul(arr[newindex].no_unit_price, a),
             2,
           );
         } else if (
@@ -503,7 +510,7 @@ const FormField: IFormField = {
         ) {
           let a = 1 + arr[newindex].tax_rate * 0.01;
           arr[newindex].unit_price = this.toFixed(
-            this.accMul(arr[newindex].no_unit_price, a),
+            fpMul(arr[newindex].no_unit_price, a),
             2,
           );
           //   newData[index].unit_price = (
@@ -516,7 +523,7 @@ const FormField: IFormField = {
           //     row.unit_price * row.det_quantity
           //   ).toFixed(2);
           arr[newindex].amount_tax = this.toFixed(
-            this.accMul(arr[newindex].unit_price, arr[newindex].det_quantity),
+            fpMul(arr[newindex].unit_price, arr[newindex].det_quantity),
             2,
           );
         }
@@ -528,7 +535,7 @@ const FormField: IFormField = {
           reg.test(arr[newindex].tax_rate)
         ) {
           let a = 1 + arr[newindex].tax_rate * 0.01;
-          let b = this.accMul(
+          let b = fpMul(
             arr[newindex].unit_price,
             arr[newindex].det_quantity,
           );
@@ -543,7 +550,7 @@ const FormField: IFormField = {
           let d = 1 + arr[newindex].tax_rate * 0.01;
           let e = this.accDiv(c, d);
           let f = arr[newindex].tax_rate * 0.01;
-          arr[newindex].tax_amount = this.toFixed(this.accMul(e, f), 2);
+          arr[newindex].tax_amount = this.toFixed(fpMul(e, f), 2);
 
           //   newData[index].tax_amount = (
           //     ((row.unit_price * row.det_quantity) / (1 + row.tax_rate * 0.01)) *
@@ -560,7 +567,7 @@ const FormField: IFormField = {
         ) {
           //   let a = 1 + row.tax_rate * 0.01;
           //   newData[index].unit_price = this.toFixed(
-          //     this.accMul(row.no_unit_price, a, 2),
+          //     fpMul(row.no_unit_price, a, 2),
           //   );
 
           arr[newindex].unit_price = this.toFixed(
@@ -598,7 +605,7 @@ const FormField: IFormField = {
         } else if (arr[newindex].no_unit_price && arr[newindex].unit_price) {
           let a = 1 + arr[newindex].tax_rate * 0.01;
           arr[newindex].unit_price = this.toFixed(
-            this.accMul(arr[newindex].no_unit_price, a),
+            fpMul(arr[newindex].no_unit_price, a),
             2,
           );
           //   newData[index].unit_price = (
@@ -611,24 +618,24 @@ const FormField: IFormField = {
           reg.test(arr[newindex].det_quantity) &&
           reg.test(arr[newindex].tax_rate)
         ) {
-          let a = this.accMul(
+          let a = fpMul(
             arr[newindex].no_unit_price,
             arr[newindex].det_quantity,
           );
-          let b = this.accMul(arr[newindex].tax_rate, 0.01);
-          arr[newindex].tax_amount = this.toFixed(this.accMul(a, b), 2);
+          let b = fpMul(arr[newindex].tax_rate, 0.01);
+          arr[newindex].tax_amount = this.toFixed(fpMul(a, b), 2);
           //   newData[index].tax_amount = (
           //     row.no_unit_price *
           //     row.det_quantity *
           //     row.tax_rate *
           //     0.01
           //   ).toFixed(2);
-          let c = this.accMul(
+          let c = fpMul(
             arr[newindex].no_unit_price,
             arr[newindex].det_quantity,
           );
           let d = 1 + arr[newindex].tax_rate * 0.01;
-          arr[newindex].amount_tax = this.toFixed(this.accMul(c, d), 2);
+          arr[newindex].amount_tax = this.toFixed(fpMul(c, d), 2);
           //   newData[index].amount_tax = (
           //     row.no_unit_price *
           //     row.det_quantity *
@@ -648,12 +655,12 @@ const FormField: IFormField = {
         arr[newindex].det_quantity &&
         reg.test(arr[newindex].tax_rate)
       ) {
-        let a = this.accMul(
+        let a = fpMul(
           arr[newindex].no_unit_price,
           arr[newindex].det_quantity,
         );
-        let b = this.accMul(arr[newindex].tax_rate, 0.01);
-        arr[newindex].tax_amount = this.toFixed(this.accMul(a, b), 2);
+        let b = fpMul(arr[newindex].tax_rate, 0.01);
+        arr[newindex].tax_amount = this.toFixed(fpMul(a, b), 2);
         // newData[index].tax_amount = (
         //   row.no_unit_price *
         //   row.det_quantity *
@@ -664,7 +671,7 @@ const FormField: IFormField = {
       //   不含税
       if (arr[newindex].no_unit_price && arr[newindex].det_quantity) {
         arr[newindex].no_amount_tax = this.toFixed(
-          this.accMul(arr[newindex].no_unit_price, arr[newindex].det_quantity),
+          fpMul(arr[newindex].no_unit_price, arr[newindex].det_quantity),
           2,
         );
         // newData[index].no_amount_tax = (
@@ -677,13 +684,13 @@ const FormField: IFormField = {
         arr[newindex].det_quantity &&
         reg.test(arr[newindex].tax_rate)
       ) {
-        let a = this.accMul(
+        let a = fpMul(
           arr[newindex].no_unit_price,
           arr[newindex].det_quantity,
         );
         let b = 1 + arr[newindex].tax_rate * 0.01;
 
-        arr[newindex].amount_tax = this.toFixed(this.accMul(a, b), 2);
+        arr[newindex].amount_tax = this.toFixed(fpMul(a, b), 2);
         // newData[index].amount_tax = (
         //   row.no_unit_price *
         //   row.det_quantity *
@@ -784,8 +791,14 @@ const FormField: IFormField = {
         <SearchBar
           value={this.state.SearchBarvalue}
           placeholder="请输入"
-          onSubmit={this.onSubmit}
-          onChange={this.onSearchBarChange}
+          onSubmit={val => {
+            const _this = this;
+            searchBarSubmit(_this, val, 0);
+          }}
+          onChange={val => {
+            const _this = this;
+            searchBarChange(_this, val, 0);
+          }}
           showCancelButton
           onCancel={() => this.setState({ showElem: 'none' })}
         />
@@ -798,7 +811,9 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name}/{item.unit}/{item.size}
+                {item.name +
+                  `${item.unit ? '/' + item.unit : ''}` +
+                  `${item.size ? '/' + item.size : ''}`}
               </List.Item>
             );
           })}
@@ -810,8 +825,14 @@ const FormField: IFormField = {
         <SearchBar
           value={this.state.SearchBarvalue}
           placeholder="请输入"
-          onSubmit={this.onSubmit}
-          onChange={this.onSearchBarChange}
+          onSubmit={val => {
+            const _this = this;
+            searchBarSubmit(_this, val, 2);
+          }}
+          onChange={val => {
+            const _this = this;
+            searchBarChange(_this, val, 2);
+          }}
           showCancelButton
           onCancel={() => this.setState({ showElem3: 'none' })}
         />
@@ -854,7 +875,9 @@ const FormField: IFormField = {
                     key={index}
                     multipleLine
                   >
-                    {item.name}/ {item.supplier}/ {item.contract_money}
+                    {item.name +
+                      `${item.supplier ? '/' + item.supplier : ''}` +
+                      `${item.contract_money ? '/' + item.contract_money : ''}`}
                   </List.Item>
                 );
               })}
@@ -870,7 +893,11 @@ const FormField: IFormField = {
                     key={index}
                     multipleLine
                   >
-                    {item.name}/ {item.supplier}/ {item.tax_total_money}
+                    {item.name +
+                      `${item.supplier ? '/' + item.supplier : ''}` +
+                      `${
+                        item.tax_total_money ? '/' + item.tax_total_money : ''
+                      }`}
                   </List.Item>
                 );
               })}
@@ -886,7 +913,9 @@ const FormField: IFormField = {
                     key={index}
                     multipleLine
                   >
-                    {item.name}/ {item.supplier}/ {item.extend_four}
+                    {item.name +
+                      `${item.supplier ? '/' + item.supplier : ''}` +
+                      `${item.extend_four ? '/' + item.extend_four : ''}`}
                   </List.Item>
                 );
               })}
@@ -958,7 +987,7 @@ const FormField: IFormField = {
               <div className="m-field-view">
                 <label className="m-field-view-label">含税金额合计(元)</label>
                 <div className="m-field-view-value">
-                  <span>{hanmoney}</span>
+                  <span>{hanmoney ? hanmoney.toFixed(2) : ''}</span>
                 </div>
               </div>
             </div>
@@ -966,7 +995,7 @@ const FormField: IFormField = {
               <div className="m-field-view">
                 <label className="m-field-view-label">不含税金额合计(元)</label>
                 <div className="m-field-view-value">
-                  <span>{nomoney}</span>
+                  <span>{nomoney ? nomoney.toFixed(2) : ''}</span>
                 </div>
               </div>
             </div>

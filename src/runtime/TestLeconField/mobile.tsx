@@ -213,7 +213,13 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-  onSearchBarChange(value) {
+    onSearchBarChange(value) {
+          if (!value) {
+            const newData = this.state.allData;
+            newData.name = value;
+            this.asyncSetFieldProps(newData);
+          }
+
     this.setState({ SearchBarvalue: value });
   },
   //增加明细
@@ -425,7 +431,7 @@ const FormField: IFormField = {
               <div className="m-field-view">
                 <label className="m-field-view-label">合计(元)</label>
                 <div className="m-field-view-value">
-                  <span>{hanmoney}</span>
+                  <span>{hanmoney ? hanmoney.toFixed(2) : ''}</span>
                 </div>
               </div>
             </div>
@@ -456,14 +462,13 @@ const FormField: IFormField = {
                           <div>
                             {label}-明细({index + 1})
                           </div>
-                         
-                            <div
-                              className="dele_item"
-                              onClick={this.deleteItem.bind(this, item, index)}
-                            >
-                              删除
-                            </div>
-                        
+
+                          <div
+                            className="dele_item"
+                            onClick={this.deleteItem.bind(this, item, index)}
+                          >
+                            删除
+                          </div>
                         </div>
                         <div className="row">
                           {/* <div>

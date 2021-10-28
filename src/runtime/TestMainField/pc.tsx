@@ -147,7 +147,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 }) => {
   const [editing, setEditing] = useState(false);
   // const inputRef = useRef(null);
-  const inputRef = useRef<Input>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const form = useContext(EditableContext)!;
 
   useEffect(() => {
@@ -780,8 +780,17 @@ const FormField: ISwapFormField = {
       {
         title: '维保内容',
         dataIndex: 'content',
-        render: (text, record, index) => {
-          return <Input value={text} placeholder="请输入" />;
+        render: (_, record, index) => {
+          let rec = record;
+          return (
+            <Input
+              value={record.content}
+              placeholder="请输入"
+              onChange={e => {
+                record.content = e.target.value;
+              }}
+            />
+          );
         },
       },
       {
@@ -931,7 +940,7 @@ const FormField: ISwapFormField = {
       return (
         <div>
           <div className="label">合计</div>
-          <div>{hanmoney}</div>
+          <div>{hanmoney ? hanmoney.toFixed(2) : ''}</div>
           <div className="label">{label}</div>
 
           {/* <div>

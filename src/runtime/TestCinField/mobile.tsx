@@ -18,6 +18,7 @@ import {
 } from 'antd-mobile';
 import { Tree } from 'antd';
 import './mobile.less';
+import { searchBarSubmit, searchBarChange } from '../../utils/searchUtils';
 const Item = List.Item;
 
 /**
@@ -298,7 +299,13 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-  onSearchBarChange(value) {
+    onSearchBarChange(value) {
+          if (!value) {
+            const newData = this.state.allData;
+            newData.name = value;
+            this.asyncSetFieldProps(newData);
+          }
+
     this.setState({ SearchBarvalue: value });
   },
   //增加明细
@@ -789,8 +796,14 @@ const FormField: IFormField = {
         <SearchBar
           value={this.state.SearchBarvalue}
           placeholder="请输入"
-          onSubmit={this.onSubmit}
-          onChange={this.onSearchBarChange}
+          onSubmit={val => {
+            const _this = this;
+            searchBarSubmit(_this, val, 2);
+          }}
+          onChange={val => {
+            const _this = this;
+            searchBarChange(_this, val, 2);
+          }}
           showCancelButton
           onCancel={() => this.setState({ showElem3: 'none' })}
         />
@@ -799,26 +812,26 @@ const FormField: IFormField = {
           initialPage={0}
           onChange={(tab, index) => {
             console.log('onChange', index, tab);
-            this.setState({ detdate: 'a1' });
+            this.setState({ detdate: 'c1' });
             let newpage = {
-              defaultActiveKey: 'a',
-              rk_id: ['a'],
+              defaultActiveKey: 'c',
+              rk_id: ['c'],
               number: '1000',
               page: 1,
               name: '',
             };
             if (index === 0) {
-              this.setState({ detdate: 'a1' });
-              newpage.rk_id = ['a'];
-            } else if (index === 1) {
-              this.setState({ detdate: 'b1' });
-              newpage.rk_id = ['b'];
-            } else if (index === 2) {
               this.setState({ detdate: 'c1' });
               newpage.rk_id = ['c'];
-            } else if (index === 3) {
+            } else if (index === 1) {
               this.setState({ detdate: 'd1' });
               newpage.rk_id = ['d'];
+            } else if (index === 2) {
+              this.setState({ detdate: 'a1' });
+              newpage.rk_id = ['a'];
+            } else if (index === 3) {
+              this.setState({ detdate: 'b1' });
+              newpage.rk_id = ['b'];
             }
             this.setState({
               allData: newpage,
@@ -850,7 +863,9 @@ const FormField: IFormField = {
                     key={index}
                     multipleLine
                   >
-                    {item.name}/{item.detailed_money}
+                    {' '}
+                    {item.name +
+                      `${item.detailed_money ? '/' + item.detailed_money : ''}`}
                   </List.Item>
                 );
               })}
@@ -865,7 +880,9 @@ const FormField: IFormField = {
                     key={index}
                     multipleLine
                   >
-                    {item.name}/{item.supplier}/{item.contract_money}
+                    {item.name +
+                      `${item.supplier ? '/' + item.supplier : ''}` +
+                      `${item.contract_money ? '/' + item.contract_money : ''}`}
                   </List.Item>
                 );
               })}
@@ -881,7 +898,11 @@ const FormField: IFormField = {
                     key={index}
                     multipleLine
                   >
-                    {item.name}/{item.supplier}/{item.tax_total_money}
+                    {item.name +
+                      `${item.supplier ? '/' + item.supplier : ''}` +
+                      `${
+                        item.tax_total_money ? '/' + item.tax_total_money : ''
+                      }`}
                   </List.Item>
                 );
               })}
@@ -953,7 +974,7 @@ const FormField: IFormField = {
               <div className="m-field-view">
                 <label className="m-field-view-label">不含税金额合计(元)</label>
                 <div className="m-field-view-value">
-                  <span>{nomoney}</span>
+                  <span>{nomoney ? nomoney.toFixed(2) : ''}</span>
                 </div>
               </div>
             </div>
@@ -961,7 +982,7 @@ const FormField: IFormField = {
               <div className="m-field-view">
                 <label className="m-field-view-label">含税金额合计(元)</label>
                 <div className="m-field-view-value">
-                  <span>{hanmoney}</span>
+                  <span>{hanmoney ? hanmoney.toFixed(2) : ''}</span>
                 </div>
               </div>
             </div>

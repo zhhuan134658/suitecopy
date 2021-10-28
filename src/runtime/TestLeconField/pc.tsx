@@ -512,7 +512,7 @@ const FormField: ISwapFormField = {
   //     this.setState({ dataSource: newData });
   //     },
 
-  asyncSetFieldProps(vlauedata) {
+  asyncSetFieldProps(vlauedata,type = 0) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
@@ -992,7 +992,7 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">合计</div>
-          <div>{hanmoney}</div>
+          <div>{hanmoney ? hanmoney.toFixed(2) : ''}</div>
 
           <div className="label">{label}</div>
 
