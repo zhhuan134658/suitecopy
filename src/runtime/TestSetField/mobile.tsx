@@ -20,7 +20,7 @@ import { Tree } from 'antd';
 import './mobile.less';
 const Item = List.Item;
 import { searchBarChange, searchBarSubmit } from '../../utils/searchUtils';
-
+import { fpAdd, fpDivide, fpMul, toFixed } from '../../utils/fpOperations';
 /**
  * 自定义控件运行态 Mobile 视图
  */
@@ -470,7 +470,7 @@ const FormField: IFormField = {
           //   ).toFixed(2);
           let a = 1 + arr[newindex].tax_rate * 0.01;
           arr[newindex].unit_price = this.toFixed(
-            this.accMul(arr[newindex].no_unit_price, a),
+            fpMul(arr[newindex].no_unit_price, a),
             2,
           );
         } else if (
@@ -510,7 +510,7 @@ const FormField: IFormField = {
         ) {
           let a = 1 + arr[newindex].tax_rate * 0.01;
           arr[newindex].unit_price = this.toFixed(
-            this.accMul(arr[newindex].no_unit_price, a),
+            fpMul(arr[newindex].no_unit_price, a),
             2,
           );
           //   newData[index].unit_price = (
@@ -523,7 +523,7 @@ const FormField: IFormField = {
           //     row.unit_price * row.det_quantity
           //   ).toFixed(2);
           arr[newindex].amount_tax = this.toFixed(
-            this.accMul(arr[newindex].unit_price, arr[newindex].det_quantity),
+            fpMul(arr[newindex].unit_price, arr[newindex].det_quantity),
             2,
           );
         }
@@ -535,7 +535,7 @@ const FormField: IFormField = {
           reg.test(arr[newindex].tax_rate)
         ) {
           let a = 1 + arr[newindex].tax_rate * 0.01;
-          let b = this.accMul(
+          let b = fpMul(
             arr[newindex].unit_price,
             arr[newindex].det_quantity,
           );
@@ -550,7 +550,7 @@ const FormField: IFormField = {
           let d = 1 + arr[newindex].tax_rate * 0.01;
           let e = this.accDiv(c, d);
           let f = arr[newindex].tax_rate * 0.01;
-          arr[newindex].tax_amount = this.toFixed(this.accMul(e, f), 2);
+          arr[newindex].tax_amount = this.toFixed(fpMul(e, f), 2);
 
           //   newData[index].tax_amount = (
           //     ((row.unit_price * row.det_quantity) / (1 + row.tax_rate * 0.01)) *
@@ -567,7 +567,7 @@ const FormField: IFormField = {
         ) {
           //   let a = 1 + row.tax_rate * 0.01;
           //   newData[index].unit_price = this.toFixed(
-          //     this.accMul(row.no_unit_price, a, 2),
+          //     fpMul(row.no_unit_price, a, 2),
           //   );
 
           arr[newindex].unit_price = this.toFixed(
@@ -605,7 +605,7 @@ const FormField: IFormField = {
         } else if (arr[newindex].no_unit_price && arr[newindex].unit_price) {
           let a = 1 + arr[newindex].tax_rate * 0.01;
           arr[newindex].unit_price = this.toFixed(
-            this.accMul(arr[newindex].no_unit_price, a),
+            fpMul(arr[newindex].no_unit_price, a),
             2,
           );
           //   newData[index].unit_price = (
@@ -618,24 +618,24 @@ const FormField: IFormField = {
           reg.test(arr[newindex].det_quantity) &&
           reg.test(arr[newindex].tax_rate)
         ) {
-          let a = this.accMul(
+          let a = fpMul(
             arr[newindex].no_unit_price,
             arr[newindex].det_quantity,
           );
-          let b = this.accMul(arr[newindex].tax_rate, 0.01);
-          arr[newindex].tax_amount = this.toFixed(this.accMul(a, b), 2);
+          let b = fpMul(arr[newindex].tax_rate, 0.01);
+          arr[newindex].tax_amount = this.toFixed(fpMul(a, b), 2);
           //   newData[index].tax_amount = (
           //     row.no_unit_price *
           //     row.det_quantity *
           //     row.tax_rate *
           //     0.01
           //   ).toFixed(2);
-          let c = this.accMul(
+          let c = fpMul(
             arr[newindex].no_unit_price,
             arr[newindex].det_quantity,
           );
           let d = 1 + arr[newindex].tax_rate * 0.01;
-          arr[newindex].amount_tax = this.toFixed(this.accMul(c, d), 2);
+          arr[newindex].amount_tax = this.toFixed(fpMul(c, d), 2);
           //   newData[index].amount_tax = (
           //     row.no_unit_price *
           //     row.det_quantity *
@@ -655,12 +655,12 @@ const FormField: IFormField = {
         arr[newindex].det_quantity &&
         reg.test(arr[newindex].tax_rate)
       ) {
-        let a = this.accMul(
+        let a = fpMul(
           arr[newindex].no_unit_price,
           arr[newindex].det_quantity,
         );
-        let b = this.accMul(arr[newindex].tax_rate, 0.01);
-        arr[newindex].tax_amount = this.toFixed(this.accMul(a, b), 2);
+        let b = fpMul(arr[newindex].tax_rate, 0.01);
+        arr[newindex].tax_amount = this.toFixed(fpMul(a, b), 2);
         // newData[index].tax_amount = (
         //   row.no_unit_price *
         //   row.det_quantity *
@@ -671,7 +671,7 @@ const FormField: IFormField = {
       //   不含税
       if (arr[newindex].no_unit_price && arr[newindex].det_quantity) {
         arr[newindex].no_amount_tax = this.toFixed(
-          this.accMul(arr[newindex].no_unit_price, arr[newindex].det_quantity),
+          fpMul(arr[newindex].no_unit_price, arr[newindex].det_quantity),
           2,
         );
         // newData[index].no_amount_tax = (
@@ -684,13 +684,13 @@ const FormField: IFormField = {
         arr[newindex].det_quantity &&
         reg.test(arr[newindex].tax_rate)
       ) {
-        let a = this.accMul(
+        let a = fpMul(
           arr[newindex].no_unit_price,
           arr[newindex].det_quantity,
         );
         let b = 1 + arr[newindex].tax_rate * 0.01;
 
-        arr[newindex].amount_tax = this.toFixed(this.accMul(a, b), 2);
+        arr[newindex].amount_tax = this.toFixed(fpMul(a, b), 2);
         // newData[index].amount_tax = (
         //   row.no_unit_price *
         //   row.det_quantity *

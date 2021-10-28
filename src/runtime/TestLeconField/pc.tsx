@@ -512,7 +512,7 @@ const FormField: ISwapFormField = {
   //     this.setState({ dataSource: newData });
   //     },
 
-  asyncSetFieldProps(vlauedata) {
+  asyncSetFieldProps(vlauedata,type = 0) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;

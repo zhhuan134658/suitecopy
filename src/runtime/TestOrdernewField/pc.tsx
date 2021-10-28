@@ -1181,7 +1181,9 @@ const FormField: ISwapFormField = {
               placement="top"
               title={
                 <div>
-                  <span>含税单价=不含税单价*（1+税率）</span>
+                  <span>
+                    含税单价=不含税单价*（1+税率）,含税单价/不含税单价二选一填入
+                  </span>
                 </div>
               }
             >

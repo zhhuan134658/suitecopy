@@ -164,7 +164,7 @@ interface EditableCellProps {
   children: React.ReactNode;
   dataIndex: keyof Item;
   record: Item;
-  handleSave: (record: Item,values:any) => void;
+  handleSave: (record: Item, values: any) => void;
   handleChange: (record: Item) => void;
 }
 
@@ -598,7 +598,7 @@ const FormField: ISwapFormField = {
     newData.splice(index, 1, { ...item, ...row });
     console.log('123', row, Object.keys(values));
     //计算
-    if (!reg.test(row.tax_rate)) {
+    if (!(reg.test(row.tax_rate) || reg.test(row.det_quantity))) {
       return this.setState({
         dataSource: newData,
       });
@@ -1291,7 +1291,9 @@ const FormField: ISwapFormField = {
               placement="top"
               title={
                 <div>
-                  <span>含税单价=不含税单价*（1+税率）</span>
+                  <span>
+                    含税单价=不含税单价*（1+税率）,含税单价/不含税单价二选一填入
+                  </span>
                 </div>
               }
             >
@@ -1516,9 +1518,9 @@ const FormField: ISwapFormField = {
             />
           </div>
           <div className="label">不含税金额合计(元)</div>
-          <div>{nomoney?nomoney.toFixed(2):''}</div>
+          <div>{nomoney ? nomoney.toFixed(2) : ''}</div>
           <div className="label">含税金额合计(元)</div>
-          <div>{hanmoney?hanmoney.toFixed(2):''}</div>
+          <div>{hanmoney ? hanmoney.toFixed(2) : ''}</div>
         </div>
       );
     }
@@ -1730,7 +1732,7 @@ const FormField: ISwapFormField = {
                   scroll={{ x: '1500px', y: '255px' }}
                   rowSelection={{
                     type: 'checkbox',
-                    ...rowSelection, 
+                    ...rowSelection,
                   }}
                   rowKey={record => record.id}
                   columns={mycolumnstree}
