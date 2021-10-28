@@ -1161,7 +1161,9 @@ const FormField: ISwapFormField = {
             />
           </div>
           <div className="合计"> {label}</div>
-          <div style={{ marginTop: '10px' }}>{hanmoney}</div>
+          <div style={{ marginTop: '10px' }}>
+            {hanmoney ? hanmoney.toFixed(2) : ''}
+          </div>
         </div>
       );
     }

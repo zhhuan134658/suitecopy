@@ -164,7 +164,7 @@ interface EditableCellProps {
   children: React.ReactNode;
   dataIndex: keyof Item;
   record: Item;
-  handleSave: (record: Item) => void;
+  handleSave: (record: Item,values:any) => void;
   handleChange: (record: Item) => void;
 }
 
@@ -180,7 +180,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 }) => {
   const [editing, setEditing] = useState(false);
   // const inputRef = useRef(null);
-  const inputRef = useRef<Input>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const form = useContext(EditableContext)!;
 
   useEffect(() => {
@@ -268,7 +268,6 @@ interface DataType {
   det_quantity: any;
   no_unit_price: any;
   tax_rate: any;
-  unit_price: any;
   amount_tax: any;
   key: React.Key;
   name: string;
@@ -1517,9 +1516,9 @@ const FormField: ISwapFormField = {
             />
           </div>
           <div className="label">不含税金额合计(元)</div>
-          <div>{nomoney}</div>
+          <div>{nomoney?nomoney.toFixed(2):''}</div>
           <div className="label">含税金额合计(元)</div>
-          <div>{hanmoney}</div>
+          <div>{hanmoney?hanmoney.toFixed(2):''}</div>
         </div>
       );
     }
@@ -1661,7 +1660,7 @@ const FormField: ISwapFormField = {
                   onSearch={this.onSearch}
                 />
                 <Table
-                  scroll={{ x: '1500px' }}
+                  scroll={{ x: '1500px', y: '420px' }}
                   rowSelection={{
                     type: 'radio',
                     ...rowSelection,
@@ -1688,6 +1687,7 @@ const FormField: ISwapFormField = {
             title="选择物资"
             width={1000}
             visible={this.state.isModalVisibletree}
+            className="limited-height"
             footer={[
               <Button key="back" onClick={this.handleCanceltree}>
                 返回
@@ -1727,10 +1727,10 @@ const FormField: ISwapFormField = {
                   </Button>
                 </div>
                 <Table
-                  scroll={{ x: '1500px' }}
+                  scroll={{ x: '1500px', y: '255px' }}
                   rowSelection={{
                     type: 'checkbox',
-                    ...rowSelection,
+                    ...rowSelection, 
                   }}
                   rowKey={record => record.id}
                   columns={mycolumnstree}

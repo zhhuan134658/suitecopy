@@ -358,7 +358,7 @@ const FormField: ISwapFormField = {
 
     this.setState({ dataSource: newData });
   },
-  asyncSetFieldProps(vlauedata) {
+  asyncSetFieldProps(vlauedata, type = 2) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
@@ -405,6 +405,11 @@ const FormField: ISwapFormField = {
           newarr = JSON.parse(res.dataList[0].value).data;
         } catch (e) {}
 
+        if (type === 1) {
+          this.setState({
+            dataSource: [...newarr],
+          });
+        }
         this.setState({
           listData: [...newarr],
           current_page: JSON.parse(res.dataList[0].value).page,
@@ -417,7 +422,14 @@ const FormField: ISwapFormField = {
   },
   rowClick(this, record, rowkey) {
     const { form } = this.props;
-
+    let newpage = {
+      rk_id: ['a1'],
+      number: '10',
+      page: 1,
+      name: '',
+    };
+    newpage.rk_id.push(record.id);
+    this.asyncSetFieldProps(newpage, 1);
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('Zumoney', record.contract_money);
       form.setExtendFieldValue('Zumoney', record.contract_money);

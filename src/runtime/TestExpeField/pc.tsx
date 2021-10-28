@@ -701,7 +701,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '金额',  
+        title: '金额',
         dataIndex: 'money',
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.money}>
@@ -877,7 +877,9 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">报销合计</div>
-          <div style={{ marginTop: '10px' }}>{hanmoney}</div>
+          <div style={{ marginTop: '10px' }}>
+            {hanmoney ? hanmoney.toFixed(2) : ''}
+          </div>
           <div style={{ marginTop: '10px' }} className="label">
             报销明细
           </div>

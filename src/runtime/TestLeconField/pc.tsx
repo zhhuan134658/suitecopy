@@ -992,7 +992,7 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">合计</div>
-          <div>{hanmoney}</div>
+          <div>{hanmoney ? hanmoney.toFixed(2) : ''}</div>
 
           <div className="label">{label}</div>
 

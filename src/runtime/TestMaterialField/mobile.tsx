@@ -17,7 +17,8 @@ import {
 import { Tree } from 'antd';
 import './mobile.less';
 const Item = List.Item;
-
+import { asyncSetProps } from '../../utils/asyncSetProps';
+import { searchBarChange, searchBarSubmit } from '../../utils/searchUtils';
 /**
  * 自定义控件运行态 Mobile 视图
  */
@@ -74,70 +75,32 @@ const FormField: IFormField = {
       ],
     };
   },
-  asyncSetFieldProps(vlauedata, typename) {
-    const { form, spi } = this.props;
-    const Pro_name = form.getFieldValue('Autopro');
-    vlauedata.project_name = Pro_name;
-    const TestMaterialField = form.getFieldInstance('TestMaterial');
-    const key = TestMaterialField.getProp('id');
-    const value = '1';
-    const bizAsyncData = [
-      {
-        key,
-        bizAlias: 'TestMaterial',
-        extendValue: vlauedata,
-        value,
-      },
-    ];
-
-    // 入参和返回参考套件数据刷新集成接口文档
-
-    spi
-      .refreshData({
-        modifiedBizAlias: ['TestMaterial'], // spi接口要改动的是leaveReason的属性值
-        bizAsyncData,
-      })
-      .then(res => {
-        let newarr;
-        //   表格数据
-        try {
-          newarr = JSON.parse(res.dataList[0].value).data;
-        } catch (e) {}
-
-        // this.setState({
-        //   listData: [...newarr],
-        // });
-        //   树状图数据
-        // const newtarr = JSON.parse(res.dataList[0].extendValue);
-        // const newtarr1 = [
-        //   {
-        //     title: '物资类型',
-        //     key: '0',
-        //     children: newtarr,
-        //   },
-        // ];
-        // this.setState({
-        //   treeData: [...newtarr1],
-        // });
-        if (typename === 'CorpHouse') {
-          this.setState({
-            checkData: [...newarr],
-          });
-        } else if (typename === 'TestMaterial') {
-          this.setState({
-            listData: [...newarr],
-          });
-        } else if (typename === 'alllist') {
-          this.setState({
-            materialList: [...newarr],
-          });
-        }
-        // if (this.showElem3 == 'inherit') {
-        //   this.setState({
-        //     materialList: [...newarr],
-        //   });
-        // }
-      });
+  asyncSetFieldProps(vlauedata, typename='TestMaterial') {
+    const _this = this;
+    const promise = asyncSetProps(_this, vlauedata, 'TestMaterial');
+    promise.then(res => {
+      console.log('new async props');
+      const type = typename;
+      let arrayData;
+      try {
+        arrayData = res
+      } catch (e) {
+        console.log(e);
+      }
+      if (type === 'CorpHouse') {
+        _this.setState({
+          checkData: [...arrayData],
+        });
+      } else if (type === 'TestMaterial') {
+        _this.setState({
+          listData: [...arrayData],
+        });
+      } else if (type === 'alllist') {
+        _this.setState({
+          materialList: [...arrayData],
+        });
+      }
+    });
   },
   onOpenChange(index: any, ...args: any[]) {
     console.log('sss');
@@ -209,10 +172,35 @@ const FormField: IFormField = {
   onSubmit(value) {
     const newdate = this.state.allData;
     newdate.name = value;
-
     this.asyncSetFieldProps(newdate);
   },
+  onSubmitStorage(value) {
+    const newdate = this.state.allData;
+    newdate.name = value;
+    this.asyncSetFieldProps(newdate, 'CorpHouse');
+  },
+  onSubmitItems(value) {
+    const newdate = this.state.allData;
+    newdate.name = value;
+    this.asyncSetFieldProps(newdate, 'alllist');
+  },
   onSearchBarChange(value) {
+    if (!value) {
+      this.onSubmit('');
+    }
+    this.setState({ SearchBarvalue: value });
+  },
+  onSearchBarChangeStorage(value) {
+    console.log('Search Bar Change', value);
+    if (!value) {
+      this.onSubmitStorage('');
+    }
+    this.setState({ SearchBarvalue: value });
+  },
+  onSearchBarChangeItems(value) {
+    if (!value) {
+      this.onSubmitItems('');
+    }
     this.setState({ SearchBarvalue: value });
   },
   //增加明细
@@ -321,8 +309,14 @@ const FormField: IFormField = {
         <SearchBar
           value={this.state.SearchBarvalue}
           placeholder="请输入"
-          onSubmit={this.onSubmit}
-          onChange={this.onSearchBarChange}
+          onSubmit={val => {
+            const _this = this;
+            searchBarSubmit(_this, val, 'CorpHouse');
+          }}
+          onChange={val => {
+            const _this = this;
+            searchBarChange(_this, val, 'CorpHouse');
+          }}
           showCancelButton
           onCancel={() => this.setState({ showElem3: 'none' })}
         />
@@ -347,8 +341,14 @@ const FormField: IFormField = {
         <SearchBar
           value={this.state.SearchBarvalue}
           placeholder="请输入"
-          onSubmit={this.onSubmit}
-          onChange={this.onSearchBarChange}
+          onSubmit={val => {
+            const _this = this;
+            searchBarSubmit(_this, val, 'alllist');
+          }}
+          onChange={val => {
+            const _this = this;
+            searchBarChange(_this, val, 'alllist');
+          }}
           showCancelButton
           onCancel={() => this.setState({ showElem: 'none' })}
         />

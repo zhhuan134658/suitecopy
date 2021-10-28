@@ -433,7 +433,8 @@ const FormField: ISwapFormField = {
     //   newData[index].total_price = '自动计算';
     // }
     if (reg.test(row.price) && reg.test(row.oil_consump)) {
-      newData[index].total_price = Number(row.price) * Number(row.oil_consump);
+      let total = Number(row.price) * Number(row.oil_consump);
+      newData[index].total_price = total.toFixed(2);
     } else {
       newData[index].total_price = '自动计算';
     }
@@ -892,7 +893,7 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">合计</div>
-          <div>{hanmoney}</div>
+          <div>{hanmoney ? hanmoney.toFixed(2) : ''}</div>
           <div className="label">{label}</div>
 
           {/* <div>

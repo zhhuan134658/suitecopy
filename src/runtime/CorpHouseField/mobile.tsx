@@ -92,7 +92,12 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
   },
   //搜索框
-  onSearchBarChange(value) {
+  onSearchBarChange(value: any) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
     this.setState({ SearchBarvalue: value });
   },
   fieldRender() {

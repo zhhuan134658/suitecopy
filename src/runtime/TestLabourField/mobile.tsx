@@ -16,7 +16,8 @@ import {
   WingBlank,
 } from 'antd-mobile';
 import './mobile.less';
-
+import { asyncSetProps } from '../../utils/asyncSetProps';
+import { searchBarChange,searchBarSubmit } from '../../utils/searchUtils';
 /**
  * 自定义控件运行态 Mobile 视图
  */
@@ -32,36 +33,17 @@ const FormField: IFormField = {
       listData: [],
     };
   },
-  asyncSetFieldProps(vlauedata) {
-    const { form, spi } = this.props;
-    const Pro_name = form.getFieldValue('Autopro');
-    vlauedata.project_name = Pro_name;
-    const TestLabourField = form.getFieldInstance('TestLabour');
-    const key = TestLabourField.getProp('id');
-    const value = '1';
-    const bizAsyncData = [
-      {
-        key,
-        bizAlias: 'TestLabour',
-        extendValue: vlauedata,
-        value,
-      },
-    ];
-
-    // 入参和返回参考套件数据刷新集成接口文档
-
-    spi
-      .refreshData({
-        modifiedBizAlias: ['TestLabour'], // spi接口要改动的是leaveReason的属性值
-        bizAsyncData,
-      })
-      .then(res => {
-        console.log(JSON.parse(res.dataList[0].value));
+    asyncSetFieldProps(vlauedata: any, typeName: any) {
+        const _this = this
+        const promise = asyncSetProps(_this,vlauedata,'TestLabour')
+        promise.then(res => {
+          const type = typeName
+        console.log(res);
         //   表格数据
         let newarr;
         //   表格数据
         try {
-          newarr = JSON.parse(res.dataList[0].value).data;
+          newarr = res
         } catch (e) {}
 
         this.setState({
@@ -119,7 +101,13 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
   },
   //搜索框
-  onSearchBarChange(value) {
+    onSearchBarChange(value) {
+          if (!value) {
+            const newData = this.state.allData;
+            newData.name = value;
+            this.asyncSetFieldProps(newData);
+          }
+
     this.setState({ SearchBarvalue: value });
   },
   fieldRender() {
