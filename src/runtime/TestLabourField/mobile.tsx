@@ -43,7 +43,7 @@ const FormField: IFormField = {
         let newarr;
         //   表格数据
         try {
-          newarr = res
+          newarr = res['dataArray']
         } catch (e) {}
 
         this.setState({

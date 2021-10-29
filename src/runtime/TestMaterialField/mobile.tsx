@@ -83,7 +83,7 @@ const FormField: IFormField = {
       const type = typename;
       let arrayData;
       try {
-        arrayData = res
+        arrayData = res['dataArray']
       } catch (e) {
         console.log(e);
       }

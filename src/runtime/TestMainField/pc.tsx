@@ -64,6 +64,7 @@ const { Column } = Table;
 import { FormInstance } from 'antd/lib/form';
 
 import './pc.less';
+import { asyncSetProps } from '../../utils/asyncSetProps';
 const mycolumns = [
   {
     title: '物品名称',
@@ -500,81 +501,38 @@ const FormField: ISwapFormField = {
   //     },
 
   asyncSetFieldProps(vlauedata) {
-    const { form, spi } = this.props;
-    const Pro_name = form.getFieldValue('Autopro');
-    vlauedata.project_name = Pro_name;
-    const TestMainField = form.getFieldInstance('TestMain');
-
-    // const leaveReasonField = form.getFieldInstance('leaveReason');
-    const key = TestMainField.getProp('id');
-    // const value = TestMainField.getValue();
-    const value = '1';
-
-    // const extendValue = TestMainField.getExtendValue();
-    const bizAsyncData = [
-      {
-        key,
-        bizAlias: 'TestMain',
-        extendValue: vlauedata,
-        value,
-      },
-    ];
-
-    // 入参和返回参考套件数据刷新集成接口文档
-
-    spi
-      .refreshData({
-        modifiedBizAlias: ['TestMain'], // spi接口要改动的是leaveReason的属性值
-        bizAsyncData,
-      })
-      .then(res => {
-        console.log(JSON.parse(res.dataList[0].value));
-
-        // this.state.listData = find(
-        //   res.dataList,
-        //   item => item.bizAlias === 'TestMain',
-        // );
-
-        // this.state.listData = res.dataList[0].value;
-
-        // this.setState({
-        //   listData: res.dataList[0].value,
-        // });
-        //   表格数据
-        let newarr;
-        //   表格数据
-        try {
-          newarr = JSON.parse(res.dataList[0].value).data;
-        } catch (e) {}
-
-        this.setState({
-          listData: [...newarr],
-          current_page: JSON.parse(res.dataList[0].value).page,
-          total2: JSON.parse(res.dataList[0].value).count,
-        });
-        //   树状图数据
-        const newtarr = JSON.parse(res.dataList[0].extendValue);
-        const newtarr1 = [
-          {
-            title: '物资类型',
-            key: '0',
-            children: newtarr,
-          },
-        ];
-        this.setState({
-          treeData: [...newtarr1],
-        });
-        if (this.state.msgdata == '1') {
-          notification.open({
-            message: JSON.parse(res.dataList[0].value).msg,
-          });
-          this.setState({
-            msgdata: '0',
-          });
-        }
-        // console.log(JSON.parse(newarr));
-        // console.log(this.state.listData);
+    const _this = this;
+    const promise = asyncSetProps(_this, vlauedata, 'TestMain');
+    promise.then(res => {
+      const dataArray = res['dataArray'];
+      const treeData = res['extendArray'];
+      this.setState({
+        listData: [...dataArray],
+        current_page: res['currentPage'],
+        total2: res['totalCount'],
       });
+      //   树状图数据
+      const newtarr1 = [
+        {
+          title: '物资类型',
+          key: '0',
+          children: treeData,
+        },
+      ];
+      this.setState({
+        treeData: [...newtarr1],
+      });
+      if (this.state.msgdata == '1') {
+        notification.open({
+          message: res['message'],
+        });
+        this.setState({
+          msgdata: '0',
+        });
+      }
+      // console.log(JSON.parse(newarr));
+      // console.log(this.state.listData);
+    });
   },
   rowClick(this, record, rowkey) {
     const { form } = this.props;

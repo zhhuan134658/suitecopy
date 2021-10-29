@@ -17,6 +17,7 @@ import {
 } from 'antd-mobile';
 import { Tree } from 'antd';
 import './mobile.less';
+import { toFixed, fpMul, fpDivide } from '../../utils/fpOperations';
 const Item = List.Item;
 
 /**
@@ -78,6 +79,7 @@ const FormField: IFormField = {
       treeData: [],
       date: now,
       checkindex: '',
+      fixedColumn: '',
       SearchBarvalue: '',
       showElem: 'none',
       showElem2: 'none',
@@ -277,12 +279,12 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },
@@ -297,6 +299,7 @@ const FormField: IFormField = {
       no_unit_price: '',
       tax_rate: '',
       tax_amount: '',
+      unit_price: '',
       amount_tax: '',
       no_amount_tax: '',
     };
@@ -347,56 +350,105 @@ const FormField: IFormField = {
     let arrindex = e;
     let newindex = index;
     let newtype = types;
-
+    let fixedColumn = this.state.fixedColumn;
     arr[newindex][newtype] = arrindex;
     if (!reg.test(arr[newindex].tax_rate)) {
+      if (
+        !reg.test(arr[newindex].no_unit_price) &&
+        reg.test(arr[newindex].unit_price)
+      ) {
+        this.setState({
+          fixedColumn: 'unit_price',
+        });
+      }
       return this.setState({
         materialList: [...arr],
       });
     }
     switch (newtype) {
       case 'no_unit_price':
+        if (!reg.test(arr[newindex].unit_price)) {
+          this.setState({
+            fixedColumn: 'no_unit_price',
+          });
+        }
+
         if (
-          arr[newindex].no_unit_price != '' &&
+          reg.test(arr[newindex].no_unit_price) &&
           reg.test(arr[newindex].tax_rate)
         ) {
           //   含税单价
-          arr[newindex].unit_price = (
-            arr[newindex].no_unit_price *
-            (1 + arr[newindex].tax_rate * 0.01)
-          ).toFixed(2);
+          //   newData[index].unit_price = (
+          //     row.no_unit_price *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+          let a = 1 + arr[newindex].tax_rate * 0.01;
+          arr[newindex].unit_price = toFixed(
+            fpMul(arr[newindex].no_unit_price, a),
+            2,
+          );
         } else if (
           arr[newindex].no_unit_price == null &&
           reg.test(arr[newindex].tax_rate) &&
           arr[newindex].unit_price
         ) {
-          arr[newindex].no_unit_price = (
-            arr[newindex].unit_price /
-            (1 + arr[newindex].tax_rate * 0.01)
-          ).toFixed(2);
+          //   newData[index].no_unit_price = (
+          //     row.unit_price /
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+          let a = 1 + arr[newindex].tax_rate * 0.01;
+          arr[newindex].no_unit_price = toFixed(
+            fpDivide(arr[newindex].unit_price, a),
+            2,
+          );
         }
         break;
       case 'unit_price':
+        console.log(
+          'No Unit Price REGEX',
+          reg.test(arr[newindex].no_unit_price),
+        );
+        if (!reg.test(arr[newindex].no_unit_price)) {
+          console.log('change fixed column');
+          this.setState({
+            fixedColumn: 'unit_price',
+          });
+        }
+
         if (arr[newindex].unit_price && reg.test(arr[newindex].tax_rate)) {
           //   bu含税单价
-
-          arr[newindex].no_unit_price = (
-            arr[newindex].unit_price /
-            (1 + arr[newindex].tax_rate * 0.01)
-          ).toFixed(2);
+          let a = 1 + arr[newindex].tax_rate * 0.01;
+          arr[newindex].no_unit_price = toFixed(
+            fpDivide(arr[newindex].unit_price, a),
+            2,
+          );
+          //   newData[index].no_unit_price = (
+          //     row.unit_price /
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
         } else if (
           arr[newindex].unit_price == null &&
-          reg.test(arr[newindex].no_unit_price) &&
-          arr[newindex].tax_rate
+          reg.test(arr[newindex].tax_rate) &&
+          arr[newindex].no_unit_price
         ) {
-          arr[newindex].unit_price = (
-            arr[newindex].no_unit_price *
-            (1 + arr[newindex].tax_rate * 0.01)
-          ).toFixed(2);
+          let a = 1 + arr[newindex].tax_rate * 0.01;
+          arr[newindex].unit_price = toFixed(
+            fpMul(arr[newindex].no_unit_price, a),
+            2,
+          );
+          //   newData[index].unit_price = (
+          //     row.no_unit_price *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
         }
         if (arr[newindex].unit_price && arr[newindex].det_quantity) {
-          (arr[newindex].amount_tax =
-            arr[newindex].unit_price * arr[newindex].det_quantity).toFixed(2);
+          //   newData[index].amount_tax = (
+          //     row.unit_price * row.det_quantity
+          //   ).toFixed(2);
+          arr[newindex].amount_tax = toFixed(
+            fpMul(arr[newindex].unit_price, arr[newindex].det_quantity),
+            2,
+          );
         }
 
         //不含税金额
@@ -405,52 +457,135 @@ const FormField: IFormField = {
           arr[newindex].det_quantity &&
           reg.test(arr[newindex].tax_rate)
         ) {
-          arr[newindex].no_amount_tax = (
-            (arr[newindex].unit_price * arr[newindex].det_quantity) /
-            (1 + arr[newindex].tax_rate * 0.01)
-          ).toFixed(2);
-          arr[newindex].tax_amount = (
-            ((arr[newindex].unit_price * arr[newindex].det_quantity) /
-              (1 + arr[newindex].tax_rate * 0.01)) *
-            arr[newindex].tax_rate *
-            0.01
-          ).toFixed(2);
+          let a = 1 + arr[newindex].tax_rate * 0.01;
+          let b = fpMul(arr[newindex].unit_price, arr[newindex].det_quantity);
+
+          arr[newindex].no_amount_tax = toFixed(fpDivide(b, a), 2);
+
+          //   newData[index].no_amount_tax = (
+          //     (row.unit_price * row.det_quantity) /
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+          let c = arr[newindex].unit_price * arr[newindex].det_quantity;
+          let d = 1 + arr[newindex].tax_rate * 0.01;
+          let e = fpDivide(c, d);
+          let f = arr[newindex].tax_rate * 0.01;
+          arr[newindex].tax_amount = toFixed(fpMul(e, f), 2);
+
+          //   newData[index].tax_amount = (
+          //     ((row.unit_price * row.det_quantity) / (1 + row.tax_rate * 0.01)) *
+          //     row.tax_rate *
+          //     0.01
+          //   ).toFixed(2);
         }
 
         break;
       case 'tax_rate':
-        if (arr[newindex].no_unit_price && !arr[newindex].unit_price) {
-          arr[newindex].unit_price = (
-            arr[newindex].no_unit_price *
-            (1 + arr[newindex].tax_rate * 0.01)
-          ).toFixed(2);
-        } else if (!arr[newindex].no_unit_price && arr[newindex].unit_price) {
-          arr[newindex].no_unit_price = (
-            arr[newindex].unit_price /
-            (1 + arr[newindex].tax_rate * 0.01)
-          ).toFixed(2);
-        } else if (arr[newindex].no_unit_price && arr[newindex].unit_price) {
-          arr[newindex].unit_price = (
-            arr[newindex].no_unit_price *
-            (1 + arr[newindex].tax_rate * 0.01)
-          ).toFixed(2);
-        }
         if (
           arr[newindex].no_unit_price &&
-          arr[newindex].det_quantity &&
+          !reg.test(arr[newindex].unit_price)
+        ) {
+          //   let a = 1 + row.tax_rate * 0.01;
+          //   newData[index].unit_price = toFixed(
+          //     fpMul(row.no_unit_price, a, 2),
+          //   );
+          console.log('FIXED COLUMN IS', this.state.fixedColumn);
+          if (this.state.fixedColumn === 'unit_price') {
+            let taxedUnitPrice = arr[newindex].unit_price;
+            let taxRate = arr[newindex].tax_rate;
+            if (taxRate) {
+              let calcedTaxFreeUnitPrice = fpDivide(
+                taxedUnitPrice,
+                1 + taxRate * 0.01,
+              );
+              arr[newindex].no_unit_price = toFixed(calcedTaxFreeUnitPrice, 2);
+            }
+          } else {
+            arr[newindex].unit_price = toFixed(
+              arr[newindex].no_unit_price * (1 + arr[newindex].tax_rate * 0.01),
+              2,
+            );
+          }
+        } else if (
+          !reg.test(arr[newindex].no_unit_price) &&
+          arr[newindex].unit_price
+        ) {
+          //   let a = 1 + row.tax_rate * 0.01;
+          //   newData[index].no_unit_price = toFixed(
+          //     fpDivide(row.unit_price, a),
+          //     2,
+          //   );
+
+          arr[newindex].no_unit_price = toFixed(
+            arr[newindex].unit_price / (1 + arr[newindex].tax_rate * 0.01),
+            2,
+          );
+
+          arr[newindex].amount_tax = toFixed(
+            arr[newindex].unit_price * arr[newindex].det_quantity,
+            2,
+          );
+          arr[newindex].no_amount_tax = toFixed(
+            (arr[newindex].unit_price * arr[newindex].det_quantity) /
+              (1 + arr[newindex].tax_rate * 0.01),
+            2,
+          );
+          arr[newindex].tax_amount = toFixed(
+            arr[newindex].amount_tax - arr[newindex].no_amount_tax,
+            2,
+          );
+        } else if (arr[newindex].no_unit_price && arr[newindex].unit_price) {
+          console.log('FIXED COLUMN IS', this.state.fixedColumn);
+          if (this.state.fixedColumn === 'unit_price') {
+            let taxedUnitPrice = arr[newindex].unit_price;
+            let taxRate = arr[newindex].tax_rate;
+            if (taxRate) {
+              let calcedTaxFreeUnitPrice = fpDivide(
+                taxedUnitPrice,
+                1 + taxRate * 0.01,
+              );
+              arr[newindex].no_unit_price = calcedTaxFreeUnitPrice;
+            }
+          } else {
+            arr[newindex].unit_price = toFixed(
+              arr[newindex].no_unit_price * (1 + arr[newindex].tax_rate * 0.01),
+              2,
+            );
+          }
+
+          //   newData[index].unit_price = (
+          //     row.no_unit_price *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+        }
+        if (
+          reg.test(arr[newindex].no_unit_price) &&
+          reg.test(arr[newindex].det_quantity) &&
           reg.test(arr[newindex].tax_rate)
         ) {
-          arr[newindex].tax_amount = (
-            arr[newindex].no_unit_price *
-            arr[newindex].det_quantity *
-            arr[newindex].tax_rate *
-            0.01
-          ).toFixed(2);
-          arr[newindex].amount_tax = (
-            arr[newindex].no_unit_price *
-            arr[newindex].det_quantity *
-            (1 + arr[newindex].tax_rate * 0.01)
-          ).toFixed(2);
+          let a = fpMul(
+            arr[newindex].no_unit_price,
+            arr[newindex].det_quantity,
+          );
+          let b = fpMul(arr[newindex].tax_rate, 0.01);
+          arr[newindex].tax_amount = toFixed(fpMul(a, b), 2);
+          //   newData[index].tax_amount = (
+          //     row.no_unit_price *
+          //     row.det_quantity *
+          //     row.tax_rate *
+          //     0.01
+          //   ).toFixed(2);
+          let c = fpMul(
+            arr[newindex].no_unit_price,
+            arr[newindex].det_quantity,
+          );
+          let d = 1 + arr[newindex].tax_rate * 0.01;
+          arr[newindex].amount_tax = toFixed(fpMul(c, d), 2);
+          //   newData[index].amount_tax = (
+          //     row.no_unit_price *
+          //     row.det_quantity *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
         }
 
         break;
@@ -465,18 +600,25 @@ const FormField: IFormField = {
         arr[newindex].det_quantity &&
         reg.test(arr[newindex].tax_rate)
       ) {
-        arr[newindex].tax_amount = (
-          arr[newindex].no_unit_price *
-          arr[newindex].det_quantity *
-          arr[newindex].tax_rate *
-          0.01
-        ).toFixed(2);
+        let a = fpMul(arr[newindex].no_unit_price, arr[newindex].det_quantity);
+        let b = fpMul(arr[newindex].tax_rate, 0.01);
+        arr[newindex].tax_amount = toFixed(fpMul(a, b), 2);
+        // newData[index].tax_amount = (
+        //   row.no_unit_price *
+        //   row.det_quantity *
+        //   row.tax_rate *
+        //   0.01
+        // ).toFixed(2);
       }
       //   不含税
       if (arr[newindex].no_unit_price && arr[newindex].det_quantity) {
-        arr[newindex].no_amount_tax = (
-          arr[newindex].no_unit_price * arr[newindex].det_quantity
-        ).toFixed(2);
+        arr[newindex].no_amount_tax = toFixed(
+          fpMul(arr[newindex].no_unit_price, arr[newindex].det_quantity),
+          2,
+        );
+        // newData[index].no_amount_tax = (
+        //   row.no_unit_price * row.det_quantity
+        // ).toFixed(2);
       }
       //含税
       if (
@@ -484,11 +626,15 @@ const FormField: IFormField = {
         arr[newindex].det_quantity &&
         reg.test(arr[newindex].tax_rate)
       ) {
-        arr[newindex].amount_tax = (
-          arr[newindex].no_unit_price *
-          arr[newindex].det_quantity *
-          (1 + arr[newindex].tax_rate * 0.01)
-        ).toFixed(2);
+        let a = fpMul(arr[newindex].no_unit_price, arr[newindex].det_quantity);
+        let b = 1 + arr[newindex].tax_rate * 0.01;
+
+        arr[newindex].amount_tax = toFixed(fpMul(a, b), 2);
+        // newData[index].amount_tax = (
+        //   row.no_unit_price *
+        //   row.det_quantity *
+        //   (1 + row.tax_rate * 0.01)
+        // ).toFixed(2);
       }
     }
     //   含税金额
@@ -515,8 +661,8 @@ const FormField: IFormField = {
     });
     this.setState({
       materialList: [...arr],
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
-      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+      Inputmoney1: eval(newarr2.join('+')),
+      Inputmoney2: eval(newarr4.join('+')),
     });
     console.log('12', arr);
   },
