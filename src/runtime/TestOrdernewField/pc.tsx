@@ -981,16 +981,16 @@ const FormField: ISwapFormField = {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
       let editData = {
-        hanmoney: '',
-        nomoney: '',
+        hanmoney: 0,
+        nomoney: 0,
         detailname: '',
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney = this.state.Inputmoney1;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       if (this.state.Inputmoney2) {
-        editData.nomoney = this.state.Inputmoney2;
+        editData.nomoney = Number(this.state.Inputmoney2);
       }
       editData.detailname = this.state.detailname;
       editData.detailedData = this.state.dataSource;
@@ -1406,8 +1406,8 @@ const FormField: ISwapFormField = {
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
       const {
-        hanmoney = '',
-        nomoney = '',
+        hanmoney = 0,
+        nomoney = 0,
         detailname = '',
         detailedData = [],
       } = value;

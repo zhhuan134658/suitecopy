@@ -756,16 +756,16 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
-        hanmoney: '',
-        nomoney: '',
+        hanmoney: 0,
+        nomoney: 0,
         detailname: '',
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney = this.state.Inputmoney1;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       if (this.state.Inputmoney2) {
-        editData.nomoney = this.state.Inputmoney2;
+        editData.nomoney = Number(this.state.Inputmoney2);
       }
       editData.detailname = this.state.chenkdata;
       editData.detailedData = this.state.materialList;
@@ -970,8 +970,8 @@ const FormField: IFormField = {
       const value = field.getValue();
 
       const {
-        hanmoney = '',
-        nomoney = '',
+        hanmoney = 0,
+        nomoney = 0,
         detailname = '',
         detailedData = [],
       } = value;

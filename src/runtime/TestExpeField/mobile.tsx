@@ -200,12 +200,12 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },
@@ -266,8 +266,8 @@ const FormField: IFormField = {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
       let editData = {
-        hanmoney: '',
-        nomoney: '',
+        hanmoney: 0,
+        nomoney: 0,
         detailedData: [], //物资明细
         petty_sele: '', //备用金抵扣
         Numbervalue1: '', //备用金余额
@@ -277,10 +277,10 @@ const FormField: IFormField = {
         Numbervalue5: '', //财务应支付金额
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney = this.state.Inputmoney1;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       if (this.state.Inputmoney2) {
-        editData.nomoney = this.state.Inputmoney2;
+        editData.nomoney = Number(this.state.Inputmoney2);
       }
 
       editData.detailedData = this.state.materialList;

@@ -181,12 +181,12 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },
@@ -274,15 +274,15 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
-        hanmoney: '',
-        nomoney: '',
+        hanmoney: 0,
+        nomoney: 0,
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney = this.state.Inputmoney1;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       if (this.state.Inputmoney2) {
-        editData.nomoney = this.state.Inputmoney2;
+        editData.nomoney = Number(this.state.Inputmoney2);
       }
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
@@ -359,7 +359,7 @@ const FormField: IFormField = {
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
 
-      const { hanmoney = '', detailedData = [] } = value;
+      const { hanmoney = 0, detailedData = [] } = value;
       return (
         <div className="field-wrapper">
           <div className="tablefield-mobile">

@@ -390,7 +390,7 @@ const FormField: IFormField = {
     //详情
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
-      const { hanmoney = '', detailedData = [] } = value;
+      const { hanmoney = 0, detailedData = [] } = value;
 
       return (
         <div className="field-wrapper">

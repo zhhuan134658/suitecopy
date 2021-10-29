@@ -301,8 +301,8 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
-        hanmoney: '',
-        nomoney: '',
+        hanmoney: 0,
+        nomoney: 0,
         warehouse: '',
         warehousein: '',
         detailedData: [], //物资明细

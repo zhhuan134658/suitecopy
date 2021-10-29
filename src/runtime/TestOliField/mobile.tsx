@@ -260,11 +260,11 @@ const FormField: IFormField = {
       console.log('发起页：fieldDidUpdate');
 
       let editData = {
-        hanmoney: '',
+        hanmoney: 0,
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney = this.state.Inputmoney1;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       editData.detailedData = this.state.materialList;
       const { form } = this.props;

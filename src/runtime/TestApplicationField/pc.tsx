@@ -776,16 +776,16 @@ const FormField: ISwapFormField = {
       );
 
       let editData = {
-        hanmoney: '',
-        nomoney: '',
+        hanmoney: 0,
+        nomoney: 0,
         detailname: '',
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney = this.state.Inputmoney1;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       if (this.state.Inputmoney2) {
-        editData.nomoney = this.state.Inputmoney2;
+        editData.nomoney = Number(this.state.Inputmoney2);
       }
       editData.detailname = this.state.detailname;
       editData.detailedData = this.state.dataSource;
@@ -1142,7 +1142,7 @@ const FormField: ISwapFormField = {
     //详情
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
-      const { detailname = '', detailedData = [], hanmoney = '' } = value;
+      const { detailname = '', detailedData = [], hanmoney = 0 } = value;
       return (
         <div className="field-wrapper">
           <div className="label"> {label}</div>

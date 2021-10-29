@@ -1154,16 +1154,16 @@ const FormField: ISwapFormField = {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
       let editData = {
-        hanmoney: '',
-        nomoney: '',
+        hanmoney: 0,
+        nomoney: 0,
         detailname: '',
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney = this.state.Inputmoney1;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       if (this.state.Inputmoney2) {
-        editData.nomoney = this.state.Inputmoney2;
+        editData.nomoney = Number(this.state.Inputmoney2);
       }
       editData.detailname = this.state.detailname;
       editData.detailedData = this.state.dataSource;
@@ -1354,7 +1354,9 @@ const FormField: ISwapFormField = {
               placement="top"
               title={
                 <div>
-                  <span>含税单价=不含税单价*（1+税率）,含税单价/不含税单价二选一填入</span>
+                  <span>
+                    含税单价=不含税单价*（1+税率）,含税单价/不含税单价二选一填入
+                  </span>
                 </div>
               }
             >
@@ -1577,8 +1579,8 @@ const FormField: ISwapFormField = {
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
       const {
-        hanmoney = '',
-        nomoney = '',
+        hanmoney = 0,
+        nomoney = 0,
         detailname = '',
         detailedData = [],
       } = value;
@@ -1610,7 +1612,9 @@ const FormField: ISwapFormField = {
           <div style={{ marginTop: '10px' }} className="label">
             不含税金额(元)
           </div>
-          <div style={{ marginTop: '10px' }}>{nomoney?nomoney.toFixed(2):''}</div>
+          <div style={{ marginTop: '10px' }}>
+            {nomoney ? nomoney.toFixed(2) : ''}
+          </div>
           <div className="label" style={{ marginTop: '10px' }}>
             含税金额(元)
           </div>
