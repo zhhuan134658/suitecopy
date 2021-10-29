@@ -17,7 +17,7 @@ import {
 } from 'antd-mobile';
 import './mobile.less';
 import { asyncSetProps } from '../../utils/asyncSetProps';
-import { searchBarChange,searchBarSubmit } from '../../utils/searchUtils';
+import { searchBarChange, searchBarSubmit } from '../../utils/searchUtils';
 /**
  * 自定义控件运行态 Mobile 视图
  */
@@ -33,23 +33,23 @@ const FormField: IFormField = {
       listData: [],
     };
   },
-    asyncSetFieldProps(vlauedata: any, typeName: any) {
-        const _this = this
-        const promise = asyncSetProps(_this,vlauedata,'TestLabour')
-        promise.then(res => {
-          const type = typeName
-        console.log(res);
-        //   表格数据
-        let newarr;
-        //   表格数据
-        try {
-          newarr = res['dataArray']
-        } catch (e) {}
+  asyncSetFieldProps(vlauedata: any, typeName: any) {
+    const _this = this;
+    const promise = asyncSetProps(_this, vlauedata, 'TestLabour');
+    promise.then(res => {
+      const type = typeName;
+      console.log(res);
+      //   表格数据
+      let newarr;
+      //   表格数据
+      try {
+        newarr = res['dataArray'];
+      } catch (e) {}
 
-        this.setState({
-          listData: newarr,
-        });
+      this.setState({
+        listData: newarr,
       });
+    });
   },
   onOpenChange(...args) {
     console.log('sss');
@@ -101,12 +101,12 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
   },
   //搜索框
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },

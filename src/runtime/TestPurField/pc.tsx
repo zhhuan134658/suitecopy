@@ -359,13 +359,13 @@ const FormField: ISwapFormField = {
   onGenderChange1(value, key) {
     console.log(key);
   },
-  onSearch(value) {
+  onSearch(value, rk_id: string) {
     console.log(value);
     const newvalue = this.state.allData;
     newvalue.name = value;
-
     newvalue.page = 1;
-    newvalue.rk_id = ['-1'];
+    newvalue.rk_id = [rk_id];
+    console.log('searchParams', newvalue);
     this.setState({
       allData: newvalue,
     });
@@ -1098,10 +1098,10 @@ const FormField: ISwapFormField = {
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney =Number(this.state.Inputmoney1) ;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       if (this.state.Inputmoney2) {
-        editData.nomoney =Number(this.state.Inputmoney2) ;
+        editData.nomoney = Number(this.state.Inputmoney2);
       }
       editData.detailname = this.state.detailname;
       editData.detailedData = this.state.dataSource;
@@ -1422,6 +1422,41 @@ const FormField: ISwapFormField = {
       });
       this.asyncSetFieldProps(newpage);
     };
+    const rowSelectionMaterial = {
+      selectedRowKeys,
+      onChange: (selectedRowKeys, selectedRows) => {
+        // console.log(
+        //   `selectedRowKeys: ${selectedRowKeys}`,
+        //   'selectedRows: ',
+        //   selectedRows,
+        // );
+        let dtar = '';
+        let newData = [...selectedRows];
+        let newDataid = [];
+        if (newData.length > 0) {
+          newData = newData.map(item => {
+            return Object.assign(item, {
+              num: 1,
+            });
+          });
+          newDataid = newData.map(item => {
+            return item.id;
+          });
+        }
+        console.log('======' + JSON.stringify(newDataid));
+        // if (this.state.detdate === 'a1') {
+        //   dtar = '采购申请-' + newData[0]?newData[0]['name']:'';
+        // } else if (this.state.detdate === 'b1') {
+        //   dtar = '材料总计划-' + newData[0].name;
+        // }
+
+        this.setState({
+          currentSelectData: newData,
+          currentSelectDataid: newDataid,
+        });
+        this.setState({ selectedRowKeys });
+      },
+    };
     const rowSelection = {
       selectedRowKeys,
       onChange: (selectedRowKeys, selectedRows) => {
@@ -1445,9 +1480,9 @@ const FormField: ISwapFormField = {
         }
         console.log('======' + JSON.stringify(newDataid));
         if (this.state.detdate === 'a1') {
-          dtar = '采购申请-' + newData[0].name;
+          dtar = '采购申请-' + (newData[0] ? newData[0]['name'] : '');
         } else if (this.state.detdate === 'b1') {
-          dtar = '材料总计划-' + newData[0].name;
+          dtar = '材料总计划-' + (newData[0] ? newData[0]['name'] : '');
         }
 
         this.setState({
@@ -1631,7 +1666,9 @@ const FormField: ISwapFormField = {
                   allowClear
                   enterButton="搜索"
                   size="large"
-                  onSearch={this.onSearch}
+                  onSearch={val => {
+                    this.onSearch(val, 'a');
+                  }}
                 />
                 <Table
                   scroll={{ x: '1500px' }}
@@ -1659,10 +1696,12 @@ const FormField: ISwapFormField = {
                   allowClear
                   enterButton="搜索"
                   size="large"
-                  onSearch={this.onSearch}
+                  onSearch={val => {
+                    this.onSearch(val, 'b');
+                  }}
                 />
                 <Table
-                  scroll={{ x: '1500px', y: '420px' }}
+                  scroll={{ x: '1500px' }}
                   rowSelection={{
                     type: 'radio',
                     ...rowSelection,
@@ -1722,7 +1761,9 @@ const FormField: ISwapFormField = {
                     allowClear
                     enterButton="搜索"
                     size="large"
-                    onSearch={this.onSearch}
+                    onSearch={val => {
+                      this.onSearch(val, '-1');
+                    }}
                   />
                   <Button onClick={this.newAdd} size="large" type="primary">
                     新增
@@ -1732,7 +1773,7 @@ const FormField: ISwapFormField = {
                   scroll={{ x: '1500px', y: '255px' }}
                   rowSelection={{
                     type: 'checkbox',
-                    ...rowSelection,
+                    ...rowSelectionMaterial,
                   }}
                   rowKey={record => record.id}
                   columns={mycolumnstree}
