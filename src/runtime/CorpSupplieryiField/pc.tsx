@@ -718,6 +718,7 @@ const FormField: ISwapFormField = {
           <Modal
             title="选择供应商"
             width={1000}
+            className="limited-height"
             visible={this.state.isModalVisible}
             footer={[
               <Button key="back" onClick={this.handleCancel}>
@@ -759,7 +760,7 @@ const FormField: ISwapFormField = {
                 </div>
 
                 <Table
-                  scroll={{ x: '1500px' }}
+                  scroll={{ x: '1500px', y: '255px' }}
                   onRow={record => {
                     return {
                       onClick: this.rowClick.bind(this, record),

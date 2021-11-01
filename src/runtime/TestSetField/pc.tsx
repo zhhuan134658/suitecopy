@@ -1805,6 +1805,7 @@ const FormField: ISwapFormField = {
           <Modal
             title="选择物资"
             width={1000}
+            className="limited-height"
             visible={this.state.isModalVisibletree}
             footer={[
               <Button key="back" onClick={this.handleCanceltree}>
@@ -1852,7 +1853,7 @@ const FormField: ISwapFormField = {
                   </Button>
                 </div>
                 <Table
-                  scroll={{ x: '1500px' }}
+                  scroll={{ x: '1500px', y: '255px' }}
                   rowSelection={{
                     type: 'checkbox',
                     ...rowSelection,
