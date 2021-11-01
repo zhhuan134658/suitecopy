@@ -1783,7 +1783,6 @@ const FormField: ISwapFormField = {
             className="limited-height"
             width={1000}
             visible={this.state.isModalVisibletree}
-            className="limited-height"
             footer={[
               <Button key="back" onClick={this.handleCanceltree}>
                 返回

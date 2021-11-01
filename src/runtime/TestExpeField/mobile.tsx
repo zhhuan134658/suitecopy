@@ -18,6 +18,7 @@ import {
 } from 'antd-mobile';
 import { Tree } from 'antd';
 import './mobile.less';
+import _ from 'lodash';
 
 const Item = List.Item;
 /**
@@ -189,7 +190,52 @@ const FormField: IFormField = {
       },
     );
   },
-
+  onChangeDeduction(e: React.ChangeEvent<HTMLInputElement>) {
+    console.log('CHANGE DEDUCTION');
+    e.persist();
+    let _this = this;
+    const calcDeduction = (e: React.ChangeEvent<HTMLInputElement>) => {
+      console.log('CALC DEDUCTION');
+      const number1 = _this.state.maxnum;
+      const number2 = _this.state.Inputmoney1;
+      let val = Number(e.target.value);
+      if (number1 > number2) {
+        if (val > _this.state.Inputmoney1) {
+          const aa = _this.state.Inputmoney1;
+          const bb = Number(aa) - Number(_this.state.maxnum);
+          _this.setState({
+            Numbervalue2: _this.state.Inputmoney1,
+            Numbervalue5: bb.toFixed(2),
+          });
+        } else {
+          const aa = _this.state.Inputmoney1;
+          const bb = aa - val;
+          _this.setState({
+            Numbervalue2: val.toFixed(2),
+            Numbervalue5: bb.toFixed(2),
+          });
+        }
+      } else {
+        if (val > _this.state.maxnum) {
+          const aa = _this.state.Inputmoney1;
+          const bb = aa - _this.state.maxnum;
+          _this.setState({
+            Numbervalue2: _this.state.maxnum.toFixed(2),
+            Numbervalue5: bb.toFixed(2),
+          });
+        } else {
+          const aa = _this.state.Inputmoney1;
+          const bb = aa - val;
+          _this.setState({
+            Numbervalue2: val.toFixed(2),
+            Numbervalue5: bb.toFixed(2),
+          });
+        }
+      }
+    };
+    console.log(e.target.value);
+    calcDeduction(e);
+  },
   onCancel() {
     this.setState({ showElem: 'none' });
   },
@@ -767,49 +813,15 @@ const FormField: IFormField = {
                                     value={this.state.Numbervalue2}
                                     placeholder="请输入"
                                     onChange={e => {
-                                      //   e.target.value
-                                      const number1 = this.state.maxnum;
-                                      const number2 = this.state.Inputmoney1;
-                                      let val = Number(e.target.value);
-                                      if (number1 > number2) {
-                                        if (val > this.state.Inputmoney1) {
-                                          const aa = this.state.Inputmoney1;
-                                          const bb =
-                                            Number(aa) -
-                                            Number(this.state.maxnum);
-                                          this.setState({
-                                            Numbervalue2:
-                                              this.state.Inputmoney1,
-                                            Numbervalue5: bb.toFixed(2),
-                                          });
-                                        } else {
-                                          const aa = this.state.Inputmoney1;
-                                          const bb = aa - val;
-                                          this.setState({
-                                            Numbervalue2: val.toFixed(2),
-                                            Numbervalue5: bb.toFixed(2),
-                                          });
-                                        }
-                                      } else {
-                                        if (val > this.state.maxnum) {
-                                          const aa = this.state.Inputmoney1;
-                                          const bb = aa - this.state.maxnum;
-                                          this.setState({
-                                            Numbervalue2:
-                                              this.state.maxnum.toFixed(2),
-                                            Numbervalue5: bb.toFixed(2),
-                                          });
-                                        } else {
-                                          const aa = this.state.Inputmoney1;
-                                          const bb = aa - val;
-                                          this.setState({
-                                            Numbervalue2: val.toFixed(2),
-                                            Numbervalue5: bb.toFixed(2),
-                                          });
-                                        }
-                                      }
-
-                                      console.log(e.target.value);
+                                      this.setState({
+                                        Numbervalue2: e.target.value,
+                                      });
+                                      e.persist();
+                                      const debouncedCalc = _.debounce(
+                                        this.onChangeDeduction,
+                                        1000,
+                                      );
+                                      debouncedCalc(e);
                                     }}
                                   />
                                 </div>

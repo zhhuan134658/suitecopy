@@ -518,7 +518,7 @@ const FormField: ISwapFormField = {
   onNumbervalue2Change(val) {
     console.log(val);
     const number1 = this.state.maxnum;
-    const number2 = this.state.Inputmoney1;
+    const number2 = this.state.Inputmoney1; // 报销费用合计
     if (number1 > number2) {
       if (val > this.state.Inputmoney1) {
         const aa = this.state.Inputmoney1;

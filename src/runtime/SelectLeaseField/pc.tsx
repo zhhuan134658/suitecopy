@@ -641,7 +641,7 @@ const FormField: ISwapFormField = {
           </div>
 
           <Modal
-            title="请租赁计划"
+            title="选择租赁计划"
             width={1000}
             visible={this.state.isModalVisible}
             footer={[
