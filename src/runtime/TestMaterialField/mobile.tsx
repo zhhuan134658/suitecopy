@@ -75,7 +75,7 @@ const FormField: IFormField = {
       ],
     };
   },
-  asyncSetFieldProps(vlauedata, typename='TestMaterial') {
+  asyncSetFieldProps(vlauedata, typename = 'TestMaterial') {
     const _this = this;
     const promise = asyncSetProps(_this, vlauedata, 'TestMaterial');
     promise.then(res => {
@@ -83,7 +83,7 @@ const FormField: IFormField = {
       const type = typename;
       let arrayData;
       try {
-        arrayData = res['dataArray']
+        arrayData = res['dataArray'];
       } catch (e) {
         console.log(e);
       }
@@ -343,11 +343,11 @@ const FormField: IFormField = {
           placeholder="请输入"
           onSubmit={val => {
             const _this = this;
-            searchBarSubmit(_this, val, 'alllist');
+            searchBarSubmit(_this, val, 'TestMaterial');
           }}
           onChange={val => {
             const _this = this;
-            searchBarChange(_this, val, 'alllist');
+            searchBarChange(_this, val, 'TestMaterial');
           }}
           showCancelButton
           onCancel={() => this.setState({ showElem: 'none' })}
@@ -373,8 +373,14 @@ const FormField: IFormField = {
         <SearchBar
           value={this.state.SearchBarvalue}
           placeholder="请输入"
-          onSubmit={this.onSubmit}
-          onChange={this.onSearchBarChange}
+          onSubmit={val => {
+            const _this = this;
+            searchBarSubmit(_this, val, 'TestMaterial');
+          }}
+          onChange={val => {
+            const _this = this;
+            searchBarChange(_this, val, 'TestMaterial');
+          }}
           onCancel={() => this.setState({ showElem2: 'none' })}
           showCancelButton
         />

@@ -78,7 +78,7 @@ const FormField: IFormField = {
       chenkdata: '',
       treevalue: undefined,
       treeData: [],
-      detdate: '',
+      detdate: 'a1',
       date: now,
       checkindex: '',
       fixedColumn: '',
@@ -242,8 +242,7 @@ const FormField: IFormField = {
   },
   habdlClick(item: { name: any; size: any; unit: any }) {
     const { form } = this.props;
-    console.log(item);
-
+    console.log('CLICK HANDLE ITEM', item);
     let arr = this.state.materialList;
     let arrindex = this.state.checkindex;
 
@@ -258,6 +257,7 @@ const FormField: IFormField = {
   },
   checkClick(item) {
     const { form } = this.props;
+    console.log('CHECK CLICK', item);
     const cDataid = [item.id];
     const newdate = this.state.allData;
     let dtar = '';
@@ -785,10 +785,10 @@ const FormField: IFormField = {
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney =Number(this.state.Inputmoney1) ;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       if (this.state.Inputmoney2) {
-        editData.nomoney =Number(this.state.Inputmoney2) ;
+        editData.nomoney = Number(this.state.Inputmoney2);
       }
       editData.detailname = this.state.chenkdata;
       editData.detailedData = this.state.materialList;
@@ -908,7 +908,7 @@ const FormField: IFormField = {
         >
           <div>
             {' '}
-            <List>
+            <List className="noWrap">
               {this.state.checkData.map((item, index) => {
                 return (
                   <List.Item
@@ -926,7 +926,7 @@ const FormField: IFormField = {
           </div>
           <div>
             {' '}
-            <List>
+            <List className="noWrap">
               {this.state.checkData.map((item, index) => {
                 return (
                   <List.Item
@@ -946,7 +946,7 @@ const FormField: IFormField = {
           </div>
           <div>
             {' '}
-            <List>
+            <List className="noWrap">
               {this.state.checkData.map((item, index) => {
                 return (
                   <List.Item
@@ -1150,7 +1150,9 @@ const FormField: IFormField = {
                                   <div className="m-field m-field-mobile m-select-field">
                                     <div className="m-field-head">
                                       <div className="m-field-label">
-                                        <span>物资名称</span>
+                                        <span style={{ color: 'red' }}>
+                                          物资名称
+                                        </span>
                                       </div>
                                     </div>
                                     <div className="m-field-box">

@@ -214,12 +214,12 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },
@@ -695,75 +695,22 @@ const FormField: IFormField = {
                         </div>
                       </div>
                     </div>
-                    <div className="table-actions">
-                      <div
-                        className="tbody-add-button tTap"
-                        onClick={this.addSon}
-                      >
-                        <img
-                          style={{ width: '20px' }}
-                          src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
-                          alt=""
-                        />
-                        &nbsp;
-                        <span className="add-button-text">增加明细</span>
-                      </div>
-                    </div>
                   </div>
                 );
               })}
             </div>
-          </div>
-
-          {/* 合计 */}
-          {/* <div className="field-wrapper">
-          <div className="m-group m-group-mobile">
-            <div className="m-field-wrapper">
-              <div className="m-field m-field-mobile m-select-field">
-                <div className="m-field-head">
-                  <div className="m-field-label">
-                    <span>含税金额</span>
-                  </div>
-                </div>
-                <div className="m-field-box">
-                  <div className="m-field-content left">
-                    <div className="input-wrapper">
-                      <InputItem
-                        value={this.state.Inputmoney1}
-                        placeholder="请输入"
-                        readOnly
-                      ></InputItem>
-                    </div>
-                  </div>
-                </div>
+            <div className="table-actions">
+              <div className="tbody-add-button tTap" onClick={this.addSon}>
+                <img
+                  style={{ width: '20px' }}
+                  src="https://dingyunlaowu.oss-cn-hangzhou.aliyuncs.com/xiezhu//Em46p8naW61629791119284.png"
+                  alt=""
+                />
+                &nbsp;
+                <span className="add-button-text">增加明细</span>
               </div>
             </div>
           </div>
-        </div>
-        <div className="field-wrapper">
-          <div className="m-group m-group-mobile">
-            <div className="m-field-wrapper">
-              <div className="m-field m-field-mobile m-select-field">
-                <div className="m-field-head">
-                  <div className="m-field-label">
-                    <span>不含税金额合计</span>
-                  </div>
-                </div>
-                <div className="m-field-box">
-                  <div className="m-field-content left">
-                    <div className="input-wrapper">
-                      <InputItem
-                        value={this.state.Inputmoney2}
-                        placeholder="请输入"
-                        readOnly
-                      ></InputItem>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
           {/* 物资明细 */}
           {createPortal(
             <Drawer

@@ -364,13 +364,13 @@ const FormField: ISwapFormField = {
   onGenderChange1(value, key) {
     console.log(key);
   },
-  onSearch(value) {
+  onSearch(value, type: string) {
     console.log(value);
     const newvalue = this.state.allData;
     newvalue.name = value;
 
     newvalue.page = 1;
-    newvalue.rk_id = ['-1'];
+    newvalue.rk_id = [type];
     this.setState({
       allData: newvalue,
     });
@@ -1687,7 +1687,14 @@ const FormField: ISwapFormField = {
                   allowClear
                   enterButton="搜索"
                   size="large"
-                  onSearch={this.onSearch}
+                  onSearch={val => {
+                    this.onSearch(val, 'c');
+                  }}
+                  onChange={e => {
+                    if (e.target.value === '') {
+                      this.onSearch('', 'c');
+                    }
+                  }}
                 />
                 <Table
                   scroll={{ x: '1500px' }}
@@ -1716,7 +1723,14 @@ const FormField: ISwapFormField = {
                   allowClear
                   enterButton="搜索"
                   size="large"
-                  onSearch={this.onSearch}
+                  onSearch={val => {
+                    this.onSearch(val, 'd');
+                  }}
+                  onChange={e => {
+                    if (e.target.value === '') {
+                      this.onSearch('', 'd');
+                    }
+                  }}
                 />
                 <Table
                   scroll={{ x: '1500px' }}
@@ -1745,7 +1759,14 @@ const FormField: ISwapFormField = {
                   allowClear
                   enterButton="搜索"
                   size="large"
-                  onSearch={this.onSearch}
+                  onSearch={val => {
+                    this.onSearch(val, 'a');
+                  }}
+                  onChange={e => {
+                    if (e.target.value === '') {
+                      this.onSearch('', 'a');
+                    }
+                  }}
                 />
                 <Table
                   scroll={{ x: '1500px' }}
@@ -1774,7 +1795,14 @@ const FormField: ISwapFormField = {
                   allowClear
                   enterButton="搜索"
                   size="large"
-                  onSearch={this.onSearch}
+                  onSearch={val => {
+                    this.onSearch(val, 'b');
+                  }}
+                  onChange={e => {
+                    if (e.target.value === '') {
+                      this.onSearch('', 'b');
+                    }
+                  }}
                 />
                 <Table
                   scroll={{ x: '1500px' }}
@@ -1836,7 +1864,14 @@ const FormField: ISwapFormField = {
                     allowClear
                     enterButton="搜索"
                     size="large"
-                    onSearch={this.onSearch}
+                    onSearch={val => {
+                      this.onSearch(val, '-1');
+                    }}
+                    onChange={e => {
+                      if (e.target.value === '') {
+                        this.onSearch('', '-1');
+                      }
+                    }}
                   />
                   <Button onClick={this.newAdd} size="large" type="primary">
                     新增

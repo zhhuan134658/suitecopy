@@ -152,7 +152,7 @@ interface EditableCellProps {
   children: React.ReactNode;
   dataIndex: keyof Item;
   record: Item;
-  handleSave: (record: Item) => void;
+  handleSave: (record: Item, type: any) => void;
   handleChange: (record: Item) => void;
 }
 
@@ -168,7 +168,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 }) => {
   const [editing, setEditing] = useState(false);
   // const inputRef = useRef(null);
-  const inputRef = useRef<Input>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const form = useContext(EditableContext)!;
 
   useEffect(() => {
@@ -372,9 +372,8 @@ const FormField: ISwapFormField = {
     console.log(value);
     const newvalue = this.state.allData;
     newvalue.name = value;
-
     newvalue.page = 1;
-    newvalue.rk_id = [''];
+    newvalue.rk_id = ['a'];
     this.setState({
       allData: newvalue,
     });
@@ -1729,6 +1728,11 @@ const FormField: ISwapFormField = {
               enterButton="搜索"
               size="large"
               onSearch={this.onSearch}
+              onChange={e => {
+                if (e.target.value === '') {
+                  this.onSearch('');
+                }
+              }}
             />
             <Table
               scroll={{ x: '1500px' }}
@@ -1789,6 +1793,11 @@ const FormField: ISwapFormField = {
                     enterButton="搜索"
                     size="large"
                     onSearch={this.onSearchcd}
+                    onChange={e => {
+                      if (e.target.value === '') {
+                        this.onSearchcd('');
+                      }
+                    }}
                   />
                   <Button onClick={this.newAdd} size="large" type="primary">
                     新增

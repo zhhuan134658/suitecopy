@@ -66,6 +66,7 @@ import { FormInstance } from 'antd/lib/form';
 const { TabPane } = Tabs;
 
 import './pc.less';
+import { toFixed } from '../../utils/fpOperations';
 const mycolumns = [
   {
     title: '采购主题',
@@ -445,7 +446,9 @@ const FormField: ISwapFormField = {
       return item.no_amount_tax;
     });
 
-    let newdata1 = this.toFixed(eval(newarr2.join('+')), 2);
+    let newdata1 = eval(newarr2.join('+'))
+      ? toFixed(eval(newarr2.join('+')), 2)
+      : null;
 
     if (isNaN(newdata1)) {
       this.setState({
@@ -456,7 +459,9 @@ const FormField: ISwapFormField = {
         Inputmoney1: newdata1,
       });
     }
-    let newdata2 = this.toFixed(eval(newarr4.join('+')), 2);
+    let newdata2 = eval(newarr4.join('+'))
+      ? toFixed(eval(newarr4.join('+')), 2)
+      : null;
 
     if (isNaN(newdata2)) {
       this.setState({
