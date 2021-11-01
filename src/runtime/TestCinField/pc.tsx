@@ -1237,6 +1237,26 @@ const FormField: ISwapFormField = {
           </Tooltip>
         ),
       },
+      {
+        title: '已入库量',
+        dataIndex: 'quantity_rk',
+
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.quantity_sq}>
+            <span>{record.quantity_sq}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '总计划量',
+        dataIndex: 'quantity_zong',
+
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.quantity_zong}>
+            <span>{record.quantity_zong}</span>
+          </Tooltip>
+        ),
+      },
     ];
     const etColumns = [
       {
@@ -1350,6 +1370,26 @@ const FormField: ISwapFormField = {
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.amount_tax}>
             <span>{record.amount_tax}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '已入库量',
+        dataIndex: 'quantity_rk',
+
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.quantity_sq}>
+            <span>{record.quantity_sq}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '总计划量',
+        dataIndex: 'quantity_zong',
+
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.quantity_zong}>
+            <span>{record.quantity_zong}</span>
           </Tooltip>
         ),
       },

@@ -873,6 +873,26 @@ const FormField: ISwapFormField = {
         ),
       },
       {
+        title: '累计申请量',
+        dataIndex: 'quantity_sq',
+
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.quantity_sq}>
+            <span>{record.quantity_sq}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '总计划量',
+        dataIndex: 'quantity_zong',
+
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.quantity_zong}>
+            <span>{record.quantity_zong}</span>
+          </Tooltip>
+        ),
+      },
+      {
         title: '参考价格',
         dataIndex: 'refer_price',
         render: (_, record: any) => (
@@ -945,6 +965,26 @@ const FormField: ISwapFormField = {
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.need_quantity}>
             <span>{record.need_quantity}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '累计申请量',
+        dataIndex: 'quantity_sq',
+
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.quantity_sq}>
+            <span>{record.quantity_sq}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '总计划量',
+        dataIndex: 'quantity_zong',
+
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.quantity_zong}>
+            <span>{record.quantity_zong}</span>
           </Tooltip>
         ),
       },
