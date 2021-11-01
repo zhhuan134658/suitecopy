@@ -1669,6 +1669,11 @@ const FormField: ISwapFormField = {
                   onSearch={val => {
                     this.onSearch(val, 'a');
                   }}
+                  onChange={e => {
+                    if (e.target.value === '') {
+                      this.onSearch('', 'a');
+                    }
+                  }}
                 />
                 <Table
                   scroll={{ x: '1500px' }}
@@ -1698,6 +1703,11 @@ const FormField: ISwapFormField = {
                   size="large"
                   onSearch={val => {
                     this.onSearch(val, 'b');
+                  }}
+                  onChange={e => {
+                    if (e.target.value === '') {
+                      this.onSearch('', 'b');
+                    }
                   }}
                 />
                 <Table
@@ -1763,6 +1773,11 @@ const FormField: ISwapFormField = {
                     size="large"
                     onSearch={val => {
                       this.onSearch(val, '-1');
+                    }}
+                    onChange={e => {
+                      if (e.target.value === '') {
+                        this.onSearch('', '-1');
+                      }
                     }}
                   />
                   <Button onClick={this.newAdd} size="large" type="primary">

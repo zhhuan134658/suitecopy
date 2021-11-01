@@ -374,7 +374,7 @@ const FormField: ISwapFormField = {
     newvalue.name = value;
 
     newvalue.page = 1;
-    newvalue.rk_id = [];
+    newvalue.rk_id = [''];
     this.setState({
       allData: newvalue,
     });

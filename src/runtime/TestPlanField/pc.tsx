@@ -320,7 +320,7 @@ const FormField: ISwapFormField = {
     console.log(key);
   },
   onSearch(value) {
-    console.log(value);
+    console.log('SEARCH', value);
     const newvalue = this.state.allData;
     newvalue.name = value;
     newvalue.type = 0;
@@ -991,6 +991,11 @@ const FormField: ISwapFormField = {
                     enterButton="搜索"
                     size="large"
                     onSearch={this.onSearch}
+                    onChange={e => {
+                      if (e.target.value === '') {
+                        this.onSearch('');
+                      }
+                    }}
                   />
                   <Button onClick={this.newAdd} size="large" type="primary">
                     新增
