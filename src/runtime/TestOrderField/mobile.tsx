@@ -338,8 +338,12 @@ const FormField: IFormField = {
       return item.no_amount_tax;
     });
     this.setState({
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
-      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+      Inputmoney1: eval(newarr2.join('+'))
+        ? toFixed(eval(newarr2.join('+')), 2)
+        : null,
+      Inputmoney2: eval(newarr4.join('+'))
+        ? toFixed(eval(newarr4.join('+')), 2)
+        : null,
     });
   },
   // 两个浮点数相减
