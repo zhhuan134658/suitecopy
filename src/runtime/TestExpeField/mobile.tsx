@@ -192,7 +192,6 @@ const FormField: IFormField = {
   },
   onChangeDeduction(e: React.ChangeEvent<HTMLInputElement>) {
     console.log('CHANGE DEDUCTION');
-    e.persist();
     let _this = this;
     const calcDeduction = (e: React.ChangeEvent<HTMLInputElement>) => {
       console.log('CALC DEDUCTION');
