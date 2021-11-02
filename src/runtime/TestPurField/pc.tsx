@@ -924,6 +924,7 @@ const FormField: ISwapFormField = {
           newarr = JSON.parse(res.dataList[0].value).data;
         } catch (e) {}
         //   树状图数据
+        console.log('RES DATA', newarr);
         const newtarr = JSON.parse(res.dataList[0].extendValue);
         const newtarr1 = [
           {

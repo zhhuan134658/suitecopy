@@ -78,7 +78,7 @@ const FormField: IFormField = {
       chenkdata: '',
       treevalue: undefined,
       treeData: [],
-      detdate: '',
+      detdate: 'a1',
       date: now,
       checkindex: '',
       SearchBarvalue: '',
@@ -601,7 +601,7 @@ const FormField: IFormField = {
                 taxedUnitPrice,
                 1 + taxRate * 0.01,
               );
-              arr[newindex].no_unit_price = toFixed(calcedTaxFreeUnitPrice,2);
+              arr[newindex].no_unit_price = toFixed(calcedTaxFreeUnitPrice, 2);
             }
           } else {
             arr[newindex].unit_price = toFixed(
@@ -786,10 +786,10 @@ const FormField: IFormField = {
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney = Number(this.state.Inputmoney1) ;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       if (this.state.Inputmoney2) {
-        editData.nomoney = Number(this.state.Inputmoney2) ;
+        editData.nomoney = Number(this.state.Inputmoney2);
       }
       editData.detailname = this.state.chenkdata;
       editData.detailedData = this.state.materialList;
