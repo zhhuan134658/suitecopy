@@ -776,8 +776,8 @@ const FormField: ISwapFormField = {
       );
 
       let editData = {
-        hanmoney: 0,
-        nomoney: 0,
+        hanmoney: null,
+        nomoney: null,
         detailname: '',
         detailedData: [], //物资明细
       };
@@ -1181,8 +1181,9 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
+      console.log('VALUE');
       const value = field.getValue();
-      const { detailname = '', detailedData = [], hanmoney = 0 } = value;
+      const { detailname = '', detailedData = [], hanmoney = null } = value;
       return (
         <div className="field-wrapper">
           <div className="label"> {label}</div>
@@ -1200,9 +1201,9 @@ const FormField: ISwapFormField = {
               pagination={false}
             />
           </div>
-          <div className="合计"> {label}</div>
+          <div> {label}</div>
           <div style={{ marginTop: '10px' }}>
-            {hanmoney ? hanmoney.toFixed(2) : ''}
+            {hanmoney ? Number(hanmoney).toFixed(2) : '暂无'}
           </div>
         </div>
       );
