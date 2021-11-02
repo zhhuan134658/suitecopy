@@ -1615,9 +1615,9 @@ const FormField: ISwapFormField = {
             />
           </div>
           <div className="label">不含税金额合计(元)</div>
-          <div>{nomoney ? nomoney.toFixed(2) : ''}</div>
+          <div>{nomoney ? Number(nomoney).toFixed(2) : ''}</div>
           <div className="label">含税金额合计(元)</div>
-          <div>{hanmoney ? hanmoney.toFixed(2) : ''}</div>
+          <div>{hanmoney ? Number(hanmoney).toFixed(2) : ''}</div>
         </div>
       );
     }

@@ -647,7 +647,7 @@ const FormField: IFormField = {
                 taxedUnitPrice,
                 1 + taxRate * 0.01,
               );
-              arr[newindex].no_unit_price = toFixed(calcedTaxFreeUnitPrice,2);
+              arr[newindex].no_unit_price = toFixed(calcedTaxFreeUnitPrice, 2);
             }
           } else {
             arr[newindex].unit_price = toFixed(
@@ -1017,7 +1017,7 @@ const FormField: IFormField = {
               <div className="m-field-view">
                 <label className="m-field-view-label">含税金额合计(元)</label>
                 <div className="m-field-view-value">
-                  <span>{hanmoney ? hanmoney.toFixed(2) : ''}</span>
+                  <span>{hanmoney ? Number(hanmoney).toFixed(2) : ''}</span>
                 </div>
               </div>
             </div>
@@ -1025,7 +1025,7 @@ const FormField: IFormField = {
               <div className="m-field-view">
                 <label className="m-field-view-label">不含税金额合计(元)</label>
                 <div className="m-field-view-value">
-                  <span>{nomoney ? nomoney.toFixed(2) : ''}</span>
+                  <span>{nomoney ? Number(nomoney).toFixed(2) : ''}</span>
                 </div>
               </div>
             </div>

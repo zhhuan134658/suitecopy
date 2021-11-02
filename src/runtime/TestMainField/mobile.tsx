@@ -399,7 +399,7 @@ const FormField: IFormField = {
               <div className="m-field-view">
                 <label className="m-field-view-label">含税金额</label>
                 <div className="m-field-view-value">
-                  <span>{hanmoney ? hanmoney.toFixed(2) : ''}</span>
+                  <span>{hanmoney ? Number(hanmoney).toFixed(2) : ''}</span>
                 </div>
               </div>
             </div>

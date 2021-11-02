@@ -213,12 +213,12 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },
@@ -431,7 +431,7 @@ const FormField: IFormField = {
               <div className="m-field-view">
                 <label className="m-field-view-label">合计(元)</label>
                 <div className="m-field-view-value">
-                  <span>{hanmoney ? hanmoney.toFixed(2) : ''}</span>
+                  <span>{hanmoney ? Number(hanmoney).toFixed(2) : ''}</span>
                 </div>
               </div>
             </div>

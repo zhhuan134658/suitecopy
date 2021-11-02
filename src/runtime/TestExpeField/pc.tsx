@@ -878,7 +878,7 @@ const FormField: ISwapFormField = {
         <div className="field-wrapper">
           <div className="label">报销合计</div>
           <div style={{ marginTop: '10px' }}>
-            {hanmoney ? hanmoney.toFixed(2) : ''}
+            {hanmoney ? Number(hanmoney).toFixed(2) : ''}
           </div>
           <div style={{ marginTop: '10px' }} className="label">
             报销明细

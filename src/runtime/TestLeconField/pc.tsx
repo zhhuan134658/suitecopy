@@ -512,7 +512,7 @@ const FormField: ISwapFormField = {
   //     this.setState({ dataSource: newData });
   //     },
 
-  asyncSetFieldProps(vlauedata,type = 0) {
+  asyncSetFieldProps(vlauedata, type = 0) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
@@ -668,7 +668,7 @@ const FormField: ISwapFormField = {
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney = Number(this.state.Inputmoney1) ;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
 
       editData.detailedData = this.state.dataSource;
@@ -992,7 +992,7 @@ const FormField: ISwapFormField = {
       return (
         <div className="field-wrapper">
           <div className="label">合计</div>
-          <div>{hanmoney ? hanmoney.toFixed(2) : ''}</div>
+          <div>{hanmoney ? Number(hanmoney).toFixed(2) : ''}</div>
 
           <div className="label">{label}</div>
 
