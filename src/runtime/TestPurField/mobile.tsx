@@ -647,7 +647,7 @@ const FormField: IFormField = {
                 taxedUnitPrice,
                 1 + taxRate * 0.01,
               );
-              arr[newindex].no_unit_price = calcedTaxFreeUnitPrice;
+              arr[newindex].no_unit_price = toFixed(calcedTaxFreeUnitPrice,2);
             }
           } else {
             arr[newindex].unit_price = toFixed(

@@ -193,24 +193,28 @@ const FormField: IFormField = {
   onChangeDeduction(e: React.ChangeEvent<HTMLInputElement>) {
     console.log('CHANGE DEDUCTION');
     let _this = this;
-    const calcDeduction = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const calcDeduction = (_this, e: React.ChangeEvent<HTMLInputElement>) => {
       console.log('CALC DEDUCTION');
       const number1 = _this.state.maxnum;
       const number2 = _this.state.Inputmoney1;
       let val = Number(e.target.value);
+      if (val <= 0.01) {
+        _this.setState({
+          Numbervalue2: '',
+        });
+        return 0;
+      }
       if (number1 > number2) {
         if (val > _this.state.Inputmoney1) {
           const aa = _this.state.Inputmoney1;
           const bb = Number(aa) - Number(_this.state.maxnum);
           _this.setState({
-            Numbervalue2: _this.state.Inputmoney1,
             Numbervalue5: bb.toFixed(2),
           });
         } else {
           const aa = _this.state.Inputmoney1;
           const bb = aa - val;
           _this.setState({
-            Numbervalue2: val.toFixed(2),
             Numbervalue5: bb.toFixed(2),
           });
         }
@@ -226,14 +230,13 @@ const FormField: IFormField = {
           const aa = _this.state.Inputmoney1;
           const bb = aa - val;
           _this.setState({
-            Numbervalue2: val.toFixed(2),
             Numbervalue5: bb.toFixed(2),
           });
         }
       }
     };
     console.log(e.target.value);
-    calcDeduction(e);
+    calcDeduction(_this, e);
   },
   onCancel() {
     this.setState({ showElem: 'none' });
