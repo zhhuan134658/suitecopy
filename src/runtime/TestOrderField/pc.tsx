@@ -1355,7 +1355,24 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '不含税单价(元)',
+        title: (
+          <div>
+            不含税单价(元)
+            <Tooltip
+              placement="top"
+              title={
+                <div>
+                  <span>
+                    含税单价=不含税单价*（1+税率）,含税单价/不含税单价二选一填入
+                  </span>
+                </div>
+              }
+            >
+              　<QuestionCircleOutlined />　
+              {/* <a-icon type="info-circle" /> */}
+            </Tooltip>
+          </div>
+        ),
         dataIndex: 'no_unit_price',
         editable: true,
         render: (_, record: any) => (
