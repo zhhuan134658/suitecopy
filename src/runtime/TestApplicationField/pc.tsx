@@ -164,7 +164,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 }) => {
   const [editing, setEditing] = useState(false);
   // const inputRef = useRef(null);
-  const inputRef = useRef<Input>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const form = useContext(EditableContext)!;
 
   useEffect(() => {
@@ -381,7 +381,7 @@ const FormField: ISwapFormField = {
     // });
   },
   handleChange(row: DataType) {
-    // const inputRef = useRef<Input>(null);
+    // const inputRef = useRef<HTMLInputElement>(null);
     // const { form } = this.props;
     // form.setFieldValue('TestApplication', e.target.value);
     // document.getElementsByClassName('ptID').blur();
@@ -1011,12 +1011,18 @@ const FormField: ISwapFormField = {
       {
         title: '备注',
         dataIndex: 'remarks',
-        editable: true,
-        render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.remarks}>
-            <span>{record.remarks}</span>
-          </Tooltip>
-        ),
+        render: (_, record: any) => {
+          let rec = record;
+          return (
+            <Input
+              value={record.content}
+              placeholder="请输入"
+              onChange={e => {
+                record.content = e.target.value;
+              }}
+            />
+          );
+        },
       },
       {
         title: '操作',

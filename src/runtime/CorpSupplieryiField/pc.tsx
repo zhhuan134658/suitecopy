@@ -148,7 +148,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
 }) => {
   const [editing, setEditing] = useState(false);
   // const inputRef = useRef(null);
-  const inputRef = useRef<Input>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
   const form = useContext(EditableContext)!;
 
   useEffect(() => {
@@ -342,7 +342,7 @@ const FormField: ISwapFormField = {
     // });
   },
   handleChange(row: DataType) {
-    // const inputRef = useRef<Input>(null);
+    // const inputRef = useRef<HTMLInputElement>(null);
     // const { form } = this.props;
     // form.setFieldValue('CorpSupplieryi', e.target.value);
     // document.getElementsByClassName('ptID').blur();

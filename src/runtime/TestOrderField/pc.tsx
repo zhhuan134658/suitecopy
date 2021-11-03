@@ -407,7 +407,7 @@ const FormField: ISwapFormField = {
     // });
   },
   handleChange(row: DataType) {
-    // const inputRef = useRef<Input>(null);
+    // const inputRef = useRef<HTMLInputElement>(null);
     // const { form } = this.props;
     // form.setFieldValue('TestOrder', e.target.value);
     // document.getElementsByClassName('ptID').blur();
