@@ -28,7 +28,7 @@ const FormField: IFormField = {
     const { form } = this.props;
     return {
       datadate: '',
-      eColumns: [
+      deColumns: [
         {
           title: '机械名称',
           dataIndex: 'name',
@@ -379,6 +379,7 @@ const FormField: IFormField = {
       const value = field.getValue();
 
       const { hanmoney = 0, detailedData = [] } = value;
+      console.log('VALUE', value);
       return (
         <div className="field-wrapper">
           <div className="tablefield-mobile">
