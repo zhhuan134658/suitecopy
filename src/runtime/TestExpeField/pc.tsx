@@ -5,6 +5,7 @@ import { Layout } from 'antd';
 
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
+import _ from 'lodash';
 import {
   TreeSelect,
   Select,
@@ -53,6 +54,7 @@ const mycolumns = [
     dataIndex: 'size',
   },
 ];
+const throttled = _.throttle(notification.open, 5000);
 interface ISwapFormField extends IFormField {
   //   handleChange: () => void;
   handleOk: () => void;
@@ -317,7 +319,6 @@ const FormField: ISwapFormField = {
     // });
   },
   onMouseEnter() {
-    console.log('1234567890987654321234567');
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     if (!Pro_name) {
@@ -519,6 +520,13 @@ const FormField: ISwapFormField = {
     console.log(val);
     const number1 = this.state.maxnum;
     const number2 = this.state.Inputmoney1; // 报销费用合计
+    if (number2 <= 0) {
+      this.setState({
+        Numbervalue2: 0,
+        Numbervalue5: 0,
+      });
+      return 0;
+    }
     if (number1 > number2) {
       if (val > this.state.Inputmoney1) {
         const aa = this.state.Inputmoney1;
@@ -539,6 +547,10 @@ const FormField: ISwapFormField = {
       if (val > this.state.maxnum) {
         const aa = this.state.Inputmoney1;
         const bb = aa - this.state.maxnum;
+        throttled({
+          duration: 2,
+          message: '超过最大抵扣限额！',
+        });
         this.setState({
           Numbervalue2: this.state.maxnum.toFixed(2),
           Numbervalue5: bb.toFixed(2),
@@ -722,6 +734,7 @@ const FormField: ISwapFormField = {
             options={this.state.Optionlist}
             onChange={value => this.SelectChange(value, record)}
             placeholder="请选择"
+            className="fullLength"
           />
           //   <Select
           //     onChange={value => this.SelectChange(value, record)}
