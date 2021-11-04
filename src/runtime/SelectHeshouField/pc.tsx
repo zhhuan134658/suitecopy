@@ -921,6 +921,7 @@ const FormField: ISwapFormField = {
 
           <Modal
             title="关联"
+            className="limited-height"
             width={1000}
             visible={this.state.isModalVisible}
             footer={[
@@ -953,7 +954,7 @@ const FormField: ISwapFormField = {
                   onSearch={this.onSearch}
                 />
                 <Table
-                  scroll={{ x: '1500px' }}
+                  scroll={{ x: '1500px', y: '255px' }}
                   rowSelection={{
                     type: 'radio',
                     ...rowSelection,
@@ -981,7 +982,7 @@ const FormField: ISwapFormField = {
                   onSearch={this.onSearch}
                 />
                 <Table
-                  scroll={{ x: '1500px' }}
+                  scroll={{ x: '1500px', y: '255px' }}
                   rowSelection={{
                     type: 'radio',
                     ...rowSelection,
@@ -1010,7 +1011,7 @@ const FormField: ISwapFormField = {
                   onSearch={this.onSearch}
                 />
                 <Table
-                  scroll={{ x: '1500px' }}
+                  scroll={{ x: '1500px', y: '255px' }}
                   rowSelection={{
                     type: 'radio',
                     ...rowSelection,
@@ -1039,7 +1040,7 @@ const FormField: ISwapFormField = {
                   onSearch={this.onSearch}
                 />
                 <Table
-                  scroll={{ x: '1500px' }}
+                  scroll={{ x: '1500px', y: '255px' }}
                   rowSelection={{
                     type: 'radio',
                     ...rowSelection,

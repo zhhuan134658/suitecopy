@@ -938,7 +938,7 @@ const FormField: ISwapFormField = {
               onSearch={this.onSearch}
             />
             <Table
-              scroll={{ x: '1500px' }}
+              scroll={{ x: '1500px', y: '255px' }}
               rowSelection={{
                 type: 'radio',
                 ...rowSelection,
