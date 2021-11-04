@@ -207,6 +207,7 @@ const FormField: IFormField = {
           const aa = _this.state.Inputmoney1;
           const bb = Number(aa) - Number(_this.state.maxnum);
           _this.setState({
+            Numbervalue2: aa.toFixed(2),
             Numbervalue5: bb.toFixed(2),
           });
         } else {

@@ -317,7 +317,6 @@ const FormField: ISwapFormField = {
     // });
   },
   onMouseEnter() {
-    console.log('1234567890987654321234567');
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     if (!Pro_name) {
@@ -519,6 +518,9 @@ const FormField: ISwapFormField = {
     console.log(val);
     const number1 = this.state.maxnum;
     const number2 = this.state.Inputmoney1; // 报销费用合计
+    if (number2 <= 0) {
+      return 0;
+    }
     if (number1 > number2) {
       if (val > this.state.Inputmoney1) {
         const aa = this.state.Inputmoney1;
@@ -539,6 +541,10 @@ const FormField: ISwapFormField = {
       if (val > this.state.maxnum) {
         const aa = this.state.Inputmoney1;
         const bb = aa - this.state.maxnum;
+        notification.open({
+          duration: 2,
+          message: '超过最大抵扣金额!',
+        });
         this.setState({
           Numbervalue2: this.state.maxnum.toFixed(2),
           Numbervalue5: bb.toFixed(2),
