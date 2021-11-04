@@ -1077,6 +1077,7 @@ const FormField: ISwapFormField = {
           <Modal
             title="选择库房"
             width={1000}
+            className="limited-height"
             visible={this.state.ischModalVisible}
             footer={[
               <Button key="back" onClick={this.handleCancelch}>
@@ -1101,7 +1102,7 @@ const FormField: ISwapFormField = {
               onSearch={this.onSearchch}
             />
             <Table
-              scroll={{ x: '1500px' }}
+              scroll={{ x: '1500px', y: '255px' }}
               onRow={record => {
                 return {
                   onClick: this.rowClickch.bind(this, record),

@@ -41,7 +41,7 @@ import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
 import { Layout } from 'antd';
-import { QuestionCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
+import { QuestionCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
@@ -1644,7 +1644,7 @@ const FormField: ISwapFormField = {
               value={this.state.detailname}
               placeholder="请选择"
               suffix={
-                <InfoCircleOutlined
+                <CloseCircleOutlined
                   onClick={this.iconClick}
                   style={{ color: 'rgba(0,0,0,.45)' }}
                 />
@@ -1709,6 +1709,7 @@ const FormField: ISwapFormField = {
 
           <Modal
             title="关联"
+            className="limited-height"
             width={1000}
             visible={this.state.isModalVisible}
             footer={[
@@ -1748,7 +1749,7 @@ const FormField: ISwapFormField = {
                   }}
                 />
                 <Table
-                  scroll={{ x: '1500px' }}
+                  scroll={{ x: '1500px', y: '255px' }}
                   rowSelection={{
                     type: 'radio',
                     ...rowSelection,
@@ -1783,7 +1784,7 @@ const FormField: ISwapFormField = {
                   }}
                 />
                 <Table
-                  scroll={{ x: '1500px' }}
+                  scroll={{ x: '1500px', y: '255px' }}
                   rowSelection={{
                     type: 'radio',
                     ...rowSelection,

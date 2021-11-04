@@ -1755,6 +1755,7 @@ const FormField: ISwapFormField = {
           <Modal
             title="关联"
             width={1000}
+            className="limited-height"
             visible={this.state.isModalVisible}
             footer={[
               <Button key="back" onClick={this.handleCancel}>
@@ -1789,7 +1790,7 @@ const FormField: ISwapFormField = {
               }}
             />
             <Table
-              scroll={{ x: '1500px' }}
+              scroll={{ x: '1500px', y: '255px' }}
               rowSelection={{
                 type: 'radio',
                 ...rowSelection,
