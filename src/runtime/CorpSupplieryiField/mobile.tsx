@@ -77,9 +77,7 @@ const FormField: IFormField = {
     console.log(item);
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('CorpSupplieryi', item.name);
-      form.setExtendFieldValue('CorpSupplieryi', {
-        data: item.name,
-      });
+      form.setFieldExtendValue('CorpSupplieryi', item.name);
     });
   },
   onCancel() {
@@ -92,7 +90,7 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
   },
   //搜索框
-    onSearchBarChange(value) {
+  onSearchBarChange(value) {
     if (!value) {
       const newData = this.state.allData;
       newData.name = value;

@@ -426,9 +426,7 @@ const FormField: ISwapFormField = {
 
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('SelectProtwo', record.name);
-      form.setExtendFieldValue('SelectProtwo', {
-        id: record.id,
-      });
+      form.setFieldExtendValue('SelectProtwo', record.name);
     });
     console.log('asdas', form);
 

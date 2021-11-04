@@ -428,13 +428,11 @@ const FormField: ISwapFormField = {
 
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('Selectjia', record.sub_unit);
-      form.setExtendFieldValue('Selectjia', record.sub_unit);
+      form.setFieldExtendValue('Selectjia', record.sub_unit);
       form.setFieldValue('Fenmoney', record.contract_money);
-      form.setExtendFieldValue('Fenmoney', record.contract_money);
+      form.setFieldExtendValue('Fenmoney', record.contract_money);
       form.setFieldValue('SelectFen', record.name);
-      form.setExtendFieldValue('SelectFen', {
-        data: record.name,
-      });
+      form.setFieldExtendValue('SelectFen', record.name);
     });
 
     // form.getFormData().then(res => {

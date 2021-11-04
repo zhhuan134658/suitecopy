@@ -641,9 +641,7 @@ const FormField: ISwapFormField = {
 
       const { form } = this.props;
       form.setFieldValue('TestLabour', detailname);
-      form.setExtendFieldValue('TestLabour', {
-        data: detailname,
-      });
+      form.setFieldExtendValue('TestLabour', detailname);
     }
 
     // this.state.dataSource;

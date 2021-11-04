@@ -98,9 +98,7 @@ const FormField: IFormField = {
     console.log(item);
     this.setState({ Inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('SelectDeposit', item.name);
-      form.setExtendFieldValue('SelectDeposit', {
-        data: item.name,
-      });
+      form.setFieldExtendValue('SelectDeposit', item.name);
     });
   },
   onCancel() {
@@ -113,12 +111,12 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
   },
   //搜索框
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },

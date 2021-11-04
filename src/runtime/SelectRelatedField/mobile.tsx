@@ -85,9 +85,7 @@ const FormField: IFormField = {
 
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('SelectRelated', item.name);
-      form.setExtendFieldValue('SelectRelated', {
-        data: item.name,
-      });
+      form.setFieldExtendValue('SelectRelated', item.name);
     });
   },
   onCancel() {

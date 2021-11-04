@@ -154,9 +154,7 @@ const FormField: IFormField = {
       { inputvalue: item.name, showElem: 'none', materialList: arr },
       () => {
         form.setFieldValue('TestOli', item.name);
-        form.setExtendFieldValue('TestOli', {
-          data: item.name,
-        });
+        form.setFieldExtendValue('TestOli', item.name);
       },
     );
   },
@@ -171,12 +169,12 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },
@@ -269,9 +267,7 @@ const FormField: IFormField = {
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
       form.setFieldValue('TestOliField', editData);
-      form.setExtendFieldValue('TestOliField', {
-        data: editData,
-      });
+      form.setFieldExtendValue('TestOliField', editData);
     }
   },
   fieldRender() {
@@ -402,14 +398,13 @@ const FormField: IFormField = {
                           <div>
                             {label}-明细({index + 1})
                           </div>
-                  
-                            <div
-                              className="dele_item"
-                              onClick={this.deleteItem.bind(this, item, index)}
-                            >
-                              删除
-                            </div>
-                       
+
+                          <div
+                            className="dele_item"
+                            onClick={this.deleteItem.bind(this, item, index)}
+                          >
+                            删除
+                          </div>
                         </div>
                         <div className="row">
                           {/* <div>

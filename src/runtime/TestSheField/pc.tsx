@@ -427,14 +427,14 @@ const FormField: ISwapFormField = {
     // if (this.state.Inputmoney2) {
     //   console.log('saadasdasdas', this.state.Inputmoney2);
     //   form.setFieldValue('TestShe', newData);
-    //   form.setExtendFieldValue('TestShe', {
+    //   form.setFieldExtendValue('TestShe', {
     //     data: newData,
     //   });
     // }
 
     // this.setState({ dataSource: newData, isModalVisible: false }, () => {
     //   form.setFieldValue('TestShe', newData);
-    //   form.setExtendFieldValue('TestShe', {
+    //   form.setFieldExtendValue('TestShe', {
     //     data: newData,
     //   });
     // });
@@ -530,11 +530,7 @@ const FormField: ISwapFormField = {
 
     this.setState({ dataSource: newData, isModalVisible: false }, () => {
       form.setFieldValue('TestShe', record);
-      form.setExtendFieldValue('TestShe', {
-        record: record,
-        Inputmoney1: this.state.Inputmoney1,
-        Inputmoney2: this.state.Inputmoney2,
-      });
+      form.setFieldExtendValue('TestShe', record);
     });
   },
   handleOk() {
@@ -575,9 +571,7 @@ const FormField: ISwapFormField = {
       console.log('发起页：fieldDidUpdate');
       const { form } = this.props;
       form.setFieldValue('TestShe', this.state.Inputmoney1);
-      form.setExtendFieldValue('TestShe', {
-        data: this.state.Inputmoney1,
-      });
+      form.setFieldExtendValue('TestShe', this.state.Inputmoney1);
     }
 
     // this.state.dataSource;

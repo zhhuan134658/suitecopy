@@ -496,14 +496,14 @@ const FormField: ISwapFormField = {
     // if (this.state.Inputmoney2) {
     //   console.log('saadasdasdas', this.state.Inputmoney2);
     //   form.setFieldValue('SelectHeshou', newData);
-    //   form.setExtendFieldValue('SelectHeshou', {
+    //   form.setFieldExtendValue('SelectHeshou', {
     //     data: newData,
     //   });
     // }
 
     // this.setState({ dataSource: newData, isModalVisible: false }, () => {
     //   form.setFieldValue('SelectHeshou', newData);
-    //   form.setExtendFieldValue('SelectHeshou', {
+    //   form.setFieldExtendValue('SelectHeshou', {
     //     data: newData,
     //   });
     // });
@@ -645,11 +645,7 @@ const FormField: ISwapFormField = {
 
     this.setState({ dataSource: newData, isModalVisible: false }, () => {
       form.setFieldValue('SelectHeshou', record);
-      form.setExtendFieldValue('SelectHeshou', {
-        record: record,
-        Inputmoney1: this.state.Inputmoney1,
-        Inputmoney2: this.state.Inputmoney2,
-      });
+      form.setFieldExtendValue('SelectHeshou', record);
     });
   },
   handleOktree() {
@@ -703,9 +699,7 @@ const FormField: ISwapFormField = {
 
       const { form } = this.props;
       form.setFieldValue('SelectHeshou', detailname);
-      form.setExtendFieldValue('SelectHeshou', {
-        data: detailname,
-      });
+      form.setFieldExtendValue('SelectHeshou', detailname);
     }
 
     // this.state.dataSource;

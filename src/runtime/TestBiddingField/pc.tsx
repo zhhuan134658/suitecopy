@@ -438,9 +438,7 @@ const FormField: ISwapFormField = {
 
     this.setState({ dataSource: newData, isModalVisible: false }, () => {
       form.setFieldValue('TestBidding', newData);
-      form.setExtendFieldValue('TestBidding', {
-        data: newData,
-      });
+      form.setFieldExtendValue('TestBidding', newData);
     });
   },
 
@@ -541,11 +539,7 @@ const FormField: ISwapFormField = {
 
     this.setState({ dataSource: newData, isModalVisible: false }, () => {
       form.setFieldValue('TestBidding', record);
-      form.setExtendFieldValue('TestBidding', {
-        record: record,
-        Inputmoney1: this.state.Inputmoney1,
-        Inputmoney2: this.state.Inputmoney2,
-      });
+      form.setFieldExtendValue('TestBidding', record);
     });
   },
   handleOk() {
@@ -589,9 +583,7 @@ const FormField: ISwapFormField = {
       editData.detailedData = this.state.dataSource;
       const { form } = this.props;
       form.setFieldValue('TestBidding', editData);
-      form.setExtendFieldValue('TestBidding', {
-        data: editData,
-      });
+      form.setFieldExtendValue('TestBidding', editData);
     }
   },
   timeChange(record, index, name, date, dateString) {

@@ -80,16 +80,14 @@ const FormField: IFormField = {
     const { form } = this.props;
     console.log(item);
     form.setFieldValue('Inputvalue', item.accountname);
-    form.setExtendFieldValue('Inputvalue', item.accountname);
+    form.setFieldExtendValue('Inputvalue', item.accountname);
     form.setFieldValue('Inputvalue1', item.accountnumber);
     form.setFieldValue('Inputvalue2', item.bankofdeposit);
-    form.setExtendFieldValue('Inputvalue1', item.accountnumber);
-    form.setExtendFieldValue('Inputvalue2', item.bankofdeposit);
+    form.setFieldExtendValue('Inputvalue1', item.accountnumber);
+    form.setFieldExtendValue('Inputvalue2', item.bankofdeposit);
     this.setState({ inputvalue: item.accountname, showElem: 'none' }, () => {
       form.setFieldValue('SelectAcc', item.accountname);
-      form.setExtendFieldValue('SelectAcc', {
-        data: item.accountname,
-      });
+      form.setFieldExtendValue('SelectAcc', item.accountname);
     });
   },
   onCancel() {
@@ -102,12 +100,12 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
   },
   //搜索框
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },

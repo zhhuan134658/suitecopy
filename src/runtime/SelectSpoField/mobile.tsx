@@ -79,11 +79,9 @@ const FormField: IFormField = {
 
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('Jiesmoney', item.detailed_money);
-      form.setExtendFieldValue('Jiesmoney', item.detailed_money);
+      form.setFieldExtendValue('Jiesmoney', item.detailed_money);
       form.setFieldValue('SelectSpo', item.name);
-      form.setExtendFieldValue('SelectSpo', {
-        data: item,
-      });
+      form.setFieldExtendValue('SelectSpo', item.name);
     });
   },
   onCancel() {
@@ -96,12 +94,12 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
   },
   //搜索框
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },

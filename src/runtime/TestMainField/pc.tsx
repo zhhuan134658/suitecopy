@@ -584,6 +584,7 @@ const FormField: ISwapFormField = {
   fieldDidUpdate() {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
+
       let editData = {
         hanmoney: 0,
         nomoney: 0,
@@ -597,11 +598,45 @@ const FormField: ISwapFormField = {
       }
 
       editData.detailedData = this.state.dataSource;
+      let newlistdata = this.state.dataSource;
+
+      let str0 =
+        '设备名称  单位  规格型号  维保内容  工时数  人工合价  材料合价  小计';
+
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].name +
+          '  ' +
+          newlistdata[i].unit +
+          '  ' +
+          newlistdata[i].size +
+          '  ' +
+          newlistdata[i].content +
+          '  ' +
+          newlistdata[i].hours +
+          '  ' +
+          newlistdata[i].person_total +
+          '  ' +
+          newlistdata[i].material_total +
+          '  ' +
+          newlistdata[i].total_price;
+      }
       const { form } = this.props;
-      form.setFieldValue('TestMain', editData);
-      form.setExtendFieldValue('TestMain', {
-        data: editData,
-      });
+      // 打印数
+      form.setFieldValue(
+        'TestMain',
+        str0,
+        //         {
+        // 金额: '1111',
+        // 测试字段1: '测试1printValue',
+        // 测试字段2: '测试1exportValue',
+        //   }
+      );
+      //   form.setExtendFieldValue('TestMain', {
+      //     data: editData,
+      //   });
+      form.setFieldExtendValue('TestMain', editData);
     }
 
     // this.state.dataSource;
@@ -893,12 +928,11 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
+      console.log('value', field);
       const { hanmoney = 0, detailedData = [] } = value;
       return (
         <div>
-          <div className="label">合计</div>
-          <div>{hanmoney ? Number(hanmoney).toFixed(2) : ''}</div>
           <div className="label">{label}</div>
 
           {/* <div>
@@ -917,6 +951,8 @@ const FormField: ISwapFormField = {
               pagination={false}
             />
           </div>
+          <div className="label">合计</div>
+          <div>{hanmoney ? Number(hanmoney).toFixed(2) : ''}</div>
         </div>
       );
     }

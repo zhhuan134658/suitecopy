@@ -567,11 +567,7 @@ const FormField: ISwapFormField = {
 
     this.setState({ dataSource: newData, isModalVisible: false }, () => {
       form.setFieldValue('TestExpe', record);
-      form.setExtendFieldValue('TestExpe', {
-        record: record,
-        Inputmoney1: this.state.Inputmoney1,
-        Inputmoney2: this.state.Inputmoney2,
-      });
+      form.setFieldExtendValue('TestExpe', record);
     });
   },
   handleOk() {
@@ -654,9 +650,7 @@ const FormField: ISwapFormField = {
       editData.Numbervalue5 = this.state.Numbervalue5;
       const { form } = this.props;
       form.setFieldValue('TestExpe', editData);
-      form.setExtendFieldValue('TestExpe', {
-        data: editData,
-      });
+      form.setFieldExtendValue('TestExpe', editData);
     }
 
     // this.state.dataSource;

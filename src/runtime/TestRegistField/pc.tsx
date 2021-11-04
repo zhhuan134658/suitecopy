@@ -545,9 +545,7 @@ const FormField: ISwapFormField = {
 
       const { form } = this.props;
       form.setFieldValue('TestRegist', this.state.detailname);
-      form.setExtendFieldValue('TestRegist', {
-        data: this.state.detailname,
-      });
+      form.setFieldExtendValue('TestRegist', this.state.detailname);
     }
 
     // this.state.dataSource;

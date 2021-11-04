@@ -77,9 +77,7 @@ const FormField: IFormField = {
     console.log(item);
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('CorpSupplier', item.name);
-      form.setExtendFieldValue('CorpSupplier', {
-        data: item.name,
-      });
+      form.setFieldExtendValue('CorpSupplier', item.name);
     });
   },
   onCancel() {

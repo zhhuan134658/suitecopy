@@ -434,11 +434,11 @@ const FormField: ISwapFormField = {
     const { form } = this.props;
     console.log(record);
     form.setFieldValue('Inputvalue', record.accountname);
-    form.setExtendFieldValue('Inputvalue', record.accountname);
+    form.setFieldExtendValue('Inputvalue', record.accountname);
     form.setFieldValue('Inputvalue1', record.accountnumber);
     form.setFieldValue('Inputvalue2', record.bankofdeposit);
-    form.setExtendFieldValue('Inputvalue1', record.accountnumber);
-    form.setExtendFieldValue('Inputvalue2', record.bankofdeposit);
+    form.setFieldExtendValue('Inputvalue1', record.accountnumber);
+    form.setFieldExtendValue('Inputvalue2', record.bankofdeposit);
     this.setState(
       {
         Inputvalue: record.accountname,
@@ -446,9 +446,7 @@ const FormField: ISwapFormField = {
       },
       () => {
         form.setFieldValue('SelectAcc', record.accountname);
-        form.setExtendFieldValue('SelectAcc', {
-          data: record.accountname,
-        });
+        form.setFieldExtendValue('SelectAcc', record.accountname);
         console.log('sssss', form);
       },
     );

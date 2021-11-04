@@ -151,9 +151,7 @@ const FormField: IFormField = {
       { inputvalue: item.name, showElem: 'none', materialList: arr },
       () => {
         form.setFieldValue('TestScience', item.name);
-        form.setExtendFieldValue('TestScience', {
-          data: item.name,
-        });
+        form.setFieldExtendValue('TestScience', item.name);
       },
     );
   },
@@ -168,12 +166,12 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },
@@ -236,9 +234,7 @@ const FormField: IFormField = {
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
       form.setFieldValue('TestScience', editData);
-      form.setExtendFieldValue('TestScience', {
-        data: editData,
-      });
+      form.setFieldExtendValue('TestScience', editData);
     }
   },
   fieldRender() {

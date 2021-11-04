@@ -46,9 +46,7 @@ const FormField: IFormField = {
     if (!value) {
       this.setState({ pickerValuedata: '' }, () => {
         form.setFieldValue('PositionDes', desData);
-        form.setExtendFieldValue('PositionDes', {
-          data: desData,
-        });
+        form.setFieldExtendValue('PositionDes', desData);
       });
     } else {
       const treeChildren = arrayTreeFilter(
@@ -60,7 +58,7 @@ const FormField: IFormField = {
       desData.Optionsname = newdata;
       this.setState({ pickerValuedata: newdata }, () => {
         form.setFieldValue('PositionDes', desData);
-        form.setExtendFieldValue('PositionDes', {
+        form.setFieldExtendValue('PositionDes', {
           data: desData,
         });
       });

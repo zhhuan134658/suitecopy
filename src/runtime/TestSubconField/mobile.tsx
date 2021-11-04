@@ -101,9 +101,7 @@ const FormField: IFormField = {
     form.setFieldValue('SubconField', item.contract_name);
     this.setState({ inputvalue: dtar, showElem: 'none' });
     form.setFieldValue('TestSubcon', dtar);
-    form.setExtendFieldValue('TestSubcon', {
-      data: dtar,
-    });
+    form.setFieldExtendValue('TestSubcon', dtar);
   },
   onCancel() {
     this.setState({ showElem: 'none' });
@@ -115,12 +113,12 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
   },
   //搜索框
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },

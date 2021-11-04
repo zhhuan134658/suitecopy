@@ -473,14 +473,14 @@ const FormField: ISwapFormField = {
     // if (this.state.Inputmoney2) {
     //   console.log('saadasdasdas', this.state.Inputmoney2);
     //   form.setFieldValue('SelecTicke', newData);
-    //   form.setExtendFieldValue('SelecTicke', {
+    //   form.setFieldExtendValue('SelecTicke', {
     //     data: newData,
     //   });
     // }
 
     // this.setState({ dataSource: newData, isModalVisible: false }, () => {
     //   form.setFieldValue('SelecTicke', newData);
-    //   form.setExtendFieldValue('SelecTicke', {
+    //   form.setFieldExtendValue('SelecTicke', {
     //     data: newData,
     //   });
     // });
@@ -622,11 +622,7 @@ const FormField: ISwapFormField = {
 
     this.setState({ dataSource: newData, isModalVisible: false }, () => {
       form.setFieldValue('SelecTicke', record);
-      form.setExtendFieldValue('SelecTicke', {
-        record: record,
-        Inputmoney1: this.state.Inputmoney1,
-        Inputmoney2: this.state.Inputmoney2,
-      });
+      form.setFieldExtendValue('SelecTicke', record);
     });
   },
   handleOktree() {
@@ -691,9 +687,7 @@ const FormField: ISwapFormField = {
       //   editData.detailedData = this.state.dataSource;
       const { form } = this.props;
       form.setFieldValue('SelecTicke', this.state.detailname);
-      form.setExtendFieldValue('SelecTicke', {
-        data: this.state.detailname,
-      });
+      form.setFieldExtendValue('SelecTicke', this.state.detailname);
     }
 
     // this.state.dataSource;

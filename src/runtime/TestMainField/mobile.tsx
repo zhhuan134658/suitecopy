@@ -164,9 +164,7 @@ const FormField: IFormField = {
       { inputvalue: item.name, showElem: 'none', materialList: arr },
       () => {
         form.setFieldValue('TestMain', item.name);
-        form.setExtendFieldValue('TestMain', {
-          data: item.name,
-        });
+        form.setFieldExtendValue('TestMain', item.name);
       },
     );
   },
@@ -287,9 +285,7 @@ const FormField: IFormField = {
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
       form.setFieldValue('TestMain', editData);
-      form.setExtendFieldValue('TestMain', {
-        data: editData,
-      });
+      form.setFieldExtendValue('TestMain', editData);
     }
   },
   fieldRender() {

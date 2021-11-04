@@ -161,9 +161,7 @@ const FormField: IFormField = {
       { inputvalue: item.name, showElem: 'none', materialList: arr },
       () => {
         form.setFieldValue('TestDemand', item.name);
-        form.setExtendFieldValue('TestDemand', {
-          data: item.name,
-        });
+        form.setFieldExtendValue('TestDemand', item.name);
       },
     );
   },
@@ -178,12 +176,12 @@ const FormField: IFormField = {
 
     this.asyncSetFieldProps(newdate);
   },
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },
@@ -231,17 +229,15 @@ const FormField: IFormField = {
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
-        editData.hanmoney = Number(this.state.Inputmoney1) ;
+        editData.hanmoney = Number(this.state.Inputmoney1);
       }
       if (this.state.Inputmoney2) {
-        editData.nomoney = Number(this.state.Inputmoney2) ;
+        editData.nomoney = Number(this.state.Inputmoney2);
       }
       editData.detailedData = this.state.materialList;
       const { form } = this.props;
       form.setFieldValue('TestDemand', editData);
-      form.setExtendFieldValue('TestDemand', {
-        data: editData,
-      });
+      form.setFieldExtendValue('TestDemand', editData);
     }
   },
   fieldRender() {

@@ -87,9 +87,7 @@ const FormField: IFormField = {
     form.setFieldValue('LabourField', item.contract_name);
     this.setState({ inputvalue: dtar, showElem: 'none' });
     form.setFieldValue('TestLabour', dtar);
-    form.setExtendFieldValue('TestLabour', {
-      data: dtar,
-    });
+    form.setFieldExtendValue('TestLabour', dtar);
   },
   onCancel() {
     this.setState({ showElem: 'none' });

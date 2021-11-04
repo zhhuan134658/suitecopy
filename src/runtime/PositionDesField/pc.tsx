@@ -111,9 +111,7 @@ const FormField: ISwapFormField = {
 
     console.log(desData, value);
     form.setFieldValue('PositionDes', desData);
-    form.setExtendFieldValue('PositionDes', {
-      data: desData,
-    });
+    form.setFieldExtendValue('PositionDes', desData);
   },
 
   asyncSetFieldProps(vlauedata) {

@@ -102,9 +102,7 @@ const FormField: IFormField = {
     console.log(dtar);
     this.setState({ inputvalue: dtar, showElem: 'none' });
     form.setFieldValue('SelecTickefa', dtar);
-    form.setExtendFieldValue('SelecTickefa', {
-      data: dtar,
-    });
+    form.setFieldExtendValue('SelecTickefa', dtar);
   },
   onCancel() {
     this.setState({ showElem: 'none' });
@@ -116,12 +114,12 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
   },
   //搜索框
-    onSearchBarChange(value) {
-          if (!value) {
-            const newData = this.state.allData;
-            newData.name = value;
-            this.asyncSetFieldProps(newData);
-          }
+  onSearchBarChange(value) {
+    if (!value) {
+      const newData = this.state.allData;
+      newData.name = value;
+      this.asyncSetFieldProps(newData);
+    }
 
     this.setState({ SearchBarvalue: value });
   },

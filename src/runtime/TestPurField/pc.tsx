@@ -41,7 +41,7 @@ import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
 import { Layout } from 'antd';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { QuestionCircleOutlined, InfoCircleOutlined } from '@ant-design/icons';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
@@ -477,6 +477,10 @@ const FormField: ISwapFormField = {
     //   Inputmoney2: this.toFixed(eval(newarr4.join('+')), 2),
     // });
   },
+  iconClick() {
+    this.setState({ detailname: '' });
+    console.log('测试点击');
+  },
   newhandleAdd() {
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
@@ -855,14 +859,14 @@ const FormField: ISwapFormField = {
     // if (this.state.Inputmoney2) {
     //   console.log('saadasdasdas', this.state.Inputmoney2);
     //   form.setFieldValue('TestPur', newData);
-    //   form.setExtendFieldValue('TestPur', {
+    //   form.setFieldExtendValue('TestPur', {
     //     data: newData,
     //   });
     // }
 
     // this.setState({ dataSource: newData, isModalVisible: false }, () => {
     //   form.setFieldValue('TestPur', newData);
-    //   form.setExtendFieldValue('TestPur', {
+    //   form.setFieldExtendValue('TestPur', {
     //     data: newData,
     //   });
     // });
@@ -1113,9 +1117,7 @@ const FormField: ISwapFormField = {
       editData.detailedData = this.state.dataSource;
       const { form } = this.props;
       form.setFieldValue('TestPur', editData);
-      form.setExtendFieldValue('TestPur', {
-        data: editData,
-      });
+      form.setFieldExtendValue('TestPur', editData);
     }
 
     // this.state.dataSource;
@@ -1585,12 +1587,14 @@ const FormField: ISwapFormField = {
     //详情
     if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
+      console.log('value', value);
       const {
         detailname = '',
         nomoney = 0,
         hanmoney = 0,
         detailedData = [],
       } = value;
+
       return (
         <div className="field-wrapper">
           <div className="label">{label}</div>
@@ -1632,13 +1636,19 @@ const FormField: ISwapFormField = {
               ) : (
                 <span style={{ color: '#fff' }}>*</span>
               )}
-              {label}
+              1{label}
             </div>
             <Input
               onClick={this.newhandleAdd}
               readOnly
               value={this.state.detailname}
               placeholder="请选择"
+              suffix={
+                <InfoCircleOutlined
+                  onClick={this.iconClick}
+                  style={{ color: 'rgba(0,0,0,.45)' }}
+                />
+              }
             />
           </div>
           {/* <div className="label">{label}</div> */}

@@ -430,11 +430,9 @@ const FormField: ISwapFormField = {
 
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('Jiesmoney', record.detailed_money);
-      form.setExtendFieldValue('Jiesmoney', record.detailed_money);
+      form.setFieldExtendValue('Jiesmoney', record.detailed_money);
       form.setFieldValue('SelectSpo', record.name);
-      form.setExtendFieldValue('SelectSpo', {
-        data: record,
-      });
+      form.setFieldExtendValue('SelectSpo', record.name);
     });
 
     // form.getFormData().then(res => {
@@ -623,11 +621,9 @@ const FormField: ISwapFormField = {
         //   Jiesmoney;
 
         form.setFieldValue('SelectSpo', dtar);
-        form.setExtendFieldValue('SelectSpo', {
-          data: dtar,
-        });
+        form.setFieldExtendValue('SelectSpo', dtar);
         form.setFieldValue('Jiesmoney', newData[0].detailed_money);
-        form.setExtendFieldValue('Jiesmoney', newData[0].detailed_money);
+        form.setFieldExtendValue('Jiesmoney', newData[0].detailed_money);
         this.setState({ selectedRowKeys });
       },
     };

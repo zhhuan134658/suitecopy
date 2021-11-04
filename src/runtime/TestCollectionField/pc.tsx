@@ -408,9 +408,7 @@ const FormField: ISwapFormField = {
 
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('TestCollection', record.name);
-      form.setExtendFieldValue('TestCollection', {
-        data: record,
-      });
+      form.setFieldExtendValue('TestCollection', record.name);
     });
 
     // form.getFormData().then(res => {

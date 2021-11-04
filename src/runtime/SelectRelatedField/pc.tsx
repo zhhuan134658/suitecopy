@@ -623,9 +623,7 @@ const FormField: ISwapFormField = {
     this.setState({ isModalVisible: false }, () => {
       form.setFieldValue('Conmoney', record.money);
       form.setFieldValue('SelectRelated', record.title);
-      form.setExtendFieldValue('SelectRelated', {
-        data: record.title,
-      });
+      form.setFieldExtendValue('SelectRelated', record.title);
     });
 
     // form.getFormData().then(res => {
