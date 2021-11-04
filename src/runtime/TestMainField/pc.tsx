@@ -41,7 +41,7 @@ import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
 import { Layout } from 'antd';
-
+import { QuestionCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
@@ -602,7 +602,7 @@ const FormField: ISwapFormField = {
 
       let str0 =
         '设备名称  单位  规格型号  维保内容  工时数  人工合价  材料合价  小计';
-
+      let str1 = '\n' + '合计(元):' + this.state.Inputmoney1;
       for (let i = 0; i < newlistdata.length; i++) {
         str0 +=
           '\n' +
@@ -622,11 +622,13 @@ const FormField: ISwapFormField = {
           '  ' +
           newlistdata[i].total_price;
       }
+      let str = str0 + str1;
+      //   str0 = '\n' + '合计(元):' + this.state.Inputmoney1;
       const { form } = this.props;
       // 打印数
       form.setFieldValue(
         'TestMain',
-        str0,
+        str,
         //         {
         // 金额: '1111',
         // 测试字段1: '测试1printValue',
@@ -928,7 +930,8 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getExtendValue();
+      //   const value = field.getExtendValue();
+      const value = field.getValue();
       console.log('value', field);
       const { hanmoney = 0, detailedData = [] } = value;
       return (

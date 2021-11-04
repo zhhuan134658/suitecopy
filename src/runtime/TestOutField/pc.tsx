@@ -3,7 +3,7 @@ import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
 import { Layout } from 'antd';
-
+import { QuestionCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
@@ -391,6 +391,14 @@ const FormField: ISwapFormField = {
     this.setState({
       dataSource: dataSource.filter(item => item.id !== row.id),
     });
+  },
+   iconClick() {
+    this.setState({
+      Inputvalue: '',
+      dataSource: [],
+    
+    });
+    console.log('测试点击');
   },
   chhandleAdd() {
     const { form } = this.props;
@@ -983,6 +991,12 @@ const FormField: ISwapFormField = {
               value={this.state.Inputvalue}
               onClick={this.chhandleAdd}
               placeholder="请选择库房"
+              suffix={
+                <CloseCircleOutlined
+                  onClick={this.iconClick}
+                  style={{ color: 'rgba(0,0,0,.45)' }}
+                />
+              }
             />
           </div>
           <Modal

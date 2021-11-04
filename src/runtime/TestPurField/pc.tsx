@@ -478,7 +478,12 @@ const FormField: ISwapFormField = {
     // });
   },
   iconClick() {
-    this.setState({ detailname: '' });
+    this.setState({
+      detailname: '',
+      dataSource: [],
+      Inputmoney2: 0,
+      Inputmoney1: 0,
+    });
     console.log('测试点击');
   },
   newhandleAdd() {

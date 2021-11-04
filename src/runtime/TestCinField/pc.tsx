@@ -5,7 +5,7 @@ import { Layout } from 'antd';
 
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
-import { QuestionCircleOutlined } from '@ant-design/icons';
+import { QuestionCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 import {
   TreeSelect,
   Select,
@@ -472,6 +472,15 @@ const FormField: ISwapFormField = {
         Inputmoney2: newdata2,
       });
     }
+  },
+  iconClick() {
+    this.setState({
+      detailname: '',
+      dataSource: [],
+      Inputmoney2: 0,
+      Inputmoney1: 0,
+    });
+    console.log('测试点击');
   },
   newhandleAdd() {
     const { form } = this.props;
@@ -1649,6 +1658,12 @@ const FormField: ISwapFormField = {
               readOnly
               value={this.state.detailname}
               placeholder="请选择"
+              suffix={
+                <CloseCircleOutlined
+                  onClick={this.iconClick}
+                  style={{ color: 'rgba(0,0,0,.45)' }}
+                />
+              }
             />
           </div>
           {/* <div className="label">{label}</div> */}

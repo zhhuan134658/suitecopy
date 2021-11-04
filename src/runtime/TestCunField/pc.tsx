@@ -42,7 +42,7 @@ import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
 import { Layout } from 'antd';
-
+import { QuestionCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
@@ -462,6 +462,21 @@ const FormField: ISwapFormField = {
       Inputmoney1: eval(newarr2.join('+')).toFixed(2),
       Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
+  },
+  iconClick(val) {
+    if (val === 'out') {
+      this.setState({
+        Inputvalue: '',
+        Inputvaluein: '',
+        dataSource: [],
+      });
+    } else {
+      this.setState({
+        Inputvaluein: '',
+      });
+    }
+
+    console.log('测试点击');
   },
   chhandleAdd(val) {
     const newdate = this.state.allData;
@@ -1061,6 +1076,12 @@ const FormField: ISwapFormField = {
               value={this.state.Inputvalue}
               onClick={this.chhandleAdd.bind(this, 'out')}
               placeholder="请选择库房"
+              suffix={
+                <CloseCircleOutlined
+                  onClick={this.iconClick.bind(this, 'out')}
+                  style={{ color: 'rgba(0,0,0,.45)' }}
+                />
+              }
             />
           </div>
           <div className="label" style={{ marginTop: 10 }}>
@@ -1072,6 +1093,12 @@ const FormField: ISwapFormField = {
               value={this.state.Inputvaluein}
               onClick={this.chhandleAdd.bind(this, 'in')}
               placeholder="请选择库房"
+              suffix={
+                <CloseCircleOutlined
+                  onClick={this.iconClick.bind(this, 'in')}
+                  style={{ color: 'rgba(0,0,0,.45)' }}
+                />
+              }
             />
           </div>
           <Modal

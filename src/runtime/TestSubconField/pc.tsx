@@ -41,7 +41,7 @@ import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
 import { Layout } from 'antd';
-
+import { QuestionCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
@@ -397,6 +397,11 @@ const FormField: ISwapFormField = {
     this.setState({
       isModalVisible: true,
     });
+  },
+  iconClick() {
+    this.setState({ detailname: '' });
+
+    console.log('测试点击');
   },
   handleAdd() {
     this.setState({ dstatus: '2' });
@@ -951,6 +956,12 @@ const FormField: ISwapFormField = {
               readOnly
               value={this.state.detailname}
               placeholder="请选择"
+              suffix={
+                <CloseCircleOutlined
+                  onClick={this.iconClick}
+                  style={{ color: 'rgba(0,0,0,.45)' }}
+                />
+              }
             />
           </div>
 

@@ -41,7 +41,7 @@ import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
 import { Layout } from 'antd';
-
+import { QuestionCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
@@ -440,6 +440,10 @@ const FormField: ISwapFormField = {
     this.setState({
       Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
+  },
+  iconClick() {
+    this.setState({ detailname: '', dataSource: [], Inputmoney1: null });
+    console.log('测试点击');
   },
   newhandleAdd() {
     const { form } = this.props;
@@ -1186,7 +1190,10 @@ const FormField: ISwapFormField = {
       const { detailname = '', detailedData = [], hanmoney = null } = value;
       return (
         <div className="field-wrapper">
-          <div className="label"> {label}</div>
+          <div className="label" style={{ marginTop: '10px' }}>
+            {' '}
+            {label}
+          </div>
           <div style={{ marginTop: '10px' }}>{detailname}</div>
           <div className="label">{label}</div>
 
@@ -1201,7 +1208,7 @@ const FormField: ISwapFormField = {
               pagination={false}
             />
           </div>
-          <div> {label}</div>
+          <div style={{ marginTop: '10px' }}> 合计</div>
           <div style={{ marginTop: '10px' }}>
             {hanmoney ? Number(hanmoney).toFixed(2) : '暂无'}
           </div>
@@ -1225,6 +1232,12 @@ const FormField: ISwapFormField = {
               readOnly
               value={this.state.detailname}
               placeholder="请选择"
+              suffix={
+                <CloseCircleOutlined
+                  onClick={this.iconClick}
+                  style={{ color: 'rgba(0,0,0,.45)' }}
+                />
+              }
             />
           </div>
           {/* <div className="label">{label}</div> */}
