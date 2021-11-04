@@ -27,7 +27,7 @@
 //       <div className="pc-custom-field-wrap">
 //         <div className="label">{label}</div>
 //         {field.getProp('viewMode') ? (
-//           field.getValue()
+//           field.getExtendValue()
 //         ) : (
 //           <Input placeholder={placeholder} onChange={this.handleChange} />
 //         )}
@@ -520,7 +520,7 @@ const FormField: ISwapFormField = {
 
     // const leaveReasonField = form.getFieldInstance('leaveReason');
     const key = TestLeconField.getProp('id');
-    // const value = TestLeconField.getValue();
+    // const value = TestLeconfield.getExtendValue();
     const value = '1';
 
     // const extendValue = TestLeconField.getExtendValue();
@@ -672,8 +672,36 @@ const FormField: ISwapFormField = {
       }
 
       editData.detailedData = this.state.dataSource;
+      // 打印数据
+      let newlistdata = this.state.dataSource;
+      let str2 = '';
+      let str0 =
+        '\n' +
+        '设备名称 单位 规格型号 计划进场日期 计划退场日期 数量 单价 小计';
+      let str1 = '\n' + '合计：' + this.state.Inputmoney1;
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].name +
+          ' ' +
+          newlistdata[i].unit +
+          ' ' +
+          newlistdata[i].size +
+          ' ' +
+          newlistdata[i].plan_in_riqi +
+          ' ' +
+          newlistdata[i].plan_out_riqi +
+          ' ' +
+          newlistdata[i].zl_number +
+          ' ' +
+          newlistdata[i].price +
+          ' ' +
+          newlistdata[i].subtotal;
+      }
+      let str = str2 + str0 + str1;
+      console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestLecon', editData);
+      form.setFieldValue('TestLecon', str);
       form.setFieldExtendValue('TestLecon', editData);
     }
 
@@ -985,7 +1013,7 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
       const { hanmoney = '', detailedData = [] } = value;
       return (
         <div className="field-wrapper">
@@ -1025,7 +1053,7 @@ const FormField: ISwapFormField = {
             {label}
           </div>
           {/* {field.getProp('viewMode') ? (
-          field.getValue()
+          field.getExtendValue()
             ) :
                 (
           <Input
@@ -1036,7 +1064,7 @@ const FormField: ISwapFormField = {
           />
         )} */}
           {/* {field?.props?.viewMode ? (
-          field.getValue()
+          field.getExtendValue()
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}

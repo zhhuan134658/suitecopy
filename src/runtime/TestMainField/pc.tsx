@@ -598,8 +598,8 @@ const FormField: ISwapFormField = {
       }
 
       editData.detailedData = this.state.dataSource;
+      // 打印数据
       let newlistdata = this.state.dataSource;
-
       let str0 =
         '设备名称  单位  规格型号  维保内容  工时数  人工合价  材料合价  小计';
       let str1 = '\n' + '合计(元):' + this.state.Inputmoney1;
@@ -623,21 +623,9 @@ const FormField: ISwapFormField = {
           newlistdata[i].total_price;
       }
       let str = str0 + str1;
-      //   str0 = '\n' + '合计(元):' + this.state.Inputmoney1;
+
       const { form } = this.props;
-      // 打印数
-      form.setFieldValue(
-        'TestMain',
-        str,
-        //         {
-        // 金额: '1111',
-        // 测试字段1: '测试1printValue',
-        // 测试字段2: '测试1exportValue',
-        //   }
-      );
-      //   form.setExtendFieldValue('TestMain', {
-      //     data: editData,
-      //   });
+      form.setFieldValue('TestMain', str);
       form.setFieldExtendValue('TestMain', editData);
     }
 
@@ -930,8 +918,8 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-      //   const value = field.getExtendValue();
-      const value = field.getValue();
+        const value = field.getExtendValue();
+    //   const value = field.getValue();
       console.log('value', field);
       const { hanmoney = 0, detailedData = [] } = value;
       return (

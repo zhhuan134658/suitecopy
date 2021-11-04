@@ -241,15 +241,39 @@ const FormField: IFormField = {
   },
   fieldDidUpdate() {
     if (!this.props.runtimeProps.viewMode) {
-      console.log('发起页：fieldDidUpdate');
-
       let editData = {
         detailedData: [], //物资明细
       };
-
-      editData.detailedData = this.state.materialList;
+      editData.detailedData = this.state.dataSource;
+      // 打印数据
+      let newlistdata = this.state.dataSource;
+      let str0 =
+        '设备名称  单位  规格型号  估算数量  物资采购单位  采购日期  采购地点  候选供应商名单';
+      let str1 = '\n';
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].name +
+          '  ' +
+          newlistdata[i].unit +
+          '  ' +
+          newlistdata[i].size +
+          '  ' +
+          newlistdata[i].number +
+          '  ' +
+          newlistdata[i].purchase_unit +
+          '  ' +
+          newlistdata[i].purchase_riqi +
+          '  ' +
+          newlistdata[i].purchase_address +
+          '  ' +
+          newlistdata[i].candidate_list;
+      }
+      let str = str0 + str1;
+      console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestBidding', editData);
+
+      form.setFieldValue('TestBidding', str);
       form.setFieldExtendValue('TestBidding', editData);
     }
   },
@@ -318,7 +342,7 @@ const FormField: IFormField = {
     );
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
 
       const { detailedData = [] } = value;
       return (

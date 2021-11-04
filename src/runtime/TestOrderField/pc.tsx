@@ -27,7 +27,7 @@
 //       <div className="pc-custom-field-wrap">
 //         <div className="label">{label}</div>
 //         {field.getProp('viewMode') ? (
-//           field.getValue()
+//           field.getExtendValue()
 //         ) : (
 //           <Input placeholder={placeholder} onChange={this.handleChange} />
 //         )}
@@ -949,7 +949,7 @@ const FormField: ISwapFormField = {
 
     // const leaveReasonField = form.getFieldInstance('leaveReason');
     const key = TestOrderField.getProp('id');
-    // const value = TestOrderField.getValue();
+    // const value = TestOrderfield.getExtendValue();
     const value = '1';
 
     // const extendValue = TestOrderField.getExtendValue();
@@ -1175,8 +1175,50 @@ const FormField: ISwapFormField = {
       }
       editData.detailname = this.state.detailname;
       editData.detailedData = this.state.dataSource;
+      // 打印数据
+      let newlistdata = this.state.dataSource;
+      let str2 = this.state.detailname;
+      let str0 =
+        '\n' +
+        '设备名称 单位 规格型号 数量 不含税单价 含税单价 税率 税额 不含税金额 含税金额 已入库量 总计划量';
+      let str1 =
+        '\n' +
+        ' 不含税金额合计(元):' +
+        this.state.Inputmoney2 +
+        '\n' +
+        '含税金额合计(元):' +
+        this.state.Inputmoney1;
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].name +
+          ' ' +
+          newlistdata[i].unit +
+          ' ' +
+          newlistdata[i].size +
+          ' ' +
+          newlistdata[i].det_quantity +
+          ' ' +
+          newlistdata[i].no_unit_price +
+          ' ' +
+          newlistdata[i].unit_price +
+          ' ' +
+          newlistdata[i].tax_rate +
+          ' ' +
+          newlistdata[i].tax_amount +
+          ' ' +
+          newlistdata[i].no_amount_tax +
+          ' ' +
+          newlistdata[i].amount_tax +
+          ' ' +
+          newlistdata[i].quantity_rk +
+          ' ' +
+          newlistdata[i].quantity_zong;
+      }
+      let str = str2 + str0 + str1;
+      console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestOrder', editData);
+      form.setFieldValue('TestOrder', str);
       form.setFieldExtendValue('TestOrder', editData);
     }
 
@@ -1639,7 +1681,7 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
       const {
         hanmoney = 0,
         nomoney = 0,
@@ -1713,7 +1755,7 @@ const FormField: ISwapFormField = {
           </div>
           {/* <div className="label">{label}</div> */}
           {/* {field.getProp('viewMode') ? (
-          field.getValue()
+          field.getExtendValue()
             ) :
                 (
           <Input
@@ -1724,7 +1766,7 @@ const FormField: ISwapFormField = {
           />
         )} */}
           {/* {field?.props?.viewMode ? (
-          field.getValue()
+          field.getExtendValue()
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}

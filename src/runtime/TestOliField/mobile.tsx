@@ -256,19 +256,49 @@ const FormField: IFormField = {
   fieldDidUpdate() {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
-
       let editData = {
         hanmoney: 0,
+        nomoney: 0,
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
         editData.hanmoney = Number(this.state.Inputmoney1);
       }
-      editData.detailedData = this.state.materialList;
+      if (this.state.Inputmoney2) {
+        editData.nomoney = Number(this.state.Inputmoney2);
+      }
+
+      editData.detailedData = this.state.dataSource;
+      // 打印数据
+      let newlistdata = this.state.dataSource;
+      let str2 = '';
+      let str0 = '\n' + '设备名称 单位 规格型号 耗油量 油价 油费';
+      let str1 = '\n' + '合计:' + this.state.Inputmoney1;
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].name +
+          ' ' +
+          newlistdata[i].unit +
+          ' ' +
+          newlistdata[i].size +
+          ' ' +
+          newlistdata[i].oil_consump +
+          ' ' +
+          newlistdata[i].price +
+          ' ' +
+          newlistdata[i].total_price;
+      }
+      let str = str2 + str0 + str1;
+      console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestOliField', editData);
-      form.setFieldExtendValue('TestOliField', editData);
+      form.setFieldValue('TestOli', str);
+      form.setFieldExtendValue('TestOli', editData);
     }
+
+    // this.state.dataSource;
+    // this.state.Inputmoney1;
+    // this.state.Inputmoney2;
   },
   fieldRender() {
     // fix in codepen
@@ -335,7 +365,7 @@ const FormField: IFormField = {
     );
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
 
       const { detailedData = [] } = value;
       return (

@@ -777,7 +777,6 @@ const FormField: IFormField = {
   fieldDidUpdate() {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
-
       let editData = {
         hanmoney: 0,
         nomoney: 0,
@@ -790,12 +789,54 @@ const FormField: IFormField = {
       if (this.state.Inputmoney2) {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
-      editData.detailname = this.state.chenkdata;
-      editData.detailedData = this.state.materialList;
+      editData.detailname = this.state.detailname;
+      editData.detailedData = this.state.dataSource;
+      // 打印数据
+      let newlistdata = this.state.dataSource;
+      let str2 = this.state.detailname;
+      let str0 =
+        '\n' +
+        '设备名称 单位 规格型号 数量 不含税单价 含税单价 税率 税额 不含税金额 含税金额';
+      let str1 =
+        '\n' +
+        ' 不含税金额合计(元):' +
+        this.state.Inputmoney2 +
+        '\n' +
+        '含税金额合计(元):' +
+        this.state.Inputmoney1;
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].name +
+          ' ' +
+          newlistdata[i].unit +
+          ' ' +
+          newlistdata[i].size +
+          ' ' +
+          newlistdata[i].det_quantity +
+          ' ' +
+          newlistdata[i].no_unit_price +
+          ' ' +
+          newlistdata[i].unit_price +
+          ' ' +
+          newlistdata[i].tax_rate +
+          ' ' +
+          newlistdata[i].tax_amount +
+          ' ' +
+          newlistdata[i].no_amount_tax +
+          ' ' +
+          newlistdata[i].amount_tax;
+      }
+      let str = str2 + str0 + str1;
+      console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestSet', editData);
+      form.setFieldValue('TestSet', str);
       form.setFieldExtendValue('TestSet', editData);
     }
+
+    // this.state.dataSource;
+    // this.state.Inputmoney1;
+    // this.state.Inputmoney2;
   },
   fieldRender() {
     // fix in codepen
@@ -979,7 +1020,7 @@ const FormField: IFormField = {
     );
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
 
       const {
         hanmoney = 0,

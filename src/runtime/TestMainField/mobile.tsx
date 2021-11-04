@@ -282,11 +282,42 @@ const FormField: IFormField = {
       if (this.state.Inputmoney2) {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
-      editData.detailedData = this.state.materialList;
+
+      editData.detailedData = this.state.dataSource;
+      // 打印数据
+      let newlistdata = this.state.dataSource;
+      let str0 =
+        '设备名称  单位  规格型号  维保内容  工时数  人工合价  材料合价  小计';
+      let str1 = '\n' + '合计(元):' + this.state.Inputmoney1;
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].name +
+          '  ' +
+          newlistdata[i].unit +
+          '  ' +
+          newlistdata[i].size +
+          '  ' +
+          newlistdata[i].content +
+          '  ' +
+          newlistdata[i].hours +
+          '  ' +
+          newlistdata[i].person_total +
+          '  ' +
+          newlistdata[i].material_total +
+          '  ' +
+          newlistdata[i].total_price;
+      }
+      let str = str0 + str1;
+
       const { form } = this.props;
-      form.setFieldValue('TestMain', editData);
+      form.setFieldValue('TestMain', str);
       form.setFieldExtendValue('TestMain', editData);
     }
+
+    // this.state.dataSource;
+    // this.state.Inputmoney1;
+    // this.state.Inputmoney2;
   },
   fieldRender() {
     // fix in codepen
@@ -353,7 +384,7 @@ const FormField: IFormField = {
     );
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
 
       const { hanmoney = 0, detailedData = [] } = value;
       return (

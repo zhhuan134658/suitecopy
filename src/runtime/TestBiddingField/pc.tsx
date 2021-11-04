@@ -28,7 +28,7 @@
 //       <div className="pc-custom-field-wrap">
 //         <div className="label">{label}</div>
 //         {field.getProp('viewMode') ? (
-//           field.getValue()
+//           field.getExtendValue()
 //         ) : (
 //           <Input placeholder={placeholder} onChange={this.handleChange} />
 //         )}
@@ -469,7 +469,7 @@ const FormField: ISwapFormField = {
 
     // const leaveReasonField = form.getFieldInstance('leaveReason');
     const key = TestBiddingField.getProp('id');
-    // const value = TestBiddingField.getValue();
+    // const value = TestBiddingfield.getExtendValue();
     const value = '1';
 
     // const extendValue = TestBiddingField.getExtendValue();
@@ -581,8 +581,35 @@ const FormField: ISwapFormField = {
         detailedData: [], //物资明细
       };
       editData.detailedData = this.state.dataSource;
+      // 打印数据
+      let newlistdata = this.state.dataSource;
+      let str0 =
+        '设备名称  单位  规格型号  估算数量  物资采购单位  采购日期  采购地点  候选供应商名单';
+      let str1 = '\n';
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].name +
+          '  ' +
+          newlistdata[i].unit +
+          '  ' +
+          newlistdata[i].size +
+          '  ' +
+          newlistdata[i].number +
+          '  ' +
+          newlistdata[i].purchase_unit +
+          '  ' +
+          newlistdata[i].purchase_riqi +
+          '  ' +
+          newlistdata[i].purchase_address +
+          '  ' +
+          newlistdata[i].candidate_list;
+      }
+      let str = str0 + str1;
+      console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestBidding', editData);
+
+      form.setFieldValue('TestBidding', str);
       form.setFieldExtendValue('TestBidding', editData);
     }
   },
@@ -876,13 +903,13 @@ const FormField: ISwapFormField = {
 
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
 
       const { detailedData = [] } = value;
 
       return (
         <div className="field-wrapper">
-          <div className="label">{label}</div>
+          <div className="label">1{label}</div>
           {/* {testdate} */}
           <div>
             {/* ----本地数据----
@@ -910,27 +937,14 @@ const FormField: ISwapFormField = {
     return (
       <div className="TestBiddingField_class">
         <div className="pc-custom-field-wrap">
-          {required ? (
-            <span style={{ color: '#ea6d5c' }}>*</span>
-          ) : (
-            <span style={{ color: '#fff' }}>*</span>
-          )}
-          {/* {field.getProp('viewMode') ? (
-          field.getValue()
-            ) :
-                (
-          <Input
-            id="ptID"
-            placeholder={placeholder}
-            onFocus={this.handleChange}
-            value={this.state.leaveLongVal}
-          />
-        )} */}
-          {/* {field?.props?.viewMode ? (
-          field.getValue()
-        ) : (
-          <Input placeholder={placeholder} onChange={this.handleChange} />
-        )} */}
+          <div className="label">
+            {required ? (
+              <span style={{ color: '#ea6d5c' }}>*</span>
+            ) : (
+              <span style={{ color: '#fff' }}>*</span>
+            )}
+            {label}
+          </div>
           <div>
             <Table
               scroll={{ x: '1500px' }}

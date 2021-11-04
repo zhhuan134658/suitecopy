@@ -27,7 +27,7 @@
 //       <div className="pc-custom-field-wrap">
 //         <div className="label">{label}</div>
 //         {field.getProp('viewMode') ? (
-//           field.getValue()
+//           field.getExtendValue()
 //         ) : (
 //           <Input placeholder={placeholder} onChange={this.handleChange} />
 //         )}
@@ -499,7 +499,7 @@ const FormField: ISwapFormField = {
 
     // const leaveReasonField = form.getFieldInstance('leaveReason');
     const key = TestMachineryField.getProp('id');
-    // const value = TestMachineryField.getValue();
+    // const value = TestMachineryfield.getExtendValue();
     const value = '1';
 
     // const extendValue = TestMachineryField.getExtendValue();
@@ -637,8 +637,35 @@ const FormField: ISwapFormField = {
       }
 
       editData.detailedData = this.state.dataSource;
+      // 打印数据
+      let newlistdata = this.state.dataSource;
+      let str2 = '';
+      let str0 =
+        '\n' + '设备名称 单位 规格型号 工作日期 施工内容 工时 单价 小计';
+      let str1 = '\n' + '合计：' + this.state.Inputmoney1;
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].name +
+          ' ' +
+          newlistdata[i].unit +
+          ' ' +
+          newlistdata[i].size +
+          ' ' +
+          newlistdata[i].riqi +
+          ' ' +
+          newlistdata[i].content +
+          ' ' +
+          newlistdata[i].work_hours +
+          ' ' +
+          newlistdata[i].price +
+          ' ' +
+          newlistdata[i].subtotal;
+      }
+      let str = str2 + str0 + str1;
+      console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestMachinery', editData);
+      form.setFieldValue('TestMachinery', str);
       form.setFieldExtendValue('TestMachinery', editData);
     }
 
@@ -957,7 +984,7 @@ const FormField: ISwapFormField = {
       this.setState({ value });
     };
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
       const { hanmoney = 0, detailedData = [] } = value;
       return (
         <div className="field-wrapper">
@@ -998,7 +1025,7 @@ const FormField: ISwapFormField = {
             {label}
           </div>
           {/* {field.getProp('viewMode') ? (
-          field.getValue()
+          field.getExtendValue()
             ) :
                 (
           <Input
@@ -1009,7 +1036,7 @@ const FormField: ISwapFormField = {
           />
         )} */}
           {/* {field?.props?.viewMode ? (
-          field.getValue()
+          field.getExtendValue()
         ) : (
           <Input placeholder={placeholder} onChange={this.handleChange} />
         )} */}

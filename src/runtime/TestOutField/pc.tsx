@@ -392,11 +392,10 @@ const FormField: ISwapFormField = {
       dataSource: dataSource.filter(item => item.id !== row.id),
     });
   },
-   iconClick() {
+  iconClick() {
     this.setState({
       Inputvalue: '',
       dataSource: [],
-    
     });
     console.log('测试点击');
   },
@@ -540,7 +539,7 @@ const FormField: ISwapFormField = {
 
     // const leaveReasonField = form.getFieldInstance('leaveReason');
     const key = TestOutField.getProp('id');
-    // const value = TestOutField.getValue();
+    // const value = TestOutfield.getExtendValue();
     const value = '1';
 
     // const extendValue = TestOutField.getExtendValue();
@@ -717,9 +716,28 @@ const FormField: ISwapFormField = {
       }
       editData.warehouse = this.state.Inputvalue;
       editData.detailedData = this.state.dataSource;
-
+      // 打印数据
+      let newlistdata = this.state.dataSource;
+      let str2 = this.state.warehouse;
+      let str0 = '\n' + '设备名称 单位 规格型号 出库数量 库存数量';
+      let str1 = '\n';
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].name +
+          ' ' +
+          newlistdata[i].unit +
+          ' ' +
+          newlistdata[i].size +
+          ' ' +
+          newlistdata[i].wz_number +
+          ' ' +
+          newlistdata[i].ku_cun;
+      }
+      let str = str2 + str0 + str1;
+      console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestOut', editData);
+      form.setFieldValue('TestOut', str);
       form.setFieldExtendValue('TestOut', editData);
     }
 
@@ -948,7 +966,7 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
       const { detailedData = [] } = value;
       return (
         <div className="field-wrapper">

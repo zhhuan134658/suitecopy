@@ -319,9 +319,8 @@ const FormField: ISwapFormField = {
     });
   },
   iconClick() {
-   
     this.setState({ Inputvalue: '' });
-  
+
     console.log('测试点击');
   },
   handleAdd() {

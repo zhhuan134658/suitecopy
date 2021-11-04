@@ -468,7 +468,7 @@ const FormField: ISwapFormField = {
 
     // const leaveReasonField = form.getFieldInstance('leaveReason');
     const key = TestExpeField.getProp('id');
-    // const value = TestExpeField.getValue();
+    // const value = TestExpefield.getExtendValue();
     const value = '1';
 
     // const extendValue = TestExpeField.getExtendValue();
@@ -660,8 +660,42 @@ const FormField: ISwapFormField = {
       editData.Numbervalue3 = this.state.Numbervalue3;
       editData.Numbervalue4 = this.state.Numbervalue4;
       editData.Numbervalue5 = this.state.Numbervalue5;
+      // 打印数据
+      let newlistdata = this.state.dataSource;
+      let str2 = '';
+      let str0 = '\n' + '费用科目 金额 备注';
+      let str1 =
+        '\n' +
+        '报销合计:' +
+        this.state.Inputmoney1 +
+        '\n' +
+        '备用金余额:' +
+        this.state.Numbervalue1 +
+        '\n' +
+        '审批中的费用报销抵扣:' +
+        this.state.Numbervalue3 +
+        '\n' +
+        '审批中的归还:' +
+        this.state.Numbervalue4 +
+        '\n' +
+        '本次抵扣金额:' +
+        this.state.Numbervalue4 +
+        '\n' +
+        '财务应支付金额:' +
+        this.state.Numbervalue5;
+      for (let i = 0; i < newlistdata.length; i++) {
+        str0 +=
+          '\n' +
+          newlistdata[i].ke_name +
+          ' ' +
+          newlistdata[i].money +
+          ' ' +
+          newlistdata[i].remarks;
+      }
+      let str = str2 + str0 + str1;
+      console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestExpe', editData);
+      form.setFieldValue('TestExpe', str);
       form.setFieldExtendValue('TestExpe', editData);
     }
 
@@ -876,7 +910,7 @@ const FormField: ISwapFormField = {
 
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      const value = field.getExtendValue();
       const {
         hanmoney = 0,
         detailedData = [],
