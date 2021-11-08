@@ -231,19 +231,13 @@ const FormField: IFormField = {
         nomoney: 0,
         detailedData: [], //物资明细
       };
-      if (this.state.Inputmoney1) {
-        editData.hanmoney = Number(this.state.Inputmoney1);
-      }
-      if (this.state.Inputmoney2) {
-        editData.nomoney = Number(this.state.Inputmoney2);
-      }
 
-      editData.detailedData = this.state.dataSource;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
+      let newlistdata = this.state.materialList;
       let str2 = '';
       let str0 = '\n' + '设备名称 单位 规格型号 数量 单价 小计';
-      let str1 = '\n' + '合计:' + this.state.Inputmoney1;
+      let str1 = '\n';
       for (let i = 0; i < newlistdata.length; i++) {
         str0 +=
           '\n' +

@@ -65,6 +65,14 @@ const FormField: IFormField = {
         });
       });
   },
+  onExtraClick() {
+    const { form } = this.props;
+    this.setState({ inputvalue: '' });
+    form.setFieldValue('Fenmoney', '');
+    form.setFieldExtendValue('Fenmoney', '');
+    console.log('测试点击');
+    console.log('测试点击');
+  },
   onOpenChange(...args) {
     console.log('sss');
     console.log(args);
@@ -183,8 +191,10 @@ const FormField: IFormField = {
                 <div className="m-field-box">
                   <div className="m-field-content left">
                     <div className="input-wrapper">
-                      <input
+                      <InputItem
                         readOnly
+                        extra="x"
+                        onExtraClick={this.onExtraClick}
                         className="ant-input m-mobile-inner-input"
                         type="text"
                         placeholder="请选择"

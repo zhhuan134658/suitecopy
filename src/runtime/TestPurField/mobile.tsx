@@ -444,7 +444,16 @@ const FormField: IFormField = {
     return Math.round(dight * Math.pow(10, bits)) / Math.pow(10, bits);
   },
   //更新数据
+  onExtraClick() {
+   this.setState({
+     chenkdata: '',
+     materialList: [],
+     Inputmoney2: 0,
+     Inputmoney1: 0,
+   });
 
+    console.log('测试点击');
+  },
   onInputchange(types, index, e) {
     console.log(types, index, e, this);
     let arr = this.state.materialList;
@@ -790,11 +799,11 @@ const FormField: IFormField = {
       if (this.state.Inputmoney2) {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
-      editData.detailname = this.state.detailname;
-      editData.detailedData = this.state.dataSource;
+      editData.detailname = this.state.chenkdata;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
-      let str2 = this.state.detailname;
+      let newlistdata = this.state.materialList;
+      let str2 = this.state.chenkdata;
       let str0 =
         '\n' +
         '设备名称 单位 规格型号 数量 不含税单价 含税单价 税率 税额 不含税金额 含税金额';
@@ -1093,6 +1102,8 @@ const FormField: IFormField = {
                           onClick={this.getcheckdata}
                           placeholder="请选择"
                           readOnly
+                          extra="x"
+                          onExtraClick={this.onExtraClick}
                         ></InputItem>
                       </div>
                     </div>

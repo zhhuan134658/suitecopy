@@ -329,7 +329,7 @@ const FormField: IFormField = {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
 
-      editData.detailedData = this.state.dataSource;
+      editData.detailedData = this.state.materialList;
       editData.petty_sele = this.state.petty_sele;
       editData.Numbervalue1 = this.state.Numbervalue1;
       editData.Numbervalue2 = this.state.Numbervalue2;
@@ -338,7 +338,7 @@ const FormField: IFormField = {
       editData.Numbervalue4 = this.state.Numbervalue4;
       editData.Numbervalue5 = this.state.Numbervalue5;
       // 打印数据
-      let newlistdata = this.state.dataSource;
+      let newlistdata = this.state.materialList;
       let str2 = '';
       let str0 = '\n' + '费用科目 金额 备注';
       let str1 =

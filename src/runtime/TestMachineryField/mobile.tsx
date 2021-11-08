@@ -305,9 +305,9 @@ const FormField: IFormField = {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
 
-      editData.detailedData = this.state.dataSource;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
+      let newlistdata = this.state.materialList;
       let str2 = '';
       let str0 =
         '\n' + '设备名称 单位 规格型号 工作日期 施工内容 工时 单价 小计';

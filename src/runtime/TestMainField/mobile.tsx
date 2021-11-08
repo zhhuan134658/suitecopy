@@ -283,9 +283,9 @@ const FormField: IFormField = {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
 
-      editData.detailedData = this.state.dataSource;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
+      let newlistdata = this.state.materialList;
       let str0 =
         '设备名称  单位  规格型号  维保内容  工时数  人工合价  材料合价  小计';
       let str1 = '\n' + '合计(元):' + this.state.Inputmoney1;

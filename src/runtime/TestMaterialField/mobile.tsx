@@ -102,6 +102,11 @@ const FormField: IFormField = {
       }
     });
   },
+  onExtraClick() {
+    this.setState({ Inputvalue: '', materialList: [] });
+
+    console.log('测试点击');
+  },
   onOpenChange(index: any, ...args: any[]) {
     console.log('sss');
     console.log(args);
@@ -278,9 +283,9 @@ const FormField: IFormField = {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
       editData.warehouse = this.state.Inputvalue;
-      editData.detailedData = this.state.dataSource;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
+      let newlistdata = this.state.materialList;
       let str2 = this.state.Inputvalue;
       let str0 = '\n' + '设备名称 单位 规格型号 账存数量 盘点数量';
       let str1 = '\n';
@@ -488,6 +493,8 @@ const FormField: IFormField = {
                         onClick={this.getcheckdata}
                         placeholder="请选择"
                         readOnly
+                        extra="x"
+                        onExtraClick={this.onExtraClick}
                       ></InputItem>
                     </div>
                   </div>

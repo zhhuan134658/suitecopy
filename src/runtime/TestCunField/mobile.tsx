@@ -140,6 +140,21 @@ const FormField: IFormField = {
     this.setState({ materialList: [...arr] });
     console.log(datetime, index);
   },
+  onExtraClick(val) {
+    if (val === 'out') {
+      this.setState({
+        Inputvalue: '',
+        Inputvaluein: '',
+        materialList: [],
+      });
+    } else {
+      this.setState({
+        Inputvaluein: '',
+      });
+    }
+
+    console.log('测试点击');
+  },
   chhandleAdd(val) {
     const newdate = this.state.allData;
     newdate.isHouse = '1';
@@ -312,9 +327,9 @@ const FormField: IFormField = {
       }
       editData.warehouse = this.state.Inputvalue;
       editData.warehousein = this.state.Inputvaluein;
-      editData.detailedData = this.state.dataSource;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
+      let newlistdata = this.state.materialList;
       let str2 =
         '调出仓库：' +
         this.state.Inputvalue +
@@ -487,9 +502,11 @@ const FormField: IFormField = {
                       <InputItem
                         editable={false}
                         clear
+                        extra="x"
                         value={this.state.inputvalue}
                         placeholder="请选择"
                         onClick={this.chhandleAdd.bind(this, 'out')}
+                        onExtraClick={this.onExtraClick.bind(this, 'out')}
                       ></InputItem>
                     </div>
                   </div>
@@ -518,8 +535,10 @@ const FormField: IFormField = {
                       <InputItem
                         editable={false}
                         clear
+                        extra="x"
                         value={this.state.Inputvaluein}
                         onClick={this.chhandleAdd.bind(this, 'in')}
+                        onExtraClick={this.onExtraClick.bind(this, 'in')}
                         placeholder="请选择"
                       ></InputItem>
                     </div>

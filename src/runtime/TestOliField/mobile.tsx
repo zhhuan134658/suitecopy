@@ -268,9 +268,9 @@ const FormField: IFormField = {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
 
-      editData.detailedData = this.state.dataSource;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
+      let newlistdata = this.state.materialList;
       let str2 = '';
       let str0 = '\n' + '设备名称 单位 规格型号 耗油量 油价 油费';
       let str1 = '\n' + '合计:' + this.state.Inputmoney1;

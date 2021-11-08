@@ -164,6 +164,11 @@ const FormField: IFormField = {
         }
       });
   },
+  onExtraClick() {
+    this.setState({ chenkdata: '', materialList: [], Inputmoney1: null });
+
+    console.log('测试点击');
+  },
   getcheckdata() {
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
@@ -332,11 +337,11 @@ const FormField: IFormField = {
       if (this.state.Inputmoney2) {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
-      editData.detailname = this.state.detailname;
-      editData.detailedData = this.state.dataSource;
+      editData.detailname = this.state.chenkdata;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
-      let str2 = this.state.detailname;
+      let newlistdata = this.state.materialList;
+      let str2 = this.state.chenkdata;
       let str0 =
         '\n' +
         '设备名称 单位 规格型号 总计划量 需用数量 累计申请量 总计划量 参考价格 小计 备注';
@@ -370,8 +375,7 @@ const FormField: IFormField = {
       form.setFieldValue('TestApplication', str);
       form.setFieldExtendValue('TestApplication', editData);
     }
-
-    // this.state.dataSource;
+    // this.state.materialList;
     // this.state.Inputmoney1;
     // this.state.Inputmoney2;
   },
@@ -549,6 +553,8 @@ const FormField: IFormField = {
                           onClick={this.getcheckdata}
                           placeholder="请选择"
                           readOnly
+                          extra="x"
+                          onExtraClick={this.onExtraClick}
                         ></InputItem>
                       </div>
                     </div>

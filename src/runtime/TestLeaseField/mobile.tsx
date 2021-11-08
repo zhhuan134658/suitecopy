@@ -265,9 +265,9 @@ const FormField: IFormField = {
         editData.hanmoney = Number(this.state.Inputmoney1);
       }
 
-      editData.detailedData = this.state.dataSource;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
+      let newlistdata = this.state.materialList;
       let str2 = '';
       let str0 = '\n' + '设备名称 单位 规格型号 计划进场日期 计划退场日期 数量';
       let str1 = '\n';

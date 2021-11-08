@@ -64,11 +64,14 @@ const FormField: IFormField = {
         });
       });
   },
+  onExtraClick() {
+    this.setState({ inputvalue: '' });
+    console.log('测试点击');
+  },
   onOpenChange(...args) {
     console.log('sss');
     console.log(args);
     const newdate = this.state.allData;
-
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit' });
   },
@@ -167,8 +170,10 @@ const FormField: IFormField = {
                 <div className="m-field-box">
                   <div className="m-field-content left">
                     <div className="input-wrapper">
-                      <input
+                      <InputItem
                         readOnly
+                        extra="x"
+                        onExtraClick={this.onExtraClick}
                         className="ant-input m-mobile-inner-input"
                         type="text"
                         placeholder="请选择"

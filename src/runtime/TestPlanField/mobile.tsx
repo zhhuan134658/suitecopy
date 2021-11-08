@@ -244,9 +244,9 @@ const FormField: IFormField = {
         detailedData: [], //物资明细
       };
 
-      editData.detailedData = this.state.dataSource;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
+      let newlistdata = this.state.materialList;
       let str0 = '设备名称  单位  规格型号  总计划量  使用部位  备注';
       let str1 = '\n';
       for (let i = 0; i < newlistdata.length; i++) {

@@ -412,6 +412,7 @@ const FormField: ISwapFormField = {
         if (newarr.length == 0) {
           this.setState({ Inputvalue: '暂无合同' });
           form.setFieldValue('SelectHe', '暂无合同');
+          form.setFieldExtendValue('SelectHe', '暂无合同');
         } else {
           this.setState({
             listData: [...newarr],

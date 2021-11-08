@@ -156,6 +156,11 @@ const FormField: IFormField = {
 
     this.setState({ showElem3: 'inherit' });
   },
+  onExtraClick() {
+    this.setState({ chenkdata: '', materialList: [] });
+
+    console.log('测试点击');
+  },
   onOpenChange(index: any, ...args: any[]) {
     console.log('sss');
     console.log(args);
@@ -292,10 +297,10 @@ const FormField: IFormField = {
       if (this.state.Inputmoney2) {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
-      editData.warehouse = this.state.Inputvalue;
-      editData.detailedData = this.state.dataSource;
+      editData.warehouse = this.state.inputvalue;
+      editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.dataSource;
+      let newlistdata = this.state.materialList;
       let str2 = this.state.warehouse;
       let str0 = '\n' + '设备名称 单位 规格型号 出库数量 库存数量';
       let str1 = '\n';
@@ -479,8 +484,10 @@ const FormField: IFormField = {
                 <div className="m-field-box">
                   <div className="m-field-content left">
                     <div className="input-wrapper">
-                      <input
+                      <InputItem
                         readOnly
+                        extra="x"
+                        onExtraClick={this.onExtraClick}
                         className="ant-input m-mobile-inner-input"
                         type="text"
                         placeholder="请选择"
