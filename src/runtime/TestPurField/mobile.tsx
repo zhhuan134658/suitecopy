@@ -445,12 +445,12 @@ const FormField: IFormField = {
   },
   //更新数据
   onExtraClick() {
-   this.setState({
-     chenkdata: '',
-     materialList: [],
-     Inputmoney2: 0,
-     Inputmoney1: 0,
-   });
+    this.setState({
+      chenkdata: '',
+      materialList: [],
+      Inputmoney2: 0,
+      Inputmoney1: 0,
+    });
 
     console.log('测试点击');
   },
@@ -1030,10 +1030,7 @@ const FormField: IFormField = {
               {detailedData.map((item, index) => {
                 return (
                   <div className="row">
-                    <label
-                      className="label row-label-title"
-                      style={{ color: 'red' }}
-                    >
+                    <label className="label row-label-title">
                       {label}明细({index + 1})
                     </label>
                     {this.state.deColumns.map((itemname, indexname) => {
@@ -1188,9 +1185,7 @@ const FormField: IFormField = {
                                   <div className="m-field m-field-mobile m-select-field">
                                     <div className="m-field-head">
                                       <div className="m-field-label">
-                                        <span style={{ color: 'red' }}>
-                                          物资名称
-                                        </span>
+                                        <span>物资名称</span>
                                       </div>
                                     </div>
                                     <div className="m-field-box">
