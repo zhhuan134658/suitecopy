@@ -1121,7 +1121,7 @@ const FormField: ISwapFormField = {
         '设备名称 单位 规格型号 数量 不含税单价 含税单价 税率 税额 不含税金额 含税金额';
       let str1 =
         '\n' +
-        ' 不含税金额合计(元):' +
+        '不含税金额合计(元):' +
         this.state.Inputmoney2 +
         '\n' +
         '含税金额合计(元):' +
