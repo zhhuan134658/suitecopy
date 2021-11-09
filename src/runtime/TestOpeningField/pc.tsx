@@ -41,7 +41,11 @@ import { Pagination } from 'antd';
 import { Tree } from 'antd';
 const { DirectoryTree } = Tree;
 import { Layout } from 'antd';
-import { QuestionCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
+import {
+  QuestionCircleOutlined,
+  CloseCircleOutlined,
+  UploadOutlined,
+} from '@ant-design/icons';
 const { Header, Footer, Sider, Content } = Layout;
 import React, { useContext, useState, useEffect, useRef } from 'react';
 import {
@@ -56,6 +60,8 @@ import {
   Button,
   Popconfirm,
   Form,
+  Upload,
+  message,
 } from 'antd';
 const { Search } = Input;
 const { Option } = Select;
@@ -91,6 +97,7 @@ const mycolumns = [
     dataIndex: 'size',
   },
 ];
+
 interface ISwapFormField extends IFormField {
   //   handleChange: () => void;
   handleOk: () => void;
@@ -252,6 +259,9 @@ type ColumnTypes = Exclude<EditableTableProps['columns'], undefined>;
 const FormField: ISwapFormField = {
   getInitialState() {
     return {
+      fileList: [],
+      OSSData: {},
+      uploadVisible: false,
       value: undefined,
       msgdata: '',
       newOptine: [],
@@ -289,13 +299,28 @@ const FormField: ISwapFormField = {
   },
   /** 控件首次渲染完成之后 */
   fieldDidMount() {
-    // const newdate = this.state.allData;
-    // this.asyncSetFieldProps(newdate);
+    this.init();
   },
   //新增
   newAdd() {
     this.setState({
       visibleModal: true,
+    });
+  },
+  //   文件上传
+  openModel() {
+    this.setState({
+      uploadVisible: true,
+    });
+  },
+  uploadOk() {
+    this.setState({
+      uploadVisible: false,
+    });
+  },
+  uploadCancel() {
+    this.setState({
+      uploadVisible: false,
     });
   },
   //取消
@@ -611,6 +636,71 @@ const FormField: ISwapFormField = {
     const res = new Map();
     return arr.filter(arr => !res.has(arr.id) && res.set(arr.id, 1));
   },
+  //   文件上传
+  init() {
+    try {
+      const OSSData = this.mockGetOSSData();
+
+      this.setState({
+        OSSData,
+      });
+    } catch (error) {
+      message.error(error);
+    }
+  },
+  // Mock get OSS api
+  // https://help.aliyun.com/document_detail/31988.html
+  mockGetOSSData: () => ({
+    dir: 'user-dir/',
+    expire: '1577811661',
+    host: '//www.mocky.io/v2/5cc8019d300000980a055e76',
+    accessId: 'c2hhb2RhaG9uZw==',
+    policy: 'eGl4aWhhaGFrdWt1ZGFkYQ==',
+    signature: 'ZGFob25nc2hhbw==',
+  }),
+
+  uploadonChange(fileList) {
+    console.log('Aliyun OSS:', fileList);
+    this.setState({ fileList: fileList.fileList });
+  },
+
+  onRemove(file) {
+    const upvalue = this.state.fileList;
+    console.log(this.state.fileList);
+    console.log(file);
+
+    const files = upvalue.filter((v: { url: any }) => v.url !== file.url);
+
+    if (this.uploadonChange) {
+      this.uploadonChange(files);
+    }
+  },
+
+  getExtraData(file) {
+    const { OSSData } = this.state;
+
+    return {
+      key: file.url,
+      OSSAccessKeyId: OSSData.accessId,
+      policy: OSSData.policy,
+      Signature: OSSData.signature,
+    };
+  },
+
+  beforeUpload(file) {
+    const { OSSData } = this.state;
+    const expire = OSSData.expire * 1000;
+
+    if (expire < Date.now()) {
+      this.init();
+    }
+
+    const suffix = file.name.slice(file.name.lastIndexOf('.'));
+    const filename = Date.now() + suffix;
+    file.url = OSSData.dir + filename;
+
+    return file;
+  },
   fieldDidUpdate() {
     if (!this.props.runtimeProps.viewMode) {
       console.log('发起页：fieldDidUpdate');
@@ -656,6 +746,7 @@ const FormField: ISwapFormField = {
     // this.state.Inputmoney1;
     // this.state.Inputmoney2;
   },
+
   fieldRender() {
     const { form } = this.props;
     const field = form.getFieldInstance('TestOpening');
@@ -663,6 +754,18 @@ const FormField: ISwapFormField = {
     const placeholder = form.getFieldProp('TestOpening', 'placeholder');
     const required = form.getFieldProp('TestOpening', 'required');
     const { dataSource, selectedRowKeys } = this.state;
+    //   文件上传
+    const { value } = this.props;
+    const uploadprops = {
+      name: 'file',
+      fileList: value,
+      action: this.state.OSSData.host,
+      onChange: this.uploadonChange,
+      onRemove: this.onRemove,
+      data: this.getExtraData,
+      beforeUpload: this.beforeUpload,
+    };
+
     // const treeData = [
     //   {
     //     title: 'parent 0',
@@ -773,10 +876,10 @@ const FormField: ISwapFormField = {
           let rec = record;
           return (
             <Input
-              value={record.content}
+              value={record.remarks}
               placeholder="请输入"
               onChange={e => {
-                record.content = e.target.value;
+                record.remarks = e.target.value;
               }}
             />
           );
@@ -922,22 +1025,7 @@ const FormField: ISwapFormField = {
             )}
             {label}
           </div>
-          {/* {field.getProp('viewMode') ? (
-          field.getExtendValue()
-            ) :
-                (
-          <Input
-            id="ptID"
-            placeholder={placeholder}
-            onFocus={this.handleChange}
-            value={this.state.leaveLongVal}
-          />
-        )} */}
-          {/* {field?.props?.viewMode ? (
-          field.getExtendValue()
-        ) : (
-          <Input placeholder={placeholder} onChange={this.handleChange} />
-        )} */}
+          {/*  <div onClick={this.openModel}>上传</div> */}
           <div>
             <Table
               scroll={{ x: '1500px' }}
@@ -1082,6 +1170,17 @@ const FormField: ISwapFormField = {
                 </Button>
               </Form.Item>
             </Form>
+          </Modal>
+          {/* 上传 */}
+          <Modal
+            title="上传"
+            visible={this.state.uploadVisible}
+            onOk={this.uploadOk}
+            onCancel={this.uploadCancel}
+          >
+            <Upload maxCount={1} {...uploadprops}>
+              <Button icon={<UploadOutlined />}>上传文件</Button>
+            </Upload>
           </Modal>
         </div>
       </div>
