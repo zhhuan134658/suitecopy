@@ -114,10 +114,15 @@ const SwapDemoSuite: ISwapDemoSuite = {
         } else if (apiname == 'Autoprobei') {
           console.log(newarr);
           form.setFieldValue('Ljjiemoney', newarr.lj_jie);
+          form.setFieldExtendValue('Ljjiemoney', newarr.lj_jie);
           form.setFieldValue('Ljhuanmoney', newarr.lj_huan);
+          form.setFieldExtendValue('Ljhuanmoney', newarr.lj_huan);
           form.setFieldValue('Beimoneyyu', newarr.bei_yu);
+          form.setFieldExtendValue('Beimoneyyu', newarr.bei_yu);
           form.setFieldValue('MoneyFeidk', newarr.fybx_dk_spz);
+          form.setFieldExtendValue('MoneyFeidk', newarr.fybx_dk_spz);
           form.setFieldValue('MoneyFeigh', newarr.re_money_spz);
+          form.setFieldExtendValue('MoneyFeigh', newarr.re_money_spz);
         }
       });
   },
