@@ -58,9 +58,7 @@ const FormField: IFormField = {
       desData.Optionsname = newdata;
       this.setState({ pickerValuedata: newdata }, () => {
         form.setFieldValue('PositionDes', desData);
-        form.setFieldExtendValue('PositionDes', {
-          data: desData,
-        });
+        form.setFieldExtendValue('PositionDes', desData);
       });
     }
   },
