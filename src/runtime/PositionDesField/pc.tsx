@@ -170,8 +170,9 @@ const FormField: ISwapFormField = {
     const { dataSource, selectedRowKeys } = this.state;
 
     // 详情页
-    if (viewMode) {
+    if (this.props.runtimeProps.viewMode) {
       const value = field.getValue();
+      console.log('value====', value);
       const { Optionsname = '' } = value;
       return (
         <div>
