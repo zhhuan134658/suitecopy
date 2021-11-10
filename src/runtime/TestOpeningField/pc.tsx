@@ -1025,7 +1025,7 @@ const FormField: ISwapFormField = {
             )}
             {label}
           </div>
-          {/*  <div onClick={this.openModel}>上传</div> */}
+          {/*  <div onClick={this.openModel}>批量导入</div> */}
           <div>
             <Table
               scroll={{ x: '1500px' }}
@@ -1173,7 +1173,7 @@ const FormField: ISwapFormField = {
           </Modal>
           {/* 上传 */}
           <Modal
-            title="上传"
+            title="批量导入"
             visible={this.state.uploadVisible}
             onOk={this.uploadOk}
             onCancel={this.uploadCancel}
