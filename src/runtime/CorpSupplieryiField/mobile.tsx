@@ -75,12 +75,18 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit' });
   },
-  habdlClick(item: { name: any }) {
+  habdlClick(item: { name: any; extend_first: any }) {
     const { form } = this.props;
     console.log(item);
     this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
       form.setFieldValue('CorpSupplieryi', item.name);
       form.setFieldExtendValue('CorpSupplieryi', item.name);
+      try {
+        form.setFieldValue('paraNumber', item.extend_first);
+        form.setFieldExtendValue('paraNumber', item.extend_first);
+      } catch (e) {
+        console.log('没有extend_first字段');
+      }
     });
   },
   onCancel() {

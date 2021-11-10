@@ -454,7 +454,14 @@
       },
       "type": "custom"
     },
-
+    {
+      "componentName": "TextField",
+      "bizAlias": "paraNumber",
+      "props": {
+        "placeholder": "请输入",
+        "label": "税号"
+      }
+    },
     {
       "componentName": "SelectField",
       "bizAlias": "IsAutoOut",

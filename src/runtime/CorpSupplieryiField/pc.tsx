@@ -477,6 +477,12 @@ const FormField: ISwapFormField = {
     this.setState({ Inputvalue: record.name, isModalVisible: false }, () => {
       form.setFieldValue('CorpSupplieryi', record.name);
       form.setFieldExtendValue('CorpSupplieryi', record.name);
+      try {
+        form.setFieldValue('paraNumber', record.extend_first);
+        form.setFieldExtendValue('paraNumber', record.extend_first);
+      } catch (e) {
+        console.log('没有extend_first字段');
+      }
     });
 
     // const newData = [...this.state.dataSource];
