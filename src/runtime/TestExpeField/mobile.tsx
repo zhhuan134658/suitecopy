@@ -18,6 +18,7 @@ import {
 } from 'antd-mobile';
 import { Tree } from 'antd';
 import './mobile.less';
+import { fpAdd } from '../../utils/fpOperations';
 import _ from 'lodash';
 
 const Item = List.Item;
@@ -280,25 +281,28 @@ const FormField: IFormField = {
     let arr = this.state.materialList;
     console.log(this.state.materialList);
     // let arrindex = e.target.value;
-    let arrindex = e;
+    let arrindex = e ? e : '';
     let newindex = index;
     let newtype = types;
     // arr[newindex] = {};
     arr[newindex][newtype] = arrindex;
-
     let newarr2 = [];
-
-    newarr2 = arr.filter(item => {
-      if (item.money) {
-        return item;
-      }
-    });
-    newarr2 = newarr2.map(item => {
-      return item.money;
-    });
+    newarr2 = [
+      ...arr.filter(item => {
+        if (item.money) {
+          return item;
+        }
+      }),
+    ];
+    newarr2 = [
+      ...newarr2.map(item => {
+        return item.money;
+      }),
+    ];
+    const totalMoney = newarr2.reduce(fpAdd, 0);
     this.setState({
       materialList: [...arr],
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney1: totalMoney.toFixed(2) <= 0.005 ? '' : totalMoney.toFixed(2),
     });
     console.log(arr);
   },
