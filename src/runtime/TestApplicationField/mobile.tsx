@@ -751,15 +751,9 @@ const FormField: IFormField = {
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
+                                            editable={false}
                                             value={item.zh_plan_quantity}
                                             placeholder="自动获取"
-                                            onChange={e =>
-                                              this.onInputchange(
-                                                'zh_plan_quantity',
-                                                index,
-                                                e,
-                                              )
-                                            }
                                           ></InputItem>
                                         </div>
                                       </div>

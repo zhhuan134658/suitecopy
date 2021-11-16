@@ -292,9 +292,9 @@ const FormField: ISwapFormField = {
     console.log(value);
     const newvalue = this.state.allData;
     newvalue.name = value;
-
+    const defaultActiveKey = this.state.defaultActiveKey;
     newvalue.page = 1;
-    newvalue.rk_id = [];
+    newvalue.rk_id = [defaultActiveKey];
     this.setState({
       allData: newvalue,
     });
@@ -367,9 +367,8 @@ const FormField: ISwapFormField = {
     });
   },
   iconClick() {
- 
     this.setState({ detailname: '' });
-   
+
     console.log('测试点击');
   },
   newhandleAdd() {
@@ -828,6 +827,7 @@ const FormField: ISwapFormField = {
         name: '',
       };
       this.setState({
+        defaultActiveKey: key,
         allData: newpage,
         detdate: key + '1',
       });

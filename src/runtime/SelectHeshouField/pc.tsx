@@ -315,9 +315,9 @@ const FormField: ISwapFormField = {
     console.log(value);
     const newvalue = this.state.allData;
     newvalue.name = value;
-
+    const defaultActiveKey = this.state.defaultActiveKey;
     newvalue.page = 1;
-    newvalue.rk_id = [];
+    newvalue.rk_id = [defaultActiveKey];
     this.setState({
       allData: newvalue,
     });

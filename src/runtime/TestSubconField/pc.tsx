@@ -296,10 +296,11 @@ const FormField: ISwapFormField = {
   onSearch(value) {
     console.log(value);
     const newvalue = this.state.allData;
+    const defaultActiveKey = this.state.defaultActiveKey;
     newvalue.name = value;
 
     newvalue.page = 1;
-    newvalue.rk_id = [];
+    newvalue.rk_id = [defaultActiveKey];
     this.setState({
       allData: newvalue,
     });
