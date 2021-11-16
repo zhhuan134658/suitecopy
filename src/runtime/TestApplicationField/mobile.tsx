@@ -16,6 +16,7 @@ import {
 } from 'antd-mobile';
 import { Tree } from 'antd';
 import './mobile.less';
+import { fpAdd, toFixed } from '../../utils/fpOperations';
 const Item = List.Item;
 
 /**
@@ -283,30 +284,36 @@ const FormField: IFormField = {
     let arr = this.state.materialList;
     console.log('120', this.state.materialList);
 
-    let arrindex = e;
+    let arrindex = e ? e : '';
     let newindex = index;
     let newtype = types;
 
     arr[newindex][newtype] = arrindex;
 
     arr[newindex].subtotal =
-      arr[newindex].need_quantity * arr[newindex].refer_price;
+      arr[newindex].need_quantity && arr[newindex].refer_price
+        ? toFixed(arr[newindex].need_quantity * arr[newindex].refer_price, 2)
+        : '';
 
     //   含税金额
     let newarr2 = [];
 
-    newarr2 = arr.filter(item => {
-      if (item.subtotal) {
-        return item;
-      }
-    });
-    newarr2 = newarr2.map(item => {
-      return item.subtotal;
-    });
-
+    newarr2 = [
+      ...arr.filter(item => {
+        if (item.subtotal) {
+          return item;
+        }
+      }),
+    ];
+    newarr2 = [
+      ...newarr2.map(item => {
+        return item.subtotal;
+      }),
+    ];
+    const totalMoney = newarr2.reduce(fpAdd, 0);
     this.setState({
       materialList: [...arr],
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney1: totalMoney.toFixed(2) <= 0.005 ? '' : totalMoney.toFixed(2),
     });
     console.log('12', arr);
   },
