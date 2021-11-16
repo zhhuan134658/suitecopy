@@ -43,7 +43,11 @@ const FormField: IFormField = {
         },
         {
           title: '总计划量',
-          dataIndex: 'zh_plan_quantity',
+          dataIndex: 'quantity_zong',
+        },
+        {
+          title: '累计申请量',
+          dataIndex: 'quantity_sq',
         },
         {
           title: '需用数量',
@@ -752,7 +756,33 @@ const FormField: IFormField = {
                                         <div className="input-wrapper">
                                           <InputItem
                                             editable={false}
-                                            value={item.zh_plan_quantity}
+                                            value={item.quantity_zong}
+                                            placeholder="自动获取"
+                                          ></InputItem>
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div>
+                            <div className="field-wrapper">
+                              <div className="m-group m-group-mobile">
+                                <div className="m-field-wrapper">
+                                  <div className="m-field m-field-mobile m-select-field">
+                                    <div className="m-field-head">
+                                      <div className="m-field-label">
+                                        <span>累计申请量</span>
+                                      </div>
+                                    </div>
+                                    <div className="m-field-box">
+                                      <div className="m-field-content left">
+                                        <div className="input-wrapper">
+                                          <InputItem
+                                            editable={false}
+                                            value={item.quantity_sq}
                                             placeholder="自动获取"
                                           ></InputItem>
                                         </div>

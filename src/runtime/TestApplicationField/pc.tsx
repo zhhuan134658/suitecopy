@@ -795,10 +795,7 @@ const FormField: ISwapFormField = {
       let str0 =
         '\n' +
         '设备名称 单位 规格型号 总计划量 需用数量 累计申请量 总计划量 参考价格 小计 备注';
-      let str1 =
-        '\n' +
-        ' 合计(元):' +
-        this.state.Inputmoney1 ;
+      let str1 = '\n' + ' 合计(元):' + this.state.Inputmoney1;
       for (let i = 0; i < newlistdata.length; i++) {
         str0 +=
           '\n' +
@@ -886,15 +883,7 @@ const FormField: ISwapFormField = {
           </Tooltip>
         ),
       },
-      {
-        title: '总计划量',
-        dataIndex: 'zh_plan_quantity',
-        render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.zh_plan_quantity}>
-            <span>{record.zh_plan_quantity}</span>
-          </Tooltip>
-        ),
-      },
+
       {
         title: '需用数量',
         dataIndex: 'need_quantity',
@@ -979,15 +968,6 @@ const FormField: ISwapFormField = {
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.size}>
             <span>{record.size}</span>
-          </Tooltip>
-        ),
-      },
-      {
-        title: '总计划量',
-        dataIndex: 'zh_plan_quantity',
-        render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.zh_plan_quantity}>
-            <span>{record.zh_plan_quantity}</span>
           </Tooltip>
         ),
       },
