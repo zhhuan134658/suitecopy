@@ -679,7 +679,7 @@ const FormField: ISwapFormField = {
         this.state.Numbervalue4 +
         '\n' +
         '本次抵扣金额:' +
-        this.state.Numbervalue4 +
+        this.state.Numbervalue2 +
         '\n' +
         '财务应支付金额:' +
         this.state.Numbervalue5;
