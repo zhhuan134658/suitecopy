@@ -921,6 +921,7 @@ const FormField: ISwapFormField = {
       let value = field.getExtendValue();
       if (!value.detailedData) {
         value = field.getValue();
+      }
       console.log('value', field);
       const { hanmoney = 0, detailedData = [] } = value;
       return (
