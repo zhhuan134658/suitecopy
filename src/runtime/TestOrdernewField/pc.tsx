@@ -1402,7 +1402,10 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getValue();
+      let value = field.getExtendValue();
+      if (!value.detailedData) {
+        value = field.getValue();
+      }
       const {
         hanmoney = 0,
         nomoney = 0,

@@ -1101,7 +1101,10 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getExtendValue();
+      let value = field.getExtendValue();
+      if (!value.detailedData) {
+        value = field.getValue();
+      }
       const { warehouse = '', detailedData = [] } = value;
       return (
         <div className="field-wrapper">

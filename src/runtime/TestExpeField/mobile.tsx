@@ -27,6 +27,50 @@ const Item = List.Item;
  */
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
+
+const calcDeduction = (_this, value: string) => {
+  console.log('CALC DEDUCTION');
+  const number1 = _this.state.maxnum;
+  const number2 = _this.state.Inputmoney1;
+  const val = parseFloat(value);
+  if (val <= 0.01) {
+    _this.setState({
+      Numbervalue2: '',
+    });
+    return 0;
+  }
+  if (number1 > number2) {
+    if (val > _this.state.Inputmoney1) {
+      const aa = _this.state.Inputmoney1;
+      const bb = Number(aa) - Number(_this.state.maxnum);
+      _this.setState({
+        Numbervalue5: bb.toFixed(2),
+      });
+    } else {
+      const aa = _this.state.Inputmoney1;
+      const bb = aa - val;
+      _this.setState({
+        Numbervalue5: bb.toFixed(2),
+      });
+    }
+  } else {
+    if (val > _this.state.maxnum) {
+      const aa = _this.state.Inputmoney1;
+      const bb = aa - _this.state.maxnum;
+      _this.setState({
+        Numbervalue2: _this.state.maxnum.toFixed(2),
+        Numbervalue5: bb.toFixed(2),
+      });
+    } else {
+      const aa = _this.state.Inputmoney1;
+      const bb = aa - val;
+      _this.setState({
+        Numbervalue5: bb.toFixed(2),
+      });
+    }
+  }
+};
+
 const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
@@ -192,50 +236,8 @@ const FormField: IFormField = {
   onChangeDeduction(e: React.ChangeEvent<HTMLInputElement>) {
     console.log('CHANGE DEDUCTION');
     let _this = this;
-    const calcDeduction = (_this, e: React.ChangeEvent<HTMLInputElement>) => {
-      console.log('CALC DEDUCTION');
-      const number1 = _this.state.maxnum;
-      const number2 = _this.state.Inputmoney1;
-      let val = Number(e.target.value);
-      if (val <= 0.01) {
-        _this.setState({
-          Numbervalue2: '',
-        });
-        return 0;
-      }
-      if (number1 > number2) {
-        if (val > _this.state.Inputmoney1) {
-          const aa = _this.state.Inputmoney1;
-          const bb = Number(aa) - Number(_this.state.maxnum);
-          _this.setState({
-            Numbervalue5: bb.toFixed(2),
-          });
-        } else {
-          const aa = _this.state.Inputmoney1;
-          const bb = aa - val;
-          _this.setState({
-            Numbervalue5: bb.toFixed(2),
-          });
-        }
-      } else {
-        if (val > _this.state.maxnum) {
-          const aa = _this.state.Inputmoney1;
-          const bb = aa - _this.state.maxnum;
-          _this.setState({
-            Numbervalue2: _this.state.maxnum.toFixed(2),
-            Numbervalue5: bb.toFixed(2),
-          });
-        } else {
-          const aa = _this.state.Inputmoney1;
-          const bb = aa - val;
-          _this.setState({
-            Numbervalue5: bb.toFixed(2),
-          });
-        }
-      }
-    };
     console.log(e.target.value);
-    calcDeduction(_this, e);
+    calcDeduction(_this, e.target.value);
   },
   onCancel() {
     this.setState({ showElem: 'none' });
@@ -266,6 +268,8 @@ const FormField: IFormField = {
     this.setState({
       materialList: [...this.state.materialList, sonData],
     });
+    const deductionNumber = this.state.Numbervalue2;
+    calcDeduction(this, deductionNumber);
   },
   //删除明细
   deleteItem(index) {
@@ -274,6 +278,8 @@ const FormField: IFormField = {
     this.setState({
       materialList: list,
     });
+    const deductionNumber = this.state.Numbervalue2;
+    calcDeduction(this, deductionNumber);
   },
   //更新数据
   onInputchange(types, index, e) {
@@ -449,8 +455,10 @@ const FormField: IFormField = {
     );
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getExtendValue();
-
+      let value = field.getExtendValue();
+      if (!value.detailedData) {
+        value = field.getValue();
+      }
       const {
         hanmoney = '',
         detailedData = [],
@@ -674,7 +682,7 @@ const FormField: IFormField = {
                     alt=""
                   />
                   &nbsp;
-                  <span className="add-button-text">增加1明细</span>
+                  <span className="add-button-text">增加明细</span>
                 </div>
               </div>
               <div className="field-wrapper">
@@ -733,7 +741,7 @@ const FormField: IFormField = {
                                     newdate.rk_id = ['是'];
                                     this.asyncSetFieldProps(newdate, '11');
                                   }
-
+                                  calcDeduction(this, '0');
                                   this.setState({
                                     checked: !this.state.checked,
                                   });

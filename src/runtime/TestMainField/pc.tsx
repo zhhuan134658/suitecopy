@@ -918,8 +918,9 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-        const value = field.getExtendValue();
-    //   const value = field.getValue();
+      let value = field.getExtendValue();
+      if (!value.detailedData) {
+        value = field.getValue();
       console.log('value', field);
       const { hanmoney = 0, detailedData = [] } = value;
       return (

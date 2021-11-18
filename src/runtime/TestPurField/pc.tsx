@@ -1629,7 +1629,10 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getExtendValue();
+      let value = field.getExtendValue();
+      if (!value.detailedData) {
+        value = field.getValue();
+      }
       console.log('value', value);
       const {
         detailname = '',
@@ -1679,7 +1682,7 @@ const FormField: ISwapFormField = {
               ) : (
                 <span style={{ color: '#fff' }}>*</span>
               )}
-              1{label}
+              {label}
             </div>
             <Input
               onClick={this.newhandleAdd}

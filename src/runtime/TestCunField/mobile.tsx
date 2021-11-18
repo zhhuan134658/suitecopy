@@ -429,8 +429,10 @@ const FormField: IFormField = {
     );
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getExtendValue();
-
+      let value = field.getExtendValue();
+      if (!value.detailedData) {
+        value = field.getValue();
+      }
       const { warehouse = '', warehousein = '', detailedData = [] } = value;
       return (
         <div className="field-wrapper">
@@ -670,7 +672,7 @@ const FormField: IFormField = {
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
-                                                editable={false}
+                                            editable={false}
                                             type="text"
                                             className="ant-input m-mobile-inner-input"
                                             value={item.size}

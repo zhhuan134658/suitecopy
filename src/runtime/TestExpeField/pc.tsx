@@ -27,6 +27,7 @@ const { Column } = Table;
 import { FormInstance } from 'antd/lib/form';
 
 import './pc.less';
+import { fpAdd } from '../../utils/fpOperations';
 const mycolumns = [
   {
     title: '物品名称',
@@ -218,6 +219,7 @@ const FormField: ISwapFormField = {
       Numbervalue1: 0,
       Numbervalue2: '',
       Numbervalue3: '',
+      Numbervalue4: '',
       Numbervalue5: '',
       isShow: false,
       value: undefined,
@@ -339,7 +341,7 @@ const FormField: ISwapFormField = {
     console.log(`selected ${value}`);
     const { form } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
-
+    this.onNumbervalue2Change(0);
     if (value === '1') {
       this.setState({
         isShow: true,
@@ -347,7 +349,6 @@ const FormField: ISwapFormField = {
       });
       const newdate = this.state.allData;
       newdate.rk_id = ['是'];
-
       this.asyncSetFieldProps(newdate, '11');
     } else {
       this.setState({
@@ -370,9 +371,15 @@ const FormField: ISwapFormField = {
     const dataSource = [...this.state.dataSource];
     console.log(row);
 
-    this.setState({
-      dataSource: dataSource.filter(item => item.key !== row.key),
-    });
+    this.setState(
+      {
+        dataSource: dataSource.filter(item => item.key !== row.key),
+      },
+      () => {
+        const deductionNumber = this.state.Numbervalue2;
+        this.onNumbervalue2Change(parseFloat(deductionNumber));
+      },
+    );
 
     if (row.money) {
       const newvalue = this.state.Inputmoney1;
@@ -424,23 +431,29 @@ const FormField: ISwapFormField = {
     const newarr1 = [...this.state.dataSource];
     let newarr2 = [];
 
-    newarr2 = newarr1.filter(item => {
-      if (item.money) {
-        return item;
-      }
-    });
-    newarr2 = newarr2.map(item => {
-      return item.money;
-    });
-    const joindata = eval(newarr2.join('+')).toFixed(2);
+    newarr2 = [
+      ...newarr1.filter(item => {
+        if (item.money) {
+          return item;
+        }
+      }),
+    ];
+    newarr2 = [
+      ...newarr2.map(item => {
+        return item.money;
+      }),
+    ];
+    const joindata = newarr2.reduce(fpAdd, 0);
     this.setState({
       Inputmoney1: joindata,
     });
+    const deductionNumber = this.state.Numbervalue2;
+    this.onNumbervalue2Change(parseFloat(deductionNumber));
   },
 
   //   handleSave(row: DataType) {
   //     const newData = [...this.state.dataSource];
-  //     const index = newData.findIndex(item => row.id === item.id);
+  //     const index = newData.findIndex(istem => row.id === item.id);
   //     const item = newData[index];
   //     newData.splice(index, 1, {
   //       ...item,
@@ -517,7 +530,7 @@ const FormField: ISwapFormField = {
       });
   },
   onNumbervalue2Change(val) {
-    console.log(val);
+    console.log(typeof val, val);
     const number1 = this.state.maxnum;
     const number2 = this.state.Inputmoney1; // 报销费用合计
     if (number2 <= 0) {
@@ -875,7 +888,6 @@ const FormField: ISwapFormField = {
             });
           });
         }
-        console.log('======' + JSON.stringify(newData));
         this.setState({ currentSelectData: newData });
         this.setState({ selectedRowKeys });
       },
@@ -910,7 +922,10 @@ const FormField: ISwapFormField = {
 
     //详情
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getExtendValue();
+      let value = field.getExtendValue();
+      if (!value.detailedData) {
+        value = field.getValue();
+      }
       const {
         hanmoney = 0,
         detailedData = [],

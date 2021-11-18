@@ -1633,7 +1633,10 @@ const FormField: ISwapFormField = {
     console.log('详情', value);
     //详情
     if (viewMode) {
-      const value = field.getExtendValue();
+      let value = field.getExtendValue();
+      if (!value.detailedData) {
+        value = field.getValue();
+      }
       console.log('详情', value);
       const {
         detailname = '',

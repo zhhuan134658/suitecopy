@@ -984,7 +984,10 @@ const FormField: ISwapFormField = {
       this.setState({ value });
     };
     if (this.props.runtimeProps.viewMode) {
-      const value = field.getExtendValue();
+      let value = field.getExtendValue();
+      if (!value.detailedData) {
+        value = field.getValue();
+      }
       const { hanmoney = 0, detailedData = [] } = value;
       return (
         <div className="field-wrapper">
