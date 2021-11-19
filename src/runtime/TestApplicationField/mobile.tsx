@@ -20,7 +20,7 @@ import { fpAdd, toFixed } from '../../utils/fpOperations';
 const Item = List.Item;
 
 /**
- * 自定义控件运行态 Mobile 视图
+ * 自定义控件运行态 Mobile 视图f
  */
 const nowTimeStamp = Date.now();
 const now = new Date(nowTimeStamp);
@@ -487,7 +487,7 @@ const FormField: IFormField = {
     );
     //详情
     if (this.props.runtimeProps.viewMode) {
-      let value = field.getExtendValue();
+      let value = field.getExtendValue() || {};
       if (!value.detailedData) {
         value = field.getValue();
       }

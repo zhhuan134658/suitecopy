@@ -79,13 +79,25 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem: 'inherit' });
   },
-  habdlClick(item: { name: any }) {
+  habdlClick(record) {
     const { form } = this.props;
-    console.log(item);
+    console.log(record);
 
-    this.setState({ inputvalue: item.name, showElem: 'none' }, () => {
-      form.setFieldValue('SelectRelated', item.name);
-      form.setFieldExtendValue('SelectRelated', item.name);
+    if (record.extend_two) {
+      this.setState({ Inputvalue: record.extend_two });
+      form.setFieldValue('SelectRelated', record.title);
+      form.setFieldExtendValue('SelectRelated', record.title);
+    } else if (record.extend_five) {
+      this.setState({ Inputvalue: record.extend_five });
+      form.setFieldValue('SelectRelated', record.title);
+      form.setFieldExtendValue('SelectRelated', record.title);
+    } else if (record.extend_five) {
+      this.setState({ Inputvalue: record.extend_five });
+      form.setFieldValue('SelectRelated', record.title);
+      form.setFieldExtendValue('SelectRelated', record.title);
+    }
+    this.setState({ isModalVisible: false }, () => {
+      form.setFieldValue('Conmoney', record.money);
     });
   },
   onCancel() {

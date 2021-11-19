@@ -1681,7 +1681,7 @@ const FormField: ISwapFormField = {
     };
     //详情
     if (this.props.runtimeProps.viewMode) {
-      let value = field.getExtendValue();
+      let value = field.getExtendValue() || {};
       if (!value.detailedData) {
         value = field.getValue();
       }
