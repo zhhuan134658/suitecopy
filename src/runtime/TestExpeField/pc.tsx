@@ -668,11 +668,16 @@ const FormField: ISwapFormField = {
       editData.detailedData = this.state.dataSource;
       editData.petty_sele = this.state.petty_sele;
       editData.Numbervalue1 = this.state.Numbervalue1;
-      editData.Numbervalue2 = this.state.Numbervalue2;
+
+      editData.Numbervalue2 = isNaN(this.state.Numbervalue2)
+        ? ''
+        : this.state.Numbervalue2;
 
       editData.Numbervalue3 = this.state.Numbervalue3;
       editData.Numbervalue4 = this.state.Numbervalue4;
-      editData.Numbervalue5 = this.state.Numbervalue5;
+      editData.Numbervalue5 = isNaN(this.state.Numbervalue5)
+        ? ''
+        : this.state.Numbervalue5;
       // 打印数据
       let newlistdata = this.state.dataSource;
       let str2 = '';
