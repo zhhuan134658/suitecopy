@@ -1024,14 +1024,16 @@ const FormField: ISwapFormField = {
       {
         title: '备注',
         dataIndex: 'remarks',
-        render: (_, record: any) => {
+        render: (_, record: any, index: number) => {
           let rec = record;
           return (
             <Input
-              value={record.content}
+              value={record.remarks}
               placeholder="请输入"
               onChange={e => {
-                record.content = e.target.value;
+                const newData = this.state.dataSource;
+                newData[index].remarks = e.target.value;
+                this.setState({ dataSource: newData });
               }}
             />
           );

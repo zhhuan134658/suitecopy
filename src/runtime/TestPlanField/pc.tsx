@@ -1,43 +1,3 @@
-//材料总计划-筑快OA
-
-// import React from 'react';
-// import { Input } from 'antd';
-// import { IFormField } from '../../types';
-
-// import './pc.less';
-
-// interface ISwapFormField extends IFormField {
-//   handleChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-// }
-
-// /**
-//  * 自定义控件运行态 PC 视图
-//  */
-// const FormField: ISwapFormField = {
-//   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
-//     const { form } = this.props;
-//     form.setFieldValue('TestPlan', e.target.value);
-//   },
-
-//   fieldRender() {
-//     const { form } = this.props;
-//     const field = form.getFieldInstance('TestPlan');
-//     const label = form.getFieldProp('TestPlan', 'label');
-//     const placeholder = form.getFieldProp('TestPlan', 'placeholders');
-
-//     return (
-//       <div className="pc-custom-field-wrap">
-//         <div className="label">{label}</div>
-//         {field.getProp('viewMode') ? (
-//           field.getExtendValue()
-//         ) : (
-//           <Input placeholder={placeholder} onChange={this.handleChange} />
-//         )}
-//       </div>
-//     );
-//   },
-// };
-
 // export default Fo,rmField;
 import { Pagination } from 'antd';
 import { Tree } from 'antd';
@@ -182,10 +142,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
   if (editable) {
     childNode = editing ? (
       <Form.Item style={{ margin: 0 }} name={dataIndex}>
-        {/*    */}
-        {/*   */}
-        {/* <Input ref={inputRef} /> */}
-
         <InputNumber
           className="editable-cell-value-inputNumber"
           ref={inputRef}
@@ -203,25 +159,6 @@ const EditableCell: React.FC<EditableCellProps> = ({
         {children}
       </div>
     );
-    // childNode = (
-    //   <Form.Item
-    //     style={{ margin: 0 }}
-    //     name={dataIndex}
-    //     rules={[
-    //       {
-    //         required: true,
-    //         message: `${title} 不能为空`,
-    //       },
-    //     ]}
-    //   >
-    //     <InputNumber
-    //       ref={inputRef}
-    //       onChange={save}
-    //       onBlur={save}
-    //       placeholder="请输入"
-    //     />
-    //   </Form.Item>
-    // );
   }
 
   return <td {...restProps}>{childNode}</td>;
@@ -781,11 +718,16 @@ const FormField: ISwapFormField = {
       {
         title: '使用部位',
         dataIndex: 'position',
-        editable: true,
-        render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.position}>
-            <span>{record.position}</span>
-          </Tooltip>
+        render: (_, record: any, index: number) => (
+          <Input
+            value={record.position}
+            placeholder="请输入"
+            onChange={e => {
+              const newData = this.state.dataSource;
+              newData[index].position = e.target.value;
+              this.setState({ dataSource: newData });
+            }}
+          />
         ),
       },
       {
@@ -795,10 +737,12 @@ const FormField: ISwapFormField = {
           let rec = record;
           return (
             <Input
-              value={record.content}
+              value={record.remarks}
               placeholder="请输入"
               onChange={e => {
-                record.content = e.target.value;
+                const newData = this.state.dataSource;
+                newData[index].remarks = e.target.value;
+                this.setState({ dataSource: newData });
               }}
             />
           );

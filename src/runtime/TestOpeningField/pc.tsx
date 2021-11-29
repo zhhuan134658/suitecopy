@@ -879,7 +879,9 @@ const FormField: ISwapFormField = {
               value={record.remarks}
               placeholder="请输入"
               onChange={e => {
-                record.remarks = e.target.value;
+                const newData = this.state.dataSource;
+                newData[index].remarks = e.target.value;
+                this.setState({ dataSource: newData });
               }}
             />
           );

@@ -875,10 +875,12 @@ const FormField: ISwapFormField = {
           let rec = record;
           return (
             <Input
-              value={record.content}
+              value={record.remarks}
               placeholder="请输入"
               onChange={e => {
-                record.content = e.target.value;
+                const newData = this.state.dataSource;
+                newData[index].remarks = e.target.value;
+                this.setState({ dataSource: newData });
               }}
             />
           );
