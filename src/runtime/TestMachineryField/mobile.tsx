@@ -16,6 +16,7 @@ import {
 } from 'antd-mobile';
 import { Tree } from 'antd';
 import './mobile.less';
+import { fpAdd, toFixed } from '../../utils/fpOperations';
 const Item = List.Item;
 
 /**
@@ -234,17 +235,22 @@ const FormField: IFormField = {
     list.splice(index, 1);
     let newarr2 = [];
 
-    newarr2 = list.filter(item => {
-      if (item.subtotal) {
-        return item;
-      }
-    });
-    newarr2 = newarr2.map(item => {
-      return item.subtotal;
-    });
+    newarr2 = [
+      ...list.filter(item => {
+        if (item.subtotal) {
+          return item;
+        }
+      }),
+    ];
+    newarr2 = [
+      ...newarr2.map(item => {
+        return item.subtotal;
+      }),
+    ];
+    const total = newarr2.reduce(fpAdd, 0);
     this.setState({
       materialList: list,
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney1: toFixed(total, 2),
     });
   },
   //更新数据
@@ -258,9 +264,10 @@ const FormField: IFormField = {
     let newtype = types;
     arr[newindex][newtype] = arrindex;
     if (arr[newindex].price && arr[newindex].work_hours) {
-      arr[newindex].subtotal = (
-        arr[newindex].price * arr[newindex].work_hours
-      ).toFixed(2);
+      arr[newindex].subtotal = toFixed(
+        arr[newindex].price * arr[newindex].work_hours,
+        2,
+      );
     }
 
     // arr[newindex] = {};
@@ -270,17 +277,22 @@ const FormField: IFormField = {
     const newarr1 = [...this.state.materialList];
     let newarr2 = [];
 
-    newarr2 = newarr1.filter(item => {
-      if (item.subtotal) {
-        return item;
-      }
-    });
-    newarr2 = newarr2.map(item => {
-      return item.subtotal;
-    });
+    newarr2 = [
+      ...newarr1.filter(item => {
+        if (item.subtotal) {
+          return item;
+        }
+      }),
+    ];
+    newarr2 = [
+      ...newarr2.map(item => {
+        return item.subtotal;
+      }),
+    ];
+    const total = newarr2.reduce(fpAdd, 0);
 
     this.setState({
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney1: toFixed(total, 2),
     });
     console.log(arr);
   },
@@ -349,6 +361,45 @@ const FormField: IFormField = {
     const field = form.getFieldInstance('TestMachinery');
     const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestMachinery', 'label');
+    const deColumns = [
+      {
+        title: '机械名称',
+        dataIndex: 'name',
+      },
+      {
+        title: '单位',
+        dataIndex: 'unit',
+      },
+      {
+        title: '规格',
+        dataIndex: 'size',
+      },
+
+      {
+        title: '工作日期',
+        dataIndex: 'riqi',
+      },
+      {
+        title: '施工内容',
+        dataIndex: 'content',
+      },
+      {
+        title: '工时',
+        dataIndex: 'work_hours',
+      },
+      {
+        title: '单价(元)',
+        dataIndex: 'price',
+      },
+      {
+        title: '小计(元)',
+        dataIndex: 'subtotal',
+      },
+      {
+        title: '备注',
+        dataIndex: 'remarks',
+      },
+    ];
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;
@@ -412,7 +463,7 @@ const FormField: IFormField = {
         value = field.getValue();
       }
       const { hanmoney = 0, detailedData = [] } = value;
-      console.log('VALUE', value);
+      console.log('DETAILED DATA', detailedData);
       return (
         <div className="field-wrapper">
           <div className="tablefield-mobile">
@@ -423,7 +474,7 @@ const FormField: IFormField = {
                     <label className="label row-label-title">
                       {label}明细({index + 1})
                     </label>
-                    {this.state.deColumns.map((itemname, indexname) => {
+                    {deColumns.map((itemname, indexname) => {
                       if (!item[itemname.dataIndex]) {
                         return null;
                       }
@@ -452,7 +503,7 @@ const FormField: IFormField = {
               <div className="m-field-view">
                 <label className="m-field-view-label">合计(元)</label>
                 <div className="m-field-view-value">
-                  <span>{hanmoney ? Number(hanmoney).toFixed(2) : ''}</span>
+                  <span>{hanmoney ? toFixed(Number(hanmoney), 2) : ''}</span>
                 </div>
               </div>
             </div>
