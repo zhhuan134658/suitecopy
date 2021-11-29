@@ -503,6 +503,10 @@ const FormField: IFormField = {
             </div>
           </div>
           <div className="m-field-view">
+            <label className="m-field-view-label">报销合计</label>
+            <div className="m-field-view-value"> {hanmoney}</div>
+          </div>{' '}
+          <div className="m-field-view">
             <label className="m-field-view-label">备用金抵扣</label>
             <div className="m-field-view-value"> {petty_sele}</div>
           </div>{' '}
