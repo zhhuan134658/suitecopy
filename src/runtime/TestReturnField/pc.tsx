@@ -14,14 +14,14 @@
 // const FormField: ISwapFormField = {
 //   handleChange(e: React.ChangeEvent<HTMLInputElement>) {
 //     const { form } = this.props;
-//     form.setFieldValue('TestPur', e.target.value);
+//     form.setFieldValue('TestReturn', e.target.value);
 //   },
 
 //   fieldRender() {
 //     const { form } = this.props;
-//     const field = form.getFieldInstance('TestPur');
-//     const label = form.getFieldProp('TestPur', 'label');
-//     const placeholder = form.getFieldProp('TestPur', 'placeholders');
+//     const field = form.getFieldInstance('TestReturn');
+//     const label = form.getFieldProp('TestReturn', 'label');
+//     const placeholder = form.getFieldProp('TestReturn', 'placeholders');
 
 //     return (
 //       <div className="pc-custom-field-wrap">
@@ -402,7 +402,7 @@ const FormField: ISwapFormField = {
   handleChange(row: DataType) {
     // const inputRef = useRef<HTMLInputElement>(null);
     // const { form } = this.props;
-    // form.setFieldValue('TestPur', e.target.value);
+    // form.setFieldValue('TestReturn', e.target.value);
     // document.getElementsByClassName('ptID').blur();
     // inputRef.current!.focus();
     this.setState({ currentEditId: row.key });
@@ -472,6 +472,10 @@ const FormField: ISwapFormField = {
         Inputmoney2: newdata2,
       });
     }
+    // this.setState({
+    //   Inputmoney1: this.toFixed(eval(newarr2.join('+')), 2),
+    //   Inputmoney2: this.toFixed(eval(newarr4.join('+')), 2),
+    // });
   },
   iconClick() {
     this.setState({
@@ -859,15 +863,15 @@ const FormField: ISwapFormField = {
 
     // if (this.state.Inputmoney2) {
     //   console.log('saadasdasdas', this.state.Inputmoney2);
-    //   form.setFieldValue('TestPur', newData);
-    //   form.setFieldExtendValue('TestPur', {
+    //   form.setFieldValue('TestReturn', newData);
+    //   form.setFieldExtendValue('TestReturn', {
     //     data: newData,
     //   });
     // }
 
     // this.setState({ dataSource: newData, isModalVisible: false }, () => {
-    //   form.setFieldValue('TestPur', newData);
-    //   form.setFieldExtendValue('TestPur', {
+    //   form.setFieldValue('TestReturn', newData);
+    //   form.setFieldExtendValue('TestReturn', {
     //     data: newData,
     //   });
     // });
@@ -898,18 +902,18 @@ const FormField: ISwapFormField = {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const TestPurField = form.getFieldInstance('TestPur');
+    const TestReturnField = form.getFieldInstance('TestReturn');
 
     // const leaveReasonField = form.getFieldInstance('leaveReason');
-    const key = TestPurField.getProp('id');
-    // const value = TestPurfield.getExtendValue();
+    const key = TestReturnField.getProp('id');
+    // const value = TestReturnfield.getExtendValue();
     const value = '1';
 
-    // const extendValue = TestPurField.getExtendValue();
+    // const extendValue = TestReturnField.getExtendValue();
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'TestPur',
+        bizAlias: 'TestReturn',
         extendValue: vlauedata,
         value,
       },
@@ -919,7 +923,7 @@ const FormField: ISwapFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['TestPur'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['TestReturn'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
@@ -1155,8 +1159,8 @@ const FormField: ISwapFormField = {
       let str = str2 + str0 + str1;
       console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestPur', str);
-      form.setFieldExtendValue('TestPur', editData);
+      form.setFieldValue('TestReturn', str);
+      form.setFieldExtendValue('TestReturn', editData);
     }
 
     // this.state.dataSource;
@@ -1165,10 +1169,10 @@ const FormField: ISwapFormField = {
   },
   fieldRender() {
     const { form } = this.props;
-    const field = form.getFieldInstance('TestPur');
-    const label = form.getFieldProp('TestPur', 'label');
-    const placeholder = form.getFieldProp('TestPur', 'placeholder');
-    const required = form.getFieldProp('TestPur', 'required');
+    const field = form.getFieldInstance('TestReturn');
+    const label = form.getFieldProp('TestReturn', 'label');
+    const placeholder = form.getFieldProp('TestReturn', 'placeholder');
+    const required = form.getFieldProp('TestReturn', 'required');
     const { dataSource, selectedRowKeys } = this.state;
     // const treeData = [
     //   {
@@ -1668,7 +1672,7 @@ const FormField: ISwapFormField = {
       );
     }
     return (
-      <div className="TestPurField_class">
+      <div className="TestReturnField_class">
         {' '}
         <div className="pc-custom-field-wrap">
           <div>

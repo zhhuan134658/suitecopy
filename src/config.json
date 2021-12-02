@@ -679,6 +679,15 @@
       "type": "custom"
     },
     {
+      "componentName": "TestReturnField",
+      "bizAlias": "TestReturn",
+      "props": {
+        "placeholder": "请输入",
+        "label": "退货单"
+      },
+      "type": "custom"
+    },
+    {
       "componentName": "TestExpeField",
       "bizAlias": "TestExpe",
       "props": {

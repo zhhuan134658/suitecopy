@@ -65,6 +65,7 @@ const { Column } = Table;
 import { FormInstance } from 'antd/lib/form';
 
 import './pc.less';
+import { toFixed } from '../../utils/fpOperations';
 const mychcolumns = [
   {
     title: '仓库名称',
@@ -156,7 +157,7 @@ interface EditableCellProps {
   children: React.ReactNode;
   dataIndex: keyof Item;
   record: Item;
-  handleSave: (record: Item) => void;
+  handleSave: (record: Item, values: any) => void;
   handleChange: (record: Item) => void;
 }
 
@@ -191,7 +192,7 @@ const EditableCell: React.FC<EditableCellProps> = ({
     try {
       const values = await form.validateFields();
       toggleEdit(); //onchange事件 输入一次失去焦点
-      handleSave({ ...record, ...values });
+      handleSave({ ...record, ...values }, values);
     } catch (errInfo) {
       console.log('11Save failed:', errInfo);
     }
@@ -408,27 +409,6 @@ const FormField: ISwapFormField = {
     this.setState({ ischModalVisible: false });
     this.setState({ selectedRowKeys: [] });
   },
-  //   handleDelete(row) {
-  //     const dataSource = [...this.state.dataSource];
-  //     console.log(row);
-  //     if (row.tax_money) {
-  //       const newvalue = this.state.Inputmoney1;
-  //       this.setState({
-  //         Inputmoney1: (newvalue - row.tax_money).toFixed(2),
-  //       });
-  //       console.log('ssks');
-  //     }
-  //     if (row.notax_money) {
-  //       const newvalue2 = this.state.Inputmoney2;
-  //       this.setState({
-  //         Inputmoney2: (newvalue2 - row.notax_money).toFixed(2),
-  //       });
-  //       console.log('ssks');
-  //     }
-  //     this.setState({
-  //       dataSource: dataSource.filter(item => item.id !== row.id),
-  //     });
-  //   },
   handleDelete(row) {
     const dataSource = [...this.state.dataSource];
     const arr = dataSource.filter(item => item.id !== row.id);
@@ -439,29 +419,51 @@ const FormField: ISwapFormField = {
     let newarr2 = [];
 
     newarr2 = arr.filter(item => {
-      if (item.tax_money) {
+      if (item.amount_tax) {
         return item;
       }
     });
     newarr2 = newarr2.map(item => {
-      return item.tax_money;
+      return item.amount_tax;
     });
     //不含税金额
     let newarr4 = [];
 
     newarr4 = arr.filter(item => {
-      if (item.notax_money) {
+      if (item.no_amount_tax) {
         return item;
       }
     });
     newarr4 = newarr4.map(item => {
-      return item.notax_money;
+      return item.no_amount_tax;
     });
 
-    this.setState({
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
-      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
-    });
+    let newdata1 = eval(newarr2.join('+'))
+      ? toFixed(eval(newarr2.join('+')), 2)
+      : null;
+
+    if (isNaN(newdata1)) {
+      this.setState({
+        Inputmoney1: 0,
+      });
+    } else {
+      this.setState({
+        Inputmoney1: newdata1,
+      });
+    }
+    let newdata2 = eval(newarr4.join('+'))
+      ? toFixed(eval(newarr4.join('+')), 2)
+      : null;
+
+    if (isNaN(newdata2)) {
+      this.setState({
+        Inputmoney2: 0,
+      });
+    } else {
+      this.setState({
+        Inputmoney2: newdata2,
+      });
+    }
   },
   iconClick(val) {
     if (val === 'out') {
@@ -469,10 +471,14 @@ const FormField: ISwapFormField = {
         Inputvalue: '',
         Inputvaluein: '',
         dataSource: [],
+        Inputmoney2: 0,
+        Inputmoney1: 0,
       });
     } else {
       this.setState({
         Inputvaluein: '',
+        Inputmoney2: 0,
+        Inputmoney1: 0,
       });
     }
 
@@ -518,13 +524,293 @@ const FormField: ISwapFormField = {
       });
     }
   },
-  handleSave(row: DataType) {
+  accSub(num1, num2) {
+    var r1, r2, m, n;
+    try {
+      r1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+      r1 = 0;
+    }
+    try {
+      r2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+      r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    n = r1 >= r2 ? r1 : r2;
+    return (Math.round(num1 * m - num2 * m) / m).toFixed(n);
+  },
+  // 两数相除
+  accDiv(num1, num2) {
+    var t1, t2, r1, r2;
+    try {
+      t1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+      t1 = 0;
+    }
+    try {
+      t2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+      t2 = 0;
+    }
+    r1 = Number(num1.toString().replace('.', ''));
+    r2 = Number(num2.toString().replace('.', ''));
+    return (r1 / r2) * Math.pow(10, t2 - t1);
+  },
+  // 两个浮点数相乘
+  accMul(num1, num2) {
+    var m = 0,
+      s1 = num1.toString(),
+      s2 = num2.toString();
+    try {
+      m += s1.split('.')[1].length;
+    } catch (e) {}
+    try {
+      m += s2.split('.')[1].length;
+    } catch (e) {}
+    return (
+      (Number(s1.replace('.', '')) * Number(s2.replace('.', ''))) /
+      Math.pow(10, m)
+    );
+  },
+  // 两个浮点数求和
+  accAdd(num1, num2) {
+    var r1, r2, m;
+    try {
+      r1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+      r1 = 0;
+    }
+    try {
+      r2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+      r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    // return (num1*m+num2*m)/m;
+    return Math.round(num1 * m + num2 * m) / m;
+  },
+  toFixed(dight, bits) {
+    return Math.round(dight * Math.pow(10, bits)) / Math.pow(10, bits);
+  },
+
+  handleSave(row: any, values) {
     const { form } = this.props;
     const newData = [...this.state.dataSource];
-
+    const reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
     const index = newData.findIndex(item => row.id === item.id);
+    row['det_quantity'] = row['wz_number'];
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
+    if (!(reg.test(row.tax_rate) || reg.test(row.det_quantity))) {
+      return this.setState({
+        dataSource: newData,
+      });
+    }
+    switch (Object.keys(values)[0]) {
+      case 'no_unit_price':
+        if (reg.test(row.no_unit_price) && reg.test(row.tax_rate)) {
+          //   含税单价
+          //   newData[index].unit_price = (
+          //     row.no_unit_price *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+          let a = 1 + row.tax_rate * 0.01;
+          newData[index].unit_price = this.toFixed(
+            this.accMul(row.no_unit_price, a),
+            2,
+          );
+        } else if (
+          row.no_unit_price == null &&
+          reg.test(row.tax_rate) &&
+          row.unit_price
+        ) {
+          //   newData[index].no_unit_price = (
+          //     row.unit_price /
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+          let a = 1 + row.tax_rate * 0.01;
+
+          newData[index].no_unit_price = this.toFixed(
+            this.accDiv(row.unit_price, a),
+            2,
+          );
+        }
+        break;
+      case 'unit_price':
+        if (row.unit_price && reg.test(row.tax_rate)) {
+          //   bu含税单价
+          let a = 1 + row.tax_rate * 0.01;
+
+          newData[index].no_unit_price = this.toFixed(
+            this.accDiv(row.unit_price, a),
+            2,
+          );
+          //   newData[index].no_unit_price = (
+          //     row.unit_price /
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+        } else if (
+          row.unit_price == null &&
+          reg.test(row.tax_rate) &&
+          row.no_unit_price
+        ) {
+          let a = 1 + row.tax_rate * 0.01;
+          newData[index].unit_price = this.toFixed(
+            this.accMul(row.no_unit_price, a),
+            2,
+          );
+          //   newData[index].unit_price = (
+          //     row.no_unit_price *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+        }
+        if (row.unit_price && row.det_quantity) {
+          //   newData[index].amount_tax = (
+          //     row.unit_price * row.det_quantity
+          //   ).toFixed(2);
+          newData[index].amount_tax = this.toFixed(
+            this.accMul(row.unit_price, row.det_quantity),
+            2,
+          );
+        }
+
+        //不含税金额
+        if (row.unit_price && row.det_quantity && reg.test(row.tax_rate)) {
+          let a = 1 + row.tax_rate * 0.01;
+          let b = this.accMul(row.unit_price, row.det_quantity);
+
+          newData[index].no_amount_tax = this.toFixed(this.accDiv(b, a), 2);
+
+          //   newData[index].no_amount_tax = (
+          //     (row.unit_price * row.det_quantity) /
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+          let c = row.unit_price * row.det_quantity;
+          let d = 1 + row.tax_rate * 0.01;
+          let e = this.accDiv(c, d);
+          let f = row.tax_rate * 0.01;
+          newData[index].tax_amount = this.toFixed(this.accMul(e, f), 2);
+
+          //   newData[index].tax_amount = (
+          //     ((row.unit_price * row.det_quantity) / (1 + row.tax_rate * 0.01)) *
+          //     row.tax_rate *
+          //     0.01
+          //   ).toFixed(2);
+        }
+
+        break;
+      case 'tax_rate':
+        if (row.no_unit_price && !reg.test(row.unit_price)) {
+          //   let a = 1 + row.tax_rate * 0.01;
+          //   newData[index].unit_price = this.toFixed(
+          //     this.accMul(row.no_unit_price, a, 2),
+          //   );
+
+          newData[index].unit_price = this.toFixed(
+            row.no_unit_price * (1 + row.tax_rate * 0.01),
+            2,
+          );
+        } else if (!reg.test(row.no_unit_price) && row.unit_price) {
+          //   let a = 1 + row.tax_rate * 0.01;
+          //   newData[index].no_unit_price = this.toFixed(
+          //     this.accDiv(row.unit_price, a),
+          //     2,
+          //   );
+
+          newData[index].no_unit_price = this.toFixed(
+            row.unit_price / (1 + row.tax_rate * 0.01),
+            2,
+          );
+
+          newData[index].amount_tax = this.toFixed(
+            row.unit_price * row.det_quantity,
+            2,
+          );
+          newData[index].no_amount_tax = this.toFixed(
+            (row.unit_price * row.det_quantity) / (1 + row.tax_rate * 0.01),
+            2,
+          );
+          newData[index].tax_amount = this.toFixed(
+            newData[index].amount_tax - newData[index].no_amount_tax,
+            2,
+          );
+        } else if (row.no_unit_price && row.unit_price) {
+          let a = 1 + row.tax_rate * 0.01;
+          newData[index].unit_price = this.toFixed(
+            this.accMul(row.no_unit_price, a),
+            2,
+          );
+          //   newData[index].unit_price = (
+          //     row.no_unit_price *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+        }
+        if (
+          reg.test(row.no_unit_price) &&
+          reg.test(row.det_quantity) &&
+          reg.test(row.tax_rate)
+        ) {
+          let a = this.accMul(row.no_unit_price, row.det_quantity);
+          let b = this.accMul(row.tax_rate, 0.01);
+          newData[index].tax_amount = this.toFixed(this.accMul(a, b), 2);
+          //   newData[index].tax_amount = (
+          //     row.no_unit_price *
+          //     row.det_quantity *
+          //     row.tax_rate *
+          //     0.01
+          //   ).toFixed(2);
+          let c = this.accMul(row.no_unit_price, row.det_quantity);
+          let d = 1 + row.tax_rate * 0.01;
+          newData[index].amount_tax = this.toFixed(this.accMul(c, d), 2);
+          //   newData[index].amount_tax = (
+          //     row.no_unit_price *
+          //     row.det_quantity *
+          //     (1 + row.tax_rate * 0.01)
+          //   ).toFixed(2);
+        }
+
+        break;
+      default:
+        break;
+    }
+
+    //税额
+    if (Object.keys(values)[0] != 'unit_price') {
+      if (row.no_unit_price && row.det_quantity && reg.test(row.tax_rate)) {
+        let a = this.accMul(row.no_unit_price, row.det_quantity);
+        let b = this.accMul(row.tax_rate, 0.01);
+        newData[index].tax_amount = this.toFixed(this.accMul(a, b), 2);
+        // newData[index].tax_amount = (
+        //   row.no_unit_price *
+        //   row.det_quantity *
+        //   row.tax_rate *
+        //   0.01
+        // ).toFixed(2);
+      }
+      //   不含税
+      if (row.no_unit_price && row.det_quantity) {
+        newData[index].no_amount_tax = this.toFixed(
+          this.accMul(row.no_unit_price, row.det_quantity),
+          2,
+        );
+        // newData[index].no_amount_tax = (
+        //   row.no_unit_price * row.det_quantity
+        // ).toFixed(2);
+      }
+      //含税
+      if (row.no_unit_price && row.det_quantity && reg.test(row.tax_rate)) {
+        let a = this.accMul(row.no_unit_price, row.det_quantity);
+        let b = 1 + row.tax_rate * 0.01;
+
+        newData[index].amount_tax = this.toFixed(this.accMul(a, b), 2);
+        // newData[index].amount_tax = (
+        //   row.no_unit_price *
+        //   row.det_quantity *
+        //   (1 + row.tax_rate * 0.01)
+        // ).toFixed(2);
+      }
+    }
 
     this.setState({
       dataSource: newData,
@@ -565,42 +851,8 @@ const FormField: ISwapFormField = {
       Inputmoney2: eval(newarr4.join('+')).toFixed(2),
     });
 
-    // if (this.state.Inputmoney2) {
-    //   console.log('saadasdasdas', this.state.Inputmoney2);
-    //   form.setFieldValue('TestCun', newData);
-    //   form.setFieldExtendValue('TestCun', {
-    //     data: newData,
-    //   });
-    // }
-
-    // this.setState({ dataSource: newData, isModalVisible: false }, () => {
-    //   form.setFieldValue('TestCun', newData);
-    //   form.setFieldExtendValue('TestCun', {
-    //     data: newData,
-    //   });
-    // });
-
     console.log('sss', eval(newarr3.join('+')).toFixed(2));
   },
-
-  //   handleSave(row: DataType) {
-  //     const newData = [...this.state.dataSource];
-  //     const index = newData.findIndex(item => row.id === item.id);
-  //     const item = newData[index];
-  //     newData.splice(index, 1, {
-  //       ...item,
-  //       ...row,
-  //     });
-  //     console.log(newData);
-  //     console.log(index);
-  //     console.log(item);
-
-  //     if (row.num2) {
-  //       newData[index].num3 = row.num1 * row.num2;
-  //     }
-
-  //     this.setState({ dataSource: newData });
-  //     },
 
   asyncSetFieldProps(vlauedata, typename) {
     const { form, spi } = this.props;
@@ -636,6 +888,12 @@ const FormField: ISwapFormField = {
           //   表格数据
           try {
             newarr = JSON.parse(res.dataList[0].value).data;
+            newarr.forEach((e, i) => {
+              if (e['wz_number']) {
+                e['det_quantity'] = e['wz_number'];
+                newarr[i] = e;
+              }
+            });
           } catch (e) {}
 
           this.setState({
@@ -648,26 +906,95 @@ const FormField: ISwapFormField = {
           //   表格数据
           try {
             newarr = JSON.parse(res.dataList[0].value).data;
+            newarr.forEach((e, i) => {
+              if (e['wz_number']) {
+                e['det_quantity'] = e['wz_number'];
+                newarr[i] = e;
+              }
+            });
           } catch (e) {}
+          const dstatus = this.state.dstatus;
+          if (dstatus === '2') {
+            const newssarr = [...newarr];
+            this.setState({
+              treelistData: newssarr,
+            });
+            // 含税金额合计;
 
-          this.setState({
-            listData: [...newarr],
-            current_page: JSON.parse(res.dataList[0].value).page,
-            total2: JSON.parse(res.dataList[0].value).count,
-          });
+            let newarr2 = [];
 
-          //   树状图数据
-          const newtarr = JSON.parse(res.dataList[0].extendValue);
-          const newtarr1 = [
-            {
-              title: '物资类型',
-              key: '0',
-              children: newtarr,
-            },
-          ];
-          this.setState({
-            treeData: [...newtarr1],
-          });
+            newarr2 = newssarr.filter(item => {
+              if (item.amount_tax) {
+                return item;
+              }
+            });
+            newarr2 = newarr2.map(item => {
+              return item.amount_tax;
+            });
+
+            this.setState({
+              Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+            });
+            // 不含税金额合计;
+
+            let newarr4 = [];
+
+            newarr4 = newssarr.filter(item => {
+              if (item.no_amount_tax) {
+                return item;
+              }
+            });
+            newarr4 = newarr4.map(item => {
+              return item.no_amount_tax;
+            });
+
+            this.setState({
+              Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+            });
+          } else if (dstatus === '1') {
+            this.setState({
+              listData: [...newarr],
+              current_page: JSON.parse(res.dataList[0].value).page,
+              total2: JSON.parse(res.dataList[0].value).count,
+            });
+          } else if (dstatus === '3') {
+            // 含税金额合计;
+            const newssarr = [...newarr];
+            this.setState({
+              dataSource: [...newarr],
+            });
+            let newarr2 = [];
+
+            newarr2 = newssarr.filter(item => {
+              if (item.amount_tax) {
+                return item;
+              }
+            });
+            newarr2 = newarr2.map(item => {
+              return item.amount_tax;
+            });
+
+            this.setState({
+              Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+            });
+            // 不含税金额合计;
+
+            let newarr4 = [];
+
+            newarr4 = newssarr.filter(item => {
+              if (item.no_amount_tax) {
+                return item;
+              }
+            });
+            newarr4 = newarr4.map(item => {
+              return item.no_amount_tax;
+            });
+
+            this.setState({
+              Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+            });
+          }
+
           if (this.state.msgdata == '1') {
             notification.open({
               message: JSON.parse(res.dataList[0].value).msg,
@@ -795,8 +1122,16 @@ const FormField: ISwapFormField = {
         '\n' +
         '调入仓库' +
         this.state.Inputvaluein;
-      let str0 = '\n' + '设备名称 单位 规格型号 调拨数量 库存数量';
-      let str1 = '\n';
+      let str0 =
+        '\n' +
+        '设备名称 单位 规格型号 调拨数量 库存数量 不含税单价 含税单价 税率 税额 不含税金额 含税金额';
+      let str1 =
+        '\n' +
+        '不含税金额合计(元):' +
+        this.state.Inputmoney2 +
+        '\n' +
+        '含税金额合计(元):' +
+        this.state.Inputmoney1;
       for (let i = 0; i < newlistdata.length; i++) {
         str0 +=
           '\n' +
@@ -808,7 +1143,19 @@ const FormField: ISwapFormField = {
           ' ' +
           newlistdata[i].wz_number +
           ' ' +
-          newlistdata[i].ku_cun;
+          newlistdata[i].ku_cun +
+          ' ' +
+          newlistdata[i].no_unit_price +
+          ' ' +
+          newlistdata[i].unit_price +
+          ' ' +
+          newlistdata[i].tax_rate +
+          ' ' +
+          newlistdata[i].tax_amount +
+          ' ' +
+          newlistdata[i].no_amount_tax +
+          ' ' +
+          newlistdata[i].amount_tax;
       }
       let str = str2 + str0 + str1;
       console.log(str);
@@ -816,10 +1163,6 @@ const FormField: ISwapFormField = {
       form.setFieldValue('TestCun', str);
       form.setFieldExtendValue('TestCun', editData);
     }
-
-    // this.state.dataSource;
-    // this.state.Inputmoney1;
-    // this.state.Inputmoney2;
   },
   fieldRender() {
     const { form } = this.props;
@@ -893,6 +1236,61 @@ const FormField: ISwapFormField = {
           </Tooltip>
         ),
       },
+      {
+        title: '不含税单价(元)',
+        dataIndex: 'no_unit_price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.no_unit_price}>
+            <span>{record.no_unit_price}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '含税单价(元)',
+        dataIndex: 'unit_price',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit_price}>
+            <span>{record.unit_price}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '税率(%)',
+        dataIndex: 'tax_rate',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_rate}>
+            <span>{record.tax_rate}</span>
+          </Tooltip>
+        ),
+      },
+
+      {
+        title: '税额',
+        dataIndex: 'tax_amount',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_amount}>
+            <span>{record.tax_amount}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '不含税金额(元)',
+        dataIndex: 'no_amount_tax',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.no_amount_tax}>
+            <span>{record.no_amount_tax}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '含税金额(元)',
+        dataIndex: 'amount_tax',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.amount_tax}>
+            <span>{record.amount_tax}</span>
+          </Tooltip>
+        ),
+      },
     ];
     const etColumns = [
       {
@@ -919,6 +1317,99 @@ const FormField: ISwapFormField = {
         render: (_, record: any) => (
           <Tooltip placement="topLeft" title={record.size}>
             <span>{record.size}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: (
+          <div>
+            不含税单价(元)
+            <Tooltip
+              placement="top"
+              title={
+                <div>
+                  <span>
+                    含税单价=不含税单价*（1+税率）,含税单价/不含税单价二选一填入
+                  </span>
+                </div>
+              }
+            >
+              　<QuestionCircleOutlined />　
+              {/* <a-icon type="info-circle" /> */}
+            </Tooltip>
+          </div>
+        ),
+        dataIndex: 'no_unit_price',
+        editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.no_unit_price}>
+            <span>{record.no_unit_price}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        // title: '含税单价(元)',
+        title: (
+          <div>
+            含税单价(元)
+            <Tooltip
+              placement="top"
+              title={
+                <div>
+                  <span>
+                    含税单价=不含税单价*（1+税率）,含税单价/不含税单价二选一填入
+                  </span>
+                </div>
+              }
+            >
+              　<QuestionCircleOutlined />　
+              {/* <a-icon type="info-circle" /> */}
+            </Tooltip>
+          </div>
+        ),
+        dataIndex: 'unit_price',
+        editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.unit_price}>
+            <span>{record.unit_price}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '税率(%)',
+        dataIndex: 'tax_rate',
+        editable: true,
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_rate}>
+            <span>{record.tax_rate}</span>
+          </Tooltip>
+        ),
+      },
+
+      {
+        title: '税额(元)',
+        dataIndex: 'tax_amount',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.tax_amount}>
+            <span>{record.tax_amount}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '不含税金额(元)',
+        dataIndex: 'no_amount_tax',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.no_amount_tax}>
+            <span>{record.no_amount_tax}</span>
+          </Tooltip>
+        ),
+      },
+      {
+        title: '含税金额(元)',
+        dataIndex: 'amount_tax',
+        render: (_, record: any) => (
+          <Tooltip placement="topLeft" title={record.amount_tax}>
+            <span>{record.amount_tax}</span>
           </Tooltip>
         ),
       },
@@ -1197,6 +1688,26 @@ const FormField: ISwapFormField = {
             >
               添加明细
             </Button>
+            <div className="label" style={{ marginTop: '10px' }}>
+              不含税金额合计(元)
+            </div>
+            <div>
+              <Input
+                readOnly
+                value={this.state.Inputmoney2}
+                placeholder="自动计算"
+              />
+            </div>
+            <div className="label" style={{ marginTop: '10px' }}>
+              含税金额合计(元)
+            </div>
+            <div>
+              <Input
+                readOnly
+                value={this.state.Inputmoney1}
+                placeholder="自动计算"
+              />
+            </div>
           </div>
 
           <Modal

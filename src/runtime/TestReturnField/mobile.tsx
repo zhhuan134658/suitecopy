@@ -6,6 +6,7 @@ import {
   DatePicker,
   InputItem,
   Drawer,
+  Tabs,
   List,
   NavBar,
   Icon,
@@ -16,7 +17,8 @@ import {
 } from 'antd-mobile';
 import { Tree } from 'antd';
 import './mobile.less';
-import { toFixed, fpMul, fpDivide } from '../../utils/fpOperations';
+import { searchBarSubmit, searchBarChange } from '../../utils/searchUtils';
+import { fpAdd, fpDivide, fpMul, toFixed } from '../../utils/fpOperations';
 const Item = List.Item;
 
 /**
@@ -28,68 +30,92 @@ const FormField: IFormField = {
   getInitialState() {
     const { form } = this.props;
     return {
-      datadate: '',
-      Housetype: '',
-      treevalue: undefined,
       deColumns: [
         {
           title: '物资名称',
           dataIndex: 'name',
         },
         {
+          title: '单位',
+          dataIndex: 'unit',
+        },
+        {
           title: '规格型号',
           dataIndex: 'size',
         },
         {
-          title: '单位',
-          dataIndex: 'unit',
+          title: '需用数量',
+          dataIndex: 'det_quantity',
+        },
+        {
+          title: '不含税单价(元)',
+          dataIndex: 'no_unit_price',
+        },
+        {
+          title: '含税单价(元)',
+          dataIndex: 'unit_price',
+        },
+        {
+          title: '税率(%)',
+          dataIndex: 'tax_rate',
         },
 
         {
-          title: '调拨数量',
-          dataIndex: 'wz_number',
+          title: '税额(元)',
+          dataIndex: 'tax_amount',
         },
         {
-          title: '库存数量',
-          dataIndex: 'ku_cun',
+          title: '不含税金额(元)',
+          dataIndex: 'no_amount_tax',
+        },
+        {
+          title: '含税金额(元)',
+          dataIndex: 'amount_tax',
         },
       ],
+      Inputmoney1: '',
+      checkData: [],
+      chenkdata: '',
+      treevalue: undefined,
       treeData: [],
+      detdate: 'a1',
       date: now,
       checkindex: '',
       SearchBarvalue: '',
       showElem: 'none',
       showElem2: 'none',
+      showElem3: 'none',
       inputvalue: '',
-      Inputvaluein: '',
       allData: { type: '0', number: '99999', page: '1', name: '' },
       listData: [],
+      fixedColumn: '',
       materialList: [
         {
           typename: '',
           name: '',
           size: '',
           unit: '',
-          number: '',
-          ku_cun: '',
-          purchase_riqi: '',
-          purchase_address: '',
-          candidate_list: '',
+          det_quantity: '',
+          no_unit_price: '',
+          tax_rate: '',
+          tax_amount: '',
+          amount_tax: '',
+          no_amount_tax: '',
         },
       ],
     };
   },
-  asyncSetFieldProps(vlauedata) {
+  asyncSetFieldProps(vlauedata, type = 0) {
     const { form, spi } = this.props;
     const Pro_name = form.getFieldValue('Autopro');
     vlauedata.project_name = Pro_name;
-    const TestCunField = form.getFieldInstance('TestCun');
-    const key = TestCunField.getProp('id');
+    const TestReturnField = form.getFieldInstance('TestReturn');
+    const key = TestReturnField.getProp('id');
     const value = '1';
     const bizAsyncData = [
       {
         key,
-        bizAlias: 'TestCun',
+        bizAlias: 'TestReturn',
         extendValue: vlauedata,
         value,
       },
@@ -99,10 +125,12 @@ const FormField: IFormField = {
 
     spi
       .refreshData({
-        modifiedBizAlias: ['TestCun'], // spi接口要改动的是leaveReason的属性值
+        modifiedBizAlias: ['TestReturn'], // spi接口要改动的是leaveReason的属性值
         bizAsyncData,
       })
       .then(res => {
+        console.log(JSON.parse(res.dataList[0].value));
+        //   表格数据
         let newarr;
         //   表格数据
         try {
@@ -112,7 +140,6 @@ const FormField: IFormField = {
         this.setState({
           listData: [...newarr],
         });
-
         //   树状图数据
         const newtarr = JSON.parse(res.dataList[0].extendValue);
         const newtarr1 = [
@@ -125,60 +152,94 @@ const FormField: IFormField = {
         this.setState({
           treeData: [...newtarr1],
         });
-      });
-  },
-  onChangedata(data, index) {
-    const newdata = new Date(data);
+        // this.setState({
+        //   checkData: [...newarr],
+        // });
+        if (type === 1) {
+          console.log('988798711', newarr);
+          const newssarr = [...newarr];
+          // 含税金额合计;
+          this.setState({
+            materialList: newarr,
+          });
+          let newarr2 = [];
 
-    var datetime =
-      newdata.getFullYear() +
-      '-' +
-      (newdata.getMonth() + 1) +
-      '-' +
-      newdata.getDate();
-    let arr = this.state.materialList;
-    arr[index].purchase_riqi = datetime;
-    this.setState({ materialList: [...arr] });
-    console.log(datetime, index);
-  },
-  onExtraClick(val) {
-    if (val === 'out') {
-      this.setState({
-        Inputvalue: '',
-        Inputvaluein: '',
-        materialList: [],
-      });
-    } else {
-      this.setState({
-        Inputvaluein: '',
-      });
-    }
+          newarr2 = newssarr.filter(item => {
+            if (item.amount_tax) {
+              return item;
+            }
+          });
+          newarr2 = newarr2.map(item => {
+            return item.amount_tax;
+          });
+          let newdata1 = eval(newarr2.join('+'));
 
-    console.log('测试点击');
+          if (isNaN(newdata1)) {
+            this.setState({
+              Inputmoney1: 0,
+            });
+          } else {
+            this.setState({
+              Inputmoney1: newdata1,
+            });
+          }
+
+          // 不含税金额合计;
+
+          let newarr4 = [];
+
+          newarr4 = newssarr.filter(item => {
+            if (item.no_amount_tax) {
+              return item;
+            }
+          });
+          newarr4 = newarr4.map(item => {
+            return item.no_amount_tax;
+          });
+
+          let newdata2 = eval(newarr4.join('+'));
+
+          if (isNaN(newdata2)) {
+            this.setState({
+              Inputmoney2: 0,
+            });
+          } else {
+            this.setState({
+              Inputmoney2: newdata2,
+            });
+          }
+        } else if (type === 2) {
+          this.setState({
+            checkData: newarr,
+          });
+        }
+      });
   },
-  chhandleAdd(val) {
-    const newdate = this.state.allData;
-    newdate.isHouse = '1';
-    console.log(val);
+  getcheckdata() {
+    const { form } = this.props;
+    const Pro_name = form.getFieldValue('Autopro');
+
+    this.setState({ dstatus: '1' });
+    let newpage = {
+      rk_id: ['a'],
+      number: '10',
+      page: 1,
+      name: '',
+    };
     this.setState({
-      showElem: 'inherit',
-      Housetype: val,
+      allData: newpage,
     });
+    this.asyncSetFieldProps(newpage, 2);
 
-    this.asyncSetFieldProps(newdate, '1');
+    this.setState({ showElem3: 'inherit' });
   },
   onOpenChange(index: any, ...args: any[]) {
     console.log('sss');
     console.log(args);
     const newdate = this.state.allData;
-    newdate.isHouse = '2';
-    newdate.ck_name = this.state.inputvalue;
+    newdate.rk_id = ['-1'];
     this.asyncSetFieldProps(newdate);
-    this.setState({
-      showElem: 'inherit',
-      checkindex: index,
-      Housetype: 'tree',
-    });
+    this.setState({ showElem: 'inherit', checkindex: index });
   },
   onOpenChange2(index: any, ...args: any[]) {
     console.log('sss');
@@ -188,36 +249,37 @@ const FormField: IFormField = {
     this.asyncSetFieldProps(newdate);
     this.setState({ showElem2: 'inherit', checkindex: index });
   },
-  habdlClick(item: { name: any; size: any; unit: any; ku_cun: any }) {
+  habdlClick(item: { name: any; size: any; unit: any }) {
     const { form } = this.props;
     console.log(item);
 
-    if (this.state.Housetype === 'out') {
-      this.setState({
-        inputvalue: item.name,
-        showElem: 'none',
-      });
-    } else if (this.state.Housetype === 'in') {
-      this.setState({
-        Inputvaluein: item.name,
-        showElem: 'none',
-      });
-    } else if (this.state.Housetype === 'tree') {
-      let arr = this.state.materialList;
-      let arrindex = this.state.checkindex;
+    let arr = this.state.materialList;
+    let arrindex = this.state.checkindex;
 
-      arr[arrindex].name = item.name;
-      arr[arrindex].size = item.size;
-      arr[arrindex].unit = item.unit;
-      arr[arrindex].ku_cun = item.ku_cun;
-      this.setState({
-        materialList: arr,
-        showElem: 'none',
-      });
+    arr[arrindex].name = item.name;
+    arr[arrindex].size = item.size;
+    arr[arrindex].unit = item.unit;
+    this.setState({
+      //   chenkdata: item.name,
+      showElem: 'none',
+      materialList: arr,
+    });
+  },
+  checkClick(item) {
+    const cDataid = [item.id];
+    const newdate = this.state.allData;
+    let dtar = '';
+    if (this.state.detdate === 'a1') {
+      dtar = '采购申请-' + item.name;
+    } else if (this.state.detdate === 'b1') {
+      dtar = '材料总计划-' + item.name;
     }
-
-    form.setFieldValue('TestCun', item.name);
-    form.setFieldExtendValue('TestCun', item.name);
+    newdate.rk_id = [this.state.detdate, ...cDataid];
+    this.asyncSetFieldProps(newdate, 1);
+    this.setState({
+      chenkdata: dtar,
+      showElem3: 'none',
+    });
   },
 
   onCancel() {
@@ -241,17 +303,20 @@ const FormField: IFormField = {
   },
   //增加明细
   addSon() {
-    const sonData = {
+    var sonData = {
       typename: '',
       name: '',
       size: '',
       unit: '',
-      number: '',
-      ku_cun: '',
-      purchase_riqi: '',
-      purchase_address: '',
-      candidate_list: '',
+      det_quantity: '',
+      no_unit_price: '',
+      tax_rate: '',
+      tax_amount: '',
+      unit_price: '',
+      amount_tax: '',
+      no_amount_tax: '',
     };
+
     this.setState({
       materialList: [...this.state.materialList, sonData],
     });
@@ -263,45 +328,141 @@ const FormField: IFormField = {
     this.setState({
       materialList: list,
     });
+    //   含税金额
     let newarr2 = [];
 
     newarr2 = list.filter(item => {
-      if (item.tax_money) {
+      if (item.amount_tax) {
         return item;
       }
     });
     newarr2 = newarr2.map(item => {
-      return item.tax_money;
+      return item.amount_tax;
     });
     //不含税金额
     let newarr4 = [];
 
     newarr4 = list.filter(item => {
-      if (item.notax_money) {
+      if (item.no_amount_tax) {
         return item;
       }
     });
     newarr4 = newarr4.map(item => {
-      return item.notax_money;
+      return item.no_amount_tax;
     });
+    let newdata1 = toFixed(eval(newarr2.join('+')), 2);
 
-    this.setState({
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
-      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
-    });
+    if (isNaN(newdata1)) {
+      this.setState({
+        Inputmoney1: 0,
+      });
+    } else {
+      this.setState({
+        Inputmoney1: newdata1,
+      });
+    }
+    let newdata2 = toFixed(eval(newarr4.join('+')), 2);
+
+    if (isNaN(newdata2)) {
+      this.setState({
+        Inputmoney2: 0,
+      });
+    } else {
+      this.setState({
+        Inputmoney2: newdata2,
+      });
+    }
+  },
+  // 两个浮点数相减
+  accSub(num1, num2) {
+    var r1, r2, m, n;
+    try {
+      r1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+      r1 = 0;
+    }
+    try {
+      r2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+      r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    n = r1 >= r2 ? r1 : r2;
+    return (Math.round(num1 * m - num2 * m) / m).toFixed(n);
+  },
+  // 两数相除
+  accDiv(num1, num2) {
+    var t1, t2, r1, r2;
+    try {
+      t1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+      t1 = 0;
+    }
+    try {
+      t2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+      t2 = 0;
+    }
+    r1 = Number(num1.toString().replace('.', ''));
+    r2 = Number(num2.toString().replace('.', ''));
+    return (r1 / r2) * Math.pow(10, t2 - t1);
+  },
+  // 两个浮点数相乘
+  accMul(num1, num2) {
+    var m = 0,
+      s1 = num1.toString(),
+      s2 = num2.toString();
+    try {
+      m += s1.split('.')[1].length;
+    } catch (e) {}
+    try {
+      m += s2.split('.')[1].length;
+    } catch (e) {}
+    return (
+      (Number(s1.replace('.', '')) * Number(s2.replace('.', ''))) /
+      Math.pow(10, m)
+    );
+  },
+  // 两个浮点数求和
+  accAdd(num1, num2) {
+    var r1, r2, m;
+    try {
+      r1 = num1.toString().split('.')[1].length;
+    } catch (e) {
+      r1 = 0;
+    }
+    try {
+      r2 = num2.toString().split('.')[1].length;
+    } catch (e) {
+      r2 = 0;
+    }
+    m = Math.pow(10, Math.max(r1, r2));
+    // return (num1*m+num2*m)/m;
+    return Math.round(num1 * m + num2 * m) / m;
+  },
+  toFixed(dight, bits) {
+    return Math.round(dight * Math.pow(10, bits)) / Math.pow(10, bits);
   },
   //更新数据
+  onExtraClick() {
+    this.setState({
+      chenkdata: '',
+      materialList: [],
+      Inputmoney2: 0,
+      Inputmoney1: 0,
+    });
+
+    console.log('测试点击');
+  },
   onInputchange(types, index, e) {
     console.log(types, index, e, this);
     let arr = this.state.materialList;
-    console.log(this.state.materialList);
+    console.log('120', this.state.materialList);
     const reg = /^[+]{0,1}(\d+)$|^[+]{0,1}(\d+\.\d+)$/;
-
-    // let arrindex = e.target.value;
     let arrindex = e;
     let newindex = index;
     let newtype = types;
-    // arr[newindex] = {};
+    let fixedColumn = this.state.fixedColumn;
     arr[newindex][newtype] = arrindex;
     if (!reg.test(arr[newindex].tax_rate)) {
       if (
@@ -615,7 +776,7 @@ const FormField: IFormField = {
       Inputmoney1: eval(newarr2.join('+')),
       Inputmoney2: eval(newarr4.join('+')),
     });
-    console.log(arr);
+    console.log('12', arr);
   },
   onDatechange(types, index, dateString) {
     // let arr = this.state.materialList;
@@ -629,8 +790,7 @@ const FormField: IFormField = {
       let editData = {
         hanmoney: 0,
         nomoney: 0,
-        warehouse: '',
-        warehousein: '',
+        detailname: '',
         detailedData: [], //物资明细
       };
       if (this.state.Inputmoney1) {
@@ -639,20 +799,14 @@ const FormField: IFormField = {
       if (this.state.Inputmoney2) {
         editData.nomoney = Number(this.state.Inputmoney2);
       }
-      editData.warehouse = this.state.Inputvalue;
-      editData.warehousein = this.state.Inputvaluein;
+      editData.detailname = this.state.chenkdata;
       editData.detailedData = this.state.materialList;
       // 打印数据
       let newlistdata = this.state.materialList;
-      let str2 =
-        '调出仓库：' +
-        this.state.Inputvalue +
-        '\n' +
-        '调入仓库' +
-        this.state.Inputvaluein;
+      let str2 = this.state.chenkdata;
       let str0 =
         '\n' +
-        '设备名称 单位 规格型号 调拨数量 库存数量 不含税单价 含税单价 税率 税额 不含税金额 含税金额';
+        '设备名称 单位 规格型号 数量 不含税单价 含税单价 税率 税额 不含税金额 含税金额';
       let str1 =
         '\n' +
         '不含税金额合计(元):' +
@@ -669,9 +823,7 @@ const FormField: IFormField = {
           ' ' +
           newlistdata[i].size +
           ' ' +
-          newlistdata[i].wz_number +
-          ' ' +
-          newlistdata[i].ku_cun +
+          newlistdata[i].det_quantity +
           ' ' +
           newlistdata[i].no_unit_price +
           ' ' +
@@ -688,8 +840,8 @@ const FormField: IFormField = {
       let str = str2 + str0 + str1;
       console.log(str);
       const { form } = this.props;
-      form.setFieldValue('TestCun', str);
-      form.setFieldExtendValue('TestCun', editData);
+      form.setFieldValue('TestReturn', str);
+      form.setFieldExtendValue('TestReturn', editData);
     }
 
     // this.state.dataSource;
@@ -699,10 +851,11 @@ const FormField: IFormField = {
   fieldRender() {
     // fix in codepen
     const { form, runtimeProps } = this.props;
-    const field = form.getFieldInstance('TestCun');
     const { viewMode } = runtimeProps;
+    const field = form.getFieldInstance('TestReturn');
     const required = form.getFieldProp('SelectPro', 'required');
-    const label = form.getFieldProp('TestCun', 'label');
+    const label = form.getFieldProp('TestReturn', 'label');
+    const tabs = [{ title: '采购申请' }, { title: '材料总计划' }];
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;
@@ -712,7 +865,7 @@ const FormField: IFormField = {
       this.setState({
         allData: treedata,
       });
-      this.asyncSetFieldProps(treedata);
+      this.asyncSetFieldProps(treedata, 2);
       console.log('selected', selectedKeys, info.node.title);
     };
 
@@ -724,10 +877,18 @@ const FormField: IFormField = {
         <SearchBar
           value={this.state.SearchBarvalue}
           placeholder="请输入"
-          onSubmit={this.onSubmit}
-          onChange={this.onSearchBarChange}
+          onSubmit={val => {
+            const _this = this;
+            searchBarSubmit(_this, val, 0);
+          }}
+          onChange={val => {
+            const _this = this;
+            searchBarChange(_this, val, 0);
+          }}
           showCancelButton
-          onCancel={() => this.setState({ showElem: 'none' })}
+          onCancel={() =>
+            this.setState({ showElem: 'none', SearchBarvalue: '' })
+          }
         />
 
         <List>
@@ -738,13 +899,102 @@ const FormField: IFormField = {
                 key={index}
                 multipleLine
               >
-                {item.name +
-                  `${item.unit ? '/' + item.unit : ''}` +
-                  `${item.size ? '/' + item.size : ''}`}
+                {item.name}/{item.unit}/{item.size}
               </List.Item>
             );
           })}
         </List>
+      </div>
+    );
+    const checkdebar = (
+      <div>
+        <SearchBar
+          value={this.state.SearchBarvalue}
+          placeholder="请输入"
+          onSubmit={val => {
+            const _this = this;
+            searchBarSubmit(_this, val, 2);
+          }}
+          onChange={val => {
+            const _this = this;
+            searchBarChange(_this, val, 2);
+          }}
+          showCancelButton
+          onCancel={() =>
+            this.setState({ showElem3: 'none', SearchBarvalue: '' })
+          }
+        />
+        <Tabs
+          tabs={tabs}
+          initialPage={0}
+          onChange={(tab, index) => {
+            console.log('onChange', index, tab);
+            this.setState({ detdate: 'a1' });
+            let newpage = {
+              defaultActiveKey: 'a',
+              rk_id: ['a'],
+              number: '1000',
+              page: 1,
+              name: '',
+            };
+            if (index === 0) {
+              this.setState({ detdate: 'a1' });
+              newpage.rk_id = ['a'];
+            } else if (index === 1) {
+              this.setState({ detdate: 'b1' });
+              newpage.rk_id = ['b'];
+            }
+            this.setState({
+              allData: newpage,
+            });
+            this.asyncSetFieldProps(newpage, 2);
+          }}
+        >
+          <div>
+            <List>
+              {this.state.checkData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.checkClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/ {item.detailed_money}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+          <div>
+            <List>
+              {this.state.checkData.map((item, index) => {
+                return (
+                  <List.Item
+                    onClick={this.checkClick.bind(this, item)}
+                    key={index}
+                    multipleLine
+                  >
+                    {item.name}/ {item.project_name}
+                  </List.Item>
+                );
+              })}
+            </List>
+          </div>
+        </Tabs>
+
+        {/* <List>
+          {this.state.checkData.map((item, index) => {
+            return (
+              <List.Item
+                onClick={this.checkClick.bind(this, item)}
+                key={index}
+                multipleLine
+              >
+                {item.name}
+              </List.Item>
+            );
+          })}
+        </List> */}
       </div>
     );
     const treesidebar = (
@@ -754,7 +1004,9 @@ const FormField: IFormField = {
           placeholder="请输入"
           onSubmit={this.onSubmit}
           onChange={this.onSearchBarChange}
-          onCancel={() => this.setState({ showElem2: 'none' })}
+          onCancel={() =>
+            this.setState({ showElem2: 'none', SearchBarvalue: '' })
+          }
           showCancelButton
         />
 
@@ -767,17 +1019,14 @@ const FormField: IFormField = {
       if (!value.detailedData) {
         value = field.getValue();
       }
-      const { warehouse = '', warehousein = '', detailedData = [] } = value;
+      const {
+        hanmoney = 0,
+        nomoney = 0,
+        detailname = '',
+        detailedData = [],
+      } = value;
       return (
         <div className="field-wrapper">
-          <div className="m-field-view">
-            <label className="m-field-view-label">调入仓库</label>
-            <div className="m-field-view-value"> {warehousein}</div>
-          </div>
-          <div className="m-field-view">
-            <label className="m-field-view-label">调出仓库</label>
-            <div className="m-field-view-value"> {warehouse}</div>
-          </div>
           <div className="tablefield-mobile">
             <div className="tbody-row-wrap">
               {detailedData.map((item, index) => {
@@ -810,73 +1059,52 @@ const FormField: IFormField = {
               })}
             </div>
           </div>
+          <div>
+            <div className="field-wrapper">
+              <div className="m-field-view">
+                <label className="m-field-view-label">含税金额合计(元)</label>
+                <div className="m-field-view-value">
+                  <span>{hanmoney ? Number(hanmoney).toFixed(2) : ''}</span>
+                </div>
+              </div>
+            </div>
+            <div className="field-wrapper">
+              <div className="m-field-view">
+                <label className="m-field-view-label">不含税金额合计(元)</label>
+                <div className="m-field-view-value">
+                  <span>{nomoney ? Number(nomoney).toFixed(2) : ''}</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       );
     }
     return (
       <div className="CorpHouse_class_m">
-        {' '}
         <div className="field-wrapper">
-          <div className="m-group m-group-mobile">
-            <div className="m-field-wrapper">
-              <div className="m-field m-field-mobile m-mobile-input vertical">
-                <div className="m-field-head" style={{ marginLeft: '-5px' }}>
-                  <label className="m-field-label">
-                    <span>
-                      {required ? (
-                        <span style={{ color: '#ea6d5c' }}>*</span>
-                      ) : (
-                        <span style={{ color: '#fff' }}>*</span>
-                      )}
-                      调出仓库
-                    </span>
-                  </label>
-                </div>
-                <div className="m-field-box">
-                  <div className="m-field-content left">
-                    <div className="input-wrapper">
-                      <InputItem
-                        editable={false}
-                        clear
-                        extra="x"
-                        value={this.state.inputvalue}
-                        placeholder="请选择"
-                        onClick={this.chhandleAdd.bind(this, 'out')}
-                        onExtraClick={this.onExtraClick.bind(this, 'out')}
-                      ></InputItem>
+          <div className="field-wrapper">
+            <div className="m-group m-group-mobile">
+              <div className="m-field-wrapper">
+                <div className="m-field m-field-mobile m-select-field">
+                  <div className="m-field-head">
+                    <div className="m-field-label">
+                      <span>{label}</span>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="m-group m-group-mobile">
-            <div className="m-field-wrapper">
-              <div className="m-field m-field-mobile m-mobile-input vertical">
-                <div className="m-field-head" style={{ marginLeft: '-5px' }}>
-                  <label className="m-field-label">
-                    <span>
-                      {required ? (
-                        <span style={{ color: '#ea6d5c' }}>*</span>
-                      ) : (
-                        <span style={{ color: '#fff' }}>*</span>
-                      )}
-                      调入仓库
-                    </span>
-                  </label>
-                </div>
-                <div className="m-field-box">
-                  <div className="m-field-content left">
-                    <div className="input-wrapper">
-                      <InputItem
-                        editable={false}
-                        clear
-                        extra="x"
-                        value={this.state.Inputvaluein}
-                        onClick={this.chhandleAdd.bind(this, 'in')}
-                        onExtraClick={this.onExtraClick.bind(this, 'in')}
-                        placeholder="请选择"
-                      ></InputItem>
+                  <div className="m-field-box">
+                    <div className="m-field-content left">
+                      <div className="input-wrapper">
+                        <InputItem
+                          editable={false}
+                          value={this.state.chenkdata}
+                          onClick={this.getcheckdata}
+                          placeholder="请选择"
+                          readOnly
+                          extra="x"
+                          onExtraClick={this.onExtraClick}
+                        ></InputItem>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -905,7 +1133,7 @@ const FormField: IFormField = {
                           {this.state.materialList.length > 0 ? (
                             <div
                               className="dele_item"
-                              onClick={this.deleteItem.bind(this, index)}
+                              onClick={this.deleteItem.bind(this, index, item)}
                             >
                               删除
                             </div>
@@ -932,7 +1160,7 @@ const FormField: IFormField = {
                                           className="ant-input m-mobile-inner-input"
                                           value={item.typename}
                                           placeholder="请选择"
-                                          onClick={this.onOpenChange2.bind(
+                                          onFocus={this.onOpenChange2.bind(
                                             this,
                                             index,
                                           )}
@@ -971,7 +1199,7 @@ const FormField: IFormField = {
                                             className="ant-input m-mobile-inner-input"
                                             value={item.name}
                                             placeholder="请选择"
-                                            onClick={this.onOpenChange.bind(
+                                            onFocus={this.onOpenChange.bind(
                                               this,
                                               index,
                                             )}
@@ -1057,50 +1285,22 @@ const FormField: IFormField = {
                                   <div className="m-field m-field-mobile m-select-field">
                                     <div className="m-field-head">
                                       <div className="m-field-label">
-                                        <span>调拨数量</span>
+                                        <span>数量</span>
                                       </div>
                                     </div>
                                     <div className="m-field-box">
                                       <div className="m-field-content left">
                                         <div className="input-wrapper">
                                           <InputItem
-                                            clear
-                                            value={item.wz_number}
+                                            value={item.det_quantity}
                                             placeholder="请输入"
                                             onChange={e =>
                                               this.onInputchange(
-                                                'wz_number',
+                                                'det_quantity',
                                                 index,
                                                 e,
                                               )
                                             }
-                                          ></InputItem>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                          <div>
-                            <div className="field-wrapper">
-                              <div className="m-group m-group-mobile">
-                                <div className="m-field-wrapper">
-                                  <div className="m-field m-field-mobile m-select-field">
-                                    <div className="m-field-head">
-                                      <div className="m-field-label">
-                                        <span>库存数量</span>
-                                      </div>
-                                    </div>
-                                    <div className="m-field-box">
-                                      <div className="m-field-content left">
-                                        <div className="input-wrapper">
-                                          <InputItem
-                                            editable={false}
-                                            clear
-                                            value={item.ku_cun}
-                                            placeholder="自动获取"
                                           ></InputItem>
                                         </div>
                                       </div>
@@ -1309,6 +1509,9 @@ const FormField: IFormField = {
               </div>
             </div>
           </div>
+          {/*  */}
+
+          {/* 合计 */}
           <div className="field-wrapper">
             <div className="m-group m-group-mobile">
               <div className="m-field-wrapper">
@@ -1397,6 +1600,25 @@ const FormField: IFormField = {
               }}
               sidebar={treesidebar}
               onOpenChange={this.onOpenChange2}
+            ></Drawer>,
+            document.getElementById('MF_APP'),
+          )}
+          {createPortal(
+            <Drawer
+              className="my-drawer"
+              open={true}
+              style={{
+                minHeight: document.documentElement.clientHeight,
+                display: this.state.showElem3,
+              }}
+              enableDragHandle
+              contentStyle={{
+                color: '#A6A6A6',
+                textAlign: 'center',
+                paddingTop: 42,
+              }}
+              sidebar={checkdebar}
+              onOpenChange={this.onOpenChange3}
             ></Drawer>,
             document.getElementById('MF_APP'),
           )}
