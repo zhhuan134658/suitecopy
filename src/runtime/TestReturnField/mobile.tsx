@@ -270,9 +270,9 @@ const FormField: IFormField = {
     const newdate = this.state.allData;
     let dtar = '';
     if (this.state.detdate === 'a1') {
-      dtar = '采购申请-' + item.name;
+      dtar = '采购合同-' + item.name;
     } else if (this.state.detdate === 'b1') {
-      dtar = '材料总计划-' + item.name;
+      dtar = '采购订单-' + item.name;
     }
     newdate.rk_id = [this.state.detdate, ...cDataid];
     this.asyncSetFieldProps(newdate, 1);
@@ -855,7 +855,7 @@ const FormField: IFormField = {
     const field = form.getFieldInstance('TestReturn');
     const required = form.getFieldProp('SelectPro', 'required');
     const label = form.getFieldProp('TestReturn', 'label');
-    const tabs = [{ title: '采购申请' }, { title: '材料总计划' }];
+    const tabs = [{ title: '采购合同' }, { title: '采购订单' }];
     const onSelect = (selectedKeys: React.Key[], info: any) => {
       let arr = this.state.materialList;
       let newindex = this.state.checkindex;

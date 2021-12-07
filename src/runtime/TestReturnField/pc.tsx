@@ -69,7 +69,7 @@ import './pc.less';
 import { toFixed } from '../../utils/fpOperations';
 const mycolumns = [
   {
-    title: '采购主题',
+    title: '采购合同',
     dataIndex: 'name',
     render: (_, record: any) => (
       <Tooltip placement="topLeft" title={record.name}>
@@ -84,7 +84,7 @@ const mycolumns = [
 ];
 const newmycolumns = [
   {
-    title: '计划主题',
+    title: '订单名称',
     dataIndex: 'name',
     render: (_, record: any) => (
       <Tooltip placement="topLeft" title={record.name}>
@@ -1552,9 +1552,9 @@ const FormField: ISwapFormField = {
         }
         console.log('======' + JSON.stringify(newDataid));
         // if (this.state.detdate === 'a1') {
-        //   dtar = '采购申请-' + newData[0]?newData[0]['name']:'';
+        //   dtar = '采购合同-' + newData[0]?newData[0]['name']:'';
         // } else if (this.state.detdate === 'b1') {
-        //   dtar = '材料总计划-' + newData[0].name;
+        //   dtar = '采购订单-' + newData[0].name;
         // }
 
         this.setState({
@@ -1587,9 +1587,9 @@ const FormField: ISwapFormField = {
         }
         console.log('======' + JSON.stringify(newDataid));
         if (this.state.detdate === 'a1') {
-          dtar = '采购申请-' + (newData[0] ? newData[0]['name'] : '');
+          dtar = '采购合同-' + (newData[0] ? newData[0]['name'] : '');
         } else if (this.state.detdate === 'b1') {
-          dtar = '材料总计划-' + (newData[0] ? newData[0]['name'] : '');
+          dtar = '采购订单-' + (newData[0] ? newData[0]['name'] : '');
         }
 
         this.setState({
@@ -1779,7 +1779,7 @@ const FormField: ISwapFormField = {
               centered
               onChange={Tabschange}
             >
-              <TabPane tab="采购申请" key="a">
+              <TabPane tab="采购合同" key="a">
                 <Search
                   placeholder="请输入"
                   allowClear
@@ -1814,7 +1814,7 @@ const FormField: ISwapFormField = {
                   onChange={this.onChangepage}
                 />
               </TabPane>
-              <TabPane tab="材料总计划" key="b">
+              <TabPane tab="采购订单" key="b">
                 <Search
                   placeholder="请输入"
                   allowClear
