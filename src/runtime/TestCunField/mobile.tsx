@@ -60,7 +60,7 @@ const FormField: IFormField = {
       SearchBarvalue: '',
       showElem: 'none',
       showElem2: 'none',
-      inputvalue: '',
+      Inputvalue: '',
       Inputvaluein: '',
       allData: { type: '0', number: '99999', page: '1', name: '' },
       listData: [],
@@ -172,7 +172,7 @@ const FormField: IFormField = {
     console.log(args);
     const newdate = this.state.allData;
     newdate.isHouse = '2';
-    newdate.ck_name = this.state.inputvalue;
+    newdate.ck_name = this.state.Inputvalue;
     this.asyncSetFieldProps(newdate);
     this.setState({
       showElem: 'inherit',
@@ -194,7 +194,7 @@ const FormField: IFormField = {
 
     if (this.state.Housetype === 'out') {
       this.setState({
-        inputvalue: item.name,
+        Inputvalue: item.name,
         showElem: 'none',
       });
     } else if (this.state.Housetype === 'in') {
@@ -839,7 +839,7 @@ const FormField: IFormField = {
                         editable={false}
                         clear
                         extra="x"
-                        value={this.state.inputvalue}
+                        value={this.state.Inputvalue}
                         placeholder="请选择"
                         onClick={this.chhandleAdd.bind(this, 'out')}
                         onExtraClick={this.onExtraClick.bind(this, 'out')}
