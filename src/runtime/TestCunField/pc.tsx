@@ -913,6 +913,23 @@ const FormField: ISwapFormField = {
               }
             });
           } catch (e) {}
+           this.setState({
+            listData: [...newarr],
+            current_page: JSON.parse(res.dataList[0].value).page,
+            total2: JSON.parse(res.dataList[0].value).count,
+          });
+          //   树状图数据
+          const newtarr = JSON.parse(res.dataList[0].extendValue);
+          const newtarr1 = [
+            {
+              title: '物资类型',
+              key: '0',
+              children: newtarr,
+            },
+          ];
+          this.setState({
+            treeData: [...newtarr1],
+          });
           const dstatus = this.state.dstatus;
           if (dstatus === '2') {
             const newssarr = [...newarr];
