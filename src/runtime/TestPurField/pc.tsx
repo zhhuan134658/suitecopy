@@ -838,7 +838,7 @@ const FormField: ISwapFormField = {
     });
 
     this.setState({
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney1: this.toFixed(eval(newarr2.join('+')), 2),
     });
     // 不含税金额合计;
     const newarr3 = [...this.state.dataSource];
@@ -854,7 +854,7 @@ const FormField: ISwapFormField = {
     });
 
     this.setState({
-      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+      Inputmoney2: this.toFixed(eval(newarr4.join('+')), 2),
     });
 
     // if (this.state.Inputmoney2) {
@@ -872,7 +872,7 @@ const FormField: ISwapFormField = {
     //   });
     // });
 
-    console.log('sss', eval(newarr3.join('+')).toFixed(2));
+    
   },
 
   //   handleSave(row: DataType) {
@@ -964,7 +964,7 @@ const FormField: ISwapFormField = {
           });
 
           this.setState({
-            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+            Inputmoney1: this.toFixed(eval(newarr2.join('+')), 2),
           });
           // 不含税金额合计;
 
@@ -980,7 +980,7 @@ const FormField: ISwapFormField = {
           });
 
           this.setState({
-            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+            Inputmoney2: this.toFixed(eval(newarr4.join('+')), 2),
           });
         } else if (dstatus === '1') {
           this.setState({
@@ -1006,7 +1006,7 @@ const FormField: ISwapFormField = {
           });
 
           this.setState({
-            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+            Inputmoney1:this.toFixed(eval(newarr2.join('+')),2),
           });
           // 不含税金额合计;
 
@@ -1022,7 +1022,7 @@ const FormField: ISwapFormField = {
           });
 
           this.setState({
-            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+            Inputmoney2: this.toFixed(eval(newarr4.join('+')),2),
           });
         }
         if (this.state.msgdata == '1') {
@@ -1285,8 +1285,8 @@ const FormField: ISwapFormField = {
         dataIndex: 'quantity_rk',
 
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.quantity_sq}>
-            <span>{record.quantity_sq}</span>
+          <Tooltip placement="topLeft" title={record.quantity_rk}>
+            <span>{record.quantity_rk}</span>
           </Tooltip>
         ),
       },
@@ -1437,8 +1437,8 @@ const FormField: ISwapFormField = {
         dataIndex: 'quantity_rk',
 
         render: (_, record: any) => (
-          <Tooltip placement="topLeft" title={record.quantity_sq}>
-            <span>{record.quantity_sq}</span>
+          <Tooltip placement="topLeft" title={record.quantity_rk}>
+            <span>{record.quantity_rk}</span>
           </Tooltip>
         ),
       },
