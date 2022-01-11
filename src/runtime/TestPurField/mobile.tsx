@@ -19,6 +19,8 @@ import { Tree } from 'antd';
 import './mobile.less';
 import { searchBarSubmit, searchBarChange } from '../../utils/searchUtils';
 import { fpAdd, fpDivide, fpMul, toFixed } from '../../utils/fpOperations';
+import { parsePrintString } from '../../utils/printStringParser';
+import { purColumns } from '../../printColumns/TestPurField';
 const Item = List.Item;
 
 /**
@@ -802,51 +804,15 @@ const FormField: IFormField = {
       editData.detailname = this.state.chenkdata;
       editData.detailedData = this.state.materialList;
       // 打印数据
-      let newlistdata = this.state.materialList;
-      let str2 = this.state.chenkdata;
-      let str0 =
-        '\n' +
-        '设备名称 单位 规格型号 数量 不含税单价 含税单价 税率 税额 不含税金额 含税金额';
-      let str1 =
-        '\n' +
-        '不含税金额合计(元):' +
-        this.state.Inputmoney2 +
-        '\n' +
-        '含税金额合计(元):' +
-        this.state.Inputmoney1;
-      for (let i = 0; i < newlistdata.length; i++) {
-        str0 +=
-          '\n' +
-          newlistdata[i].name +
-          ' ' +
-          newlistdata[i].unit +
-          ' ' +
-          newlistdata[i].size +
-          ' ' +
-          newlistdata[i].det_quantity +
-          ' ' +
-          newlistdata[i].no_unit_price +
-          ' ' +
-          newlistdata[i].unit_price +
-          ' ' +
-          newlistdata[i].tax_rate +
-          ' ' +
-          newlistdata[i].tax_amount +
-          ' ' +
-          newlistdata[i].no_amount_tax +
-          ' ' +
-          newlistdata[i].amount_tax;
-      }
-      let str = str2 + str0 + str1;
+      const newlistdata = this.state.materialList;
+      const str2 = this.state.detailname;
+      const str1 = `不含税金额合计(元)：${this.state.Inputmoney2}\n 含税金额合计(元)：${this.state.Inputmoney1}`;
+      const str = str2 + parsePrintString(newlistdata, purColumns, str1);
       console.log(str);
       const { form } = this.props;
       form.setFieldValue('TestPur', str);
       form.setFieldExtendValue('TestPur', editData);
     }
-
-    // this.state.dataSource;
-    // this.state.Inputmoney1;
-    // this.state.Inputmoney2;
   },
   fieldRender() {
     // fix in codepen

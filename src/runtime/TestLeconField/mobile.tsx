@@ -29,6 +29,7 @@ const FormField: IFormField = {
     return {
       datadate1: '',
       datadate2: '',
+      datenum: 0,
       deColumns: [
         {
           title: '物资名称',
@@ -43,11 +44,11 @@ const FormField: IFormField = {
           dataIndex: 'size',
         },
         {
-          title: '计划进场日期',
+          title: '结算周期（始）',
           dataIndex: 'plan_in_riqi',
         },
         {
-          title: '计划退场日期',
+          title: '结算周期（终）',
           dataIndex: 'plan_out_riqi',
         },
         {
@@ -153,6 +154,7 @@ const FormField: IFormField = {
     this.setState({ materialList: [...arr] });
     console.log(datetime, index);
   },
+
   onChangedata2(data, index) {
     const newdata = new Date(data);
 
@@ -258,8 +260,21 @@ const FormField: IFormField = {
       Inputmoney1: eval(newarr2.join('+')).toFixed(2),
     });
   },
+  getDaysBetween(dateString1, dateString2) {
+    var startDate = Date.parse(dateString1);
+    var endDate = Date.parse(dateString2);
+    if (startDate > endDate) {
+      return 0;
+    }
+    if (startDate == endDate) {
+      return 1;
+    }
+    var days = (endDate - startDate) / (1 * 24 * 60 * 60 * 1000);
+    return days;
+  },
   //更新数据
   onInputchange(types, index, e) {
+    const datenum = this.state.datenum;
     console.log(types, index, e, this);
     let arr = this.state.materialList;
     console.log(this.state.materialList);
@@ -274,9 +289,20 @@ const FormField: IFormField = {
       arr[newindex][newtype] = arrindex;
     }
 
-    if (arr[newindex].zl_number && arr[newindex].price) {
+    if (
+      arr[newindex].zl_number &&
+      arr[newindex].price &&
+      arr[newindex].plan_out_riqi &&
+      arr[newindex].plan_in_riqi
+    ) {
+      const timenum = this.getDaysBetween(
+        arr[newindex].plan_in_riqi,
+        arr[newindex].plan_out_riqi,
+      );
       arr[newindex].subtotal = (
-        arr[newindex].zl_number * arr[newindex].price
+        arr[newindex].zl_number *
+        arr[newindex].price *
+        timenum
       ).toFixed(2);
     } else {
       arr[newindex].subtotal = 0;
@@ -324,7 +350,7 @@ const FormField: IFormField = {
       let str2 = '';
       let str0 =
         '\n' +
-        '设备名称 单位 规格型号 计划进场日期 计划退场日期 数量 单价 小计';
+        '设备名称 单位 规格型号 结算周期（始） 结算周期（终） 数量 单价 小计';
       let str1 = '\n' + '合计：' + this.state.Inputmoney1;
       for (let i = 0; i < newlistdata.length; i++) {
         str0 +=
@@ -655,7 +681,7 @@ const FormField: IFormField = {
                                     <div className="m-field m-field-mobile m-select-field">
                                       <div className="m-field-head">
                                         <div className="m-field-label">
-                                          <span>计划进场日期</span>
+                                          <span>结算周期（始）</span>
                                         </div>
                                       </div>
 
@@ -692,7 +718,7 @@ const FormField: IFormField = {
                                     <div className="m-field m-field-mobile m-select-field">
                                       <div className="m-field-head">
                                         <div className="m-field-label">
-                                          <span>计划退场日期</span>
+                                          <span>结算周期（终）</span>
                                         </div>
                                       </div>
 

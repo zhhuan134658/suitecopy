@@ -437,20 +437,23 @@ const FormField: ISwapFormField = {
   },
   handleSave(row: DataType) {
     const newData = [...this.state.dataSource];
-    const timenum = this.state.timenum;
     console.log(row);
 
-    // if (!row.plan_out_riqi) {
-    //   notification.open({
-    //     message: '请先选择日期',
-    //   });
-    // }
-    // const timenum = this.getDaysBetween(row.plan_in_riqi, row.plan_out_riqi);
+    if (!row.plan_out_riqi) {
+      notification.open({
+        message: '请先选择日期',
+      });
+    }
+    const timenum = this.getDaysBetween(row.plan_in_riqi, row.plan_out_riqi);
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
     if (row.price && row.zl_number) {
-      newData[index].subtotal = (row.zl_number * row.price).toFixed(2);
+      newData[index].subtotal = (
+        row.zl_number *
+        row.price *
+        Number(timenum)
+      ).toFixed(2);
     }
 
     this.setState({
@@ -677,7 +680,7 @@ const FormField: ISwapFormField = {
       let str2 = '';
       let str0 =
         '\n' +
-        '设备名称 单位 规格型号 计划进场日期 计划退场日期 数量 单价 小计';
+        '设备名称 单位 规格型号 结算周期（始） 结算周期（终） 数量 单价 小计';
       let str1 = '\n' + '合计：' + this.state.Inputmoney1;
       for (let i = 0; i < newlistdata.length; i++) {
         str0 +=
@@ -763,7 +766,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '计划进场日期',
+        title: '结算周期（始）',
         dataIndex: 'plan_in_riqi',
         width: 200,
         render: (_, record: any) => (
@@ -773,7 +776,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '计划退场日期',
+        title: '结算周期（终）',
         dataIndex: 'plan_out_riqi',
         width: 200,
         render: (_, record: any) => (
@@ -840,7 +843,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '计划进场日期',
+        title: '结算周期（始）',
         dataIndex: 'plan_in_riqi',
         key: 'plan_in_riqi',
         width: 200,
@@ -860,7 +863,7 @@ const FormField: ISwapFormField = {
         },
       },
       {
-        title: '计划退场日期',
+        title: '结算周期（终）',
         dataIndex: 'plan_out_riqi',
         key: 'plan_out_riqi',
         width: 200,

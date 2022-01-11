@@ -654,7 +654,8 @@ const FormField: ISwapFormField = {
       // 打印数据
       let newlistdata = this.state.dataSource;
       let str2 = '';
-      let str0 = '\n' + '设备名称 单位 规格型号 计划进场日期 计划退场日期 数量';
+      let str0 =
+        '\n' + '设备名称 单位 规格型号 结算周期（始） 结算周期（终） 数量';
       let str1 = '\n';
       for (let i = 0; i < newlistdata.length; i++) {
         str0 +=
@@ -732,7 +733,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '计划进场日期',
+        title: '结算周期（始）',
         dataIndex: 'plan_in_riqi',
         key: 'plan_in_riqi',
         width: 200,
@@ -743,7 +744,7 @@ const FormField: ISwapFormField = {
         ),
       },
       {
-        title: '计划退场日期',
+        title: '结算周期（终）',
         dataIndex: 'plan_out_riqi',
         key: 'plan_out_riqi',
         width: 200,
@@ -793,7 +794,7 @@ const FormField: ISwapFormField = {
       },
       //     value={text !== '' ? moment(text) : ''}
       {
-        title: '计划进场日期',
+        title: '结算周期（始）',
         dataIndex: 'plan_in_riqi',
         key: 'plan_in_riqi',
         width: 200,
@@ -813,7 +814,7 @@ const FormField: ISwapFormField = {
         },
       },
       {
-        title: '计划退场日期',
+        title: '结算周期（终）',
         dataIndex: 'plan_out_riqi',
         key: 'plan_out_riqi',
         width: 200,
