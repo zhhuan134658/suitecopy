@@ -452,7 +452,7 @@ const FormField: ISwapFormField = {
       newData[index].subtotal = (
         row.zl_number *
         row.price *
-        Number(timenum)
+        (Number(timenum) + 1)
       ).toFixed(2);
     }
 

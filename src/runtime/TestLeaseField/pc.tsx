@@ -428,8 +428,9 @@ const FormField: ISwapFormField = {
     const index = newData.findIndex(item => row.id === item.id);
     const item = newData[index];
     newData.splice(index, 1, { ...item, ...row });
+    console.log('TIME', timenum);
     if (row.price) {
-      newData[index].subtotal = row.zl_number * row.price * timenum;
+      newData[index].subtotal = row.zl_number * row.price * (timenum + 1);
     }
 
     this.setState({

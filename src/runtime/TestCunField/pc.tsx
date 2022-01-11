@@ -65,7 +65,7 @@ const { Column } = Table;
 import { FormInstance } from 'antd/lib/form';
 
 import './pc.less';
-import { toFixed } from '../../utils/fpOperations';
+import { fpAdd, toFixed } from '../../utils/fpOperations';
 const mychcolumns = [
   {
     title: '仓库名称',
@@ -804,11 +804,6 @@ const FormField: ISwapFormField = {
         let b = 1 + row.tax_rate * 0.01;
 
         newData[index].amount_tax = this.toFixed(this.accMul(a, b), 2);
-        // newData[index].amount_tax = (
-        //   row.no_unit_price *
-        //   row.det_quantity *
-        //   (1 + row.tax_rate * 0.01)
-        // ).toFixed(2);
       }
     }
 
@@ -823,35 +818,33 @@ const FormField: ISwapFormField = {
     let newarr2 = [];
 
     newarr2 = newarr1.filter(item => {
-      if (item.tax_money) {
+      if (item.amount_tax) {
         return item;
       }
     });
     newarr2 = newarr2.map(item => {
-      return item.tax_money;
+      return item.amount_tax;
     });
-
+    console.log('taxed', newarr2);
     this.setState({
-      Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+      Inputmoney1: newarr2.reduce(fpAdd,0).toFixed(2),
     });
     // 不含税金额合计;
     const newarr3 = [...this.state.dataSource];
     let newarr4 = [];
 
     newarr4 = newarr3.filter(item => {
-      if (item.notax_money) {
+      if (item.no_amount_tax) {
         return item;
       }
     });
     newarr4 = newarr4.map(item => {
-      return item.notax_money;
+      return item.no_amount_tax;
     });
 
     this.setState({
-      Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+      Inputmoney2: newarr4.reduce(fpAdd,0).toFixed(2),
     });
-
-    console.log('sss', eval(newarr3.join('+')).toFixed(2));
   },
 
   asyncSetFieldProps(vlauedata, typename) {
