@@ -1680,7 +1680,7 @@ const FormField: ISwapFormField = {
               添加明细
             </Button>
             <div className="label" style={{ marginTop: '10px' }}>
-                不含税金额合计(元)<span style={{ color: "transparent" }}>2.1.31</span>
+                不含税金额合计(元)<span style={{ color: "transparent" }}>2.1.32</span>
             </div>
             <div>
               <Input
