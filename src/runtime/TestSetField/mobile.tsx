@@ -171,14 +171,14 @@ const FormField: IFormField = {
           newarr2 = newarr2.map(item => {
             return item.amount_tax;
           });
-
-          this.setState({
-            Inputmoney1: eval(newarr2.join('+')),
-          });
+          if (newarr2.length > 0) {
+            this.setState({
+              Inputmoney1: eval(newarr2.join('+')),
+            });
+          }
           // 不含税金额合计;
 
           let newarr4 = [];
-
           newarr4 = newssarr.filter(item => {
             if (item.no_amount_tax) {
               return item;
@@ -187,10 +187,11 @@ const FormField: IFormField = {
           newarr4 = newarr4.map(item => {
             return item.no_amount_tax;
           });
-
-          this.setState({
-            Inputmoney2: eval(newarr4.join('+')),
-          });
+          if (newarr4.length > 0) {
+            this.setState({
+              Inputmoney2: eval(newarr4.join('+')),
+            });
+          }
         } else if (type === 2) {
           this.setState({
             checkData: newarr,

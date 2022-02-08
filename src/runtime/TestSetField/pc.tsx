@@ -1024,10 +1024,12 @@ const FormField: ISwapFormField = {
           newarr2 = newarr2.map(item => {
             return item.amount_tax;
           });
-
-          this.setState({
-            Inputmoney1: eval(newarr2.join('+')).toFixed(2),
-          });
+          console.log('newarr2', newarr2);
+          if (newarr2.length > 0) {
+            this.setState({
+              Inputmoney1: eval(newarr2.join('+')).toFixed(2),
+            });
+          }
           // 不含税金额合计;
 
           let newarr4 = [];
@@ -1040,10 +1042,12 @@ const FormField: ISwapFormField = {
           newarr4 = newarr4.map(item => {
             return item.no_amount_tax;
           });
-
-          this.setState({
-            Inputmoney2: eval(newarr4.join('+')).toFixed(2),
-          });
+          console.log('newarr4', newarr4);
+          if (newarr4.length > 0) {
+            this.setState({
+              Inputmoney2: eval(newarr4.join('+')).toFixed(2),
+            });
+          }
           this.setState({
             dataSource: [...newarr],
           });
